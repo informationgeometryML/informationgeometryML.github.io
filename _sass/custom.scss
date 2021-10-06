@@ -1,0 +1,119 @@
+/* ==========================================================================
+   Comments
+   from https://github.com/mmistakes/made-mistakes-jekyll/blob/master/src/assets/stylesheets/_comments.scss
+   ========================================================================== */
+
+.page__inner-wrap {
+    margin-bottom: 1em;
+}
+
+.comment {
+    display: flex;
+
+    + .comment {
+        margin-top: 2em;
+    }
+
+    &.child {
+        margin-left: 40px;
+
+        @include breakpoint($md-up) {
+        margin-left: 80px;
+        }
+    }
+}
+
+.comment__avatar {
+    $avatar-size: 30px;
+  
+    flex-shrink: 0;
+    margin-right: 10px;
+    width: $avatar-size;
+    height: $avatar-size;
+  
+    @include breakpoint($md-up) {
+      margin-right: 20px;
+      width: (2 * $avatar-size);
+      height: (2 * $avatar-size);
+    }
+  
+    img {
+      width: $avatar-size;
+      height: $avatar-size;
+      border-radius: 50%;
+  
+      @include breakpoint($md-up) {
+        width: (2 * $avatar-size);
+        height: (2 * $avatar-size);
+        padding: 5px;
+        border: 1px solid $border-color;
+      }
+    }
+}
+
+.comment_date {
+      font-size: 0.75em;
+}
+
+.comment__main {
+    min-width: calc(100% - 40px); // fix overflowing code blocks (message width - avatar size)
+  
+    @include breakpoint($md-up) {
+      min-width: calc(100% - 80px); // fix overflowing code blocks (message width - avatar size)
+    }
+}
+
+.comment__meta {
+    margin-bottom: 1em;
+    padding-bottom: 0.25em;
+    font-family: $monospace;
+    font-size: ms(-1);
+    border-bottom: 2px solid;
+  
+    a {
+      color: inherit;
+    }
+}
+
+.comment__message {
+    font-size: ms(-1);
+  
+    > *:last-child {
+      margin-bottom: 0;
+    }
+  
+    img {
+      max-width: 100%;
+    }
+}
+
+.comment__reply {
+    margin-top: 0.5em;
+    font-family: $monospace;
+    font-size: ms(-2);
+}
+
+.comment__form {
+    @include margin-bottom(2);
+  
+    .title {
+      @include margin-top(2);
+  
+      &:before {
+        @include margin-bottom(1);
+        content: '';
+        display: block;
+        width: 2em;
+        height: 0.125em;
+        background-color: #000;
+      }
+    }
+}
+
+#cancel-comment-reply-link {
+    margin-left: 1em;
+    color: $danger-color;
+}
+
+button.btn--primary { background-color: #44AF13; }
+button:disabled.btn--primary { background-color: #808080; }

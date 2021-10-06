@@ -1,0 +1,94 @@
+# Name of the property. You can have multiple properties with completely
+# different config blocks for different sections of your site.
+# For example, you can have one property to handle comment submission and
+# another one to handle posts.
+comments:
+  # (*) REQUIRED
+  #
+  # Names of the fields the form is allowed to submit. If a field that is
+  # not here is part of the request, an error will be thrown.
+  allowedFields: ["name", "email", "url", "message", "replying_to"]
+
+  # (*) REQUIRED
+  #
+  # Name of the branch being used. Must match the one sent in the URL of the
+  # request.
+  branch: "master"
+
+  # Text to use as the commit message or pull request title. Accepts placeholders.
+  commitMessage: "Add Comments"
+
+  # (*) REQUIRED
+  #
+  # Destination path (filename) for the data files. Accepts placeholders.
+  filename: "comment-{@timestamp}"
+
+  # The format of the generated data files. Accepted values are "json", "yaml"
+  # or "frontmatter"
+  format: "yaml"
+
+  # List of fields to be populated automatically by Staticman and included in
+  # the data file. Keys are the name of the field. The value can be an object
+  # with a `type` property, which configures the generated field, or any value
+  # to be used directly (e.g. a string, number or array)
+  generatedFields:
+    date:
+      type: date
+      options:
+        format: "iso8601" # "iso8601" (default), "timestamp-seconds", "timestamp-milliseconds"
+
+  # Whether entries need to be appproved before they are published to the main
+  # branch. If set to `true`, a pull request will be created for your approval.
+  # Otherwise, entries will be published to the main branch automatically.
+  moderation: false
+
+  # Akismet spam detection.
+  akismet:
+    enabled: false
+    author: "name"
+    authorEmail: "email"
+  #   authorUrl: "url"
+    content: "message"
+    type: "comment"
+
+  # Name of the site. Used in notification emails.
+  name: "Blog about Information Geometry"
+
+  # Notification settings. When enabled, users can choose to receive notifications
+  # via email when someone adds a reply or a new comment. This requires an account
+  # with Mailgun, which you can get for free at http://mailgun.com.
+  #notifications:
+    # Enable notifications
+    #enabled: true
+
+    # (!) ENCRYPTED
+    #
+    # Mailgun API key
+    #apiKey: "1q2w3e4r"
+
+    # (!) ENCRYPTED
+    #
+    # Mailgun domain (encrypted)
+    #domain: "4r3e2w1q"
+
+  # (*) REQUIRED
+  #
+  # Destination path (directory) for the data files. Accepts placeholders.
+  path: "_data/comments/{options.slug}"
+
+  # Names of required fields. If any of these isn't in the request or is empty,
+  # an error will be thrown.
+  requiredFields: ["name", "email", "message"]
+
+  # List of transformations to apply to any of the fields supplied. Keys are
+  # the name of the field and values are possible transformation types.
+  transforms:
+    email: md5
+
+  reCaptcha:
+    enabled: true
+    siteKey: "6Ld7ObMcAAAAAGVilIW46XfGNx3pWasDXJh83S2D"
+    # Encrypt reCaptcha secret key using Staticman /encrypt endpoint
+    # For more information, https://staticman.net/docs/encryption
+    #
+    secret: "UcbAzteai2+N2jBMkLmeuIjwOD2waSEdoyc3qBSKSp9q+NOOLUJGoVEDoyu68bO5NftvRG0X9lD79yO0YMdrOblRF1R94T71A5QtS8rHBIqiJcbbDkLK2TAVZEH9C64O1SlkOO9KIeOLrWnNs+OtVb82sk4L+et6BBiMykMOzNJWmbDblezet5D0a7BTCxefXmTfVHi6s51oT3CbX4LFE+jjnSCayYS3T4gbGvL0+iEVueGlbtG6Z3qCKrgzF+5doD6yUV3N3iVkowOOWryAbbdTsLp/EjXezyWHIsN7uG2djFJxwqLqgiz/xu+7IUosbi3HCeg2vkqVJq1iNnxZIgFtUNsY5afNxYNe6yJsEANVzs6WvjbZMHKIuCGyTkyK70gVocxv5zqnX50ac0JKYynMK0NUtFEBwqMNacKUOSCouptUzUh0h3efs58y8EereHZwe/iaSeiDmox78a68ztkwmrbskYrrKHLbuvLZg0HqcYhn9JxvnWu5sFNE0tt/aoG7L2vwTjnqDKJjeq5w6rqYO3Lrl+29y2K/Y5LYHnN/+Pi1xLitO6RxJQca+gKLlq467OxKmZf/52GAbBzNQIrMP5HOJYxaufnO3wndlBRxhb9nzwEuIl/LvjonAoinNqOJqQoZYCIa00v2eh1rwfOm9ctr1QHKCyaJkoIHbww="

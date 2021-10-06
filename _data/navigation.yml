@@ -1,0 +1,15 @@
+# main links
+main:
+  - title: "Home"
+    url: /
+  - title: "News"
+    url: /news/
+  # - title: "Research"
+  #   url: /research/
+  - title: "Blog Posts"
+    url: /year-archive/
+  #- title: "Misc"
+    #url: /misc/
+    #
+  #- title: "Publications"
+    #url: /publications/
