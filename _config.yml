@@ -55,8 +55,8 @@ staticman:
       options:
         format           : # "iso8601" (default), "timestamp-seconds", "timestamp-milliseconds"
 reCaptcha:
-  siteKey                : "6Ld7ObMcAAAAAGVilIW46XfGNx3pWasDXJh83S2D"
-  secret                 : "UcbAzteai2+N2jBMkLmeuIjwOD2waSEdoyc3qBSKSp9q+NOOLUJGoVEDoyu68bO5NftvRG0X9lD79yO0YMdrOblRF1R94T71A5QtS8rHBIqiJcbbDkLK2TAVZEH9C64O1SlkOO9KIeOLrWnNs+OtVb82sk4L+et6BBiMykMOzNJWmbDblezet5D0a7BTCxefXmTfVHi6s51oT3CbX4LFE+jjnSCayYS3T4gbGvL0+iEVueGlbtG6Z3qCKrgzF+5doD6yUV3N3iVkowOOWryAbbdTsLp/EjXezyWHIsN7uG2djFJxwqLqgiz/xu+7IUosbi3HCeg2vkqVJq1iNnxZIgFtUNsY5afNxYNe6yJsEANVzs6WvjbZMHKIuCGyTkyK70gVocxv5zqnX50ac0JKYynMK0NUtFEBwqMNacKUOSCouptUzUh0h3efs58y8EereHZwe/iaSeiDmox78a68ztkwmrbskYrrKHLbuvLZg0HqcYhn9JxvnWu5sFNE0tt/aoG7L2vwTjnqDKJjeq5w6rqYO3Lrl+29y2K/Y5LYHnN/+Pi1xLitO6RxJQca+gKLlq467OxKmZf/52GAbBzNQIrMP5HOJYxaufnO3wndlBRxhb9nzwEuIl/LvjonAoinNqOJqQoZYCIa00v2eh1rwfOm9ctr1QHKCyaJkoIHbww="
+  siteKey              : "6LcXW7McAAAAAH2V0NEG55ZboBkl3SPL4gQFO5dU"
+  secret               : "lD5HGm9uOMTAQ2Kim07Ooijx7QtPG1jom+6aZKMA4s3qhHipnbfxuW5yVAVy4UL5XNnuEYg3OQHxF3xznQ/PlcyQXSGbLIBheEKbIO78jP/iEEhUlyXIwg1VbVyie2ux7GmxRA2DfA6GGD2rWcIChoR4l4ZBAaFp1b8duXA/z4EGCxTbNntIjGDm5NYQ9xCbtG4SS3gRe39dww6oUEtzlcX4R81srC0HXk1dd4NB/16K1e//BZW/I8OeDFwKVtBPPgXO53czozYxxEEtJhexHWTv8/F1E4iR5FDCpb7Y7e1wGxhl0Cma7rQlauOZeOf/UXtMw4JdoyTIcDKTitVCwhiMWUW9g4r8srOJHv3J078RhdMV55FHcIshc9kxmKshjT+vOmsA9vs3Hqlwp9sMQ5EYQRdvb60227HrqzRxhgM/QA4gb0sOS0rwOpnj1L4j3+24wW6NfPL900pK74Jxl5MgtzzGMLsXKtSvi/JI+ikEjjBWgPM74+pPwlQxzK/zXUeRAFmjlRxpLwWbvbQjz9cO/i2mFuuFcGOqVegLue+aPyhfLLLYM7XZl8CzS+Uz8sCAet6Zu+Ooc2HClJFqXY1qOJ/dKUEQ3TPRXoUkY/rU5nUzwmrQTPaBOJJCk4d3UWQzhuwpXlZLSRXmDrdFu4sQKfA7y3dbw61FZGQ0mJE="
 atom_feed:
   path                   : # blank (default) uses feed.xml
 search                   : # true, false (default)
