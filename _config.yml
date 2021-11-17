@@ -215,6 +215,15 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jemoji
+  - jekyll-scholar
+
+scholar:
+  style: custom
+  source: _bibliography
+  bibliography_list_tag: p
+  bibliography_item_tag: p
+  bibtex_filters:
+    - latex
 
 # mimic GitHub Pages with --safe
 whitelist:
