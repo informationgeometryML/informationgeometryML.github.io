@@ -1,76 +1,39 @@
-require "bundler/gem_tasks"
-require "jekyll"
-require "listen"
-
-def listen_ignore_paths(base, options)
-  [
-    /_config\.ya?ml/,
-    /_site/,
-    /\.jekyll-metadata/
-  ]
+desc "Commit _site/"
+task :commit do
+  puts "\n## Staging modified files"
+  status = system("git add -A")
+  puts status ? "Success" : "Failed"
+  puts "\n## Committing a site build at #{Time.now.utc}"
+  message = "Build site at #{Time.now.utc}"
+  status = system("git commit -m \"#{message}\"")
+  puts status ? "Success" : "Failed"
+  puts "\n## Pushing commits to remote"
+  status = system("git push origin source")
+  puts status ? "Success" : "Failed"
 end
 
-def listen_handler(base, options)
-  site = Jekyll::Site.new(options)
-  Jekyll::Command.process_site(site)
-  proc do |modified, added, removed|
-    t = Time.now
-    c = modified + added + removed
-    n = c.length
-    relative_paths = c.map{ |p| Pathname.new(p).relative_path_from(base).to_s }
-    print Jekyll.logger.message("Regenerating:", "#{relative_paths.join(", ")} changed... ")
-    begin
-      Jekyll::Command.process_site(site)
-      puts "regenerated in #{Time.now - t} seconds."
-    rescue => e
-      puts "error:"
-      Jekyll.logger.warn "Error:", e.message
-      Jekyll.logger.warn "Error:", "Run jekyll build --trace for more information."
-    end
-  end
+desc "Deploy _site/ to master branch"
+task :deploy do
+  puts "\n## Deleting master branch"
+  status = system("git branch -D master")
+  puts status ? "Success" : "Failed"
+  puts "\n## Creating new master branch and switching to it"
+  status = system("git checkout -b master")
+  puts status ? "Success" : "Failed"
+  puts "\n## Forcing the _site subdirectory to be project root"
+  status = system("git filter-branch --subdirectory-filter _site/ -f")
+  puts status ? "Success" : "Failed"
+  status = system("git pull origin master")
+  puts status ? "Success" : "Failed"
+  puts "\n## Switching back to source branch"
+  status = system("git checkout source")
+  puts status ? "Success" : "Failed"
+  puts "\n## Pushing all branches to origin"
+  status = system("git push --all origin")
+  puts status ? "Success" : "Failed"
 end
 
-task :preview do
-  base = Pathname.new('.').expand_path
-  options = {
-    "source"        => base.join('test').to_s,
-    "destination"   => base.join('test/_site').to_s,
-    "force_polling" => false,
-    "serving"       => true,
-    "theme"         => "minimal-mistakes-jekyll"
-  }
-
-  options = Jekyll.configuration(options)
-
-  ENV["LISTEN_GEM_DEBUGGING"] = "1"
-  listener = Listen.to(
-    base.join("_data"),
-    base.join("_includes"),
-    base.join("_layouts"),
-    base.join("_sass"),
-    base.join("assets"),
-    options["source"],
-    :ignore => listen_ignore_paths(base, options),
-    :force_polling => options['force_polling'],
-    &(listen_handler(base, options))
-  )
-
-  begin
-    listener.start
-    Jekyll.logger.info "Auto-regeneration:", "enabled for '#{options["source"]}'"
-
-    unless options['serving']
-      trap("INT") do
-        listener.stop
-        puts "     Halting auto-regeneration."
-        exit 0
-      end
-
-      loop { sleep 1000 }
-    end
-  rescue ThreadError
-    # You pressed Ctrl-C, oh my!
-  end
-
-  Jekyll::Commands::Serve.process(options)
+desc "Commit and deploy _site/"
+task :commit_deploy => [:commit, :deploy] do
 end
+
