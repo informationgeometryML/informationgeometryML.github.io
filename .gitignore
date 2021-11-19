@@ -1,2 +1,10 @@
-_site/
+# project
+_site
+.sass-cache
+.vagrant
+.jekyll-cache
 
+
+_drafts
+*.gitignored
+*-gitignored.md
