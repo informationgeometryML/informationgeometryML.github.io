@@ -1,0 +1,1201 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-11-30T22:48:33-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+
+&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+&lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
+
+&lt;p&gt;We will give an informal introduction with a focus on high level of ideas.&lt;/p&gt;
+
+&lt;h1 id=&quot;two-kinds-of-spaces&quot;&gt;Two kinds of Spaces&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;As we disucssed in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, the parameter space $\Omega_\tau$ and the tangent space denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T\mathcal{M}_{\tau_0}$&lt;/code&gt; at point $\tau_0$ are different spaces. Recall that the tangent space is a vector space and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T\mathcal{M}_{\tau_0}=\mathcal{R}^K$&lt;/code&gt; while the parameter space $\Omega_\tau$ is like a local vector space in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where $K$ is the dimension of the manifold. Moreover, $\Omega_\tau \subset T\mathcal{M}_{\tau_0}$ since  $\tau$ is an &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;intrinsic parametrization&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;In a manifold case, we have to explicitly distinguish the difference between the representation of a point/parameter and a (Riemannian) vector/gradient.
+The following figure illustrates the difference between the &lt;strong&gt;domain&lt;/strong&gt; of these two spaces. Moreover, the &lt;strong&gt;norm/distance&lt;/strong&gt; in each of these two spaces is defined differently.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;natural-gradient-descent-in-an-intrinsic-parameter-space&quot;&gt;Natural-gradient Descent in an Intrinsic Parameter Space&lt;/h1&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;Using intrinstic parametrization $\tau$, we can perform a natural-gradient update known as natural-gradient descent. 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \tau_{k} - \alpha \hat{\mathbf{g}}_{\tau_k} 
+\end{aligned}\tag{1}\label{1}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\tau_k}$&lt;/code&gt; is a natural/Riemannian gradient evaluated at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k}$&lt;/code&gt; and $\alpha&amp;gt;0$ is a step-size.&lt;/p&gt;
+
+&lt;p&gt;The update in Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is valid since the parameter space $\Omega_\tau$  has a local vector-space structure thanks to the use of an intrinsic parametrization.
+However, when $\Omega_\tau$ is a proper subset of $T\mathcal{M}_{\tau_k}$ (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau \neq T\mathcal{M}_{\tau_k} $&lt;/code&gt;), the update in Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is valid only when the step-size $\alpha$ is small enough so that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k+1} \in \Omega_\tau$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example:&lt;/p&gt;
+
+  &lt;p&gt;Consider a 1-dimensional  Gaussian family.
+We specify an intrinsic parameterization $\mathbf{\tau}$  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;. &lt;br /&gt;&lt;/p&gt;
+
+  &lt;p&gt;We have to properly select the step-size $\alpha$ for natural-gradient descent in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; due to the positivity constraint in $\sigma$.&lt;/p&gt;
+
+  &lt;p&gt;In multivariate Gaussian cases, we have to handle a positive-definite constraint.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;natural-gradient-descent-is-linearly-invariant&quot;&gt;Natural-gradient Descent is Linearly Invariant&lt;/h1&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;Recall that in &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transform-and-invariance&quot;&gt;Part III&lt;/a&gt;, we have shown that natural-gradients are invaraint under any intrinsic parameter transformation.
+The parameter transformation can be non-linear.&lt;/p&gt;
+
+&lt;p&gt;It is natural to expect that natural-gradient descent has a similar property. However, natural-gradient descent is only invariant under  an intrinsic &lt;strong&gt;linear&lt;/strong&gt; transformation. Note that Newton’s method is also linearly invariant while Euclidean gradient descent is not.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Warning&lt;/strong&gt;&lt;/span&gt;: Be aware of the difference of the invaraince property between natural-gradient and natural-gradient descent.&lt;/p&gt;
+
+&lt;p&gt;Let’s consider the following (scalar) optimization problem on a manifold $\mathcal{M}$ with the Fisher-Rao metric $F$.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{x \in \mathcal{M}} h(x)
+\end{aligned}\tag{2}\label{2}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that $\mathcal{M}$ in general does not have a vector-space structure. 
+We consider an intrinstic parameterization $\tau$ so that the parameter space $\Omega_\tau$ at least has a local  vector-space structure.
+The problem in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; can be re-expressed as below.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\tau \in \Omega_\tau} h_\tau(\tau)
+\end{aligned}
+$$&lt;/code&gt; where $h_\tau$ is the parameter representation of scalar smooth function $h$.&lt;/p&gt;
+
+&lt;p&gt;Natural gradient descent in this parameter space $\Omega_\tau$ is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \tau_{k} - \alpha \hat{\mathbf{g}}_{\tau_k} 
+\end{aligned}\tag{3}\label{3}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\tau_k} := [\mathbf{F}_\tau(\tau_k) ]^{-1} \nabla_\tau h_\tau(\tau_k)$&lt;/code&gt; and the step-size $\alpha$ is small enough so that  $\tau_{k+1} \in \Omega_\tau$.&lt;/p&gt;
+
+&lt;p&gt;Consider another intrinstic parameterization $\lambda$ so that $\lambda=\mathbf{U} \tau$, where $\mathbf{U}$ is a constant (square) invertible matrix. 
+When $\lambda$ is a valid parameterization, we know that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ \mathbf{U}\tau |\tau \in\Omega_\tau \} 	\cap \Omega_\lambda \neq \emptyset$&lt;/code&gt;.
+For simplicity,  we further assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ \mathbf{U}\tau |\tau \in\Omega_\tau \} = \Omega_\lambda$&lt;/code&gt;, where $\Omega_\lambda$ is the parameter space of $\lambda$. In general, we could use a smaller parameter space either $\Omega_\lambda$ or $\Omega_\tau$ so that this additional assumption holds.&lt;/p&gt;
+
+&lt;p&gt;Natural gradient descent in this parameter space $\Omega_\lambda$ is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\lambda_{k+1} \leftarrow \lambda_{k} -  \alpha  \hat{\mathbf{g}}_{\lambda_k} 
+\end{aligned}\tag{4}\label{4}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\lambda_k} := [\mathbf{F}_\lambda(\lambda_k) ]^{-1} \nabla_\lambda h_\lambda(\lambda_k)$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Recall that we have the &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance&quot;&gt;transformation rule&lt;/a&gt; for natural gradients as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\hat{\mathbf{g}}_\tau= \mathbf{Q}  \hat{\mathbf{g}}_\lambda 
+\end{aligned}
+$$&lt;/code&gt; where $Q_{ji}=\frac{\partial \tau^j(\lambda)}{\partial \lambda^i}$.&lt;/p&gt;
+
+&lt;p&gt;We can verify that $\mathbf{Q} = \mathbf{U}^{-1}$. Notice that $\tau_0 = \mathbf{U}^{-1} \lambda_0$ by construction.
+The update in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt; at iteration $k=1$ then can be re-expressed as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{1} \leftarrow \tau_{0} -  \alpha  \hat{\mathbf{g}}_{\tau_0} = \mathbf{U}^{-1} \lambda_0 -  \alpha  \mathbf{U}^{-1}  \hat{\mathbf{g}}_{\lambda_0} 
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Therefore, it is easy to show that $\tau_k = \mathbf{U}^{-1} \lambda_k$ by induction. Updates in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; are equivalent when $t$ is small enough.&lt;/p&gt;
+
+&lt;h1 id=&quot;euclidean-gradient-descent-is-not-linearly-invariant&quot;&gt;Euclidean Gradient Descent is NOT (Linearly) Invariant&lt;/h1&gt;
+&lt;p&gt;to do:
+add an exapmle&lt;/p&gt;
+
+&lt;h1 id=&quot;riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;Riemannian Gradient Descent and its (Non-linear) Invariance&lt;/h1&gt;
+
+&lt;p&gt;Now we discuss a gradient-based method that is invariant to any intrinsic parameter transformation.
+We will first introduce the concept of a (one-dimensional) geodesic $\gamma(t)$, which is the “shortest curve” on a manifold with a Riemannian metric (e.g., the Fisher-Rao metric).
+Recall that in  &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold.&lt;/p&gt;
+
+&lt;p&gt;Consider an intrinsic parametrization $\tau$, where $\gamma_\tau(t)$ is the parameter representation of the geodesic.
+To specify a geodesic, we need to provide a starting point $\tau_0$ on the manifold and a Riemannian gradient $\mathbf{v}_{\tau_0}$ evluated at point $\tau_0$.
+The geodeisc is the solution of a system of second-order non-linear ordinary differential equations (ODE) with the following initial conditions.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\gamma_\tau(0) = \tau_0; \,\,\,\,\,\,
+\frac{d \gamma_\tau(t) }{d t} \Big|_{t=0} = \mathbf{v}_{\tau_0}
+\end{aligned}
+$$&lt;/code&gt; where the geodesic is determined by the initial conditions and the domain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau$&lt;/code&gt; of the geodesic contains 0 and 1.&lt;/p&gt;
+
+&lt;p&gt;We will use the following map to define Riemannian gradient descent without specifying complicated  differential equations (e.g., Christoffel symbols) in the geodesic.
+We define a manifold expoential map at point $\tau_0$ for a manifold  via the geodesic as 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathrm{Exp}_{\tau_0}\colon  T\mathcal{M}_{\tau_0} &amp;amp; \mapsto \mathcal{M}\\
+\mathbf{v}_{\tau_0} &amp;amp; \mapsto \gamma_\tau(1) \,\,\,\, \textrm{s.t.} \,\,\,\,\,\, \gamma_\tau(0) = \tau_0;\,\,\,\,\,\,
+\frac{d \gamma_\tau(t) }{d t} \Big|_{t=0} = \mathbf{v}_{\tau_0}
+\end{aligned}
+$$&lt;/code&gt; Technically, we should require  manifold &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{M}$&lt;/code&gt; to be geodesically complete so that the domain of the expoential map is the whole tangent space. 
+Equiavalently, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau $&lt;/code&gt; is the whole &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^1$&lt;/code&gt; space in such cases.&lt;/p&gt;
+
+&lt;p&gt;Under intrinsic parametrization $\tau$, (exact) Riemannian gradient descent is defined as 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \mathrm{Exp}_{\tau_k} (- \alpha  \hat{\mathbf{g}}_{\tau_k} ) 
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The invariance of this update is due to the uniqueness of ODE and transformation rules for natural-gradients, Fisher information matrix, and Christoffel symbols. We will not discuss this further in this post to avoid complicated derivations. 
+Although Riemannian gradient descent is nice, the expoential map or the geodesic often does not have a closed form expression.&lt;/p&gt;
+
+&lt;h1 id=&quot;natural-gradient-descent-as-inexact-riemannian-gradient-descent&quot;&gt;Natural-gradient Descent as Inexact Riemannian Gradient Descent&lt;/h1&gt;
+
+&lt;p&gt;Natural-gradient descent can be viewed as a first-order (linear) approximation of the geodesic, which implies that natural-gradient descent is indeed an inexact Riemannian gradient update.
+Natural-gradient descent only is linearly invariant due to the approximation.&lt;/p&gt;
+
+&lt;p&gt;Consider a first-order Taylor approximation at $t=0$ of the geodesic shown below.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\gamma_\tau(t) \approx  \gamma_\tau(0) + \frac{d  \gamma_\tau(t)}{d t} \Big|_{t=0} (t-0)  
+\end{aligned}
+$$&lt;/code&gt; Note that this approximation does not guarantee that the approximated geodesic stays on the manifold for all $t \neq 0$.&lt;/p&gt;
+
+&lt;p&gt;Recall that the  expoential map  is defined via the geodesic  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(1)$&lt;/code&gt;.
+We can similarly define an approximated  expoential map (A.K.A. the Euclidean retraction map)  as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathrm{Ret}_{\tau_0}(\mathbf{v}_{\tau_0}) := \gamma_\tau(0) + \frac{d  \gamma_\tau(t)}{d t} \Big|_{t=0} (1-0) =\tau_0 + \mathbf{v}_{\tau_0}
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Therefore, the inexact Riemannian gradient update is defined as 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \mathrm{Ret}_{\tau_k} (- \alpha  \hat{\mathbf{g}}_{\tau_k} )  = \tau_k  - \alpha  \hat{\mathbf{g}}_{\tau_k}
+\end{aligned}
+$$&lt;/code&gt; which recovers natural-gradient descent.&lt;/p&gt;
+
+&lt;h1 id=&quot;issues-of-natural-gradient-descent-in-non-intrinsic-parameter-spaces&quot;&gt;Issues of Natural-gradient Descent in Non-intrinsic Parameter Spaces&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;As mentioned in &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;Part I&lt;/a&gt;, an intrinsic parametrization creates a nice parameter space (e.g., a local vector space structure) and guarantees a non-singular FIM.
+We now discuss issues when it comes to  natural-gradient descent over non-intrinsic parametrizations including overparameterization.&lt;/p&gt;
+
+&lt;p&gt;The first issue of using a non-intrinsic parametrization is that we may not have a local vector space structure in the parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM is not well-defined in such cases. We will illustrated by examples.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example: Bernoulli family:&lt;/p&gt;
+
+  &lt;p&gt;Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
+As we shown in &lt;a href=&quot;/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation&quot;&gt;Part I&lt;/a&gt;, the FIM is ill-defined due to this eqaulity constraint.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example: Von Mises–Fisher family:&lt;/p&gt;
+
+  &lt;p&gt;Consider $2$-dimensional Von Mises–Fisher  family  $ \{  C(\kappa) \exp(\kappa (w_1\mu_1+w_2\mu_2) ) \Big| \kappa&amp;gt;0, \mu_1^2+\mu_2^2 =1  \}$ with parameter $\tau = (\kappa,\mu_1,\mu_2)$, where $ C(\kappa)$ is the normalization constant, $\mathbf{w}=(w_1,w_2)$ is a random unit vector defined in a circle,
+$\kappa$ is a positive scalar, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\mu}=(\mu_1,\mu_2)$&lt;/code&gt; is also a unit vector.
+We can show that the FIM is ill-defined under this parametrization due to this eqaulity constraint.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The second issue is that we have to deal with a singular FIM. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and the singular FIM often destroy structures in a non-singular FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example. Moreover, natural-gradient descent in non-intrinsic parameter spaces could easily violate parameter constraints.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example:  (parameter constraint violation)&lt;/p&gt;
+
+  &lt;p&gt;Consider a univarate  Gaussian family with zero mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |0,  \sigma_1 \sigma_2) \Big|  \sigma_1&amp;gt;0, \sigma_2 &amp;gt; 0  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\sigma_1,\sigma_2) $&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \sigma_1 \sigma_2$&lt;/code&gt; is the varaince of this Gaussian family.&lt;/p&gt;
+
+  &lt;p&gt;Natural-gradient descent in this parameter space $\Omega_\tau$ could easily violate the parameter constraints when $\sigma_1$ is very closed to $0$ even when the variance $\sigma_1 \sigma_2 $ is big enough.&lt;/p&gt;
+
+  &lt;p&gt;Let’s consider an intrinsic parameterization of this family as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |0,  \sigma) \Big|  \sigma &amp;gt; 0  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda = \sigma $&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \sigma$&lt;/code&gt; is the varaince of this Gaussian family.
+Natural-gradient descent in this parameter space $\Omega_\lambda$ less likely violate the parameter constraints when the variance $\sigma_1 \sigma_2 $ is big enough.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example:  (high iteation cost)&lt;/p&gt;
+
+  &lt;p&gt;Consider a $d$-dimensional Gaussian mixture family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $&lt;/code&gt;.
+If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.&lt;/p&gt;
+
+  &lt;p&gt;The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.&lt;/p&gt;
+
+  &lt;p&gt;Now, consider the equivalent Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda =( \mu_0,\Sigma_0 ) $&lt;/code&gt;, where $\lambda$ is an intrinsic parameterization of the Gaussian family.&lt;/p&gt;
+
+  &lt;p&gt;As we will shown in Part V, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;To reduce the iteration cost of computing natural-gradients, it is tempting to use an emprical FIM with a scalar damping term to handle the singularity of the FIM. However, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.&lt;/p&gt;
+
+&lt;h1 id=&quot;natural-gradient-descent-as-an-proximal-gradient-method&quot;&gt;Natural-gradient Descent as an Proximal Gradient Method&lt;/h1&gt;
+&lt;p&gt;As we mentioned before, the &lt;strong&gt;distances&lt;/strong&gt; in  the gradient space and the parameter space are defined differently. 
+In the &lt;a href=&quot;#riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;previous section&lt;/a&gt;, we use the geodesic to define the distance between two points in a parameter space.&lt;/p&gt;
+
+&lt;p&gt;We could also use other “distances” denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(.,.)$&lt;/code&gt; (e.g., Kullback–Leibler divergence or f-divergence) to define the length between two points in a parameter space.
+Given such of definition of “distance”, we could obtain new gradient-based updates via the proximal gradient framework as shown below.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{k+1} = \arg\min_{y \in  \Omega_\tau  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \mathrm{D}(y,\tau_k) \}
+\end{aligned}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient.&lt;/p&gt;
+
+&lt;p&gt;When $\mathrm{D}(y,\tau_k)$ is a secord-order Taylor approximation of the KL divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{KL} [q(w|\tau_k) || q(w|y)]$&lt;/code&gt; (in general, any f-divergence)  at $\tau_k$,  proximal gradient descent also recovers natural-gradient method when the parameter space $\Omega_\tau=\mathcal{R}^K$ is unconstrainted.&lt;/p&gt;
+
+&lt;p&gt;In Part V, we will show that proximal gradient descent recovers natural-gradient descent for expoential family where $\mathrm{D}(y,\tau_k)$ can also be the exact KL divergence.&lt;/p&gt;
+
+&lt;p&gt;In the expoential family cases, we will show in Part V that natural-gradient method becomes mirror descent under the natural-parameterization $\tau$ as long as the parameter space $\Omega_\tau=\mathcal{R}^K$ is unconstrainted.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part III: Invariance of Natural-Gradients</title><link href="/posts/2021/11/Geomopt03/" rel="alternate" type="text/html" title="Part III: Invariance of Natural-Gradients" /><published>2021-11-02T00:00:00-07:00</published><updated>2021-11-02T00:00:00-07:00</updated><id>/posts/2021/11/Geomopt03</id><content type="html" xml:base="/posts/2021/11/Geomopt03/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+&lt;p&gt;This blog post should help readers to understand the invariance of natural-gradients.
+We will also discuss why the Euclidean steepest direction is NOT invariant while the gradient direction in Newton’s method is invariant.&lt;/p&gt;
+
+&lt;p&gt;We will give an informal introduction with a focus on high level of ideas.&lt;/p&gt;
+
+&lt;h1 id=&quot;parameter-transformation-and-invariance&quot;&gt;Parameter Transformation and Invariance&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;In &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, we show that a Riemannian gradient is a parametric representation of the tangent direction of a curve in a  manifold.
+Since a curve and its tangent direction are geometric obejects, they should be invariant to the choice of parametrization.
+In other words, geometric properties should be persevered in any valid coordinate system. This is a coordinate-free argument.&lt;/p&gt;
+
+&lt;p&gt;The argument could be abstract for beginners. To be more concrete, we consider the corresponding coordinate-dependent argument: geometric properties should remain unchanged if we perform a (valid) parameter transformation.&lt;/p&gt;
+
+&lt;p&gt;In this blog post, we will show that two key &lt;strong&gt;geometric properties&lt;/strong&gt; remains the same under an &lt;strong&gt;intrinsic&lt;/strong&gt; parameter transformation.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Directional derivative&lt;/li&gt;
+  &lt;li&gt;Length of a Riemannian vector/gradient induced by the Fisher-Rao metric&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Thanks to these properties, we can easily show that the optimal solution of the &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/a&gt; considered in Part II is equivalent  under an intrinsic parameter transformation  since both the length and the directional derivative remain the same.&lt;/p&gt;
+
+&lt;p&gt;In &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, we consider a point $\mathbf{x}_0$ in a manifold $\mathcal{M}$, a (1-dimensional) curve $\gamma(t)$, and a smooth scalar function $h: \mathcal{M} \to \mathcal{R}$.
+Given an intrinsic parametrization $\tau$ containing the point, we consider the following parametric representations.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;geometric object&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;parametric representation&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;curve  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(t) $&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;function  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h(x_0)$&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h_\tau(\tau_0) $&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Intuitively, the following identity should hold for any two (intrinsic) parametrizations $\tau$ and $\lambda$.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+h(\gamma(t)) = h_\tau(\gamma_\tau(t)) = h_\lambda(\gamma_\lambda(t))
+\end{aligned}
+$$&lt;/code&gt; where we consider $t$ is fixed.&lt;/p&gt;
+
+&lt;p&gt;Technically speaking,  domain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau$&lt;/code&gt; of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(t)$&lt;/code&gt; and  domain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\lambda$&lt;/code&gt; of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\lambda(t)$&lt;/code&gt; may be different. However, both domains are open intervals containing 0 since both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(0)=\tau_0$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\lambda(0)=\lambda_0$&lt;/code&gt;  are parametric representations of the same point $\mathbf{x}_0$.&lt;/p&gt;
+
+&lt;p&gt;From the above expression, we can see that directional derivatives should be the same at $t=0$
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ \frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0} = \frac{d h_\lambda({\gamma}_\lambda(t)) }{d t} \Big|_{t=0} 
+\end{aligned}\tag{1}\label{1}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, we have shown that 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ \frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0} &amp;amp;=  [\nabla h_\tau(\mathbf{\tau}_0)  ]^T  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}   \\ 
+ \frac{d h_\lambda({\gamma}_\lambda(t)) }{d t} \Big|_{t=0} &amp;amp; = [\nabla h_\lambda(\mathbf{\lambda}_0) ]^T  \frac{d {\gamma}_\lambda(t) }{d t} \Big|_{t=0}  
+\end{aligned}
+$$&lt;/code&gt; where $\nabla$ is the standard (coordinate) derivative.&lt;/p&gt;
+
+&lt;p&gt;Recall that in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;,  we have shown that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt; is a  parametric representation of a Riemannian vector, which is a Riemannian gradient.
+Notice that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla h_\lambda(\mathbf{\lambda}_0)$&lt;/code&gt; is a Euclidean gradient.&lt;/p&gt;
+
+&lt;p&gt;We will use the following the notations to simplify expressions.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Notation&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Meanings&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Euclidean gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(g_\tau)_i$&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;$i$-th entry  under parametrization $\tau$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Riemannian gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(\hat{g}_\tau)^j$&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;$j$-th entry under parametrization $\tau$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau^j$&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;$j$-th parameter under parametrization   $\tau$&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Using these notations, the derivational derivatives then can be re-expressed as&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ \frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0} &amp;amp;= \sum_{i}  (g_\tau)_i  (\hat{g}_\tau)^i  = {\mathbf{g}_\tau} \hat{\mathbf{g}}_\tau \\ 
+ \frac{d h_\lambda({\gamma}_\lambda(t)) }{d t} \Big|_{t=0} &amp;amp; =\sum_{i}  (g_\lambda)_i (\hat{g}_\lambda)^i =  {\mathbf{g}}_\lambda \hat{\mathbf{g}}_\lambda
+\end{aligned}\tag{2}\label{2}
+$$&lt;/code&gt;
+where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\lambda$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau$&lt;/code&gt; (e.g.,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau=(\nabla h_\tau(\tau_0) )^T$&lt;/code&gt;) are &lt;strong&gt;row&lt;/strong&gt; vectors while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\lambda$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\tau$&lt;/code&gt; (e.g., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\tau=\mathbf{v}_\tau(\tau_0) =\frac{d \gamma_\tau(0) }{d t}$&lt;/code&gt;) are &lt;strong&gt;column&lt;/strong&gt; vectors. Moreover, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\lambda$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau$&lt;/code&gt; are Euclidean gradients while  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\lambda$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\tau$&lt;/code&gt;  are  Riemannian gradients.&lt;/p&gt;
+
+&lt;p&gt;By &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt;, we have the following identity obtained from the &lt;strong&gt;geometric property&lt;/strong&gt; of directional derivatives.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ \mathbf{g}_\tau \hat{\mathbf{g}}_\tau  =  \mathbf{g}_\lambda \hat{\mathbf{g}}_\lambda 
+\end{aligned}\tag{3}\label{3}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, we discuss the parameter transform between $\tau$ and $\lambda$, where we can express $\lambda$ in terms of $\tau$ denoted by $\lambda(\tau)$.&lt;/p&gt;
+
+&lt;p&gt;By the (standard) chain rule for a Euclidean gradient, we has
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+(g_\tau)_i = \sum_{k}  \color{red}{ (g_\lambda)_k} \frac{\color{red}{ \partial \lambda^k(\tau) }}{ \partial \tau^i } 
+\end{aligned}
+\tag{4}\label{4}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Let $J_{ki}:=\frac{\partial \lambda^k(\tau) }{ \partial \tau^i }$ denotes the $(k,i)$ entry of the Jacobian matrix. We can express the Jacobian matrix as below.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\begin{matrix}
+&amp;amp; \\
+\mathbf{J} = 
+    \left ( \vphantom{ \begin{matrix} 12 \\ 12  \end{matrix} } \right .
+\end{matrix}
+\hspace{-1.2em}
+\begin{matrix}
+    i=1 &amp;amp; i=2 \\ \hline
+    J_{11} &amp;amp; J_{12}  \\
+   J_{21} &amp;amp; J_{22} \\
+\end{matrix}
+\hspace{-0.2em}
+\begin{matrix}
+&amp;amp; \\
+\left . \vphantom{ \begin{matrix} 12 \\ 12  \end{matrix} } \right )
+    \begin{matrix}
+    k=1 \\ k=2 
+    \end{matrix}
+\end{matrix}
+\end{aligned}\tag{5}\label{5}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; gives us the transformation rule for Eulcidean gradients (denoted by a row vector)  as below in a vector form.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{g}_\tau =  \mathbf{g}_\lambda \mathbf{J}
+\end{aligned},
+$$&lt;/code&gt;
+where row vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_\tau$&lt;/code&gt; can be computed via a vector-Jacobian product in any standard Auto-Diff toolbox given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_\lambda$&lt;/code&gt; is pre-computed.&lt;/p&gt;
+
+&lt;p&gt;By Eq &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt;, we obtain the transformation rule for Riemannian gradients as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ \hat{\mathbf{g}}_\tau= \mathbf{J}^{-1}  \hat{\mathbf{g}}_\lambda 
+\end{aligned}
+$$&lt;/code&gt; where $\mathbf{Q}:=\mathbf{J}^{-1}$ is also a Jacobian matrix and $Q_{ki}=\frac{\partial \tau^k(\lambda)}{\partial \lambda^i}$ is the $(k,i)$ entry of matrix $\mathbf{Q}$.&lt;/p&gt;
+
+&lt;p&gt;The elementwise expression of the transformation rule for Riemannian gradients (denoted by a column vector) is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+(g_\tau)^k
+ = \sum_{i}  \frac{ \partial \tau^k(\lambda)  }{\color{red} {\partial  \lambda^i} }  \color{red} {(g_\lambda)^i}
+\end{aligned},
+$$&lt;/code&gt; 
+where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\tau$&lt;/code&gt; can be computed via a Jacobian-vector product used in forward-mode differentiation given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\lambda$&lt;/code&gt; is pre-computed.&lt;/p&gt;
+
+&lt;p&gt;Note that these transformation rules are valid  when the Jacobian matrix is square and non-singular.
+As we discussed in Part I about &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;intrinsic parameterizations&lt;/a&gt;, the transformation map between $\tau$ and $\lambda$ must be bi-jective, which implies the Jacoabian matrix is square. 
+Moreover, the map and its inverse map should be smooth, which implies that Jacobian matrix is well-defined and non-singular.&lt;/p&gt;
+
+&lt;p&gt;Finally, we give a transformation rule for the Fisher information matrix as defined at &lt;a href=&quot;/posts/2021/09/Geomopt01/#fisher-rao-metric&quot;&gt;Part I&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ]
+\end{aligned}
+$$&lt;/code&gt;
+Since $ \log p(w|\tau )$ can be considered as a scalar function $h$ defined on the manifold for any valid $w$, we have 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ \log p(w|\tau_0  ) = h_\tau(\tau_0) = h_\lambda(\lambda_0) =  \log p(w|\lambda_0  )
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Thus, the Fisher metric can be computed as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ F_{ij}(\tau_0) &amp;amp;= E_{p(w|\tau_0) }  [ \Big( \partial_{\tau_i} \log p(w|\tau_0 ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau_0) \Big) ] \\
+&amp;amp;=  E_{p(w|\lambda_0) }  [ \Big( \partial_{\tau_i} \log p(w|\tau_0 ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau_0) \Big) ]\\
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Recall that by the standard chain rule, we have 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\partial_{\tau_i} \log p(w|\tau_0 ) = \sum_k \frac{ \partial \lambda^k(\tau_0) }{ \partial \tau^i } \partial_{\lambda_k} \log p(w|\lambda_0 )
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Moreover, the Jacobian matrix does not depent on $w$. Therefore, we have
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ F_{ij}(\tau_0) 
+&amp;amp;=  E_{p(w|\lambda_0) }  [ \Big( \partial_{\tau_i} \log p(w|\tau_0 ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau_0) \Big) ]\\
+&amp;amp;=  E_{p(w|\lambda_0) }  [ \Big( \sum_k \frac{ \partial \lambda^k(\tau_0) }{ \partial \tau^i } \partial_{\lambda_k} \log p(w|\lambda_0 ) \Big)  \Big(  \sum_l \frac{ \partial \lambda^l(\tau_0) }{ \partial \tau^j } \partial_{\lambda_l} \log p(w|\lambda_0 ) \Big) ] \\
+&amp;amp;= \sum_k \sum_l  \frac{ \partial \lambda^k(\tau_0) }{ \partial \tau^i }  \frac{ \partial \lambda^l(\tau_0) }{ \partial \tau^j }  E_{p(w|\lambda_0) }  [ \Big(  \partial_{\lambda_k} \log p(w|\lambda_0 ) \Big)  \Big(  \partial_{\lambda_l} \log p(w|\lambda_0 ) \Big) ] \\
+&amp;amp;= \sum_k \sum_l  \frac{ \partial \lambda^k(\tau_0) }{ \partial \tau^i }  \frac{ \partial \lambda^l(\tau_0) }{ \partial \tau^j } F_{kl}(\lambda_0)
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We can re-express the above expression in a matrix form as below. This is the transformation rule for the Fisher information matrix.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{F}_{\tau} (\tau_0) = \underbrace{\mathbf{J}^T}_{  \frac{ \partial \lambda^i(\tau_0) }{ \partial \tau^k }  } \mathbf{F}_{\lambda} (\lambda_0) \underbrace{\mathbf{J}}_{  \frac{ \partial \lambda^l(\tau_0) }{ \partial \tau^j }  } 
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;By using this transformation rule, we can show that another &lt;strong&gt;geometric property&lt;/strong&gt;: the length of a Riemannian vector is preserved.&lt;/p&gt;
+
+&lt;p&gt;We can see that the length of a Riemannian vector is also invariant.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\| \hat{\mathbf{g}}_\tau \|^2_{F_\tau} &amp;amp;= [\hat{\mathbf{g}}_\tau]^T \mathbf{F}_{\tau} (\tau_0) \hat{\mathbf{g}}_\tau \\
+&amp;amp;= [\mathbf{J}^{-1} \hat{\mathbf{g}}_\lambda]^T \mathbf{F}_{\tau} (\tau_0) \mathbf{J}^{-1} \hat{\mathbf{g}}_\lambda \\
+&amp;amp;= [\hat{\mathbf{g}}_\lambda]^T [ \mathbf{J}^{-T}  \mathbf{F}_{\tau} (\tau_0) \mathbf{J}^{-1} ] \hat{\mathbf{g}}_\lambda \\
+&amp;amp;= [\hat{\mathbf{g}}_\lambda]^T  \mathbf{F}_{\lambda} (\lambda_0)  \hat{\mathbf{g}}_\lambda = \| \hat{\mathbf{g}}_\lambda \|^2_{F_\lambda}
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;riemannian-steepest-direction-is-invariant&quot;&gt;Riemannian Steepest Direction is Invariant&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;Now, we can show that the optimal solution of &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/a&gt; considered in Part II  under parametrization $\tau$ and $\lambda$ are equivalent since both the length and the directional derivative remain the same.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+(\nabla  f_\tau(\mathbf{\tau}_0)  )^T   \mathbf{v}^{(opt)}_{\tau}  &amp;amp;=   (\nabla  f_\lambda(\mathbf{\lambda}_0) )^T \mathbf{v}^{(opt)}_{\lambda} &amp;amp; \,\,\, \text{(invariance of directional derivative)}  \\
+[\nabla  f_\tau(\mathbf{\tau}_0)]^T &amp;amp; =  [\nabla  f_\lambda(\mathbf{\lambda}_0)]^T \mathbf{J} &amp;amp; \,\,\, \text{(parameter transformation for a Euclidean gradient)} \\
+\|  \mathbf{v}^{(opt)}_{\tau} \|^2_{\color{red}{F_{\tau_0}}} &amp;amp; = \|  \mathbf{v}^{(opt)}_{\lambda} \|^2_{\color{red}{F_{\lambda_0}} } &amp;amp; \,\,\, \text{(invariance of the length of the Riemannian steepest direction)}  \\
+\mathbf{v}^{(opt)}_{\tau} &amp;amp; = \mathbf{J}^{-1}  \mathbf{v}^{(opt)}_{\lambda} &amp;amp; \,\,\, \text{(parameter transformation for the Riemannian steepest direction)}  
+\end{aligned}.
+$$&lt;/code&gt; 
+In other words, the Riemannian steepest direction (which is indeed  a normalized Riemannian gradient) is transformed according to the transformation rule for a Riemannian gradient.&lt;/p&gt;
+
+&lt;p&gt;As we will discuss in &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-is-linearly-invariant&quot;&gt;Part IV&lt;/a&gt;, this invariance property implies that natural-gradient descent is linearly invariant.&lt;/p&gt;
+
+&lt;h1 id=&quot;euclidean-steepest-direction-is-not-invariant&quot;&gt;Euclidean Steepest Direction is NOT Invariant&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;Recall that we have shown that a Euclidean gradient is the optimal solution of  &lt;a href=&quot;/posts/2021/10/Geomopt02/#euclidean-steepest-direction-and directional-derivative&quot;&gt;Euclidean steepest direction&lt;/a&gt; in Part II.&lt;/p&gt;
+
+&lt;p&gt;By the standard chain rule, we have the parameter transformation rule of a Euclidean gradient as&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{g}_\tau =  \mathbf{g}_\lambda \mathbf{J}
+\end{aligned},
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\lambda$&lt;/code&gt; are the same Euclidean gradient under parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt;, respectively,  and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}$&lt;/code&gt; is the Jacobian matrix defined at Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;We can show that the (standard) length of a Euclidean gradient is not invariant under a parameter transformation due to the Jacobian matrix (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\| \mathbf{g}_\tau \| \neq \| \mathbf{g}_\lambda \|$&lt;/code&gt;). This is a reason why we use the &lt;a href=&quot;/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; to define the length of a gradient vector.&lt;/p&gt;
+
+&lt;p&gt;Let &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\lambda:= (\nabla  f_\lambda(\mathbf{\lambda}_0) )^T$&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau:= (\nabla  f_\tau(\mathbf{\tau}_0) )^T = (\nabla  f_\lambda(\mathbf{\lambda}(\tau_0)) )^T$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Recall that the optimal solution of the &lt;a href=&quot;/posts/2021/10/Geomopt02/#euclidean-steepest-direction-and-directional-derivative&quot;&gt;Euclidean steepest direction&lt;/a&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{v}_{\lambda}^{(opt)}= -\frac{\nabla_\lambda f_\lambda(\mathbf{\lambda}_0) }{\|\nabla_\lambda f_\lambda(\mathbf{\lambda}_0)  \|} = -\frac{\mathbf{g}_\lambda^T}{\|\mathbf{g}_\lambda\|} \\
+\mathbf{v}_{\tau}^{(opt)}= -\frac{\nabla_\tau f_\tau(\mathbf{\tau}_0) }{\|\nabla_\tau f_{\tau}(\mathbf{\tau}_0) \|} = -\frac{\mathbf{g}_\tau^T}{\|\mathbf{g}_\tau\|} 
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The optimal solution does not obey the parameter transformation rule for Euclidean gradients.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+(\mathbf{v}_{\tau}^{(opt)})^T \neq (\mathbf{v}_{\lambda}^{(opt)})^T \mathbf{J} 
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Moreover, the optimal value of the Euclidean steepest direction is not invariant under a parameter transformation as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+(\nabla  f_\lambda(\mathbf{\lambda}_0) )^T \mathbf{v}^{(opt)}_{\lambda}  = - \|\mathbf{g}_\lambda\| \neq - \|\mathbf{g}_\tau\| =(\nabla  f_\tau(\mathbf{\tau}_0) )^T \mathbf{v}^{(opt)}_{\tau} 
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In summary, the Euclidean steepest direction (which is a normalized Euclidean gradient) is NOT transformed according to the transformation rule for a Euclidean gradient.
+This also implies that Euclidean gradient descent is not invariant under a parameter transformation. We will cover more about this in Part IV.&lt;/p&gt;
+
+&lt;h1 id=&quot;gradient-direction-in-newtons-method-is-invariant&quot;&gt;Gradient Direction in Newton’s Method is Invariant&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;Let’s consider the following optimization problem  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\min_{\tau \in \Omega_\tau } f_\tau(\mathbf{\tau})$&lt;/code&gt; under an intrinsic parameterization $\mathbf{\tau}$.&lt;/p&gt;
+
+&lt;p&gt;For Newton’s method, we have to assume the loss function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau})$&lt;/code&gt; to be stronly convex so that the Hessian &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau^2 f_\tau(\mathbf{\tau})$&lt;/code&gt; is positive-definite everywhere in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The key observation is that we can use the Hessian to define a new Riemannian metric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{F}}_\tau:=\nabla_\tau^2 f_\tau(\mathbf{\tau})$&lt;/code&gt; under parametrization $\tau$. Note that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{F}}_\tau$&lt;/code&gt; in general is not the same as the Fisher-Rao metric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{F}}_\tau$&lt;/code&gt; .&lt;/p&gt;
+
+&lt;p&gt;We can show that the new metric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{F}}_\tau$&lt;/code&gt; follows the same parameter transformation rule as the Fisher-Rao metric as shown below.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\hat{\mathbf{F}}_{\tau} (\tau_0) = \underbrace{\mathbf{J}^T}_{  \frac{ \partial \lambda^i(\tau_0) }{ \partial \tau^k }  } \hat{\mathbf{F}}_{\lambda} (\lambda_0) \underbrace{\mathbf{J}}_{  \frac{ \partial \lambda^l(\tau_0) }{ \partial \tau^j }  } 
+\end{aligned}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{F}}_\tau(\tau_0) :=\nabla_\tau^2 f_\tau(\mathbf{\tau_0}) =\nabla_\tau^2 [ f_\lambda({\lambda}(\tau_0)) ]$&lt;/code&gt; and $f_\tau(\mathbf{\tau}) =  f_\lambda({\lambda}(\tau))$.&lt;/p&gt;
+
+&lt;p&gt;In this case, using the result of the &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/a&gt;, it is easy to show that
+the Riemannian steepest direction with this metric is&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{v}_{\text{opt}}= -\frac{ \hat{\mathbf{F}}_\tau^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \hat{\mathbf{F}}_\tau^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_\hat{F}}
+=  -\frac{  [\nabla_\tau^2 f_\tau(\tau_0)]^{-1} \nabla_\tau f({\tau}_0) }{\| [\nabla_\tau^2 f_\tau(\tau_0)]^{-1} \nabla_\tau f(\mathbf{\tau}_0) \|_\hat{F}} 
+\end{aligned}
+$$&lt;/code&gt; This Riemannian steepest direction is exactly the normalized gradient direction in Newton’s method, where we use the weighted inner product to define the norm.&lt;/p&gt;
+
+&lt;p&gt;It is obvious that the gradient direction in Newton’s method is invariant since it is a speical case of the Riemannian steepest direction.
+This invariance property also implies that Newton’s method is linearly invariant.&lt;/p&gt;
+
+&lt;p&gt;Readers may wonder why not use the Newton metric instead of the Fisher-Rao metric.  Key reasons are the Fisher-Rao metric is defined via the manifold while this Newton metric is defined via the loss function.
+As we will discuss more in Part V, computing Riemannians gradient with this Newton  metric are often more computaitonally intensive compared to the Fisher-Rao metric. Moreover, Riemannian gradients with this Newton  metric are dependent on the convexity of the loss function (see more about this in Part V).&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post should help readers to understand the invariance of natural-gradients. We will also discuss why the Euclidean steepest direction is NOT invariant while the gradient direction in Newton’s method is invariant.</summary></entry><entry><title type="html">Part II: Natural-Gradients Evaluted at one Point</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Natural-Gradients Evaluted at one Point" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+&lt;p&gt;This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.
+The main propose of this post is to show how to compute/define a natural-gradient.
+The space of natural-gradients evaluated at the same point is called a tangent space at that point.&lt;/p&gt;
+
+&lt;p&gt;We will give an informal introduction with a focus on high level of ideas.&lt;/p&gt;
+
+&lt;h1 id=&quot;euclidean-steepest-direction-and-directional-derivative&quot;&gt;Euclidean steepest direction and directional derivative&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;Before we discuss natural-gradients, we first revisit Euclidean gradients.
+We will show a Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we extend the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a natural-gradient.&lt;/p&gt;
+
+&lt;p&gt;Given a smooth scalar function $\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$ in a &lt;strong&gt;vector space&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, we can define the (Euclidean) steepest direction at current &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; as the optimal solution to the following optimization problem. We can express the optimization problem in terms of a &lt;strong&gt;directional derivative&lt;/strong&gt; along vector $\mathbf{v}$. We assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$&lt;/code&gt;.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\|v\|^2=1} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0) )^T \mathbf{v} 
+\end{aligned}\tag{1}\label{1}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;It is easy to see that the optimal solution of Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$&lt;/code&gt;, which is the (Euclidean) steepest direction at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;distance-induced-by-the-fisher-rao-metric&quot;&gt;Distance induced by the Fisher-Rao metric&lt;/h1&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;To generalize  the steepest direction at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; in a Riemannian manifold, we first formulate a similar optimization problem like Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; in the manifold case.
+To do so, we have to define the length of a vector in manifold cases. In &lt;a href=&quot;/posts/2021/11/Geomopt03/#standard-euclidean-gradients-are-not-invariant&quot;&gt;Part III&lt;/a&gt;, we will show that the (standard) length does not perseve under a parameter transform while the length induced by the Fisher-Rao metric does.&lt;/p&gt;
+
+&lt;p&gt;As mentioned at &lt;a href=&quot;/posts/2021/09/Geomopt01/#fisher-rao-metric&quot;&gt;Part I&lt;/a&gt;, the FIM $\mathbf{F}$ should be positive definite. We can use FIM to define the length/norm of a vector (e.g., a Riemannian gradient) $\mathbf{v}$ at a point in a manifold via a weighted inner product.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\|\mathbf{v}\|_F := \sqrt{\mathbf{v}^T \mathbf{F} \mathbf{v}}
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The positive-definiteness of FIM is essential since we do not want a non-zero vector has a zero length.&lt;/p&gt;
+
+&lt;p&gt;The distance (and orthogonality) between two &lt;span style=&quot;color:red&quot;&gt;vectors&lt;/span&gt; at the &lt;span style=&quot;color:red&quot;&gt;same&lt;/span&gt;  point is also induced by FIM since we can define them by the inner product as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+d(\mathbf{v},\mathbf{w}) := \|\mathbf{v}-\mathbf{w}\|_F
+\end{aligned}
+$$&lt;/code&gt;
+where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w}$&lt;/code&gt; are two vectors evaluted at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In manifold cases, we have to distinguish the difference between a point (e.g., parameter array $\tau_0$) and a vector (e.g., Riemannian gradient under a parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;).
+This point is crucial to (natural) gradient-based methods in &lt;a href=&quot;/posts/2021/11/Geomopt04/#two-kinds-of-spaces&quot;&gt;Part IV&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Warning&lt;/strong&gt;&lt;/span&gt;: We do NOT define the distance between two points in the manifold, which will be discussed &lt;a href=&quot;#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;here&lt;/a&gt;.
+We also do NOT define the distance between a vector at one point and another vector at a distinct point.&lt;/p&gt;
+
+&lt;h1 id=&quot;directional-derivatives-in-a-manifold&quot;&gt;Directional derivatives in a manifold&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;As we shown before, the objective function in Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is a directional derivative in Euclidean cases.
+The next step is to generalize the concept of directional derivatives in a manifold.&lt;/p&gt;
+
+&lt;p&gt;Recall that a manifold should be locally like a vector space under &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;&lt;strong&gt;intrinsic&lt;/strong&gt; parameterization&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}$&lt;/code&gt;.
+Using this parameterization, consider an optimization problem $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$, where the parameter space $\Omega_\tau$ is determined by the parameterization and the manifold. Recall that we have a local vector space structure denoted by $E$ if we parametrize the manifold with an intrinsic parameterization.&lt;/p&gt;
+
+&lt;p&gt;Therefore, we can similarly define a directional derivative at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; along Riemannian vector $\mathbf{v}$ as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t}$&lt;/code&gt;, where $t$ is a scalar real number. The main point is that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v}$&lt;/code&gt; stays in the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; thanks to the &lt;strong&gt;local vector space&lt;/strong&gt; structure.&lt;/p&gt;
+
+&lt;p&gt;Recall that we allow a &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;small perturbation&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$E$&lt;/code&gt; contained in  parameter space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$E \subset \Omega_\tau$&lt;/code&gt;) since  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}$&lt;/code&gt; is an intrinsic parameterization.
+Therefore, when $|t|$ is small enough, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} $&lt;/code&gt; stays in the parameter space and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau}_0+t\mathbf{v})$&lt;/code&gt; is well-defined.
+Note that we only require &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$&lt;/code&gt; when $|t|$ is small enough. When $|t|$ is small enough, this is possible since a line segment &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{\tau}_0+t\mathbf{v} \in E$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$E \subset \Omega_\tau$&lt;/code&gt;.
+ Technically, this is because  $\Omega_\tau$ is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Under &lt;strong&gt;intrinsic&lt;/strong&gt; parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the &lt;strong&gt;local vector space&lt;/strong&gt; structure.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v} \end{aligned}$$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The following example illustrates directional derivatives in manifold cases.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 1 (Valid directional derivative):&lt;/p&gt;
+
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a &lt;strong&gt;local intrinsic&lt;/strong&gt; parameterization for the unit sphere.&lt;/p&gt;
+
+  &lt;p&gt;The line segment from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} $&lt;/code&gt;  is shown in blue, which is the parameter representation of the yellow curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; in the manifold.
+We will show later that Riemannian gradient vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; under this parametrization at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; is the &lt;strong&gt;parameter representation&lt;/strong&gt; of the tangent vector of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/img/sphere_simple.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: Curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; is NOT the shortest curve in the manifold between &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_1$&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 2 (Invalid directional derivative):&lt;/p&gt;
+
+  &lt;p&gt;A directional derivative can be ill-defined under a &lt;strong&gt;non-intrinsic&lt;/strong&gt; parameterization.&lt;/p&gt;
+
+  &lt;p&gt;We use &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;parameterization 3&lt;/a&gt; for unit circle &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{S}^1$&lt;/code&gt;, where the red line segment passes through &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0=(0,1) \in \mathcal{S}^1 $&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/img/tangent_non.png&quot; alt=&quot;Figure 1&quot; /&gt;&lt;/p&gt;
+
+  &lt;p&gt;Any other point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0 + t\mathbf{v}$&lt;/code&gt; in the line segment leaves the manifold for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$t\neq 0$&lt;/code&gt; and thus, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau}_0+t\mathbf{v})$&lt;/code&gt; is not well-defined.
+The main reason is that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is not an intrinsic parameterization.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
+Now, we can introduce the Riemannian steepest direction.&lt;/p&gt;
+
+&lt;p&gt;Given  a smooth scalar funcion defined in a manifold $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$ under an intrinsic parameterization $\mathbf{\tau}$. We can define the Riemannian steepest direction as the optimal solution to the following optimization problem.  The optimization problem is expressed in terms of a directional derivative along Riemannian vector $\mathbf{v}$, where we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$&lt;/code&gt;.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{ \color{red} {\|v\|_{F}^2=1} } ( \nabla_\tau f(\mathbf{\tau}_0) )^T  \mathbf{v} 
+\end{aligned} \tag{2}\label{2}
+$$&lt;/code&gt; 
+where $\mathbf{v}$ can be any (Riemannian) vector at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; satisfied the norm constraint.&lt;/p&gt;
+
+&lt;p&gt;The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+L(\mathbf{v},\lambda) =  ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v} + \lambda (\|v\|_{F}^2 - 1) = \mathbf{v}^T \nabla_\tau f(\mathbf{\tau}_0) + \lambda (\mathbf{v}^T \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}  - 1) 
+\end{aligned}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\mathbf{\tau}_0)$&lt;/code&gt; is FIM evaluated at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;One of the KKT necessary conditions implies that
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{0} = \nabla_{v} L(\mathbf{v}_{\text{opt}},\lambda) = \nabla_\tau f(\mathbf{\tau}_0) + 2 \lambda \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}_{\text{opt}}
+\end{aligned}
+$$&lt;/code&gt;
+When $\lambda \neq 0$, vector 	&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}$&lt;/code&gt; should be proportional to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0)$&lt;/code&gt;, where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}^{-1}(\mathbf{\tau}_0)$&lt;/code&gt; is well-defined since FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\mathbf{\tau}_0)$&lt;/code&gt; is positive definite.&lt;/p&gt;
+
+&lt;p&gt;We can show that the optimal solution of Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$&lt;/code&gt;, which gives us the Riemannian steepest direction at current &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;Euclidean&lt;/strong&gt; steepest direction &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{euclid}}= -\frac{ \nabla_\tau f(\mathbf{\tau}_0) }{\| \nabla_\tau f(\mathbf{\tau}_0) \|_F}$&lt;/code&gt; is &lt;strong&gt;not&lt;/strong&gt; the optimal solution of  Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\tau_0) \neq \mathbf{I}$&lt;/code&gt;.
+We will illustrate this by using an example.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Euclidean steepest direction is not the optimal solution of  Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt;&lt;/p&gt;
+
+  &lt;p&gt;Consider &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\tau_0)=\begin{bmatrix} 1 &amp;amp; 0 \\ 0 &amp;amp; \frac{1}{2} \end{bmatrix}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)=\begin{bmatrix} 1\\1 \end{bmatrix}$&lt;/code&gt;.
+We have the following results
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\| F^{-1} \nabla_\tau f(\mathbf{\tau}_0) \|_F^2  =  \nabla_\tau^T f(\mathbf{\tau}_0) \mathbf{F}^{-1}(\tau_0) \nabla_\tau f(\mathbf{\tau}_0) = 3; \,\,\,
+\| \nabla_\tau f(\mathbf{\tau}_0) \|_F^2  =  \nabla_\tau^T f(\mathbf{\tau}_0) \mathbf{F}(\tau_0) \nabla_\tau f(\mathbf{\tau}_0) = \frac{3}{2}
+\end{aligned}
+$$&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{v}_{\text{opt}} = -\begin{bmatrix} \frac{1}{\sqrt{3}} \\ \frac{2}{\sqrt{3}} \end{bmatrix}; \,\,\,
+\mathbf{v}_{\text{euclid}}=
+-\begin{bmatrix} \sqrt{\frac{2}{3}} \\ \sqrt{\frac{2}{3}} \end{bmatrix}\end{aligned}
+$$&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ \mathbf{v}_{\text{opt}}^T \nabla_\tau f(\mathbf{\tau}_0)= -\sqrt{3}  &amp;lt;  -\frac{2\sqrt{2}}{\sqrt{3}} = \mathbf{v}_{\text{euclid}}^T \nabla_\tau f(\mathbf{\tau}_0) 
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+  &lt;p&gt;Therefore, the Euclidean steepest direction &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{euclid}}$&lt;/code&gt; is not the optimal solution of  Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Given a scalar function $f(\mathbf{\tau})$, if its &lt;strong&gt;Euclidean&lt;/strong&gt; (steepest) gradient is $\nabla_\tau f(\mathbf{\tau})$, its &lt;strong&gt;Riemannian&lt;/strong&gt; (steepest) gradient is defined as $ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$ in literature.
+We use a learning-rate to control the length of a gradient instead of normalizing its length. 
+Since we use the Fisher-Rao metric, the Riemannian gradient is also known as the &lt;strong&gt;natural&lt;/strong&gt; gradient.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Intrinsic parametrization and natural-gradients for multivate Gaussian&lt;/p&gt;
+
+  &lt;p&gt;Consider a $d$-dimensional Gaussian family with zero mean discussed in &lt;a href=&quot;/posts/2021/09/Geomopt01/#manifold-dimension&quot;&gt;Part I&lt;/a&gt;. &lt;br /&gt;
+We specify an intrinsic parameterization $\mathbf{\tau}$ of the  family as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \mathrm{vech}(\mathbf{\Sigma})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of the the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization function&lt;/a&gt; $\mathrm{vech}()$.&lt;/p&gt;
+
+  &lt;p&gt;Technically speaking, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt; is NOT an intrinsic parameter due to the symmetry constraint. In other words, FIM w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt; will be singular if  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt; is considered as a matrix parameter with $d^2$ degrees of freedom.&lt;/p&gt;
+
+  &lt;p&gt;In literature, a natural gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt; is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}(\mathbf{v})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is a natural-gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{\Sigma})$&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Riemannian gradients as tangent vectors (optional)&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
+Now, we will disucss a more abstract concept of Riemannian vectors without a parametrization. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transform-and-invariance&quot;&gt;Part III&lt;/a&gt;.  In physics, this invariance means that a law of physics should be independent of the choice of (reference) coordinate systems.&lt;/p&gt;
+
+&lt;p&gt;A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$  in the manifold under the parametrization $\tau$. 
+The set of tangent vectors evaluated at $\mathbf{\tau}_0$ is called the tangent space at the corresponding point. 
+We will illustrate this by an example.&lt;/p&gt;
+
+&lt;p&gt;Let’s denote the unit sphere by $\mathcal{M}$, where we set the origin to be the center of the sphere. Point $\mathbf{x_0}=(0,0,1)$ is the north pole.
+We use the following parameterization, where the top half of the sphere can be locally expressed as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{(\tau_x,\tau_y,\sqrt{1-\tau_x^2-\tau_y^2})|  \tau_x^2 + \tau_y^2 &amp;lt;1 \}$&lt;/code&gt; with parameter $\mathbf{\tau}=(\tau_x,\tau_y)$. 
+Under parametrization $\mathbf{\tau}$, we have the following parametric representations.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;     &lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Parametric representation&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;North pole  $\mathbf{x_0}$&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;$\mathbf{\tau}_0=(0,0)$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Intrinsic parameter space&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;red space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau:=\{ (\tau_x,\tau_y)| \tau_x^2 + \tau_y^2 &amp;lt;1 \}$&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Tangent space at $\mathbf{x_0}$&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;green space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^2$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Yellow curve from $\mathbf{x_0}$ to $\mathbf{x_1}$&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;blue line segment from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v}(\tau_0)$&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Note that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; is considered a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is considered a Riemannian gradient, which is a representation of the tangent vector of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma$&lt;/code&gt; at point $\mathbf{x}_0$.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: Be aware of the differences shown in the table.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;     &lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;parametric representation of&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;supported operations&lt;/th&gt;
+      &lt;th&gt;distance  discussed in this post&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^2$&lt;/code&gt; (vector/natural-gradient) space&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;tangent vector space at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;real scalar product, vector addition&lt;/td&gt;
+      &lt;td&gt;defined&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; (point/parameter) space&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;top half of the manifold&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;local&lt;/strong&gt; &lt;/span&gt; scalar product, &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;local&lt;/strong&gt; &lt;/span&gt; vector addition&lt;/td&gt;
+      &lt;td&gt;undefined&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Under &lt;strong&gt;intrinsic&lt;/strong&gt; parametrization $\tau$, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau \subset \mathcal{R}^2$&lt;/code&gt;. Thus, we can perform this operation in $\Omega_\tau$ space: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0 +t\mathbf{v}(\tau_0) \in \Omega_\tau$&lt;/code&gt; when scalar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$|t|$&lt;/code&gt; is small enough. Note that we only define the &lt;a href=&quot;#distance-induced-by-the-fisher-rao-metric&quot;&gt;distance&lt;/a&gt; between two vectors in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^2$&lt;/code&gt; space. The distance between two points in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; space is undefined in this post.&lt;/p&gt;
+
+&lt;p&gt;(Parameterization-free repesentation of  vector $\mathbf{v}$ ):&lt;/p&gt;
+
+&lt;p&gt;The tangent vector $\mathbf{v}$ at point $\mathbf{x_0}$  can be viewed as the &lt;strong&gt;tangent direction&lt;/strong&gt; of a (1-dimensional) smooth curve $\gamma(t) \in \mathcal{M}$, where $\gamma(0)=\mathbf{x_0}$,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d {\gamma}(t) }{d t} \Big|_{t=0}=\mathbf{v}$&lt;/code&gt; and the support of $\gamma(t)$ denoted by $\mathbf{I}$ is an open interval in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^1$&lt;/code&gt; containing 0. 
+Since a curve $\gamma(t)$ is a geometric object, this is a parameterization-free repesentation of a vector.&lt;/p&gt;
+
+&lt;p&gt;(Parameterization-dependent repesentation of vector $\mathbf{v}$ ):&lt;/p&gt;
+
+&lt;p&gt;Given intrinsic parametrization $\tau$, we can define the parametric representation of the curve denoted by ${\gamma}_\tau(t)$, where the domain is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau \subset \mathcal{R}^1$&lt;/code&gt;.
+The parametric representation of vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_{\tau}(t) }{d t} \Big|_{t=0}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_{\tau}(0)=\tau_0$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example&lt;/p&gt;
+
+  &lt;p&gt;Consider the yellow curve $\gamma(t) = (t v_{x}, t v_{y}, \sqrt{1 - t^2(v_{x}^2 + v_{y}^2) } ) \in \mathcal{M} $ 
+and the blue line segment &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_{\tau}(t)= (t v_{x} , t v_y  ) \in \Omega_\tau $&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$|t|$&lt;/code&gt; must be small enough.&lt;/p&gt;
+
+  &lt;p&gt;The parametric  representation of the vector is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}=(v_x,v_y)$&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A Riemannian gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0)$&lt;/code&gt; can be viewed as a parametric representation of tangent vector  $\mathbf{v}$ as shown below.&lt;/p&gt;
+
+&lt;blockquote&gt;
+
+  &lt;p&gt;Consider a smooth scalar function defined in the manifold $h: \mathcal{M} \to \mathcal{R}$. In the unit sphere case, consider &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h(\mathbf{x})$&lt;/code&gt; subject to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}^T \mathbf{x}=1$&lt;/code&gt;.
+Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h_\tau(\mathbf{\tau}):=h( (\tau_x,\tau_y,\sqrt{1-\tau_x^2-\tau_y^2}) )$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau \in \Omega_\tau$&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;By the definition of a directional derivative, the following identity holds for any smooth scalar function $h$: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$[\nabla h_\tau(\mathbf{\tau}_0)]^T \mathbf{v}(\mathbf{\tau}_0) =\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}$&lt;/code&gt;, where $h_\tau$ is the parametric representation of  $h$ . Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(h_\tau \circ {\gamma}_\tau) (t)$&lt;/code&gt; is a function defined from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau $&lt;/code&gt; to $\mathcal{R}^1$, where domain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau \subset \mathcal{R}^1$&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;The &lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;key&lt;/strong&gt; &lt;/span&gt; observation is that function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(h_\tau \circ {\gamma}_\tau) (t)$&lt;/code&gt; becomes a scalar function defined in $\mathcal{R}^1$ thanks to parametrization $\tau$. Thus, we can use the standard chain rule.&lt;/p&gt;
+
+  &lt;p&gt;By the chain rule, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}=[\nabla h_\tau(\mathbf{\tau}_0)]^T  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_\tau(0)=\tau_0$&lt;/code&gt;. Thus,
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt; since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla h_\tau(\mathbf{\tau}_0)$&lt;/code&gt; can be arbitrary.&lt;/p&gt;
+
+  &lt;p&gt;In summary, a Riemannian gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0)$&lt;/code&gt; can be viewed as a parametric representation of the tangent vector 
+ of curve $\gamma(t)$ at $\mathbf{x}_0$ since  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_\tau(t)$&lt;/code&gt; is the parametric representation of $\gamma(t)$.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Last but not least,
+we can also define vector additions and real scalar products in a tangent vector space  by using tangent directions of curves in the manifold with/without a parameterization.
+In other words, a vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; which is a parametric representation of a set of &lt;strong&gt;points&lt;/strong&gt; in a manifold.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. The main propose of this post is to show how to compute/define a natural-gradient. The space of natural-gradients evaluated at the same point is called a tangent space at that point.</summary></entry><entry><title type="html">Part I: Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+&lt;p&gt;This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The FIM plays an essential role in statistics and machine learning&lt;/li&gt;
+  &lt;li&gt;For a parametric distribution, it induces a &lt;strong&gt;Riemannian&lt;/strong&gt; geometric-structure&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The discussion here is informal and focuses on more on intuitions, rather than rigor.&lt;/p&gt;
+
+&lt;h1 id=&quot;motivation&quot;&gt;Motivation&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;Let’s start with some motivation: why should we care about geometric structures of probability distributions?
+Probability distributions form the backbone of majority of machine-learning approaches, for example, any approach that use probabilistic modeling is built upon such distributions. 
+For all such cases, we can exploit the underlying geometric structure, induced by the Fisher-Rao metric, which is the topic of this blog. 
+Below, we give some common examples from machine learning, where probability  distributions naturally arise.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Least Square (Empirical Risk Minimization):&lt;/p&gt;
+
+  &lt;p&gt;Given N input-output pairs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(x_i,y_i)$&lt;/code&gt;,  the least-square loss can be viewed as expectation under a probability distribution.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\tau} \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2  &amp;amp; = \max_{\tau} \frac{1}{n}  \sum_{i=1}^{n}  \log \mathcal{N}(y_i | x_i^T\tau,1) \\
+&amp;amp; \approx \int [ \log p(x,y | \tau) ]  d p(x,y | \tau)
+\end{aligned} \tag{1}\label{1}
+$$&lt;/code&gt;
+Here &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $&lt;/code&gt; is assumed to be the data-generating distribution, and the least-square loss is the finite-sample approximation of the expectation. The normal distribution is denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{N} (y | x^T\tau,1) $&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ x^T\tau $&lt;/code&gt; and variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ 1 $&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;Algorithms such as  &lt;strong&gt;Fisher scoring&lt;/strong&gt; and &lt;strong&gt;(emprical) natural-gradient descent&lt;/strong&gt; are commonly used methods that exploit the geometric structure of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(x,y | \tau)$&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;!--- \stackrel{\eqref{1}} (Eq. `$\eqref{1}$`) ---&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Variational Inference:&lt;/p&gt;
+
+  &lt;p&gt;Given a prior \(p(z)\) and a likelihood &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(\mathcal{D} | z ) $&lt;/code&gt; over an latent vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$z$&lt;/code&gt; and known data $ \mathcal{D} $, we can approximate the exact posterior &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p( z | \mathcal{D} ) =\frac{p(z,\mathcal{D})}{p(\mathcal{D})} $&lt;/code&gt; by optimizing a variational objective with respect to  an approximated distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ q(z | \tau) $&lt;/code&gt;:
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\tau} \mathrm{KL} [ { q(z | \tau) || p( z | \mathcal{D} ) }   ] = E_{ \color{red}  {q(z | \tau)} } [ \log q(z | \tau) - \log p( z , \mathcal{D} )    ]  + \log p(\mathcal{D} ) 
+\end{aligned} \tag{2}\label{2}
+$$&lt;/code&gt;
+where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathrm{KL} [ q(z) ||  p(z) ] :=  E_{ {q(z)} } [ \log \big(\frac{q(z)}{p(z)}\big) ]$&lt;/code&gt; is the Kullback–Leibler divergence.&lt;/p&gt;
+
+  &lt;p&gt;The &lt;strong&gt;natural-gradient variatioal inference&lt;/strong&gt; is an algorithm that speeds up the inference by exploiting the geometry of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(z|\tau)$&lt;/code&gt; induced by the Fisher-Rao metric.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Evolution Strategies (Gradient-free Search):&lt;/p&gt;
+
+  &lt;p&gt;In gradient-free optimization, we often use a search distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi(a | \tau ) $&lt;/code&gt; to find the optimal solution of an objective funtion &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h(a)$&lt;/code&gt; by solving the following problem:
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\tau}  E_{ \color{red}  {\pi(a | \tau)} } [ h(a)  ]
+\end{aligned} \tag{3}\label{3}
+$$&lt;/code&gt;
+The &lt;strong&gt;natural evolution strategies&lt;/strong&gt; is an algorithm that speeds up the search process by exploiting the geometry of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi(a|\tau)$&lt;/code&gt;.
+In the context of reinforcement learning,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi(a | \tau ) $&lt;/code&gt; is known as the policy distribution to generate actions and the natural evolution strategies is known as the &lt;strong&gt;natural policy gradient&lt;/strong&gt; method.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;In these examples, we can express the objective function in terms of an expectation under a parametric family highlighted in red. 
+By doing so, we can exploit the geometric structure of a parametric family denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; induced by the Fisher-Rao metric.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Example       &lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$w$&lt;/code&gt;        &lt;/th&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Least Square&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;observation $(x,y)$&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(x,y|\tau)$&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Variational Inference&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;latent variable $z$&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(z|\tau)$&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Evolution Strategies&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;decision variable $a$&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi(a|\tau)$&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We will mainly focus on the geometric structure of (finite-dimensional) parametric families.
+For example, let’s consider a 1-dimensional Gaussian family.
+The following figure illustrates four distributions in a Gaussian family denoted by
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w | \tau ): = \mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $&lt;/code&gt;  and $\tau :=(\mu,\sigma) $.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/gauss1d.png&quot; alt=&quot;Figure 2&quot; title=&quot;Source:Wikipedia&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;intrinsic-parameterizations&quot;&gt;Intrinsic Parameterizations&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;We start by discussing parameterizations for a distribution family. As we will see, a proper parameterization plays an important role in defining FIM.
+We can not use an arbitrary differentiable parameterization to represent a geometric structure.
+This structure is also known as a manifold structure. A (smooth) manifold should be locally like a “flat” vector space. For example, consider the (curved) Earth surface. It looks like a (locally) flat space to us.&lt;/p&gt;
+
+&lt;p&gt;The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined.
+These properties will play a key role in &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space&quot;&gt;Part IV&lt;/a&gt; for natural-gradient descent.&lt;/p&gt;
+
+&lt;p&gt;We require that a manifold should be locally like a vector space denoted by $ E $ under a parameterization.
+A local vector-space structure means that we can do &lt;strong&gt;local vector additions&lt;/strong&gt; and &lt;strong&gt;local real scalar products&lt;/strong&gt; (see &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; for the details.)
+Intuitively, this vector-space structure means that a local (small) perturbation $ E $ at each point should not take out of the parameter space.
+Technically, the parameter space denoted by $\Omega_\tau$ should be an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of a parameter array.
+As we will see soon, FIM is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt;-by-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; matrix.&lt;/p&gt;
+
+&lt;p&gt;To illustrate this, let’s consider a unit circle in $\mathcal{R}^2$ as shown in the Figure.
+Clearly, a point $ (0,1) $ highlighted in green is in the circle, where we consider its center as the origin.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/circle.png&quot; title=&quot;Source:Wikipedia&quot; width=&quot;300&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Parametrization 1 (Intrinsic parameterization):&lt;/p&gt;
+
+  &lt;p&gt;A (local) parametrization at $ (0,1) $ highlighted in red for the circle is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (t,\sqrt{1-t^2}) | -h&amp;lt;t&amp;lt;h \} $&lt;/code&gt;, where $h=0.1$. We use &lt;strong&gt;one&lt;/strong&gt; (scalar) parameter in this parametrization.&lt;/p&gt;
+
+  &lt;p&gt;The manifold is (locally) “flat” since we can always find a small &lt;strong&gt;1-dimensional&lt;/strong&gt; perturbation $E$ in the &lt;strong&gt;1-dimensional&lt;/strong&gt; parameter space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_t=\{t|-h&amp;lt;t&amp;lt;h \} $&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/img/1d-perturbation.png&quot; title=&quot;Fig&quot; width=&quot;300&quot; /&gt;&lt;/p&gt;
+
+  &lt;p&gt;This parametrization is called an &lt;strong&gt;intrinsic&lt;/strong&gt; parameterization.&lt;/p&gt;
+
+  &lt;p&gt;We can similarly define a (local) parametrization at each point of the circle. In fact, we can use  four (local) parameterizations to represent the circle as shown below.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/img/charts.png&quot; title=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Parametrization 2 (Non-intrinsic parameterization):&lt;/p&gt;
+
+  &lt;p&gt;Let’s define a map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f : [0,2\pi) \rightarrow \mathcal{S}^1 $&lt;/code&gt; such that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\theta) = (\sin \theta, \cos \theta ) $&lt;/code&gt;, where we use $\mathcal{S}^1$ to denote the circle.&lt;/p&gt;
+
+  &lt;p&gt;A (global) parametrization of the circle is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ f(\theta) | \theta \in [0,2\pi)  \}$&lt;/code&gt;. We use one (scalar) parameter in this parametrization.&lt;/p&gt;
+
+  &lt;p&gt;This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$. Moreover, its inverse map $f^{-1}$ is &lt;strong&gt;not&lt;/strong&gt; continous at point $(0,1) \in  \mathcal{S}^1$.&lt;/p&gt;
+
+  &lt;p&gt;This smoothness requirement of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The requirement gives us a way to generate new intrinsic parameterizations. In other words, the Jacobian matrix is non-singular if the requirement is satisfied. Thus, we can safely use the chain rule and inverse function theorem.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Parametrization 3 (Non-intrinsic parameterization):&lt;/p&gt;
+
+  &lt;p&gt;The circle does &lt;strong&gt;not&lt;/strong&gt; look like a flat space under the following parametrization
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (x,y) | x^2+y^2=1, x,y \in \mathcal{R} \} $&lt;/code&gt;. The number of entries in this parameter array is 2.&lt;/p&gt;
+
+  &lt;p&gt;The reason is that we cannot find a small &lt;strong&gt;2-dimensional&lt;/strong&gt; perturbation $E$ in the &lt;strong&gt;2-dimensional&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_{\tau}=\{(x,y)|x^2+y^2=1 \} $&lt;/code&gt; due to the constraint $x^2+y^2=1$. In other words, $\Omega_\tau$ is not open in $\mathcal{R}^2$.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/img/2d-perturbation.png&quot; title=&quot;Fig&quot; width=&quot;300&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;intrinsic-parameterizations-for-parametric-families&quot;&gt;Intrinsic Parameterizations for Parametric families&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;Now, we discuss how to choose a parameterization given a parametric family so that we can exploit the geometric structure induced by the Fisher-Rao metric.&lt;/p&gt;
+
+&lt;p&gt;Given a parametric distribution family $ p(w|\tau) $ indexed by its parameter $\tau$, $ p(w|\tau) $ should be smooth w.r.t. $ \tau $ by considering $ w $ to be fixed.
+We say a parametrization is &lt;strong&gt;intrinsic&lt;/strong&gt; if the following condition for parameter (array) $\tau $ holds:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Regularity Condition&lt;/strong&gt;:  The set of partial derivatives 
+$ \{ \partial_{\tau_i} \log p(w|\tau) \}  $ should be linearly independent for any $ w $ and any $\tau$.&lt;/p&gt;
+
+&lt;p&gt;Note that this regularity condition implicitly assumes that the parameter space $\Omega_\tau$ is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where K is the number of entries in parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.
+We will discuss more about this at &lt;a href=&quot;#caveats-of-the-fisher-matrix-computation&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;We will use the following examples to illustrate this condition.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 1 (Intrinsic parameterization):&lt;/p&gt;
+
+  &lt;p&gt;We will show that the regularity condition holds. Consider a 1-dimensional Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with parameter $\tau = (\mu,\sigma) $.
+The partial derivatives are
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
+\end{aligned} \tag{4}\label{4}
+$$&lt;/code&gt;
+For simplicity,  let $\mu=0$ and $\sigma=1$. We can simplify the partial derivatives as below.&lt;/p&gt;
+
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
+\end{aligned} \tag{5}\label{5}
+$$&lt;/code&gt;
+If $ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$ holds for any $w$, we have $c_1=c_2=0$, which implies  linear independence.&lt;/p&gt;
+
+  &lt;p&gt;Similarly, we can show that for any $\mu \in \mathcal{R}$ and $\sigma &amp;gt;0$, 
+the partial derivatives are linearly independent.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 2 (Non-intrinsic parameterization):&lt;/p&gt;
+
+  &lt;p&gt;We will show that the regularity condition fails. Consider a Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0  \}$&lt;/code&gt; with parameter $\tau = (\pi_0,\pi_1) $, where function $ \mathcal{I}(\cdot) $ is the indicator function.
+The partial derivatives are&lt;/p&gt;
+
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+ \partial_{\pi_0} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{\pi_1}{(\pi_0+\pi_1)^2}   
+\end{aligned} \tag{6}\label{6}
+$$&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\partial_{\pi_1} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} 
+\end{aligned} \tag{7}\label{7}
+$$&lt;/code&gt;
+Note that when $c_0 = \pi_0 \neq 0 $ and $c_1= \pi_1 \neq 0$, we have $c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$.&lt;/p&gt;
+
+  &lt;p&gt;Therefore, we can show that 
+the partial derivatives are linearly dependent.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 3 (Non-intrinsic parameterization):&lt;/p&gt;
+
+  &lt;p&gt;We will soon show that the  condition fails for Bernoulli family  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$&lt;/code&gt; with parameter $\tau = (\pi_0,\pi_1)$. 
+The main reason is that the parameter space is not open in $\mathcal{R}^2$.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 4  (Intrinsic parameterization):&lt;/p&gt;
+
+  &lt;p&gt;We can show that the condition holds for Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&amp;lt;\pi_0&amp;lt;1  \}$&lt;/code&gt; with parameter $\tau = \pi_0$.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;fisher-rao-metric&quot;&gt;Fisher-Rao Metric&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;Given an intrinstic parameterization, we can define the Fisher-Rao metric under this parameterization as:
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ]$&lt;/code&gt;.
+Note that the metric could be ill-defined since the expectation may not exist.&lt;/p&gt;
+
+&lt;p&gt;Given a parameterization,  we can express the metric in a matrix form as
+$ \mathbf{F}(\tau) := E_{p(w|\tau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ]$,
+where $K$ is the number of entries of parameter array $\tau$ and 
+$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $ is a column vector.
+The matrix form is also known as the &lt;strong&gt;Fisher information matrix&lt;/strong&gt; (FIM). Obviously, FIM depends on the choice of parameterizations. In many cases,  we could also compute FIM as
+$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$.&lt;/p&gt;
+
+&lt;p&gt;The regularity condition guarantees that FIM is non-singular if the matrix exists.
+The condition is also related to the model identification in maximum likelihood estimation.&lt;/p&gt;
+
+&lt;p&gt;In the following discussion, we will assume the metric is well-defined.
+In such cases, the Fisher-Rao metric is a valid Riemannian metric since the corresponding FIM is positive definite everywhere in an &lt;strong&gt;intrinsic&lt;/strong&gt; parameter space.
+The Fisher-Rao metric is &lt;strong&gt;special&lt;/strong&gt; since it is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Warning&lt;/strong&gt;&lt;/span&gt;: An arbitrary Riemannian metric often is NOT useful for applications in machine learning.&lt;/p&gt;
+
+&lt;p&gt;Recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
+If this smoothness requirement is satisfied, we can obtain a new intrinsic parameterization via the transformation.
+In &lt;a href=&quot;/posts/2021/11/Geomopt03/#Pparameter-transform-and-invariance&quot;&gt;Part III&lt;/a&gt;,
+we will show FIM is also positive definite under this new intrinsic parameterization.&lt;/p&gt;
+
+&lt;h1 id=&quot;caveats-of-the-fisher-matrix-computation&quot;&gt;Caveats of the Fisher matrix computation&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;There are some caveats when it comes to the Fisher matrix computation. In particular, the regularity condition should be satisfied.
+It is possible to define FIM under a non-intrinstic parameterization. However, FIM often is singular or ill-defined under a non-intrinstic  parameterization as shown below.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 1 (Ill-defined FIM):&lt;/p&gt;
+
+  &lt;p&gt;Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
+The following computation is not correct. Do you make similar mistakes like this?&lt;/p&gt;
+
+  &lt;p&gt;Let $  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$, where $\tau = (\pi_0,\pi_1)$. The derivative is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$  
+\begin{aligned}
+\nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T 
+\end{aligned} \tag{8}\label{8}
+$$&lt;/code&gt;
+Thus, by Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{8}$&lt;/code&gt;, FIM under this  parameterization is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$ 
+\begin{aligned}
+F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\ 
+\mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;amp;  0 \\ 0 &amp;amp;  \frac{1}{\pi_1} \end{bmatrix}
+\end{aligned} \tag{9}\label{9}
+$$&lt;/code&gt;
+This computation is not correct. Do you know why it is not correct?&lt;/p&gt;
+
+  &lt;p&gt;The key reason is the equality constraint $ \pi_0+\pi_1=1 $. Thus, Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{8}$&lt;/code&gt; is &lt;strong&gt;incorrect&lt;/strong&gt;.&lt;/p&gt;
+
+  &lt;p&gt;By definition, a Bernoulli distribution is valid only when the constraint holds. 
+Thus, the constraint $ \pi_0+\pi_1=1 $ must be satisifed when we compute the Fisher matrix since the computation involves the expectation of this distribution.&lt;/p&gt;
+
+  &lt;p&gt;Note that the gradient is defined as $ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $.&lt;/p&gt;
+
+  &lt;p&gt;Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative $ \partial_{\pi_0} \log p(w|\tau )$, we fix $\pi_1$ and allow $\pi_0$ to change.
+However, given that $\pi_1$ is fixed and $ \pi_0 $ is fully determined by $\pi_1$ due to the equality constraint $ \pi_0+\pi_1=1 $. 
+Therefore, $  \partial_{\pi_0} \log p(w|\tau ) $ is not well-defined.
+In other words, the above Fisher matrix computation is not correct since $ \nabla_{\tau} \log p(w|\tau ) $ does not exist.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 2  (Singular FIM):&lt;/p&gt;
+
+  &lt;p&gt;Consider Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0  \}$&lt;/code&gt; with parameter $\tau = (\pi_0,\pi_1) $.&lt;/p&gt;
+
+  &lt;p&gt;We can show that FIM under this  parameterization is singular.&lt;/p&gt;
+
+  &lt;p&gt;A Bernoulli family with a non-singular FIM can be defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&amp;lt;\pi_0&amp;lt;1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \pi_0$&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;manifold-dimension&quot;&gt;Manifold Dimension&lt;/h1&gt;
+&lt;hr /&gt;
+&lt;p&gt;We can define the dimension of a manifold by using the dimension of an intrinsic parametrization. Mathematically, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom.
+We now illustrate this by examples.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 1 (Manifold):&lt;/p&gt;
+
+  &lt;p&gt;The unit circle dicussed before is a 1-dimensional manifold.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/img/circle-org.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 2 (Manifold):&lt;/p&gt;
+
+  &lt;p&gt;The open unit ball is a 2-dimensional manifold.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/img/open-ball.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 3 (Non-manifold):&lt;/p&gt;
+
+  &lt;p&gt;The closed unit ball is &lt;strong&gt;not&lt;/strong&gt; a manifold.&lt;/p&gt;
+
+  &lt;p&gt;&lt;img src=&quot;/img/closed-ball.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/p&gt;
+
+  &lt;p&gt;The main reason is that its boundary does not have the same degrees of freedom as its interior.&lt;/p&gt;
+
+  &lt;p&gt;The closed ball is indeed a manifold with (closed) boundary. We will not consider such cases in these blog posts.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 4 (Stastical manifold):&lt;/p&gt;
+
+  &lt;p&gt;Consider a 1-dimensional  Gaussian family.
+We specify an intrinsic parameterization $\mathbf{\tau}$  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;. &lt;br /&gt;&lt;/p&gt;
+
+  &lt;p&gt;This Gaussian family is a  2-dimensional manifold.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example 5 (Stastical manifold):&lt;/p&gt;
+
+  &lt;p&gt;Consider a $d$-dimensional Gaussian family with zero mean.
+We specify an intrinsic parameterization $\mathbf{\tau}$  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \mathrm{vech}(\mathbf{\Sigma})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization function&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt;. 
+The half-vectorization of a symmetric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d \times d$&lt;/code&gt; matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt; denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{\Sigma})$&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d + 1)}{2}$&lt;/code&gt;-dim array obtained by vectorizing only the lower triangular part of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;This Gaussian family is a $\frac{d(d+1)}{2}$-dimensional manifold. We will disucss more about this family in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that, The FIM plays an essential role in statistics and machine learning For a parametric distribution, it induces a Riemannian geometric-structure</summary></entry></feed>

@@ -1,0 +1,719 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.12.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Part II: Natural-Gradients Evaluted at one Point - Information Geometry in Machine Learning</title>
+<meta name="description" content="GoalThis blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.The main propose of this post is to show how to compute/define a natural-gradient.The space of natural-gradients evaluated at the same point is called a tangent space at that point.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Information Geometry in Machine Learning">
+<meta property="og:title" content="Part II: Natural-Gradients Evaluted at one Point">
+<meta property="og:url" content="/posts/2021/10/Geomopt02/">
+
+
+  <meta property="og:description" content="GoalThis blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.The main propose of this post is to show how to compute/define a natural-gradient.The space of natural-gradients evaluated at the same point is called a tangent space at that point.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-10-04T00:00:00-07:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/posts/2021/10/Geomopt02/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Information Geometry in ML",
+      "url": "https://github.com/pages/informationgeometryML/informationgeometryML.github.io",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Information Geometry in Machine Learning Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single mywide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Information Geometry in Machine Learning</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/news/" >News</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/year-archive/" >Blog Posts</a>
+            </li>
+          
+        </ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Part II: Natural-Gradients Evaluted at one Point">
+    <meta itemprop="description" content="GoalThis blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.The main propose of this post is to show how to compute/define a natural-gradient.The space of natural-gradients evaluated at the same point is called a tangent space at that point.">
+    <meta itemprop="datePublished" content="October 04, 2021">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Part II: Natural-Gradients Evaluted at one Point
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  11 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="goal">Goal</h2>
+<p>This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.
+The main propose of this post is to show how to compute/define a natural-gradient.
+The space of natural-gradients evaluated at the same point is called a tangent space at that point.</p>
+
+<p>We will give an informal introduction with a focus on high level of ideas.</p>
+
+<h1 id="euclidean-steepest-direction-and-directional-derivative">Euclidean steepest direction and directional derivative</h1>
+<hr />
+<p>Before we discuss natural-gradients, we first revisit Euclidean gradients.
+We will show a Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we extend the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a natural-gradient.</p>
+
+<p>Given a smooth scalar function $\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$ in a <strong>vector space</strong> <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, we can define the (Euclidean) steepest direction at current <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> as the optimal solution to the following optimization problem. We can express the optimization problem in terms of a <strong>directional derivative</strong> along vector $\mathbf{v}$. We assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\|v\|^2=1} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0) )^T \mathbf{v} 
+\end{aligned}\tag{1}\label{1}
+$$</code></p>
+
+<p>It is easy to see that the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$</code>, which is the (Euclidean) steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
+
+<h1 id="distance-induced-by-the-fisher-rao-metric">Distance induced by the Fisher-Rao metric</h1>
+<hr />
+
+<p>To generalize  the steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> in a Riemannian manifold, we first formulate a similar optimization problem like Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> in the manifold case.
+To do so, we have to define the length of a vector in manifold cases. In <a href="/posts/2021/11/Geomopt03/#standard-euclidean-gradients-are-not-invariant">Part III</a>, we will show that the (standard) length does not perseve under a parameter transform while the length induced by the Fisher-Rao metric does.</p>
+
+<p>As mentioned at <a href="/posts/2021/09/Geomopt01/#fisher-rao-metric">Part I</a>, the FIM $\mathbf{F}$ should be positive definite. We can use FIM to define the length/norm of a vector (e.g., a Riemannian gradient) $\mathbf{v}$ at a point in a manifold via a weighted inner product.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\|\mathbf{v}\|_F := \sqrt{\mathbf{v}^T \mathbf{F} \mathbf{v}}
+\end{aligned}
+$$</code></p>
+
+<p>The positive-definiteness of FIM is essential since we do not want a non-zero vector has a zero length.</p>
+
+<p>The distance (and orthogonality) between two <span style="color:red">vectors</span> at the <span style="color:red">same</span>  point is also induced by FIM since we can define them by the inner product as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+d(\mathbf{v},\mathbf{w}) := \|\mathbf{v}-\mathbf{w}\|_F
+\end{aligned}
+$$</code>
+where <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> are two vectors evaluted at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
+
+<p>In manifold cases, we have to distinguish the difference between a point (e.g., parameter array $\tau_0$) and a vector (e.g., Riemannian gradient under a parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code>).
+This point is crucial to (natural) gradient-based methods in <a href="/posts/2021/11/Geomopt04/#two-kinds-of-spaces">Part IV</a>.</p>
+
+<p><span style="color:red"><strong>Warning</strong></span>: We do NOT define the distance between two points in the manifold, which will be discussed <a href="#riemannian-gradients-as-tangent-vectors-optional">here</a>.
+We also do NOT define the distance between a vector at one point and another vector at a distinct point.</p>
+
+<h1 id="directional-derivatives-in-a-manifold">Directional derivatives in a manifold</h1>
+<hr />
+<p>As we shown before, the objective function in Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is a directional derivative in Euclidean cases.
+The next step is to generalize the concept of directional derivatives in a manifold.</p>
+
+<p>Recall that a manifold should be locally like a vector space under <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations"><strong>intrinsic</strong> parameterization</a> <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}$</code>.
+Using this parameterization, consider an optimization problem $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$, where the parameter space $\Omega_\tau$ is determined by the parameterization and the manifold. Recall that we have a local vector space structure denoted by $E$ if we parametrize the manifold with an intrinsic parameterization.</p>
+
+<p>Therefore, we can similarly define a directional derivative at <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> along Riemannian vector $\mathbf{v}$ as <code class="language-plaintext highlighter-rouge">$\lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t}$</code>, where $t$ is a scalar real number. The main point is that <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}$</code> stays in the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> thanks to the <strong>local vector space</strong> structure.</p>
+
+<p>Recall that we allow a <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">small perturbation</a> <code class="language-plaintext highlighter-rouge">$E$</code> contained in  parameter space  <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> (i.e., <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>) since  <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}$</code> is an intrinsic parameterization.
+Therefore, when $|t|$ is small enough, <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} $</code> stays in the parameter space and <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau}_0+t\mathbf{v})$</code> is well-defined.
+Note that we only require <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$</code> when $|t|$ is small enough. When $|t|$ is small enough, this is possible since a line segment <code class="language-plaintext highlighter-rouge">$ \mathbf{\tau}_0+t\mathbf{v} \in E$</code> and <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>.
+ Technically, this is because  $\Omega_\tau$ is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
+
+<p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the <strong>local vector space</strong> structure.
+<code class="language-plaintext highlighter-rouge">$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v} \end{aligned}$$</code>.</p>
+
+<p>The following example illustrates directional derivatives in manifold cases.</p>
+
+<blockquote>
+  <p>Example 1 (Valid directional derivative):</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$\tau$</code> is a <strong>local intrinsic</strong> parameterization for the unit sphere.</p>
+
+  <p>The line segment from <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> to <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} $</code>  is shown in blue, which is the parameter representation of the yellow curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> in the manifold.
+We will show later that Riemannian gradient vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> under this parametrization at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> is the <strong>parameter representation</strong> of the tangent vector of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> at point <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code>.</p>
+
+  <p><img src="/img/sphere_simple.png" width="500" /></p>
+
+  <p><strong>Warning</strong>: Curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> is NOT the shortest curve in the manifold between <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{x}_1$</code>.</p>
+</blockquote>
+
+<blockquote>
+  <p>Example 2 (Invalid directional derivative):</p>
+
+  <p>A directional derivative can be ill-defined under a <strong>non-intrinsic</strong> parameterization.</p>
+
+  <p>We use <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">parameterization 3</a> for unit circle <code class="language-plaintext highlighter-rouge">$\mathcal{S}^1$</code>, where the red line segment passes through <code class="language-plaintext highlighter-rouge">$\tau_0=(0,1) \in \mathcal{S}^1 $</code>.</p>
+
+  <p><img src="/img/tangent_non.png" alt="Figure 1" /></p>
+
+  <p>Any other point <code class="language-plaintext highlighter-rouge">$\tau_0 + t\mathbf{v}$</code> in the line segment leaves the manifold for <code class="language-plaintext highlighter-rouge">$t\neq 0$</code> and thus, <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau}_0+t\mathbf{v})$</code> is not well-defined.
+The main reason is that <code class="language-plaintext highlighter-rouge">$\tau$</code> is not an intrinsic parameterization.</p>
+</blockquote>
+
+<h1 id="riemannian-steepest-direction">Riemannian steepest direction</h1>
+<hr />
+<p>Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
+Now, we can introduce the Riemannian steepest direction.</p>
+
+<p>Given  a smooth scalar funcion defined in a manifold $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$ under an intrinsic parameterization $\mathbf{\tau}$. We can define the Riemannian steepest direction as the optimal solution to the following optimization problem.  The optimization problem is expressed in terms of a directional derivative along Riemannian vector $\mathbf{v}$, where we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{ \color{red} {\|v\|_{F}^2=1} } ( \nabla_\tau f(\mathbf{\tau}_0) )^T  \mathbf{v} 
+\end{aligned} \tag{2}\label{2}
+$$</code> 
+where $\mathbf{v}$ can be any (Riemannian) vector at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> satisfied the norm constraint.</p>
+
+<p>The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+L(\mathbf{v},\lambda) =  ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v} + \lambda (\|v\|_{F}^2 - 1) = \mathbf{v}^T \nabla_\tau f(\mathbf{\tau}_0) + \lambda (\mathbf{v}^T \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}  - 1) 
+\end{aligned}
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\mathbf{\tau}_0)$</code> is FIM evaluated at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
+
+<p>One of the KKT necessary conditions implies that
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{0} = \nabla_{v} L(\mathbf{v}_{\text{opt}},\lambda) = \nabla_\tau f(\mathbf{\tau}_0) + 2 \lambda \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}_{\text{opt}}
+\end{aligned}
+$$</code>
+When $\lambda \neq 0$, vector 	<code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}$</code> should be proportional to <code class="language-plaintext highlighter-rouge">$\mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0)$</code>, where  <code class="language-plaintext highlighter-rouge">$\mathbf{F}^{-1}(\mathbf{\tau}_0)$</code> is well-defined since FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\mathbf{\tau}_0)$</code> is positive definite.</p>
+
+<p>We can show that the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$</code>, which gives us the Riemannian steepest direction at current <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
+
+<p>The <strong>Euclidean</strong> steepest direction <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{euclid}}= -\frac{ \nabla_\tau f(\mathbf{\tau}_0) }{\| \nabla_\tau f(\mathbf{\tau}_0) \|_F}$</code> is <strong>not</strong> the optimal solution of  Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> when <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\tau_0) \neq \mathbf{I}$</code>.
+We will illustrate this by using an example.</p>
+
+<blockquote>
+  <p>Euclidean steepest direction is not the optimal solution of  Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code></p>
+
+  <p>Consider <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\tau_0)=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; \frac{1}{2} \end{bmatrix}$</code> and <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)=\begin{bmatrix} 1\\1 \end{bmatrix}$</code>.
+We have the following results
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\| F^{-1} \nabla_\tau f(\mathbf{\tau}_0) \|_F^2  =  \nabla_\tau^T f(\mathbf{\tau}_0) \mathbf{F}^{-1}(\tau_0) \nabla_\tau f(\mathbf{\tau}_0) = 3; \,\,\,
+\| \nabla_\tau f(\mathbf{\tau}_0) \|_F^2  =  \nabla_\tau^T f(\mathbf{\tau}_0) \mathbf{F}(\tau_0) \nabla_\tau f(\mathbf{\tau}_0) = \frac{3}{2}
+\end{aligned}
+$$</code>
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{v}_{\text{opt}} = -\begin{bmatrix} \frac{1}{\sqrt{3}} \\ \frac{2}{\sqrt{3}} \end{bmatrix}; \,\,\,
+\mathbf{v}_{\text{euclid}}=
+-\begin{bmatrix} \sqrt{\frac{2}{3}} \\ \sqrt{\frac{2}{3}} \end{bmatrix}\end{aligned}
+$$</code>
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+ \mathbf{v}_{\text{opt}}^T \nabla_\tau f(\mathbf{\tau}_0)= -\sqrt{3}  &lt;  -\frac{2\sqrt{2}}{\sqrt{3}} = \mathbf{v}_{\text{euclid}}^T \nabla_\tau f(\mathbf{\tau}_0) 
+\end{aligned}
+$$</code></p>
+
+  <p>Therefore, the Euclidean steepest direction <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{euclid}}$</code> is not the optimal solution of  Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>.</p>
+</blockquote>
+
+<p>Given a scalar function $f(\mathbf{\tau})$, if its <strong>Euclidean</strong> (steepest) gradient is $\nabla_\tau f(\mathbf{\tau})$, its <strong>Riemannian</strong> (steepest) gradient is defined as $ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$ in literature.
+We use a learning-rate to control the length of a gradient instead of normalizing its length. 
+Since we use the Fisher-Rao metric, the Riemannian gradient is also known as the <strong>natural</strong> gradient.</p>
+
+<blockquote>
+  <p>Intrinsic parametrization and natural-gradients for multivate Gaussian</p>
+
+  <p>Consider a $d$-dimensional Gaussian family with zero mean discussed in <a href="/posts/2021/09/Geomopt01/#manifold-dimension">Part I</a>. <br />
+We specify an intrinsic parameterization $\mathbf{\tau}$ of the  family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{\Sigma})$</code>, where <code class="language-plaintext highlighter-rouge">$\tau$</code> is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of the the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization function</a> $\mathrm{vech}()$.</p>
+
+  <p>Technically speaking, <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code> is NOT an intrinsic parameter due to the symmetry constraint. In other words, FIM w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code> will be singular if  <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code> is considered as a matrix parameter with $d^2$ degrees of freedom.</p>
+
+  <p>In literature, a natural gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code> is defined as <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is a natural-gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{\Sigma})$</code>.</p>
+</blockquote>
+
+<h1 id="riemannian-gradients-as-tangent-vectors-optional">Riemannian gradients as tangent vectors (optional)</h1>
+<hr />
+<p>In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
+Now, we will disucss a more abstract concept of Riemannian vectors without a parametrization. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in <a href="/posts/2021/11/Geomopt03/#parameter-transform-and-invariance">Part III</a>.  In physics, this invariance means that a law of physics should be independent of the choice of (reference) coordinate systems.</p>
+
+<p>A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$  in the manifold under the parametrization $\tau$. 
+The set of tangent vectors evaluated at $\mathbf{\tau}_0$ is called the tangent space at the corresponding point. 
+We will illustrate this by an example.</p>
+
+<p>Let’s denote the unit sphere by $\mathcal{M}$, where we set the origin to be the center of the sphere. Point $\mathbf{x_0}=(0,0,1)$ is the north pole.
+We use the following parameterization, where the top half of the sphere can be locally expressed as <code class="language-plaintext highlighter-rouge">$\{(\tau_x,\tau_y,\sqrt{1-\tau_x^2-\tau_y^2})|  \tau_x^2 + \tau_y^2 &lt;1 \}$</code> with parameter $\mathbf{\tau}=(\tau_x,\tau_y)$. 
+Under parametrization $\mathbf{\tau}$, we have the following parametric representations.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">     </th>
+      <th style="text-align: center">Parametric representation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">North pole  $\mathbf{x_0}$</td>
+      <td style="text-align: center">$\mathbf{\tau}_0=(0,0)$</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Intrinsic parameter space</td>
+      <td style="text-align: center">red space <code class="language-plaintext highlighter-rouge">$\Omega_\tau:=\{ (\tau_x,\tau_y)| \tau_x^2 + \tau_y^2 &lt;1 \}$</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Tangent space at $\mathbf{x_0}$</td>
+      <td style="text-align: center">green space  <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Yellow curve from $\mathbf{x_0}$ to $\mathbf{x_1}$</td>
+      <td style="text-align: center">blue line segment from <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> to <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}(\tau_0)$</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="/img/sphere.png" width="500" /></p>
+
+<p>Note that  <code class="language-plaintext highlighter-rouge">$\tau_0$</code> is considered a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is considered a Riemannian gradient, which is a representation of the tangent vector of curve <code class="language-plaintext highlighter-rouge">$\gamma$</code> at point $\mathbf{x}_0$.</p>
+
+<p><strong>Warning</strong>: Be aware of the differences shown in the table.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">     </th>
+      <th style="text-align: center">parametric representation of</th>
+      <th style="text-align: center">supported operations</th>
+      <th>distance  discussed in this post</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> (vector/natural-gradient) space</td>
+      <td style="text-align: center">tangent vector space at <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code></td>
+      <td style="text-align: center">real scalar product, vector addition</td>
+      <td>defined</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> (point/parameter) space</td>
+      <td style="text-align: center">top half of the manifold</td>
+      <td style="text-align: center"><span style="color:red"> <strong>local</strong> </span> scalar product, <span style="color:red"><strong>local</strong> </span> vector addition</td>
+      <td>undefined</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Under <strong>intrinsic</strong> parametrization $\tau$, we have <code class="language-plaintext highlighter-rouge">$\Omega_\tau \subset \mathcal{R}^2$</code>. Thus, we can perform this operation in $\Omega_\tau$ space: <code class="language-plaintext highlighter-rouge">$\tau_0 +t\mathbf{v}(\tau_0) \in \Omega_\tau$</code> when scalar <code class="language-plaintext highlighter-rouge">$|t|$</code> is small enough. Note that we only define the <a href="#distance-induced-by-the-fisher-rao-metric">distance</a> between two vectors in the <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> space. The distance between two points in the <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> space is undefined in this post.</p>
+
+<p>(Parameterization-free repesentation of  vector $\mathbf{v}$ ):</p>
+
+<p>The tangent vector $\mathbf{v}$ at point $\mathbf{x_0}$  can be viewed as the <strong>tangent direction</strong> of a (1-dimensional) smooth curve $\gamma(t) \in \mathcal{M}$, where $\gamma(0)=\mathbf{x_0}$,  <code class="language-plaintext highlighter-rouge">$\frac{d {\gamma}(t) }{d t} \Big|_{t=0}=\mathbf{v}$</code> and the support of $\gamma(t)$ denoted by $\mathbf{I}$ is an open interval in  <code class="language-plaintext highlighter-rouge">$\mathcal{R}^1$</code> containing 0. 
+Since a curve $\gamma(t)$ is a geometric object, this is a parameterization-free repesentation of a vector.</p>
+
+<p>(Parameterization-dependent repesentation of vector $\mathbf{v}$ ):</p>
+
+<p>Given intrinsic parametrization $\tau$, we can define the parametric representation of the curve denoted by ${\gamma}_\tau(t)$, where the domain is <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau \subset \mathcal{R}^1$</code>.
+The parametric representation of vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is defined as <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_{\tau}(t) }{d t} \Big|_{t=0}$</code>, where <code class="language-plaintext highlighter-rouge">${\gamma}_{\tau}(0)=\tau_0$</code>.</p>
+
+<blockquote>
+  <p>Example</p>
+
+  <p>Consider the yellow curve $\gamma(t) = (t v_{x}, t v_{y}, \sqrt{1 - t^2(v_{x}^2 + v_{y}^2) } ) \in \mathcal{M} $ 
+and the blue line segment <code class="language-plaintext highlighter-rouge">${\gamma}_{\tau}(t)= (t v_{x} , t v_y  ) \in \Omega_\tau $</code>, where <code class="language-plaintext highlighter-rouge">$|t|$</code> must be small enough.</p>
+
+  <p>The parametric  representation of the vector is <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}=(v_x,v_y)$</code>.</p>
+</blockquote>
+
+<p>A Riemannian gradient <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0)$</code> can be viewed as a parametric representation of tangent vector  $\mathbf{v}$ as shown below.</p>
+
+<blockquote>
+
+  <p>Consider a smooth scalar function defined in the manifold $h: \mathcal{M} \to \mathcal{R}$. In the unit sphere case, consider <code class="language-plaintext highlighter-rouge">$h(\mathbf{x})$</code> subject to <code class="language-plaintext highlighter-rouge">$\mathbf{x}^T \mathbf{x}=1$</code>.
+Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function as <code class="language-plaintext highlighter-rouge">$h_\tau(\mathbf{\tau}):=h( (\tau_x,\tau_y,\sqrt{1-\tau_x^2-\tau_y^2}) )$</code> where <code class="language-plaintext highlighter-rouge">$\tau \in \Omega_\tau$</code>.</p>
+
+  <p>By the definition of a directional derivative, the following identity holds for any smooth scalar function $h$: <code class="language-plaintext highlighter-rouge">$[\nabla h_\tau(\mathbf{\tau}_0)]^T \mathbf{v}(\mathbf{\tau}_0) =\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}$</code>, where $h_\tau$ is the parametric representation of  $h$ . Note that <code class="language-plaintext highlighter-rouge">$(h_\tau \circ {\gamma}_\tau) (t)$</code> is a function defined from <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau $</code> to $\mathcal{R}^1$, where domain <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau \subset \mathcal{R}^1$</code>.</p>
+
+  <p>The <span style="color:red"> <strong>key</strong> </span> observation is that function <code class="language-plaintext highlighter-rouge">$(h_\tau \circ {\gamma}_\tau) (t)$</code> becomes a scalar function defined in $\mathcal{R}^1$ thanks to parametrization $\tau$. Thus, we can use the standard chain rule.</p>
+
+  <p>By the chain rule, we have <code class="language-plaintext highlighter-rouge">$\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}=[\nabla h_\tau(\mathbf{\tau}_0)]^T  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$</code>, where <code class="language-plaintext highlighter-rouge">${\gamma}_\tau(0)=\tau_0$</code>. Thus,
+<code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$</code> since <code class="language-plaintext highlighter-rouge">$\nabla h_\tau(\mathbf{\tau}_0)$</code> can be arbitrary.</p>
+
+  <p>In summary, a Riemannian gradient <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0)$</code> can be viewed as a parametric representation of the tangent vector 
+ of curve $\gamma(t)$ at $\mathbf{x}_0$ since  <code class="language-plaintext highlighter-rouge">${\gamma}_\tau(t)$</code> is the parametric representation of $\gamma(t)$.</p>
+</blockquote>
+
+<p>Last but not least,
+we can also define vector additions and real scalar products in a tangent vector space  by using tangent directions of curves in the manifold with/without a parameterization.
+In other words, a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> which is a parametric representation of a set of <strong>points</strong> in a manifold.</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#information-geometry" class="page__taxonomy-item" rel="tag">Information Geometry</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#natural-gradient-descent" class="page__taxonomy-item" rel="tag">Natural Gradient Descent</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#riemannian-manifold" class="page__taxonomy-item" rel="tag">Riemannian Manifold</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-10-04T00:00:00-07:00">October 04, 2021</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title" data-translate="share_on_label">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Part+II%3A+Natural-Gradients+Evaluted+at+one+Point%20informationgeometryML.github.io%2Fposts%2F2021%2F10%2FGeomopt02%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=informationgeometryML.github.io%2Fposts%2F2021%2F10%2FGeomopt02%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=informationgeometryML.github.io%2Fposts%2F2021%2F10%2FGeomopt02%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+
+
+
+     
+
+  <script src="https://utteranc.es/client.js"
+    repo=informationgeometryML/informationgeometryML.github.io
+    issue-term=url
+    label=blog-comments
+    theme=github-light
+    crossorigin= "anonymous"
+    async>
+  </script>
+
+
+
+
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/posts/2021/09/Geomopt01/" class="pagination--pager" title="Part I: Manifolds with the Fisher-Rao Metric
+">Previous</a>
+    
+    
+      <a href="/posts/2021/11/Geomopt03/" class="pagination--pager" title="Part III: Invariance of Natural-Gradients
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/11/Geomopt04/" rel="permalink">Part IV: Natural and Riemannian  Gradient Descent
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  10 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/11/Geomopt03/" rel="permalink">Part III: Invariance of Natural-Gradients
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  10 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post should help readers to understand the invariance of natural-gradients.
+We will also discuss why the Euclidean steepest direction is NOT i...</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/09/Geomopt01/" rel="permalink">Part I: Manifolds with the Fisher-Rao Metric
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  12 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,
+
+  The FIM plays an ess...</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow</strong></li>
+    
+    
+    
+    
+      <li><a href="https://github.com/informationgeometryML"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/custom.js"></script>
+  
+    <script src="/assets/js/translations.js"></script>
+  
+    <script src="/assets/js/math-code.js"></script>
+  
+
+
+
+  </body>
+</html>
+

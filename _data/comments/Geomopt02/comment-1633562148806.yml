@@ -1,7 +1,0 @@
-_id: 57681b10-26fb-11ec-86c4-eda454b95945
-_parent: 0d23a790-26fb-11ec-86c4-eda454b95945
-message: "math test  `$$\r\n\\begin{aligned}\r\n\\min_{\\tau} \\frac{1}{2n} \\sum_{i=1}^{n}   (y_i-x_i^T\\tau)^2   + \\mathrm{Constant} & = - \\frac{1}{n}  \\sum_{i=1}^{n}  \\log \\mathcal{N}(y_i | x_i^T\\tau,1) \\\\\r\n& \\approx - E_{ \\color{red} {p(x,y | \\tau)} } [ \\log p(x,y | \\tau) ] \r\n\\end{aligned} \r\n$$`"
-name: hello
-email: fb9f3b9521d530e23b7cc60f863b3319
-hidden: ''
-date: '2021-10-06T23:15:48.806Z'

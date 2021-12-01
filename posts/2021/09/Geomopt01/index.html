@@ -1,0 +1,791 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.12.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Part I: Manifolds with the Fisher-Rao Metric - Information Geometry in Machine Learning</title>
+<meta name="description" content="GoalThis blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,  The FIM plays an essential role in statistics and machine learning  For a parametric distribution, it induces a Riemannian geometric-structure">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Information Geometry in Machine Learning">
+<meta property="og:title" content="Part I: Manifolds with the Fisher-Rao Metric">
+<meta property="og:url" content="/posts/2021/09/Geomopt01/">
+
+
+  <meta property="og:description" content="GoalThis blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,  The FIM plays an essential role in statistics and machine learning  For a parametric distribution, it induces a Riemannian geometric-structure">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-09-06T00:00:00-07:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/posts/2021/09/Geomopt01/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Information Geometry in ML",
+      "url": "https://github.com/pages/informationgeometryML/informationgeometryML.github.io",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Information Geometry in Machine Learning Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single mywide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Information Geometry in Machine Learning</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/news/" >News</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/year-archive/" >Blog Posts</a>
+            </li>
+          
+        </ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Part I: Manifolds with the Fisher-Rao Metric">
+    <meta itemprop="description" content="GoalThis blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,  The FIM plays an essential role in statistics and machine learning  For a parametric distribution, it induces a Riemannian geometric-structure">
+    <meta itemprop="datePublished" content="September 06, 2021">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Part I: Manifolds with the Fisher-Rao Metric
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  12 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="goal">Goal</h2>
+<p>This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,</p>
+<ul>
+  <li>The FIM plays an essential role in statistics and machine learning</li>
+  <li>For a parametric distribution, it induces a <strong>Riemannian</strong> geometric-structure</li>
+</ul>
+
+<p>The discussion here is informal and focuses on more on intuitions, rather than rigor.</p>
+
+<h1 id="motivation">Motivation</h1>
+<hr />
+<p>Let’s start with some motivation: why should we care about geometric structures of probability distributions?
+Probability distributions form the backbone of majority of machine-learning approaches, for example, any approach that use probabilistic modeling is built upon such distributions. 
+For all such cases, we can exploit the underlying geometric structure, induced by the Fisher-Rao metric, which is the topic of this blog. 
+Below, we give some common examples from machine learning, where probability  distributions naturally arise.</p>
+
+<blockquote>
+  <p>Least Square (Empirical Risk Minimization):</p>
+
+  <p>Given N input-output pairs <code class="language-plaintext highlighter-rouge">$(x_i,y_i)$</code>,  the least-square loss can be viewed as expectation under a probability distribution.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\tau} \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2  &amp; = \max_{\tau} \frac{1}{n}  \sum_{i=1}^{n}  \log \mathcal{N}(y_i | x_i^T\tau,1) \\
+&amp; \approx \int [ \log p(x,y | \tau) ]  d p(x,y | \tau)
+\end{aligned} \tag{1}\label{1}
+$$</code>
+Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution, and the least-square loss is the finite-sample approximation of the expectation. The normal distribution is denoted by <code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | x^T\tau,1) $</code> with mean <code class="language-plaintext highlighter-rouge">$ x^T\tau $</code> and variance <code class="language-plaintext highlighter-rouge">$ 1 $</code>.</p>
+
+  <p>Algorithms such as  <strong>Fisher scoring</strong> and <strong>(emprical) natural-gradient descent</strong> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>.</p>
+</blockquote>
+
+<!--- \stackrel{\eqref{1}} (Eq. `$\eqref{1}$`) --->
+
+<blockquote>
+  <p>Variational Inference:</p>
+
+  <p>Given a prior \(p(z)\) and a likelihood <code class="language-plaintext highlighter-rouge">$ p(\mathcal{D} | z ) $</code> over an latent vector <code class="language-plaintext highlighter-rouge">$z$</code> and known data $ \mathcal{D} $, we can approximate the exact posterior <code class="language-plaintext highlighter-rouge">$ p( z | \mathcal{D} ) =\frac{p(z,\mathcal{D})}{p(\mathcal{D})} $</code> by optimizing a variational objective with respect to  an approximated distribution <code class="language-plaintext highlighter-rouge">$ q(z | \tau) $</code>:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\tau} \mathrm{KL} [ { q(z | \tau) || p( z | \mathcal{D} ) }   ] = E_{ \color{red}  {q(z | \tau)} } [ \log q(z | \tau) - \log p( z , \mathcal{D} )    ]  + \log p(\mathcal{D} ) 
+\end{aligned} \tag{2}\label{2}
+$$</code>
+where <code class="language-plaintext highlighter-rouge">$ \mathrm{KL} [ q(z) ||  p(z) ] :=  E_{ {q(z)} } [ \log \big(\frac{q(z)}{p(z)}\big) ]$</code> is the Kullback–Leibler divergence.</p>
+
+  <p>The <strong>natural-gradient variatioal inference</strong> is an algorithm that speeds up the inference by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$q(z|\tau)$</code> induced by the Fisher-Rao metric.</p>
+</blockquote>
+
+<blockquote>
+  <p>Evolution Strategies (Gradient-free Search):</p>
+
+  <p>In gradient-free optimization, we often use a search distribution <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code> to find the optimal solution of an objective funtion <code class="language-plaintext highlighter-rouge">$h(a)$</code> by solving the following problem:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\tau}  E_{ \color{red}  {\pi(a | \tau)} } [ h(a)  ]
+\end{aligned} \tag{3}\label{3}
+$$</code>
+The <strong>natural evolution strategies</strong> is an algorithm that speeds up the search process by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$\pi(a|\tau)$</code>.
+In the context of reinforcement learning,  <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code> is known as the policy distribution to generate actions and the natural evolution strategies is known as the <strong>natural policy gradient</strong> method.</p>
+</blockquote>
+
+<p>In these examples, we can express the objective function in terms of an expectation under a parametric family highlighted in red. 
+By doing so, we can exploit the geometric structure of a parametric family denoted by <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> induced by the Fisher-Rao metric.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Example       </th>
+      <th style="text-align: center"><code class="language-plaintext highlighter-rouge">$w$</code>        </th>
+      <th style="text-align: right"><code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Least Square</td>
+      <td style="text-align: center">observation $(x,y)$</td>
+      <td style="text-align: right"><code class="language-plaintext highlighter-rouge">$p(x,y|\tau)$</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Variational Inference</td>
+      <td style="text-align: center">latent variable $z$</td>
+      <td style="text-align: right"><code class="language-plaintext highlighter-rouge">$q(z|\tau)$</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Evolution Strategies</td>
+      <td style="text-align: center">decision variable $a$</td>
+      <td style="text-align: right"><code class="language-plaintext highlighter-rouge">$\pi(a|\tau)$</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We will mainly focus on the geometric structure of (finite-dimensional) parametric families.
+For example, let’s consider a 1-dimensional Gaussian family.
+The following figure illustrates four distributions in a Gaussian family denoted by
+<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code>, where <code class="language-plaintext highlighter-rouge">$ p(w | \tau ): = \mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>  and $\tau :=(\mu,\sigma) $.</p>
+
+<p><img src="/img/gauss1d.png" alt="Figure 2" title="Source:Wikipedia" /></p>
+
+<h1 id="intrinsic-parameterizations">Intrinsic Parameterizations</h1>
+<hr />
+<p>We start by discussing parameterizations for a distribution family. As we will see, a proper parameterization plays an important role in defining FIM.
+We can not use an arbitrary differentiable parameterization to represent a geometric structure.
+This structure is also known as a manifold structure. A (smooth) manifold should be locally like a “flat” vector space. For example, consider the (curved) Earth surface. It looks like a (locally) flat space to us.</p>
+
+<p>The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined.
+These properties will play a key role in <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space">Part IV</a> for natural-gradient descent.</p>
+
+<p>We require that a manifold should be locally like a vector space denoted by $ E $ under a parameterization.
+A local vector-space structure means that we can do <strong>local vector additions</strong> and <strong>local real scalar products</strong> (see <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a> for the details.)
+Intuitively, this vector-space structure means that a local (small) perturbation $ E $ at each point should not take out of the parameter space.
+Technically, the parameter space denoted by $\Omega_\tau$ should be an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array.
+As we will see soon, FIM is a <code class="language-plaintext highlighter-rouge">$K$</code>-by-<code class="language-plaintext highlighter-rouge">$K$</code> matrix.</p>
+
+<p>To illustrate this, let’s consider a unit circle in $\mathcal{R}^2$ as shown in the Figure.
+Clearly, a point $ (0,1) $ highlighted in green is in the circle, where we consider its center as the origin.</p>
+
+<p><img src="/img/circle.png" title="Source:Wikipedia" width="300" /></p>
+
+<blockquote>
+  <p>Parametrization 1 (Intrinsic parameterization):</p>
+
+  <p>A (local) parametrization at $ (0,1) $ highlighted in red for the circle is
+<code class="language-plaintext highlighter-rouge">$\{ (t,\sqrt{1-t^2}) | -h&lt;t&lt;h \} $</code>, where $h=0.1$. We use <strong>one</strong> (scalar) parameter in this parametrization.</p>
+
+  <p>The manifold is (locally) “flat” since we can always find a small <strong>1-dimensional</strong> perturbation $E$ in the <strong>1-dimensional</strong> parameter space  <code class="language-plaintext highlighter-rouge">$\Omega_t=\{t|-h&lt;t&lt;h \} $</code>.</p>
+
+  <p><img src="/img/1d-perturbation.png" title="Fig" width="300" /></p>
+
+  <p>This parametrization is called an <strong>intrinsic</strong> parameterization.</p>
+
+  <p>We can similarly define a (local) parametrization at each point of the circle. In fact, we can use  four (local) parameterizations to represent the circle as shown below.</p>
+
+  <p><img src="/img/charts.png" title="Source:Wikipedia" width="200" /></p>
+</blockquote>
+
+<blockquote>
+  <p>Parametrization 2 (Non-intrinsic parameterization):</p>
+
+  <p>Let’s define a map <code class="language-plaintext highlighter-rouge">$f : [0,2\pi) \rightarrow \mathcal{S}^1 $</code> such that <code class="language-plaintext highlighter-rouge">$f(\theta) = (\sin \theta, \cos \theta ) $</code>, where we use $\mathcal{S}^1$ to denote the circle.</p>
+
+  <p>A (global) parametrization of the circle is <code class="language-plaintext highlighter-rouge">$\{ f(\theta) | \theta \in [0,2\pi)  \}$</code>. We use one (scalar) parameter in this parametrization.</p>
+
+  <p>This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$. Moreover, its inverse map $f^{-1}$ is <strong>not</strong> continous at point $(0,1) \in  \mathcal{S}^1$.</p>
+
+  <p>This smoothness requirement of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The requirement gives us a way to generate new intrinsic parameterizations. In other words, the Jacobian matrix is non-singular if the requirement is satisfied. Thus, we can safely use the chain rule and inverse function theorem.</p>
+</blockquote>
+
+<blockquote>
+  <p>Parametrization 3 (Non-intrinsic parameterization):</p>
+
+  <p>The circle does <strong>not</strong> look like a flat space under the following parametrization
+<code class="language-plaintext highlighter-rouge">$\{ (x,y) | x^2+y^2=1, x,y \in \mathcal{R} \} $</code>. The number of entries in this parameter array is 2.</p>
+
+  <p>The reason is that we cannot find a small <strong>2-dimensional</strong> perturbation $E$ in the <strong>2-dimensional</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_{\tau}=\{(x,y)|x^2+y^2=1 \} $</code> due to the constraint $x^2+y^2=1$. In other words, $\Omega_\tau$ is not open in $\mathcal{R}^2$.</p>
+
+  <p><img src="/img/2d-perturbation.png" title="Fig" width="300" /></p>
+</blockquote>
+
+<h1 id="intrinsic-parameterizations-for-parametric-families">Intrinsic Parameterizations for Parametric families</h1>
+<hr />
+<p>Now, we discuss how to choose a parameterization given a parametric family so that we can exploit the geometric structure induced by the Fisher-Rao metric.</p>
+
+<p>Given a parametric distribution family $ p(w|\tau) $ indexed by its parameter $\tau$, $ p(w|\tau) $ should be smooth w.r.t. $ \tau $ by considering $ w $ to be fixed.
+We say a parametrization is <strong>intrinsic</strong> if the following condition for parameter (array) $\tau $ holds:</p>
+
+<p><strong>Regularity Condition</strong>:  The set of partial derivatives 
+$ \{ \partial_{\tau_i} \log p(w|\tau) \}  $ should be linearly independent for any $ w $ and any $\tau$.</p>
+
+<p>Note that this regularity condition implicitly assumes that the parameter space $\Omega_\tau$ is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
+We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-computation">here</a>.</p>
+
+<p>We will use the following examples to illustrate this condition.</p>
+
+<blockquote>
+  <p>Example 1 (Intrinsic parameterization):</p>
+
+  <p>We will show that the regularity condition holds. Consider a 1-dimensional Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with parameter $\tau = (\mu,\sigma) $.
+The partial derivatives are
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+ \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
+\end{aligned} \tag{4}\label{4}
+$$</code>
+For simplicity,  let $\mu=0$ and $\sigma=1$. We can simplify the partial derivatives as below.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+ \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
+\end{aligned} \tag{5}\label{5}
+$$</code>
+If $ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$ holds for any $w$, we have $c_1=c_2=0$, which implies  linear independence.</p>
+
+  <p>Similarly, we can show that for any $\mu \in \mathcal{R}$ and $\sigma &gt;0$, 
+the partial derivatives are linearly independent.</p>
+</blockquote>
+
+<blockquote>
+  <p>Example 2 (Non-intrinsic parameterization):</p>
+
+  <p>We will show that the regularity condition fails. Consider a Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with parameter $\tau = (\pi_0,\pi_1) $, where function $ \mathcal{I}(\cdot) $ is the indicator function.
+The partial derivatives are</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+ \partial_{\pi_0} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{\pi_1}{(\pi_0+\pi_1)^2}   
+\end{aligned} \tag{6}\label{6}
+$$</code>
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\partial_{\pi_1} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} 
+\end{aligned} \tag{7}\label{7}
+$$</code>
+Note that when $c_0 = \pi_0 \neq 0 $ and $c_1= \pi_1 \neq 0$, we have $c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$.</p>
+
+  <p>Therefore, we can show that 
+the partial derivatives are linearly dependent.</p>
+</blockquote>
+
+<blockquote>
+  <p>Example 3 (Non-intrinsic parameterization):</p>
+
+  <p>We will soon show that the  condition fails for Bernoulli family  <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$</code> with parameter $\tau = (\pi_0,\pi_1)$. 
+The main reason is that the parameter space is not open in $\mathcal{R}^2$.</p>
+</blockquote>
+
+<blockquote>
+  <p>Example 4  (Intrinsic parameterization):</p>
+
+  <p>We can show that the condition holds for Bernoulli family <code class="language-plaintext highlighter-rouge">$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&lt;\pi_0&lt;1  \}$</code> with parameter $\tau = \pi_0$.</p>
+</blockquote>
+
+<h1 id="fisher-rao-metric">Fisher-Rao Metric</h1>
+<hr />
+<p>Given an intrinstic parameterization, we can define the Fisher-Rao metric under this parameterization as:
+<code class="language-plaintext highlighter-rouge">$ F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ]$</code>.
+Note that the metric could be ill-defined since the expectation may not exist.</p>
+
+<p>Given a parameterization,  we can express the metric in a matrix form as
+$ \mathbf{F}(\tau) := E_{p(w|\tau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ]$,
+where $K$ is the number of entries of parameter array $\tau$ and 
+$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $ is a column vector.
+The matrix form is also known as the <strong>Fisher information matrix</strong> (FIM). Obviously, FIM depends on the choice of parameterizations. In many cases,  we could also compute FIM as
+$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$.</p>
+
+<p>The regularity condition guarantees that FIM is non-singular if the matrix exists.
+The condition is also related to the model identification in maximum likelihood estimation.</p>
+
+<p>In the following discussion, we will assume the metric is well-defined.
+In such cases, the Fisher-Rao metric is a valid Riemannian metric since the corresponding FIM is positive definite everywhere in an <strong>intrinsic</strong> parameter space.
+The Fisher-Rao metric is <strong>special</strong> since it is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.</p>
+
+<p><span style="color:red"><strong>Warning</strong></span>: An arbitrary Riemannian metric often is NOT useful for applications in machine learning.</p>
+
+<p>Recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
+If this smoothness requirement is satisfied, we can obtain a new intrinsic parameterization via the transformation.
+In <a href="/posts/2021/11/Geomopt03/#Pparameter-transform-and-invariance">Part III</a>,
+we will show FIM is also positive definite under this new intrinsic parameterization.</p>
+
+<h1 id="caveats-of-the-fisher-matrix-computation">Caveats of the Fisher matrix computation</h1>
+<hr />
+<p>There are some caveats when it comes to the Fisher matrix computation. In particular, the regularity condition should be satisfied.
+It is possible to define FIM under a non-intrinstic parameterization. However, FIM often is singular or ill-defined under a non-intrinstic  parameterization as shown below.</p>
+
+<blockquote>
+  <p>Example 1 (Ill-defined FIM):</p>
+
+  <p>Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
+The following computation is not correct. Do you make similar mistakes like this?</p>
+
+  <p>Let $  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$, where $\tau = (\pi_0,\pi_1)$. The derivative is
+<code class="language-plaintext highlighter-rouge">$$  
+\begin{aligned}
+\nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T 
+\end{aligned} \tag{8}\label{8}
+$$</code>
+Thus, by Eq. <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code>, FIM under this  parameterization is
+<code class="language-plaintext highlighter-rouge">$$ 
+\begin{aligned}
+F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\ 
+\mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;  0 \\ 0 &amp;  \frac{1}{\pi_1} \end{bmatrix}
+\end{aligned} \tag{9}\label{9}
+$$</code>
+This computation is not correct. Do you know why it is not correct?</p>
+
+  <p>The key reason is the equality constraint $ \pi_0+\pi_1=1 $. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code> is <strong>incorrect</strong>.</p>
+
+  <p>By definition, a Bernoulli distribution is valid only when the constraint holds. 
+Thus, the constraint $ \pi_0+\pi_1=1 $ must be satisifed when we compute the Fisher matrix since the computation involves the expectation of this distribution.</p>
+
+  <p>Note that the gradient is defined as $ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $.</p>
+
+  <p>Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative $ \partial_{\pi_0} \log p(w|\tau )$, we fix $\pi_1$ and allow $\pi_0$ to change.
+However, given that $\pi_1$ is fixed and $ \pi_0 $ is fully determined by $\pi_1$ due to the equality constraint $ \pi_0+\pi_1=1 $. 
+Therefore, $  \partial_{\pi_0} \log p(w|\tau ) $ is not well-defined.
+In other words, the above Fisher matrix computation is not correct since $ \nabla_{\tau} \log p(w|\tau ) $ does not exist.</p>
+</blockquote>
+
+<blockquote>
+  <p>Example 2  (Singular FIM):</p>
+
+  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with parameter $\tau = (\pi_0,\pi_1) $.</p>
+
+  <p>We can show that FIM under this  parameterization is singular.</p>
+
+  <p>A Bernoulli family with a non-singular FIM can be defined as <code class="language-plaintext highlighter-rouge">$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&lt;\pi_0&lt;1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi_0$</code>.</p>
+</blockquote>
+
+<h1 id="manifold-dimension">Manifold Dimension</h1>
+<hr />
+<p>We can define the dimension of a manifold by using the dimension of an intrinsic parametrization. Mathematically, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom.
+We now illustrate this by examples.</p>
+
+<blockquote>
+  <p>Example 1 (Manifold):</p>
+
+  <p>The unit circle dicussed before is a 1-dimensional manifold.</p>
+
+  <p><img src="/img/circle-org.png" alt="Source:Wikipedia" width="200" /></p>
+</blockquote>
+
+<blockquote>
+  <p>Example 2 (Manifold):</p>
+
+  <p>The open unit ball is a 2-dimensional manifold.</p>
+
+  <p><img src="/img/open-ball.png" alt="Source:Wikipedia" width="200" /></p>
+</blockquote>
+
+<blockquote>
+  <p>Example 3 (Non-manifold):</p>
+
+  <p>The closed unit ball is <strong>not</strong> a manifold.</p>
+
+  <p><img src="/img/closed-ball.png" alt="Source:Wikipedia" width="200" /></p>
+
+  <p>The main reason is that its boundary does not have the same degrees of freedom as its interior.</p>
+
+  <p>The closed ball is indeed a manifold with (closed) boundary. We will not consider such cases in these blog posts.</p>
+</blockquote>
+
+<blockquote>
+  <p>Example 4 (Stastical manifold):</p>
+
+  <p>Consider a 1-dimensional  Gaussian family.
+We specify an intrinsic parameterization $\mathbf{\tau}$  as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = (\mu,\sigma) $</code>. <br /></p>
+
+  <p>This Gaussian family is a  2-dimensional manifold.</p>
+</blockquote>
+
+<blockquote>
+  <p>Example 5 (Stastical manifold):</p>
+
+  <p>Consider a $d$-dimensional Gaussian family with zero mean.
+We specify an intrinsic parameterization $\mathbf{\tau}$  as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{\Sigma})$</code>, where <code class="language-plaintext highlighter-rouge">$\tau$</code> is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization function</a> <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code>. 
+The half-vectorization of a symmetric <code class="language-plaintext highlighter-rouge">$d \times d$</code> matrix <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code> denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{\Sigma})$</code> is a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array obtained by vectorizing only the lower triangular part of <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code>.</p>
+
+  <p>This Gaussian family is a $\frac{d(d+1)}{2}$-dimensional manifold. We will disucss more about this family in <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Part II</a>.</p>
+</blockquote>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#information-geometry" class="page__taxonomy-item" rel="tag">Information Geometry</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#natural-gradient-descent" class="page__taxonomy-item" rel="tag">Natural Gradient Descent</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#riemannian-manifold" class="page__taxonomy-item" rel="tag">Riemannian Manifold</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-09-06T00:00:00-07:00">September 06, 2021</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title" data-translate="share_on_label">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Part+I%3A+Manifolds+with+the+Fisher-Rao+Metric%20informationgeometryML.github.io%2Fposts%2F2021%2F09%2FGeomopt01%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=informationgeometryML.github.io%2Fposts%2F2021%2F09%2FGeomopt01%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=informationgeometryML.github.io%2Fposts%2F2021%2F09%2FGeomopt01%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+
+
+
+     
+
+  <script src="https://utteranc.es/client.js"
+    repo=informationgeometryML/informationgeometryML.github.io
+    issue-term=url
+    label=blog-comments
+    theme=github-light
+    crossorigin= "anonymous"
+    async>
+  </script>
+
+
+
+
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/posts/2021/10/Geomopt02/" class="pagination--pager" title="Part II: Natural-Gradients Evaluted at one Point
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/11/Geomopt04/" rel="permalink">Part IV: Natural and Riemannian  Gradient Descent
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  10 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/11/Geomopt03/" rel="permalink">Part III: Invariance of Natural-Gradients
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  10 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post should help readers to understand the invariance of natural-gradients.
+We will also discuss why the Euclidean steepest direction is NOT i...</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/10/Geomopt02/" rel="permalink">Part II: Natural-Gradients Evaluted at one Point
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  11 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.
+The main propose...</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow</strong></li>
+    
+    
+    
+    
+      <li><a href="https://github.com/informationgeometryML"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/custom.js"></script>
+  
+    <script src="/assets/js/translations.js"></script>
+  
+    <script src="/assets/js/math-code.js"></script>
+  
+
+
+
+  </body>
+</html>
+
