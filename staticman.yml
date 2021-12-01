@@ -44,7 +44,7 @@ comments:
 
   # Akismet spam detection.
   akismet:
-    enabled: true
+    enabled: false
     author: "name"
     authorEmail: "email"
   #   authorUrl: "url"
@@ -86,7 +86,8 @@ comments:
     email: md5
 
   reCaptcha:
-    enabled: true
+    #enabled: true
+    enabled: false
     siteKey: "6LcXW7McAAAAAH2V0NEG55ZboBkl3SPL4gQFO5dU"
     # Encrypt reCaptcha secret key using Staticman /encrypt endpoint
     # For more information, https://staticman.net/docs/encryption

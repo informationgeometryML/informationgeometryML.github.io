@@ -93,6 +93,11 @@
     font-size: ms(-2);
 }
 
+
+.utterances {
+  max-width: 100%;
+}
+
 .comment__form {
     @include margin-bottom(2);
   

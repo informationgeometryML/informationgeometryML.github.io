@@ -1,10 +1,10 @@
-# project
-_site
+_site/
+*.swp
 .sass-cache
 .vagrant
 .jekyll-cache
 
-
 _drafts
 *.gitignored
 *-gitignored.md
+
