@@ -111,7 +111,7 @@ analytics:
 author:
   name             : "Wu Lin,<br>Frank Nielsen,<br>Emtiyaz Khan,<br>Mark Schmidt"
   avatar           : #"/img/biopic.jpg"# path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Blog posts about informaion geometry in machine learning"
+  bio              : "Blog posts about information geometry in machine learning"
   googlescholar    : #
   cv               : # "/files/cv.pdf"
   home             : "/" # null (default), "absolute or relative url to link to author home"
