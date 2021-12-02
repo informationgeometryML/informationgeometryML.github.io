@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-11-30T23:09:48-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-02T13:09:14-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -850,7 +850,9 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 
 &lt;p&gt;Last but not least,
 we can also define vector additions and real scalar products in a tangent vector space  by using tangent directions of curves in the manifold with/without a parameterization.
-In other words, a vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; which is a parametric representation of a set of &lt;strong&gt;points&lt;/strong&gt; in a manifold.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. The main propose of this post is to show how to compute/define a natural-gradient. The space of natural-gradients evaluated at the same point is called a tangent space at that point.</summary></entry><entry><title type="html">Part I: Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+In other words, a vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; which is a parametric representation of a set of &lt;strong&gt;points&lt;/strong&gt; in a manifold.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. The main propose of this post is to show how to compute/define a natural-gradient. The space of natural-gradients evaluated at the same point is called a tangent space at that point.</summary></entry><entry><title type="html">Part I: Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;p&gt;&lt;a href=&quot;&quot;&gt;pdf&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;The FIM plays an essential role in statistics and machine learning&lt;/li&gt;
@@ -886,7 +888,7 @@ Here &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(x,y 
 &lt;blockquote&gt;
   &lt;p&gt;Variational Inference:&lt;/p&gt;
 
-  &lt;p&gt;Given a prior \(p(z)\) and a likelihood &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(\mathcal{D} | z ) $&lt;/code&gt; over an latent vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$z$&lt;/code&gt; and known data $ \mathcal{D} $, we can approximate the exact posterior &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p( z | \mathcal{D} ) =\frac{p(z,\mathcal{D})}{p(\mathcal{D})} $&lt;/code&gt; by optimizing a variational objective with respect to  an approximated distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ q(z | \tau) $&lt;/code&gt;:
+  &lt;p&gt;Given a prior &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(z) $&lt;/code&gt; and a likelihood &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(\mathcal{D} | z ) $&lt;/code&gt; over an latent vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$z$&lt;/code&gt; and known data &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{D} $&lt;/code&gt;, we can approximate the exact posterior &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p( z | \mathcal{D} ) =\frac{p(z,\mathcal{D})}{p(\mathcal{D})} $&lt;/code&gt; by optimizing a variational objective with respect to  an approximated distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ q(z | \tau) $&lt;/code&gt;:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \min_{\tau} \mathrm{KL} [ { q(z | \tau) || p( z | \mathcal{D} ) }   ] = E_{ \color{red}  {q(z | \tau)} } [ \log q(z | \tau) - \log p( z , \mathcal{D} )    ]  + \log p(\mathcal{D} ) 
@@ -943,7 +945,7 @@ By doing so, we can exploit the geometric structure of a parametric family denot
 &lt;p&gt;We will mainly focus on the geometric structure of (finite-dimensional) parametric families.
 For example, let’s consider a 1-dimensional Gaussian family.
 The following figure illustrates four distributions in a Gaussian family denoted by
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w | \tau ): = \mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $&lt;/code&gt;  and $\tau :=(\mu,\sigma) $.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w | \tau ): = \mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $&lt;/code&gt;  and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau :=(\mu,\sigma) $&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/gauss1d.png&quot; alt=&quot;Figure 2&quot; title=&quot;Source:Wikipedia&quot; /&gt;&lt;/p&gt;
 
@@ -1011,13 +1013,13 @@ Clearly, a point $ (0,1) $ highlighted in green is in the circle, where we consi
 &lt;hr /&gt;
 &lt;p&gt;Now, we discuss how to choose a parameterization given a parametric family so that we can exploit the geometric structure induced by the Fisher-Rao metric.&lt;/p&gt;
 
-&lt;p&gt;Given a parametric distribution family $ p(w|\tau) $ indexed by its parameter $\tau$, $ p(w|\tau) $ should be smooth w.r.t. $ \tau $ by considering $ w $ to be fixed.
-We say a parametrization is &lt;strong&gt;intrinsic&lt;/strong&gt; if the following condition for parameter (array) $\tau $ holds:&lt;/p&gt;
+&lt;p&gt;Given a parametric distribution family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; indexed by its parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; should be smooth w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \tau $&lt;/code&gt; by considering &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ w $&lt;/code&gt; to be fixed.
+We say a parametrization is &lt;strong&gt;intrinsic&lt;/strong&gt; if the following condition for parameter (array) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau $&lt;/code&gt; holds:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Regularity Condition&lt;/strong&gt;:  The set of partial derivatives 
-$ \{ \partial_{\tau_i} \log p(w|\tau) \}  $ should be linearly independent for any $ w $ and any $\tau$.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \partial_{\tau_i} \log p(w\|\tau) \} $&lt;/code&gt;  should be linearly independent for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ w $&lt;/code&gt; and any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Note that this regularity condition implicitly assumes that the parameter space $\Omega_\tau$ is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where K is the number of entries in parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.
+&lt;p&gt;Note that this regularity condition implicitly assumes that the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where K is the number of entries in parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.
 We will discuss more about this at &lt;a href=&quot;#caveats-of-the-fisher-matrix-computation&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;We will use the following examples to illustrate this condition.&lt;/p&gt;
@@ -1025,30 +1027,29 @@ We will discuss more about this at &lt;a href=&quot;#caveats-of-the-fisher-matri
 &lt;blockquote&gt;
   &lt;p&gt;Example 1 (Intrinsic parameterization):&lt;/p&gt;
 
-  &lt;p&gt;We will show that the regularity condition holds. Consider a 1-dimensional Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with parameter $\tau = (\mu,\sigma) $.
+  &lt;p&gt;We will show that the regularity condition holds. Consider a 1-dimensional Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;.
 The partial derivatives are
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
  \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
 \end{aligned} \tag{4}\label{4}
-$$&lt;/code&gt;
-For simplicity,  let $\mu=0$ and $\sigma=1$. We can simplify the partial derivatives as below.&lt;/p&gt;
+$$&lt;/code&gt;&lt;/p&gt;
 
   &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
  \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
 \end{aligned} \tag{5}\label{5}
 $$&lt;/code&gt;
-If $ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$ holds for any $w$, we have $c_1=c_2=0$, which implies  linear independence.&lt;/p&gt;
+If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$&lt;/code&gt; holds for any $w$, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_1=c_2=0$&lt;/code&gt;, which implies  linear independence.&lt;/p&gt;
 
-  &lt;p&gt;Similarly, we can show that for any $\mu \in \mathcal{R}$ and $\sigma &amp;gt;0$, 
+  &lt;p&gt;Similarly, we can show that for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu \in \mathcal{R}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sigma &amp;gt;0$&lt;/code&gt;, 
 the partial derivatives are linearly independent.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Example 2 (Non-intrinsic parameterization):&lt;/p&gt;
 
-  &lt;p&gt;We will show that the regularity condition fails. Consider a Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0  \}$&lt;/code&gt; with parameter $\tau = (\pi_0,\pi_1) $, where function $ \mathcal{I}(\cdot) $ is the indicator function.
+  &lt;p&gt;We will show that the regularity condition fails. Consider a Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1) $&lt;/code&gt;, where function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{I}(\cdot) $&lt;/code&gt; is the indicator function.
 The partial derivatives are&lt;/p&gt;
 
   &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -1061,7 +1062,7 @@ $$&lt;/code&gt;
 \partial_{\pi_1} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} 
 \end{aligned} \tag{7}\label{7}
 $$&lt;/code&gt;
-Note that when $c_0 = \pi_0 \neq 0 $ and $c_1= \pi_1 \neq 0$, we have $c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$.&lt;/p&gt;
+Note that when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_0 = \pi_0 \neq 0 $&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_1= \pi_1 \neq 0$&lt;/code&gt;, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;Therefore, we can show that 
 the partial derivatives are linearly dependent.&lt;/p&gt;
@@ -1070,14 +1071,14 @@ the partial derivatives are linearly dependent.&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Example 3 (Non-intrinsic parameterization):&lt;/p&gt;
 
-  &lt;p&gt;We will soon show that the  condition fails for Bernoulli family  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$&lt;/code&gt; with parameter $\tau = (\pi_0,\pi_1)$. 
+  &lt;p&gt;We will soon show that the  condition fails for Bernoulli family  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;. 
 The main reason is that the parameter space is not open in $\mathcal{R}^2$.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Example 4  (Intrinsic parameterization):&lt;/p&gt;
 
-  &lt;p&gt;We can show that the condition holds for Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&amp;lt;\pi_0&amp;lt;1  \}$&lt;/code&gt; with parameter $\tau = \pi_0$.&lt;/p&gt;
+  &lt;p&gt;We can show that the condition holds for Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&amp;lt;\pi_0&amp;lt;1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \pi_0$&lt;/code&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h1 id=&quot;fisher-rao-metric&quot;&gt;Fisher-Rao Metric&lt;/h1&gt;
@@ -1087,11 +1088,11 @@ The main reason is that the parameter space is not open in $\mathcal{R}^2$.&lt;/
 Note that the metric could be ill-defined since the expectation may not exist.&lt;/p&gt;
 
 &lt;p&gt;Given a parameterization,  we can express the metric in a matrix form as
-$ \mathbf{F}(\tau) := E_{p(w|\tau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ]$,
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}(\tau) := E_{p(w\|\tau) }  [ \Big( \nabla_{\tau} \log p(w\|\tau ) \Big)  \Big(\nabla_{\tau} \log (w\|\tau) \Big)^T ]$&lt;/code&gt;,
 where $K$ is the number of entries of parameter array $\tau$ and 
-$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $ is a column vector.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w\|\tau ) := [ \partial_{\tau_1} \log p(w\|\tau ), \cdots, \partial_{\tau_K} \log p(w\|\tau ) ]^T  $&lt;/code&gt; is a column vector.
 The matrix form is also known as the &lt;strong&gt;Fisher information matrix&lt;/strong&gt; (FIM). Obviously, FIM depends on the choice of parameterizations. In many cases,  we could also compute FIM as
-$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}(\tau) := - E_{p(w\|\tau) }  [  \nabla_{\tau}^2 \log p(w\|\tau )  ]$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;The regularity condition guarantees that FIM is non-singular if the matrix exists.
 The condition is also related to the model identification in maximum likelihood estimation.&lt;/p&gt;
@@ -1115,10 +1116,10 @@ It is possible to define FIM under a non-intrinstic parameterization. However, F
 &lt;blockquote&gt;
   &lt;p&gt;Example 1 (Ill-defined FIM):&lt;/p&gt;
 
-  &lt;p&gt;Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
+  &lt;p&gt;Consider Bernoulli family  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big\| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;.
 The following computation is not correct. Do you make similar mistakes like this?&lt;/p&gt;
 
-  &lt;p&gt;Let $  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$, where $\tau = (\pi_0,\pi_1)$. The derivative is
+  &lt;p&gt;Let &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$  p(w\|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;. The derivative is
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$  
 \begin{aligned}
 \nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T 
@@ -1133,23 +1134,23 @@ F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w
 $$&lt;/code&gt;
 This computation is not correct. Do you know why it is not correct?&lt;/p&gt;
 
-  &lt;p&gt;The key reason is the equality constraint $ \pi_0+\pi_1=1 $. Thus, Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{8}$&lt;/code&gt; is &lt;strong&gt;incorrect&lt;/strong&gt;.&lt;/p&gt;
+  &lt;p&gt;The key reason is the equality constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt;. Thus, Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{8}$&lt;/code&gt; is &lt;strong&gt;incorrect&lt;/strong&gt;.&lt;/p&gt;
 
   &lt;p&gt;By definition, a Bernoulli distribution is valid only when the constraint holds. 
-Thus, the constraint $ \pi_0+\pi_1=1 $ must be satisifed when we compute the Fisher matrix since the computation involves the expectation of this distribution.&lt;/p&gt;
+Thus, the constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt; must be satisifed when we compute the Fisher matrix since the computation involves the expectation of this distribution.&lt;/p&gt;
 
-  &lt;p&gt;Note that the gradient is defined as $ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $.&lt;/p&gt;
+  &lt;p&gt;Note that the gradient is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w\|\tau ) := [ \partial_{\pi_0} \log p(w\|\tau ), \partial_{\pi_1} \log p(w\|\tau ) ]^T $&lt;/code&gt;.&lt;/p&gt;
 
-  &lt;p&gt;Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative $ \partial_{\pi_0} \log p(w|\tau )$, we fix $\pi_1$ and allow $\pi_0$ to change.
-However, given that $\pi_1$ is fixed and $ \pi_0 $ is fully determined by $\pi_1$ due to the equality constraint $ \pi_0+\pi_1=1 $. 
-Therefore, $  \partial_{\pi_0} \log p(w|\tau ) $ is not well-defined.
-In other words, the above Fisher matrix computation is not correct since $ \nabla_{\tau} \log p(w|\tau ) $ does not exist.&lt;/p&gt;
+  &lt;p&gt;Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \partial_{\pi_0} \log p(w\|\tau )$&lt;/code&gt;, we fix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; and allow &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_0$&lt;/code&gt; to change.
+However, given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; is fixed and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0 $&lt;/code&gt; is fully determined by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; due to the equality constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt;. 
+Therefore, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$  \partial_{\pi_0} \log p(w\|\tau ) $&lt;/code&gt; is not well-defined.
+In other words, the above Fisher matrix computation is not correct since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w\|\tau ) $&lt;/code&gt; does not exist.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Example 2  (Singular FIM):&lt;/p&gt;
 
-  &lt;p&gt;Consider Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0  \}$&lt;/code&gt; with parameter $\tau = (\pi_0,\pi_1) $.&lt;/p&gt;
+  &lt;p&gt;Consider Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1) $&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;We can show that FIM under this  parameterization is singular.&lt;/p&gt;
 
@@ -1193,7 +1194,7 @@ We now illustrate this by examples.&lt;/p&gt;
   &lt;p&gt;Example 4 (Stastical manifold):&lt;/p&gt;
 
   &lt;p&gt;Consider a 1-dimensional  Gaussian family.
-We specify an intrinsic parameterization $\mathbf{\tau}$  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;. &lt;br /&gt;&lt;/p&gt;
+We specify an intrinsic parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}$&lt;/code&gt;  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;. &lt;br /&gt;&lt;/p&gt;
 
   &lt;p&gt;This Gaussian family is a  2-dimensional manifold.&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -1205,5 +1206,5 @@ We specify an intrinsic parameterization $\mathbf{\tau}$  as &lt;code class=&quo
 We specify an intrinsic parameterization $\mathbf{\tau}$  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \mathrm{vech}(\mathbf{\Sigma})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization function&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt;. 
 The half-vectorization of a symmetric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d \times d$&lt;/code&gt; matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt; denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{\Sigma})$&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d + 1)}{2}$&lt;/code&gt;-dim array obtained by vectorizing only the lower triangular part of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt;.&lt;/p&gt;
 
-  &lt;p&gt;This Gaussian family is a $\frac{d(d+1)}{2}$-dimensional manifold. We will disucss more about this family in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that, The FIM plays an essential role in statistics and machine learning For a parametric distribution, it induces a Riemannian geometric-structure</summary></entry></feed>
+  &lt;p&gt;This Gaussian family is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d+1)}{2}$&lt;/code&gt;-dimensional manifold. We will disucss more about this family in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">pdf</summary></entry></feed>

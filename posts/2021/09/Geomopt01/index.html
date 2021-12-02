@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part I: Manifolds with the Fisher-Rao Metric - Information Geometry in Machine Learning</title>
-<meta name="description" content="GoalThis blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,  The FIM plays an essential role in statistics and machine learning  For a parametric distribution, it induces a Riemannian geometric-structure">
+<meta name="description" content="pdf">
 
 
 
@@ -21,7 +21,7 @@
 <meta property="og:url" content="/posts/2021/09/Geomopt01/">
 
 
-  <meta property="og:description" content="GoalThis blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,  The FIM plays an essential role in statistics and machine learning  For a parametric distribution, it induces a Riemannian geometric-structure">
+  <meta property="og:description" content="pdf">
 
 
 
@@ -167,7 +167,7 @@
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <meta itemprop="headline" content="Part I: Manifolds with the Fisher-Rao Metric">
-    <meta itemprop="description" content="GoalThis blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,  The FIM plays an essential role in statistics and machine learning  For a parametric distribution, it induces a Riemannian geometric-structure">
+    <meta itemprop="description" content="pdf">
     <meta itemprop="datePublished" content="September 06, 2021">
     
 
@@ -190,7 +190,9 @@
 
       <section class="page__content" itemprop="text">
         
-        <h2 id="goal">Goal</h2>
+        <p><a href="">pdf</a></p>
+
+<h2 id="goal">Goal</h2>
 <p>This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,</p>
 <ul>
   <li>The FIM plays an essential role in statistics and machine learning</li>
@@ -226,7 +228,7 @@ Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathc
 <blockquote>
   <p>Variational Inference:</p>
 
-  <p>Given a prior \(p(z)\) and a likelihood <code class="language-plaintext highlighter-rouge">$ p(\mathcal{D} | z ) $</code> over an latent vector <code class="language-plaintext highlighter-rouge">$z$</code> and known data $ \mathcal{D} $, we can approximate the exact posterior <code class="language-plaintext highlighter-rouge">$ p( z | \mathcal{D} ) =\frac{p(z,\mathcal{D})}{p(\mathcal{D})} $</code> by optimizing a variational objective with respect to  an approximated distribution <code class="language-plaintext highlighter-rouge">$ q(z | \tau) $</code>:
+  <p>Given a prior <code class="language-plaintext highlighter-rouge">$ p(z) $</code> and a likelihood <code class="language-plaintext highlighter-rouge">$ p(\mathcal{D} | z ) $</code> over an latent vector <code class="language-plaintext highlighter-rouge">$z$</code> and known data <code class="language-plaintext highlighter-rouge">$ \mathcal{D} $</code>, we can approximate the exact posterior <code class="language-plaintext highlighter-rouge">$ p( z | \mathcal{D} ) =\frac{p(z,\mathcal{D})}{p(\mathcal{D})} $</code> by optimizing a variational objective with respect to  an approximated distribution <code class="language-plaintext highlighter-rouge">$ q(z | \tau) $</code>:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \min_{\tau} \mathrm{KL} [ { q(z | \tau) || p( z | \mathcal{D} ) }   ] = E_{ \color{red}  {q(z | \tau)} } [ \log q(z | \tau) - \log p( z , \mathcal{D} )    ]  + \log p(\mathcal{D} ) 
@@ -283,7 +285,7 @@ By doing so, we can exploit the geometric structure of a parametric family denot
 <p>We will mainly focus on the geometric structure of (finite-dimensional) parametric families.
 For example, let’s consider a 1-dimensional Gaussian family.
 The following figure illustrates four distributions in a Gaussian family denoted by
-<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code>, where <code class="language-plaintext highlighter-rouge">$ p(w | \tau ): = \mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>  and $\tau :=(\mu,\sigma) $.</p>
+<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code>, where <code class="language-plaintext highlighter-rouge">$ p(w | \tau ): = \mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>  and <code class="language-plaintext highlighter-rouge">$\tau :=(\mu,\sigma) $</code>.</p>
 
 <p><img src="/img/gauss1d.png" alt="Figure 2" title="Source:Wikipedia" /></p>
 
@@ -351,13 +353,13 @@ Clearly, a point $ (0,1) $ highlighted in green is in the circle, where we consi
 <hr />
 <p>Now, we discuss how to choose a parameterization given a parametric family so that we can exploit the geometric structure induced by the Fisher-Rao metric.</p>
 
-<p>Given a parametric distribution family $ p(w|\tau) $ indexed by its parameter $\tau$, $ p(w|\tau) $ should be smooth w.r.t. $ \tau $ by considering $ w $ to be fixed.
-We say a parametrization is <strong>intrinsic</strong> if the following condition for parameter (array) $\tau $ holds:</p>
+<p>Given a parametric distribution family <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> indexed by its parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> should be smooth w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> by considering <code class="language-plaintext highlighter-rouge">$ w $</code> to be fixed.
+We say a parametrization is <strong>intrinsic</strong> if the following condition for parameter (array) <code class="language-plaintext highlighter-rouge">$\tau $</code> holds:</p>
 
 <p><strong>Regularity Condition</strong>:  The set of partial derivatives 
-$ \{ \partial_{\tau_i} \log p(w|\tau) \}  $ should be linearly independent for any $ w $ and any $\tau$.</p>
+<code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w\|\tau) \} $</code>  should be linearly independent for any <code class="language-plaintext highlighter-rouge">$ w $</code> and any <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
 
-<p>Note that this regularity condition implicitly assumes that the parameter space $\Omega_\tau$ is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
+<p>Note that this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
 We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-computation">here</a>.</p>
 
 <p>We will use the following examples to illustrate this condition.</p>
@@ -365,30 +367,29 @@ We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-comput
 <blockquote>
   <p>Example 1 (Intrinsic parameterization):</p>
 
-  <p>We will show that the regularity condition holds. Consider a 1-dimensional Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with parameter $\tau = (\mu,\sigma) $.
+  <p>We will show that the regularity condition holds. Consider a 1-dimensional Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\mu,\sigma) $</code>.
 The partial derivatives are
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
  \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
 \end{aligned} \tag{4}\label{4}
-$$</code>
-For simplicity,  let $\mu=0$ and $\sigma=1$. We can simplify the partial derivatives as below.</p>
+$$</code></p>
 
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
  \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
 \end{aligned} \tag{5}\label{5}
 $$</code>
-If $ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$ holds for any $w$, we have $c_1=c_2=0$, which implies  linear independence.</p>
+If <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code> holds for any $w$, we have <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies  linear independence.</p>
 
-  <p>Similarly, we can show that for any $\mu \in \mathcal{R}$ and $\sigma &gt;0$, 
+  <p>Similarly, we can show that for any <code class="language-plaintext highlighter-rouge">$\mu \in \mathcal{R}$</code> and <code class="language-plaintext highlighter-rouge">$\sigma &gt;0$</code>, 
 the partial derivatives are linearly independent.</p>
 </blockquote>
 
 <blockquote>
   <p>Example 2 (Non-intrinsic parameterization):</p>
 
-  <p>We will show that the regularity condition fails. Consider a Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with parameter $\tau = (\pi_0,\pi_1) $, where function $ \mathcal{I}(\cdot) $ is the indicator function.
+  <p>We will show that the regularity condition fails. Consider a Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1) $</code>, where function <code class="language-plaintext highlighter-rouge">$ \mathcal{I}(\cdot) $</code> is the indicator function.
 The partial derivatives are</p>
 
   <p><code class="language-plaintext highlighter-rouge">$$
@@ -401,7 +402,7 @@ $$</code>
 \partial_{\pi_1} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} 
 \end{aligned} \tag{7}\label{7}
 $$</code>
-Note that when $c_0 = \pi_0 \neq 0 $ and $c_1= \pi_1 \neq 0$, we have $c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$.</p>
+Note that when <code class="language-plaintext highlighter-rouge">$c_0 = \pi_0 \neq 0 $</code> and <code class="language-plaintext highlighter-rouge">$c_1= \pi_1 \neq 0$</code>, we have <code class="language-plaintext highlighter-rouge">$c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$</code>.</p>
 
   <p>Therefore, we can show that 
 the partial derivatives are linearly dependent.</p>
@@ -410,14 +411,14 @@ the partial derivatives are linearly dependent.</p>
 <blockquote>
   <p>Example 3 (Non-intrinsic parameterization):</p>
 
-  <p>We will soon show that the  condition fails for Bernoulli family  <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$</code> with parameter $\tau = (\pi_0,\pi_1)$. 
+  <p>We will soon show that the  condition fails for Bernoulli family  <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. 
 The main reason is that the parameter space is not open in $\mathcal{R}^2$.</p>
 </blockquote>
 
 <blockquote>
   <p>Example 4  (Intrinsic parameterization):</p>
 
-  <p>We can show that the condition holds for Bernoulli family <code class="language-plaintext highlighter-rouge">$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&lt;\pi_0&lt;1  \}$</code> with parameter $\tau = \pi_0$.</p>
+  <p>We can show that the condition holds for Bernoulli family <code class="language-plaintext highlighter-rouge">$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&lt;\pi_0&lt;1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi_0$</code>.</p>
 </blockquote>
 
 <h1 id="fisher-rao-metric">Fisher-Rao Metric</h1>
@@ -427,11 +428,11 @@ The main reason is that the parameter space is not open in $\mathcal{R}^2$.</p>
 Note that the metric could be ill-defined since the expectation may not exist.</p>
 
 <p>Given a parameterization,  we can express the metric in a matrix form as
-$ \mathbf{F}(\tau) := E_{p(w|\tau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ]$,
+<code class="language-plaintext highlighter-rouge">$ \mathbf{F}(\tau) := E_{p(w\|\tau) }  [ \Big( \nabla_{\tau} \log p(w\|\tau ) \Big)  \Big(\nabla_{\tau} \log (w\|\tau) \Big)^T ]$</code>,
 where $K$ is the number of entries of parameter array $\tau$ and 
-$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $ is a column vector.
+<code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w\|\tau ) := [ \partial_{\tau_1} \log p(w\|\tau ), \cdots, \partial_{\tau_K} \log p(w\|\tau ) ]^T  $</code> is a column vector.
 The matrix form is also known as the <strong>Fisher information matrix</strong> (FIM). Obviously, FIM depends on the choice of parameterizations. In many cases,  we could also compute FIM as
-$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$.</p>
+<code class="language-plaintext highlighter-rouge">$ \mathbf{F}(\tau) := - E_{p(w\|\tau) }  [  \nabla_{\tau}^2 \log p(w\|\tau )  ]$</code>.</p>
 
 <p>The regularity condition guarantees that FIM is non-singular if the matrix exists.
 The condition is also related to the model identification in maximum likelihood estimation.</p>
@@ -455,10 +456,10 @@ It is possible to define FIM under a non-intrinstic parameterization. However, F
 <blockquote>
   <p>Example 1 (Ill-defined FIM):</p>
 
-  <p>Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
+  <p>Consider Bernoulli family  <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big\| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>.
 The following computation is not correct. Do you make similar mistakes like this?</p>
 
-  <p>Let $  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$, where $\tau = (\pi_0,\pi_1)$. The derivative is
+  <p>Let <code class="language-plaintext highlighter-rouge">$  p(w\|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$</code>, where <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. The derivative is
 <code class="language-plaintext highlighter-rouge">$$  
 \begin{aligned}
 \nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T 
@@ -473,23 +474,23 @@ F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w
 $$</code>
 This computation is not correct. Do you know why it is not correct?</p>
 
-  <p>The key reason is the equality constraint $ \pi_0+\pi_1=1 $. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code> is <strong>incorrect</strong>.</p>
+  <p>The key reason is the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code> is <strong>incorrect</strong>.</p>
 
   <p>By definition, a Bernoulli distribution is valid only when the constraint holds. 
-Thus, the constraint $ \pi_0+\pi_1=1 $ must be satisifed when we compute the Fisher matrix since the computation involves the expectation of this distribution.</p>
+Thus, the constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code> must be satisifed when we compute the Fisher matrix since the computation involves the expectation of this distribution.</p>
 
-  <p>Note that the gradient is defined as $ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $.</p>
+  <p>Note that the gradient is defined as <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w\|\tau ) := [ \partial_{\pi_0} \log p(w\|\tau ), \partial_{\pi_1} \log p(w\|\tau ) ]^T $</code>.</p>
 
-  <p>Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative $ \partial_{\pi_0} \log p(w|\tau )$, we fix $\pi_1$ and allow $\pi_0$ to change.
-However, given that $\pi_1$ is fixed and $ \pi_0 $ is fully determined by $\pi_1$ due to the equality constraint $ \pi_0+\pi_1=1 $. 
-Therefore, $  \partial_{\pi_0} \log p(w|\tau ) $ is not well-defined.
-In other words, the above Fisher matrix computation is not correct since $ \nabla_{\tau} \log p(w|\tau ) $ does not exist.</p>
+  <p>Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative <code class="language-plaintext highlighter-rouge">$ \partial_{\pi_0} \log p(w\|\tau )$</code>, we fix <code class="language-plaintext highlighter-rouge">$\pi_1$</code> and allow <code class="language-plaintext highlighter-rouge">$\pi_0$</code> to change.
+However, given that <code class="language-plaintext highlighter-rouge">$\pi_1$</code> is fixed and <code class="language-plaintext highlighter-rouge">$ \pi_0 $</code> is fully determined by <code class="language-plaintext highlighter-rouge">$\pi_1$</code> due to the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. 
+Therefore, <code class="language-plaintext highlighter-rouge">$  \partial_{\pi_0} \log p(w\|\tau ) $</code> is not well-defined.
+In other words, the above Fisher matrix computation is not correct since <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w\|\tau ) $</code> does not exist.</p>
 </blockquote>
 
 <blockquote>
   <p>Example 2  (Singular FIM):</p>
 
-  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with parameter $\tau = (\pi_0,\pi_1) $.</p>
+  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1) $</code>.</p>
 
   <p>We can show that FIM under this  parameterization is singular.</p>
 
@@ -533,7 +534,7 @@ We now illustrate this by examples.</p>
   <p>Example 4 (Stastical manifold):</p>
 
   <p>Consider a 1-dimensional  Gaussian family.
-We specify an intrinsic parameterization $\mathbf{\tau}$  as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = (\mu,\sigma) $</code>. <br /></p>
+We specify an intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}$</code>  as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = (\mu,\sigma) $</code>. <br /></p>
 
   <p>This Gaussian family is a  2-dimensional manifold.</p>
 </blockquote>
@@ -545,7 +546,7 @@ We specify an intrinsic parameterization $\mathbf{\tau}$  as <code class="langua
 We specify an intrinsic parameterization $\mathbf{\tau}$  as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{\Sigma})$</code>, where <code class="language-plaintext highlighter-rouge">$\tau$</code> is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization function</a> <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code>. 
 The half-vectorization of a symmetric <code class="language-plaintext highlighter-rouge">$d \times d$</code> matrix <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code> denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{\Sigma})$</code> is a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array obtained by vectorizing only the lower triangular part of <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code>.</p>
 
-  <p>This Gaussian family is a $\frac{d(d+1)}{2}$-dimensional manifold. We will disucss more about this family in <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Part II</a>.</p>
+  <p>This Gaussian family is a <code class="language-plaintext highlighter-rouge">$\frac{d(d+1)}{2}$</code>-dimensional manifold. We will disucss more about this family in <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Part II</a>.</p>
 </blockquote>
 
 
