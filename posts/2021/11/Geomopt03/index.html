@@ -182,7 +182,7 @@
 
 
 
-  10 minute read
+  8 minute read
 </p>
           
         </header>
@@ -487,37 +487,6 @@ $$</code></p>
 
 <p>In summary, the Euclidean steepest direction (which is a normalized Euclidean gradient) is NOT transformed according to the transformation rule for a Euclidean gradient.
 This also implies that Euclidean gradient descent is not invariant under a parameter transformation. We will cover more about this in Part IV.</p>
-
-<h1 id="gradient-direction-in-newtons-method-is-invariant">Gradient Direction in Newton’s Method is Invariant</h1>
-<hr />
-<p>Let’s consider the following optimization problem  <code class="language-plaintext highlighter-rouge">$\min_{\tau \in \Omega_\tau } f_\tau(\mathbf{\tau})$</code> under an intrinsic parameterization $\mathbf{\tau}$.</p>
-
-<p>For Newton’s method, we have to assume the loss function <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau})$</code> to be stronly convex so that the Hessian <code class="language-plaintext highlighter-rouge">$\nabla_\tau^2 f_\tau(\mathbf{\tau})$</code> is positive-definite everywhere in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.</p>
-
-<p>The key observation is that we can use the Hessian to define a new Riemannian metric <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{F}}_\tau:=\nabla_\tau^2 f_\tau(\mathbf{\tau})$</code> under parametrization $\tau$. Note that  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{F}}_\tau$</code> in general is not the same as the Fisher-Rao metric <code class="language-plaintext highlighter-rouge">${\mathbf{F}}_\tau$</code> .</p>
-
-<p>We can show that the new metric <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{F}}_\tau$</code> follows the same parameter transformation rule as the Fisher-Rao metric as shown below.
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\hat{\mathbf{F}}_{\tau} (\tau_0) = \underbrace{\mathbf{J}^T}_{  \frac{ \partial \lambda^i(\tau_0) }{ \partial \tau^k }  } \hat{\mathbf{F}}_{\lambda} (\lambda_0) \underbrace{\mathbf{J}}_{  \frac{ \partial \lambda^l(\tau_0) }{ \partial \tau^j }  } 
-\end{aligned}
-$$</code> where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{F}}_\tau(\tau_0) :=\nabla_\tau^2 f_\tau(\mathbf{\tau_0}) =\nabla_\tau^2 [ f_\lambda({\lambda}(\tau_0)) ]$</code> and $f_\tau(\mathbf{\tau}) =  f_\lambda({\lambda}(\tau))$.</p>
-
-<p>In this case, using the result of the <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a>, it is easy to show that
-the Riemannian steepest direction with this metric is</p>
-
-<p><code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\mathbf{v}_{\text{opt}}= -\frac{ \hat{\mathbf{F}}_\tau^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \hat{\mathbf{F}}_\tau^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_\hat{F}}
-=  -\frac{  [\nabla_\tau^2 f_\tau(\tau_0)]^{-1} \nabla_\tau f({\tau}_0) }{\| [\nabla_\tau^2 f_\tau(\tau_0)]^{-1} \nabla_\tau f(\mathbf{\tau}_0) \|_\hat{F}} 
-\end{aligned}
-$$</code> This Riemannian steepest direction is exactly the normalized gradient direction in Newton’s method, where we use the weighted inner product to define the norm.</p>
-
-<p>It is obvious that the gradient direction in Newton’s method is invariant since it is a speical case of the Riemannian steepest direction.
-This invariance property also implies that Newton’s method is linearly invariant.</p>
-
-<p>Readers may wonder why not use the Newton metric instead of the Fisher-Rao metric.  Key reasons are the Fisher-Rao metric is defined via the manifold while this Newton metric is defined via the loss function.
-As we will discuss more in Part V, computing Riemannians gradient with this Newton  metric are often more computaitonally intensive compared to the Fisher-Rao metric. Moreover, Riemannian gradients with this Newton  metric are dependent on the convexity of the loss function (see more about this in Part V).</p>
 
 
         
