@@ -1,0 +1,643 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.12.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Structured Natural Gradient Descent (ICML 2021) - Information Geometry in Machine Learning</title>
+<meta name="description" content="About this work [1]: (Youtube) talk, ICML paper,poster">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Information Geometry in Machine Learning">
+<meta property="og:title" content="Structured Natural Gradient Descent (ICML 2021)">
+<meta property="og:url" content="/posts/2021/07/ICML/">
+
+
+  <meta property="og:description" content="About this work [1]: (Youtube) talk, ICML paper,poster">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-07-05T00:00:00-07:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/posts/2021/07/ICML/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Information Geometry in ML",
+      "url": "https://github.com/pages/informationgeometryML/informationgeometryML.github.io",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Information Geometry in Machine Learning Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single mywide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Information Geometry in Machine Learning</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/" >Home</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/news/" >News</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/year-archive/" >Blog Posts</a>
+            </li>
+          
+        </ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Structured Natural Gradient Descent (ICML 2021)">
+    <meta itemprop="description" content="About this work [1]: (Youtube) talk, ICML paper,poster">
+    <meta itemprop="datePublished" content="July 05, 2021">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Structured Natural Gradient Descent (ICML 2021)
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  3 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>About this work <a class="citation" href="#lin2021tractable">[1]</a>: <a href="https://www.youtube.com/watch?v=vEY1ZxDJX8o&amp;t=11s">(Youtube) talk</a>, <a href="https://arxiv.org/abs/2102.07405">ICML paper</a>,
+<a href="/img/poster.pdf">poster</a></p>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Natural-gradient descent (NGD) on structured parameter spaces  is computationally challenging.
+We propose a flexible and efficient NGD method to incorporate structures.</p>
+
+<p>Our NGD method</p>
+<ul>
+  <li>generalizes the exponential natural evolutionary strategy</li>
+  <li>recovers existing  Newton-like algorithms</li>
+  <li>yields new structured second-order algorithms and structured adaptive-gradient methods</li>
+  <li>gives new NGD to learn structured covariances of Gaussian, Wishart and their mixtures</li>
+</ul>
+
+<p>Applications:</p>
+<ul>
+  <li>deep learning (adaptive-gradient),</li>
+  <li>non-convex optimization (structured 2nd-order),</li>
+  <li>evolution strategies (gradient-free),</li>
+  <li>variational inference (multimodal density with Monte Carlo gradient).</li>
+</ul>
+
+<hr />
+<h1 id="ngd-for-optimization-inference-and-search">NGD for Optimization, Inference, and Search</h1>
+
+<p>A unified view for problems in optimization, inference, and search
+as optimization over a parametric family <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code>:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+   \min_{ \tau \in \Omega_\tau } \mathcal{L}(\tau):= \mathrm{E}_{q(\text{w}| \tau )} \big[ \ell(w) \big] + \gamma \mathrm{E}_{q(\text{w} |\tau )} \big[ \log q(w|\tau) \big] 
+\end{aligned} \tag{1}\label{1}
+$$</code>
+where <code class="language-plaintext highlighter-rouge">$w$</code> is the decision variable,  <code class="language-plaintext highlighter-rouge">$\ell(w)$</code> is a loss function, <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is the parameter space of <code class="language-plaintext highlighter-rouge">$q$</code>, and <code class="language-plaintext highlighter-rouge">$\gamma\ge 0$</code> is a constant.</p>
+
+<p>Gradient Descent to solve <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\textrm{GD: } \tau_{t+1} \leftarrow \tau_t - \alpha \nabla_{\tau_t} \mathcal{L}(\tau)
+\end{aligned}
+$$</code></p>
+
+<p>Natural-gradient Descent to solve <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\textrm{Standard NGD: } \tau_{t+1} \leftarrow \tau_t - \beta\,\, \big[ \mathbf{F}_{\tau} (\tau_t) \big]^{-1} \nabla_{\tau_t} \mathcal{L}(\tau)
+\end{aligned} 
+$$</code></p>
+
+<p>Advantages of NGD:</p>
+<ul>
+  <li>recovers a Newton-like update for Gaussian <code class="language-plaintext highlighter-rouge">$q$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code> and precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mu_{t+1}  &amp; \leftarrow \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( w) \big] } \\
+\mathbf{S}_{t+1}  &amp; \leftarrow (1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w^2 \ell(w) \big] }
+\end{aligned} 
+$$</code></li>
+  <li>less sensitive to parameter transforms  than GD</li>
+  <li>converges faster than GD</li>
+</ul>
+
+<p>Challenges of Standard NGD:</p>
+<ul>
+  <li>NGD could violate parameterization constraints</li>
+  <li>Singular FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\tau}(\tau)$</code> of <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code></li>
+  <li>Limited covariance structures</li>
+  <li>Ad-hoc approximations for cost reductions</li>
+  <li>Complicated and inefficient NG computation</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Fig 1</th>
+      <th style="text-align: center">Fig 2</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="/img/icml2021-fig01.png" width="500" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-fig02.png" width="500" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="ngd-using-local-parameterizations">NGD using Local Parameterizations</h1>
+
+<ul>
+  <li>Global (original) parameterization <code class="language-plaintext highlighter-rouge">$\tau$</code> for <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code></li>
+  <li>New Auxiliary parameterization <code class="language-plaintext highlighter-rouge">$\lambda$</code>  with a surjective map: <code class="language-plaintext highlighter-rouge">$\tau= \psi(\lambda)$</code></li>
+  <li>Local parameterization<code class="language-plaintext highlighter-rouge">$\eta$</code> for <code class="language-plaintext highlighter-rouge">$\eta$</code> at a current value <code class="language-plaintext highlighter-rouge">$\lambda_t$</code> with a local map:
+<code class="language-plaintext highlighter-rouge">$\lambda = \phi_{\lambda_t} (\eta)$</code>;
+<code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> is
+<span style="color:red"> tight </span> at <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$ (we assume <code class="language-plaintext highlighter-rouge">$\eta_0 =\mathbf{0}$</code>)
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned} 
+\color{red}{\textrm{Our NGD}}: \quad
+\lambda_{t+1} &amp; \leftarrow  \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big) \\
+\tau_{t+1} &amp; \leftarrow \psi\big( \lambda_{t+1} \big)
+\end{aligned} 
+$$</code>
+where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code> is
+ the natural-gradient at <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>, which is computed by the chain rule,
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned} 
+      \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;=  \color{green} {\mathbf{F}_{\eta}(\eta_0)^{-1} } 
+       \,\, \big[ \nabla_{\eta_0} \big[ \psi \circ \phi_{\lambda_t} (\eta) \big]
+      \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
+\end{aligned} 
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\eta}(\eta_0)$</code>  is the (exact) FIM for  <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to  <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>.</li>
+</ul>
+
+<p><img src="/img/icml2021-fig03.png" width="500" /> 
+ Standard NGD is a special case of our NGD.</p>
+
+<hr />
+<h1 id="gaussian-example-with-full-covariance">Gaussian example with full covariance</h1>
+
+<p>Notations:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$\mathrm{GL}^{p\times p}$</code>: Invertible Matrices (General Linear Group),</li>
+  <li><code class="language-plaintext highlighter-rouge">$\mathcal{D}^{p\times p}$</code>: Diagonal Matrices,</li>
+  <li><code class="language-plaintext highlighter-rouge">$\mathcal{D}_{++}^{p\times p}$</code>: Diagonal and invertible Matrices (Diagonal Matrix Group),</li>
+  <li><code class="language-plaintext highlighter-rouge">$\mathcal{S}_{++}^{p\times p}$</code>: Positive-definite Matrices,</li>
+  <li><code class="language-plaintext highlighter-rouge">$\mathcal{S}^{p\times p}$</code>: Symmetric Matrices.</li>
+</ul>
+
+<p>Consider a Gaussian family <code class="language-plaintext highlighter-rouge">$q(w|\mu,\mathbf{S})$</code> with mean $\mu$ and precision $\mathbf{S}=\Sigma^{-1}$.</p>
+
+<p>The global, auxiliary, and local parameterizations are:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+        \tau &amp;= \Big\{\mu \in \mathcal{R}^p, \mathbf{S} \in \mathcal{S}_{++}^{p\times p} \Big\},  &amp; \mathbf{S}: \text{ strictly positive-definite space } \\
+        \lambda &amp; = \Big\{ \mu \in  \mathcal{R}^p , \mathbf{B} \in\mathrm{GL}^{p\times p} \Big\}, &amp;\mathbf{B}: \text{ (closed) matrix Lie group}\\
+        \eta &amp;= \Big\{ \delta\in  \mathcal{R}^p, \mathbf{M} \in\mathcal{S}^{p\times p}  \Big\}, &amp; \mathbf{M}: \text{ Lie sub-algebra }
+\end{aligned}
+$$</code></p>
+
+<p>Define <code class="language-plaintext highlighter-rouge">$\mathbf{h}(\mathbf{M}):=\mathbf{I}+\mathbf{M}+\frac{1}{2} \mathbf{M}^2$</code>. 
+Maps <code class="language-plaintext highlighter-rouge">$\psi$</code> and  <code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> are :
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+        \Big\{ \begin{array}{c} \mu \\ \mathbf{S} \end{array} \Big\} = \psi(\lambda) &amp; := \Big \{ \begin{array}{c} \mu \\ \mathbf{B}\mathbf{B}^\top \end{array} \Big \}, \\
+       \Big \{ \begin{array}{c} \mu \\ \mathbf{B} \end{array} \Big \} = \phi_{\lambda_t}(\eta) &amp; := \Big \{ \begin{array}{c} \mu_t + \mathbf{B}_t^{-T} \delta \\ \mathbf{B}_t \mathbf{h} (\mathbf{M}) \end{array} \Big \}.
+\end{aligned}
+$$</code></p>
+
+<p>Our NGD in <code class="language-plaintext highlighter-rouge">$  \lambda $</code> is below, where we assume $\eta_0=\mathbf{0}$.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\lambda_{t+1} = 
+  \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{S}_{t+1} \end{array} \Big\} =
+  \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big)
+  =\Big\{ \begin{array}{c}  \mu_t - \beta \mathbf{B}_{t}^{-T} \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathbf{B}_t  \mathbf{h}\big(\beta \mathbf{B}_t^{-1}\mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \end{array} \Big\} 
+ \end{aligned}
+$$</code></p>
+
+<p>Tractable natural-gradient at <code class="language-plaintext highlighter-rouge">$\eta_0=\{\delta_0, \mathbf{M}_0\}$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t=\{\mu_t,\mathbf{B}_t\}$</code>:</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+    \hat{\mathbf{g}}_{\eta_0}^{(t)} =
+ \Big(  \begin{array}{c} \hat{\mathbf{g}}_{\delta_0}^{(t)}\\ \mathrm{vec}(  \hat{\mathbf{g}}_{M_0}^{(t)})\end{array}   \Big)
+=   \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big]
+\end{aligned}
+$$</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">$\mathbf{g}_\mu$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\Sigma}$</code> are Euclidean gradients computed via Stein’s lemma:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{g}_\mu &amp;= \nabla_{\mu}\mathcal{L}(\tau) = E_{q}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] }, \\
+\mathbf{g}_{\Sigma}  &amp;= \nabla_{S^{-1}}\mathcal{L}(\tau)
+ = \frac{1}{2}  E_{q}{ \big[ \nabla_w^2 \ell( \mathbf{w}) \big] } - \frac{\gamma}{2} \mathbf{S} 
+ \end{aligned}
+$$</code></p>
+
+<h1 id="references">References</h1>
+<p class="bibliography"><p><span id="lin2021tractable">[1] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Tractable structured natural gradient descent using local parameterizations," <i>International Conference on Machine Learning (ICML)</i> (2021).</span></p></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#information-geometry" class="page__taxonomy-item" rel="tag">Information Geometry</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#matrix-lie-groups" class="page__taxonomy-item" rel="tag">Matrix Lie Groups</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#natural-gradient-descent" class="page__taxonomy-item" rel="tag">Natural Gradient Descent</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-07-05T00:00:00-07:00">July 05, 2021</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title" data-translate="share_on_label">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Structured+Natural+Gradient+Descent+%28ICML+2021%29%20informationgeometryML.github.io%2Fposts%2F2021%2F07%2FICML%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=informationgeometryML.github.io%2Fposts%2F2021%2F07%2FICML%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=informationgeometryML.github.io%2Fposts%2F2021%2F07%2FICML%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+
+
+
+     
+
+  <script src="https://utteranc.es/client.js"
+    repo=informationgeometryML/informationgeometryML.github.io
+    issue-term=url
+    label=blog-comments
+    theme=github-light
+    crossorigin= "anonymous"
+    async>
+  </script>
+
+
+
+
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/posts/2021/09/Geomopt01/" class="pagination--pager" title="Part I: Manifolds with the Fisher-Rao Metric
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/11/Geomopt04/" rel="permalink">Part IV: Natural and Riemannian  Gradient Descent
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  10 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/11/Geomopt03/" rel="permalink">Part III: Invariance of Natural-Gradients
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  9 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post should help readers to understand the invariance of natural-gradients.
+We will also discuss why the Euclidean steepest direction is NOT i...</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/10/Geomopt02/" rel="permalink">Part II: Natural-Gradients Evaluted at one Point
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  11 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.
+The main propose...</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/09/Geomopt01/" rel="permalink">Part I: Manifolds with the Fisher-Rao Metric
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  12 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,
+
+  The FIM plays an ess...</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow</strong></li>
+    
+    
+    
+    
+      <li><a href="https://github.com/informationgeometryML"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/custom.js"></script>
+  
+    <script src="/assets/js/translations.js"></script>
+  
+    <script src="/assets/js/math-code.js"></script>
+  
+
+
+
+  </body>
+</html>
+
