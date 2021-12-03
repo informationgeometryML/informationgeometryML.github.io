@@ -182,7 +182,7 @@
 
 
 
-  4 minute read
+  7 minute read
 </p>
           
         </header>
@@ -221,10 +221,10 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
 as optimization over a parametric family <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code>:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-   \min_{ \tau \in \Omega_\tau } \mathcal{L}(\tau):= \mathrm{E}_{q(\text{w}| \tau )} \big[ \ell(w) \big] + \gamma \mathrm{E}_{q(\text{w} |\tau )} \big[ \log q(w|\tau) \big] 
+   \min_{ \tau \in \Omega_\tau } \mathcal{L}(\tau):= \mathrm{E}_{q(\text{w}| \tau )} \big[ \ell(\mathbf{w}) \big] + \gamma \mathrm{E}_{q(\text{w} |\tau )} \big[ \log q(w|\tau) \big] 
 \end{aligned} \tag{1}\label{1}
 $$</code>
-where <code class="language-plaintext highlighter-rouge">$w$</code> is the decision variable,  <code class="language-plaintext highlighter-rouge">$\ell(w)$</code> is a loss function, <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is the parameter space of <code class="language-plaintext highlighter-rouge">$q$</code>, and <code class="language-plaintext highlighter-rouge">$\gamma\ge 0$</code> is a constant.</p>
+where <code class="language-plaintext highlighter-rouge">$w$</code> is the decision variable,  <code class="language-plaintext highlighter-rouge">$\ell(\mathbf{w})$</code> is a loss function, <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is the parameter space of <code class="language-plaintext highlighter-rouge">$q$</code>, and <code class="language-plaintext highlighter-rouge">$\gamma\ge 0$</code> is a constant.</p>
 
 <p>Gradient descent and natural-gradient descent  to solve <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>:
 <code class="language-plaintext highlighter-rouge">$$
@@ -239,13 +239,15 @@ $$</code></p>
   <li>recovers a Newton-like update for Gaussian <code class="language-plaintext highlighter-rouge">$q$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code> and precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mu_{t+1}  &amp; \leftarrow \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( w) \big] } \\
-\mathbf{S}_{t+1}  &amp; \leftarrow (1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w^2 \ell(w) \big] }
+\mu_{t+1}  &amp; \leftarrow \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( \mathbf{w}) \big] } \\
+\mathbf{S}_{t+1}  &amp; \leftarrow (1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) \big] }
 \end{aligned} \tag{2}\label{2}
 $$</code></li>
   <li>is less sensitive to parameter transformations  than GD</li>
   <li>converges faster than GD</li>
 </ul>
+
+<p><img src="/img/icml2021-fig01.png" width="500" /></p>
 
 <p>Challenges of Standard NGD:</p>
 <ul>
@@ -256,53 +258,44 @@ $$</code></li>
   <li>Complicated and inefficient NG computation</li>
 </ul>
 
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">Fig 1</th>
-      <th style="text-align: center">Fig 2</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center"><img src="/img/icml2021-fig01.png" width="500" /></td>
-      <td style="text-align: center"><img src="/img/icml2021-fig02.png" width="500" /></td>
-    </tr>
-  </tbody>
-</table>
-
 <h1 id="ngd-using-local-parameterizations">NGD using Local Parameterizations</h1>
 
+<p>Our NGD performs updates in local parameter spaces while maintaining structures via matrix groups in auxiliary parameters. This decoupling enables a tractable NGD that exploits the structures in auxiliary parameter spaces.</p>
+
+<p>We consider the following three kinds of parameterizations.</p>
 <ul>
   <li>Global (original) parameterization <code class="language-plaintext highlighter-rouge">$\tau$</code> for <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code></li>
-  <li>New Auxiliary parameterization <code class="language-plaintext highlighter-rouge">$\lambda$</code>  with a surjective map: <code class="language-plaintext highlighter-rouge">$\tau= \psi(\lambda)$</code></li>
+  <li>New auxiliary parameterization <code class="language-plaintext highlighter-rouge">$\lambda$</code>  with a surjective map: <code class="language-plaintext highlighter-rouge">$\tau= \psi(\lambda)$</code></li>
   <li>Local parameterization <code class="language-plaintext highlighter-rouge">$\eta$</code> for <code class="language-plaintext highlighter-rouge">$\lambda$</code> at a current value <code class="language-plaintext highlighter-rouge">$\lambda_t$</code> with a local map:
 <code class="language-plaintext highlighter-rouge">$\lambda = \phi_{\lambda_t} (\eta)$</code>, where<br />
 <code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> is
-<span style="color:red"> tight </span> at <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$, and  we assume <code class="language-plaintext highlighter-rouge">$\eta_0 =\mathbf{0}$</code> the relative origin.
-<code class="language-plaintext highlighter-rouge">$$ 
+<span style="color:red"> tight </span> at <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$, and  we assume <code class="language-plaintext highlighter-rouge">$\eta_0 =\mathbf{0}$</code> to be a relative origin.</li>
+</ul>
+
+<fieldset class="field-set">
+  <legend class="leg-title"><span style="color:red">Our NGD:</span></legend>
+  <p><code class="language-plaintext highlighter-rouge">$$ 
 \begin{aligned} 
-\color{red}{\textrm{Our NGD}}: \quad
 \lambda_{t+1} &amp; \leftarrow  \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big) \\
 \tau_{t+1} &amp; \leftarrow \psi\big( \lambda_{t+1} \big)
 \end{aligned} 
-$$</code>
-where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code> is
+$$</code></p>
+</fieldset>
+<p>where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code> is
  the natural-gradient <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code> at <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>, which is computed by the chain rule,
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned} 
-      \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;=  \color{green} {\mathbf{F}_{\eta}(\eta_0)^{-1} } 
-       \,\, \big[ \nabla_{\eta_0} \big[ \psi \circ \phi_{\lambda_t} (\eta) \big]
-      \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
+        \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;=  \color{green} {\mathbf{F}_{\eta}(\eta_0)^{-1} } 
+         \,\, \big[ \nabla_{\eta_0} \big[ \psi \circ \phi_{\lambda_t} (\eta) \big]
+        \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
 \end{aligned} 
-$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\eta}(\eta_0)$</code>  is the (exact) FIM for  <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to  <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>.</li>
-</ul>
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\eta}(\eta_0)$</code>  is the (exact) FIM for  <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to  <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>.</p>
 
 <p><img src="/img/icml2021-fig03.png" width="500" /> 
  Standard NGD is a special case of our NGD.</p>
 
 <hr />
-<h1 id="gaussian-example-with-full-covariance">Gaussian example with full covariance</h1>
+<h1 id="gaussian-example-with-full-covariance">Gaussian Example with Full Covariance</h1>
 
 <p>Notations:</p>
 <ul>
@@ -337,7 +330,7 @@ $$</code></p>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \lambda_{t+1} = 
-  \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{S}_{t+1} \end{array} \Big\} =
+  \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} =
   \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big)
   =\Big\{ \begin{array}{c}  \mu_t - \beta \mathbf{B}_{t}^{-T} \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathbf{B}_t  \mathbf{h}\big(\beta \mathbf{B}_t^{-1}\mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \end{array} \Big\} 
  \end{aligned}
@@ -356,42 +349,259 @@ $$</code></p>
 <p>Note that <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\mu$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\Sigma}$</code> are Euclidean gradients of <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> computed via Stein’s lemma:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{g}_\mu &amp;= \nabla_{\mu}\mathcal{L}(\tau) = E_{q}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] }, \\
-\mathbf{g}_{\Sigma}  &amp;= \nabla_{S^{-1}}\mathcal{L}(\tau)
+\mathbf{g}_\mu = \nabla_{\mu}\mathcal{L}(\tau) = E_{q}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] }, \,\,\,\,\,
+\mathbf{g}_{\Sigma}  = \nabla_{S^{-1}}\mathcal{L}(\tau)
  = \frac{1}{2}  E_{q}{ \big[ \nabla_w^2 \ell( \mathbf{w}) \big] } - \frac{\gamma}{2} \mathbf{S} 
- \end{aligned}
+ \end{aligned} \tag{3}\label{3}
 $$</code></p>
 
-<p>Update on <code class="language-plaintext highlighter-rouge">$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$</code> is like update of <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{G}_t := E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) ] } -\gamma \mathbf{S}_t$</code>.
+<p>Our update on <code class="language-plaintext highlighter-rouge">$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$</code> and $\mu_{t+1}$ is like update of <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
+&amp; \mu_{t+1}   = \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] } \\
 &amp;\mathbf{S}_{t+1} =   \underbrace{ \overbrace{(1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) \big] }}^{\text{standard NGD on $\mathbf{S}$ }} + \color{red}{ \frac{\beta^2}{2} \mathbf{G}_t \mathbf{S}_t^{-1}\mathbf{G}_t}
 }_{\color{red}{\text{ RGD with retraction} }}+ O(\beta^3)
  \end{aligned}
-$$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong></span> matrix in matrix group <code class="language-plaintext highlighter-rouge">$\mathrm{GL}^{p\times p}$</code>.</p>
+$$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong></span> matrix in matrix group <code class="language-plaintext highlighter-rouge">$\mathrm{GL}^{p\times p}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{G}_t := E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) ] } -\gamma \mathbf{S}_t$</code>.</p>
 
-<hr />
-<h1 id="gaussian-example-with-structured-covariance">Gaussian example with structured covariance</h1>
+<p>Well-known structures in matrix $\mathbf{B}$ are illustrated in the following figure.</p>
 
 <table>
   <thead>
     <tr>
       <th style="text-align: center">Dense</th>
       <th style="text-align: center">Diagonal</th>
-      <th style="text-align: center">lower-triangular</th>
-      <th style="text-align: center">upper-triangular</th>
-      <th style="text-align: center">Hierarchical</th>
-      <th style="text-align: center">Kronecker product</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style="text-align: center"><img src="/img/icml2021-group-full.png" width="250" /></td>
       <td style="text-align: center"><img src="/img/icml2021-group-diag.png" width="250" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="gaussian-example-with-flexiable-structured-covariance">Gaussian Example with Flexiable Structured Covariance</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Lower-triangular</th>
+      <th style="text-align: center">Upper-triangular</th>
+      <th style="text-align: center">Hierarchical</th>
+      <th style="text-align: center">Kronecker product</th>
+      <th style="text-align: center">Triangular-Toeplitz</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
       <td style="text-align: center"><img src="/img/icml2021-group-low.png" width="250" /></td>
       <td style="text-align: center"><img src="/img/icml2021-group-up.png" width="250" /></td>
       <td style="text-align: center"><img src="/img/icml2021-group-hie.png" width="250" /></td>
       <td style="text-align: center"><img src="/img/icml2021-group-kro.png" width="250" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-tri-Toep.png" width="250" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>A structured Gaussian example: Auxiliary  parameter $\mathbf{B}$ lives in  a structured space (matrix Lie group):  <code class="language-plaintext highlighter-rouge">${\cal{B}_{\text{up}}}(k)$</code>,
+a <span style="color:red">block upper-triangular</span> sub-group of <code class="language-plaintext highlighter-rouge">$\mathrm{GL}^{p \times p}$</code>;</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+{\cal{B}_{\text{up}}}(k)  := \Big\{ 
+\begin{bmatrix}
+\mathbf{B}_A &amp;  \mathbf{B}_B  \\
+ \mathbf{0} &amp; \mathbf{B}_D
+      \end{bmatrix} \Big| &amp; \mathbf{B}_A \in \mathrm{GL}^{k \times k},\,
+ \mathbf{B}_D  \in{\cal D}^{(p-k) \times (p-k)}_{++}  \Big\},\,\,
+ \end{aligned}
+$$</code></p>
+
+<p>When <code class="language-plaintext highlighter-rouge">$k=0$</code>, the space <code class="language-plaintext highlighter-rouge">${\cal{B}_{\text{up}}}(0) = {\cal D}^{p \times p}_{++}$</code> becomes  the diagonal case.
+When <code class="language-plaintext highlighter-rouge">$k=p$</code>, <code class="language-plaintext highlighter-rouge">${\cal{B}_{\text{up}}}(p) = \mathrm{GL}^{p\times p}$</code> becomes the dense case.</p>
+
+<p>Consider a local parameter space (Lie sub-algebra): <code class="language-plaintext highlighter-rouge">${\cal{M}_{\text{up}}}(k)$</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+{\cal{M}_{\text{up}}}(k):  = \Big\{ 
+\begin{bmatrix}
+\mathbf{M}_A &amp;  \mathbf{M}_B  \\
+ \mathbf{0} &amp; \mathbf{M}_D
+      \end{bmatrix} \Big| &amp;  \mathbf{M}_A \in{\cal S}^{k \times k}, \,
+ \mathbf{M}_D  \in{\cal D}^{(p-k) \times (p-k)} \Big\}
+ \end{aligned}
+$$</code></p>
+
+<p>The global, auxiliary, and local parameterizations :
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+       \tau &amp;= \Big\{\mu \in \mathcal{R}^p,  \mathbf{S}=\mathbf{B} \mathbf{B}^T \in \mathcal{S}_{++}^{p\times p} | \mathbf{B} \in {\cal{B}_{\text{up}}}(k) \Big\}, \\
+        \lambda &amp; = \Big\{ \mu \in \mathcal{R}^p,  \mathbf{B} \in {\cal{B}_{\text{up}}}(k) \Big\},\\
+        \eta &amp;= \Big\{ \delta\in \mathcal{R}^p,  \mathbf{M} \in {\cal{M}_{\text{up}}}(k)   \Big\}.
+ \end{aligned}
+$$</code></p>
+
+<p>Maps <code class="language-plaintext highlighter-rouge">$\psi$</code>, <code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> are defined in the previous section. <code class="language-plaintext highlighter-rouge">$\kappa_{\text{up}}(\mathbf{X})$</code> extracts non-zero entries of <code class="language-plaintext highlighter-rouge">${\cal{M}_{\text{up}}}(k)$</code> from <code class="language-plaintext highlighter-rouge">$\mathbf{X}$</code>.</p>
+
+<p>Our NGD update in the <code class="language-plaintext highlighter-rouge">$  \lambda $</code> space is shown below, where we assume $\eta_0=\mathbf{0}$.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\lambda_{t+1} = 
+  \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} =
+  \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big)
+  =\Big\{ \begin{array}{c}  \mu_t - \beta \mathbf{B}_{t}^{-T} \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ 
+\mathbf{B}_t  \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)  \end{array} \Big\}   
+ \end{aligned}
+$$</code>
+where <code class="language-plaintext highlighter-rouge">$\odot$</code> is the elementwise product , <code class="language-plaintext highlighter-rouge">$\kappa_{\text{up}}(\mathbf{X}) \in {\cal{M}_{\text{up}}}(k)$</code>, and
+<code class="language-plaintext highlighter-rouge">$ \mathbf{C}_{\text{up}} = 
+ \begin{bmatrix}
+\frac{1}{2} \mathbb{1} &amp;  \mathbb{1}   \\
+ \mathbf{0} &amp; \frac{1}{2} \mathbf{I}_D
+      \end{bmatrix}  \in {\cal{M}_{\text{up}}}(k)$</code>.</p>
+
+<p>Note that <code class="language-plaintext highlighter-rouge">$ \mathbf{B}_{t+1} \in {\cal{S}_{\text{up}}}(k)$</code> thanks to the property of <code class="language-plaintext highlighter-rouge">$\cal{M}_{\text{up}}(k)$</code>:
+<code class="language-plaintext highlighter-rouge">$\mathbf{h}\big(\mathbf{M}\big) \in {\cal{B}_{\text{up}}}(k) $</code> for any <code class="language-plaintext highlighter-rouge">$\mathbf{M} \in \cal{M}_{\text{up}}(k)$</code>.</p>
+
+<p>Our NGD method:</p>
+<ul>
+  <li>is a systemic approach to incorporate structures</li>
+  <li>induces exact and non-singular FIMs</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Standard NGD</th>
+      <th style="text-align: center">Our NGD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="/img/icml2021-fig02.png" width="500" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-fig04.png" width="500" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="applications">Applications</h1>
+
+<h2 id="structured-2nd-order-methods-for-non-convex-optimization">Structured 2nd-order Methods for Non-convex Optimization</h2>
+
+<p>Given an optimization problem
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\mu \in \mathcal{R}^p} \ell(\mu),
+ \end{aligned}\tag{4}\label{4}
+$$</code></p>
+
+<p>we formulate a new problem over Gaussian <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)$</code> with structured covariance.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+   \min_{\tau \in \Omega_\tau} E_{q(w|\tau)} \big[ \ell(\mathbf{w}) \big] +  E_{q(w|\tau)} \big[ \log q(\mathbf{w}|\tau)\big],
+ \end{aligned}\tag{5}\label{5}
+$$</code> where $\tau=(\mu,\mathbf{S})$ with mean $\mu$ and precision matrix $\mathbf{S}=\Sigma^{-1}$.</p>
+
+<p>Use our NGD to solve <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> with $\mathbf{S}=\mathbf{B}\mathbf{B}^T$, which gives the following update
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mu_{t+1}  &amp; \leftarrow \mu_{t} - \beta \mathbf{S}_t^{-1} \mathbf{g}_{\mu_t},\\
+\mathbf{B}_{t+1}  &amp; \leftarrow   \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)
+ \end{aligned}
+$$</code></p>
+
+<p>Obtain an update to solve <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> with a group-structural invariance:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+   \mu_{t+1} &amp;  \leftarrow  \mu_t - \beta \mathbf{S}_{t}^{-1} \nabla_{\mu_t} \ell( \mu), \\ 
+  \mathbf{B}_{t+1} &amp; \leftarrow 
+     \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \color{red}{\kappa_{\text{up}}\big(  \mathbf{B}_t^{-1} \nabla_{\mu_t}^2 \ell( \mu)  \mathbf{B}_t^{-T} - \mathbf{I} \big)} \Big)
+ \end{aligned}\tag{6}\label{6}
+$$</code>
+by using <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code> evaluated at the mean <code class="language-plaintext highlighter-rouge">$\mu_t$</code>
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{g}_{\mu_t} \approx \nabla_{\mu_t} \ell( \mu),\,\,\,\,
+ \mathbf{g}_{\Sigma_t} \approx \frac{1}{2} \big[ \nabla_{\mu_t}^2 \ell( \mu) - \mathbf{S}_t\big].
+ \end{aligned}\tag{7}\label{7}
+$$</code></p>
+
+<fieldset class="field-set">
+  <legend class="leg-title">Group-structural invariance:</legend>
+  <p>If <code class="language-plaintext highlighter-rouge">$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$</code>,  the update in <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code> is invariant under any (group) transform <code class="language-plaintext highlighter-rouge">$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$</code> of  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>  such as <code class="language-plaintext highlighter-rouge">$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$</code>.</p>
+</fieldset>
+
+<fieldset class="field-set">
+  <legend class="leg-title">Time complexity:</legend>
+  <ul>
+    <li><code class="language-plaintext highlighter-rouge">$O(k^2 p)$</code> for triangular structure,</li>
+    <li><code class="language-plaintext highlighter-rouge">$O( (k_1^2+k_2^2) p)$</code> for hierarchical structure.</li>
+  </ul>
+
+  <p>Implementation using Hessian-vector products (HVPs);</p>
+  <ul>
+    <li>Off-diagonal: <code class="language-plaintext highlighter-rouge">$k$</code> HVPs (triangular), <code class="language-plaintext highlighter-rouge">$k_1+k_2$</code> HVPs (hierarchical),</li>
+    <li>Diagonal: compute/approximate diagonal entries of <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code>.</li>
+  </ul>
+</fieldset>
+
+<p>200-dim non-separable non-convex functions:</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><img src="/img/icml2021-rbfun.png" width="500" /></td>
+      <td><img src="/img/icml2021-dpfun.png" width="500" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="structured-adaptive-gradient-methods-for-dl">Structured Adaptive-gradient Methods for DL</h2>
+
+<p>Consider a block-diagonal Gaussian 
+       <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)=\prod_{i} q(\mathbf{w}^i|\mu^i,\mathbf{S}^i)$</code> with a Kronecker product group at each <code class="language-plaintext highlighter-rouge">$i$</code>-th layer.</p>
+
+<p>Obtain adaptive-gradient updates with a structural invariance by
+ approximating <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code> using the Gauss-Newton in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>.</p>
+
+<fieldset class="field-set">
+  <legend class="leg-title">Time complexity:</legend>
+  <ul>
+    <li><code class="language-plaintext highlighter-rouge">$O(k p)$</code> for triangular structure,</li>
+    <li><code class="language-plaintext highlighter-rouge">$O( (k_1+k_2) p)$</code> for hierarchical structure.</li>
+  </ul>
+
+  <p>Easy to parallelize by Auto-Diff, No sequential conjugate-grad (CG) steps</p>
+</fieldset>
+
+<p>Kronecker product of lower-triangular groups for a CNN</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><img src="/img/icml2021-stl10.png" width="500" /></td>
+      <td><img src="/img/icml2021-cifar10.png" width="500" /></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="variational-inference-vi-with-gaussian-mixtures">Variational Inference (VI) with Gaussian Mixtures</h2>
+
+<p>Our NGD can be easily exteneded to structured mixture: <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)=\frac{1}{K}\sum_{k=1}^{K}q(\mathbf{w}|\mu_k,\mathbf{S}_k)$</code></p>
+
+<p>Obtain natural-gradient VI for structured Gaussian mixtures with MC gradients</p>
+
+<p>Example: approximate a 80-dim mixture of Student’s t distributions</p>
+
+<p>First 8 marginal distributions of our approximation (mixture with a block upper-triangular group <code class="language-plaintext highlighter-rouge">$k=5$</code>)</p>
+
+<table>
+  <tbody>
+    <tr>
+      <td><img src="/img/icml2021-tmm80d-01.png" width="500" /></td>
+      <td><img src="/img/icml2021-tmm80d-02.png" width="500" /></td>
     </tr>
   </tbody>
 </table>

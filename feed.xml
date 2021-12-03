@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-02T23:02:54-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-03T14:06:24-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -1197,10 +1197,10 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
 as optimization over a parametric family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\tau)$&lt;/code&gt;:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-   \min_{ \tau \in \Omega_\tau } \mathcal{L}(\tau):= \mathrm{E}_{q(\text{w}| \tau )} \big[ \ell(w) \big] + \gamma \mathrm{E}_{q(\text{w} |\tau )} \big[ \log q(w|\tau) \big] 
+   \min_{ \tau \in \Omega_\tau } \mathcal{L}(\tau):= \mathrm{E}_{q(\text{w}| \tau )} \big[ \ell(\mathbf{w}) \big] + \gamma \mathrm{E}_{q(\text{w} |\tau )} \big[ \log q(w|\tau) \big] 
 \end{aligned} \tag{1}\label{1}
 $$&lt;/code&gt;
-where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$w$&lt;/code&gt; is the decision variable,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\ell(w)$&lt;/code&gt; is a loss function, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is the parameter space of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q$&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma\ge 0$&lt;/code&gt; is a constant.&lt;/p&gt;
+where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$w$&lt;/code&gt; is the decision variable,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\ell(\mathbf{w})$&lt;/code&gt; is a loss function, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is the parameter space of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q$&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma\ge 0$&lt;/code&gt; is a constant.&lt;/p&gt;
 
 &lt;p&gt;Gradient descent and natural-gradient descent  to solve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt;:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -1215,13 +1215,15 @@ $$&lt;/code&gt;&lt;/p&gt;
   &lt;li&gt;recovers a Newton-like update for Gaussian &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q$&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu$&lt;/code&gt; and precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mu_{t+1}  &amp;amp; \leftarrow \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( w) \big] } \\
-\mathbf{S}_{t+1}  &amp;amp; \leftarrow (1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w^2 \ell(w) \big] }
+\mu_{t+1}  &amp;amp; \leftarrow \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( \mathbf{w}) \big] } \\
+\mathbf{S}_{t+1}  &amp;amp; \leftarrow (1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) \big] }
 \end{aligned} \tag{2}\label{2}
 $$&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;is less sensitive to parameter transformations  than GD&lt;/li&gt;
   &lt;li&gt;converges faster than GD&lt;/li&gt;
 &lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/icml2021-fig01.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Challenges of Standard NGD:&lt;/p&gt;
 &lt;ul&gt;
@@ -1232,53 +1234,44 @@ $$&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Complicated and inefficient NG computation&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Fig 1&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Fig 2&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-fig01.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-fig02.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
 &lt;h1 id=&quot;ngd-using-local-parameterizations&quot;&gt;NGD using Local Parameterizations&lt;/h1&gt;
 
+&lt;p&gt;Our NGD performs updates in local parameter spaces while maintaining structures via matrix groups in auxiliary parameters. This decoupling enables a tractable NGD that exploits the structures in auxiliary parameter spaces.&lt;/p&gt;
+
+&lt;p&gt;We consider the following three kinds of parameterizations.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Global (original) parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\tau)$&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;New Auxiliary parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt;  with a surjective map: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau= \psi(\lambda)$&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;New auxiliary parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt;  with a surjective map: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau= \psi(\lambda)$&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Local parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt; at a current value &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt; with a local map:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda = \phi_{\lambda_t} (\eta)$&lt;/code&gt;, where&lt;br /&gt;
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; is
-&lt;span style=&quot;color:red&quot;&gt; tight &lt;/span&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$, and  we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0 =\mathbf{0}$&lt;/code&gt; the relative origin.
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$ 
+&lt;span style=&quot;color:red&quot;&gt; tight &lt;/span&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$, and  we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0 =\mathbf{0}$&lt;/code&gt; to be a relative origin.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;fieldset class=&quot;field-set&quot;&gt;
+  &lt;legend class=&quot;leg-title&quot;&gt;&lt;span style=&quot;color:red&quot;&gt;Our NGD:&lt;/span&gt;&lt;/legend&gt;
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$ 
 \begin{aligned} 
-\color{red}{\textrm{Our NGD}}: \quad
 \lambda_{t+1} &amp;amp; \leftarrow  \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big) \\
 \tau_{t+1} &amp;amp; \leftarrow \psi\big( \lambda_{t+1} \big)
 \end{aligned} 
-$$&lt;/code&gt;
-where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\eta_0}^{(t)}$&lt;/code&gt; is
+$$&lt;/code&gt;&lt;/p&gt;
+&lt;/fieldset&gt;
+&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\eta_0}^{(t)}$&lt;/code&gt; is
  the natural-gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\eta_0}^{(t)}$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt; tied to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;, which is computed by the chain rule,
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned} 
-      \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;amp;=  \color{green} {\mathbf{F}_{\eta}(\eta_0)^{-1} } 
-       \,\, \big[ \nabla_{\eta_0} \big[ \psi \circ \phi_{\lambda_t} (\eta) \big]
-      \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
+        \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;amp;=  \color{green} {\mathbf{F}_{\eta}(\eta_0)^{-1} } 
+         \,\, \big[ \nabla_{\eta_0} \big[ \psi \circ \phi_{\lambda_t} (\eta) \big]
+        \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
 \end{aligned} 
-$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_{\eta}(\eta_0)$&lt;/code&gt;  is the (exact) FIM for  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt; tied to  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_{\eta}(\eta_0)$&lt;/code&gt;  is the (exact) FIM for  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt; tied to  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/icml2021-fig03.png&quot; width=&quot;500&quot; /&gt; 
  Standard NGD is a special case of our NGD.&lt;/p&gt;
 
 &lt;hr /&gt;
-&lt;h1 id=&quot;gaussian-example-with-full-covariance&quot;&gt;Gaussian example with full covariance&lt;/h1&gt;
+&lt;h1 id=&quot;gaussian-example-with-full-covariance&quot;&gt;Gaussian Example with Full Covariance&lt;/h1&gt;
 
 &lt;p&gt;Notations:&lt;/p&gt;
 &lt;ul&gt;
@@ -1313,7 +1306,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \lambda_{t+1} = 
-  \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{S}_{t+1} \end{array} \Big\} =
+  \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} =
   \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big)
   =\Big\{ \begin{array}{c}  \mu_t - \beta \mathbf{B}_{t}^{-T} \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathbf{B}_t  \mathbf{h}\big(\beta \mathbf{B}_t^{-1}\mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \end{array} \Big\} 
  \end{aligned}
@@ -1332,42 +1325,259 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\mu$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\Sigma}$&lt;/code&gt; are Euclidean gradients of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; computed via Stein’s lemma:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mathbf{g}_\mu &amp;amp;= \nabla_{\mu}\mathcal{L}(\tau) = E_{q}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] }, \\
-\mathbf{g}_{\Sigma}  &amp;amp;= \nabla_{S^{-1}}\mathcal{L}(\tau)
+\mathbf{g}_\mu = \nabla_{\mu}\mathcal{L}(\tau) = E_{q}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] }, \,\,\,\,\,
+\mathbf{g}_{\Sigma}  = \nabla_{S^{-1}}\mathcal{L}(\tau)
  = \frac{1}{2}  E_{q}{ \big[ \nabla_w^2 \ell( \mathbf{w}) \big] } - \frac{\gamma}{2} \mathbf{S} 
- \end{aligned}
+ \end{aligned} \tag{3}\label{3}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Update on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$&lt;/code&gt; is like update of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{G}_t := E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) ] } -\gamma \mathbf{S}_t$&lt;/code&gt;.
+&lt;p&gt;Our update on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$&lt;/code&gt; and $\mu_{t+1}$ is like update of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
+&amp;amp; \mu_{t+1}   = \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] } \\
 &amp;amp;\mathbf{S}_{t+1} =   \underbrace{ \overbrace{(1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) \big] }}^{\text{standard NGD on $\mathbf{S}$ }} + \color{red}{ \frac{\beta^2}{2} \mathbf{G}_t \mathbf{S}_t^{-1}\mathbf{G}_t}
 }_{\color{red}{\text{ RGD with retraction} }}+ O(\beta^3)
  \end{aligned}
-$$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;dense&lt;/strong&gt;&lt;/span&gt; matrix in matrix group &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{GL}^{p\times p}$&lt;/code&gt;.&lt;/p&gt;
+$$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;dense&lt;/strong&gt;&lt;/span&gt; matrix in matrix group &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{GL}^{p\times p}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{G}_t := E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) ] } -\gamma \mathbf{S}_t$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;hr /&gt;
-&lt;h1 id=&quot;gaussian-example-with-structured-covariance&quot;&gt;Gaussian example with structured covariance&lt;/h1&gt;
+&lt;p&gt;Well-known structures in matrix $\mathbf{B}$ are illustrated in the following figure.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th style=&quot;text-align: center&quot;&gt;Dense&lt;/th&gt;
       &lt;th style=&quot;text-align: center&quot;&gt;Diagonal&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;lower-triangular&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;upper-triangular&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Hierarchical&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Kronecker product&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-full.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-diag.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&quot;gaussian-example-with-flexiable-structured-covariance&quot;&gt;Gaussian Example with Flexiable Structured Covariance&lt;/h1&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Lower-triangular&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Upper-triangular&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Hierarchical&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Kronecker product&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Triangular-Toeplitz&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-low.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-up.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-hie.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-kro.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-tri-Toep.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;A structured Gaussian example: Auxiliary  parameter $\mathbf{B}$ lives in  a structured space (matrix Lie group):  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{B}_{\text{up}}}(k)$&lt;/code&gt;,
+a &lt;span style=&quot;color:red&quot;&gt;block upper-triangular&lt;/span&gt; sub-group of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{GL}^{p \times p}$&lt;/code&gt;;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+{\cal{B}_{\text{up}}}(k)  := \Big\{ 
+\begin{bmatrix}
+\mathbf{B}_A &amp;amp;  \mathbf{B}_B  \\
+ \mathbf{0} &amp;amp; \mathbf{B}_D
+      \end{bmatrix} \Big| &amp;amp; \mathbf{B}_A \in \mathrm{GL}^{k \times k},\,
+ \mathbf{B}_D  \in{\cal D}^{(p-k) \times (p-k)}_{++}  \Big\},\,\,
+ \end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=0$&lt;/code&gt;, the space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{B}_{\text{up}}}(0) = {\cal D}^{p \times p}_{++}$&lt;/code&gt; becomes  the diagonal case.
+When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=p$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{B}_{\text{up}}}(p) = \mathrm{GL}^{p\times p}$&lt;/code&gt; becomes the dense case.&lt;/p&gt;
+
+&lt;p&gt;Consider a local parameter space (Lie sub-algebra): &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{M}_{\text{up}}}(k)$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+{\cal{M}_{\text{up}}}(k):  = \Big\{ 
+\begin{bmatrix}
+\mathbf{M}_A &amp;amp;  \mathbf{M}_B  \\
+ \mathbf{0} &amp;amp; \mathbf{M}_D
+      \end{bmatrix} \Big| &amp;amp;  \mathbf{M}_A \in{\cal S}^{k \times k}, \,
+ \mathbf{M}_D  \in{\cal D}^{(p-k) \times (p-k)} \Big\}
+ \end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The global, auxiliary, and local parameterizations :
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+       \tau &amp;amp;= \Big\{\mu \in \mathcal{R}^p,  \mathbf{S}=\mathbf{B} \mathbf{B}^T \in \mathcal{S}_{++}^{p\times p} | \mathbf{B} \in {\cal{B}_{\text{up}}}(k) \Big\}, \\
+        \lambda &amp;amp; = \Big\{ \mu \in \mathcal{R}^p,  \mathbf{B} \in {\cal{B}_{\text{up}}}(k) \Big\},\\
+        \eta &amp;amp;= \Big\{ \delta\in \mathcal{R}^p,  \mathbf{M} \in {\cal{M}_{\text{up}}}(k)   \Big\}.
+ \end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Maps &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; are defined in the previous section. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\kappa_{\text{up}}(\mathbf{X})$&lt;/code&gt; extracts non-zero entries of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{M}_{\text{up}}}(k)$&lt;/code&gt; from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{X}$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our NGD update in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$  \lambda $&lt;/code&gt; space is shown below, where we assume $\eta_0=\mathbf{0}$.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\lambda_{t+1} = 
+  \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} =
+  \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big)
+  =\Big\{ \begin{array}{c}  \mu_t - \beta \mathbf{B}_{t}^{-T} \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ 
+\mathbf{B}_t  \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)  \end{array} \Big\}   
+ \end{aligned}
+$$&lt;/code&gt;
+where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\odot$&lt;/code&gt; is the elementwise product , &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\kappa_{\text{up}}(\mathbf{X}) \in {\cal{M}_{\text{up}}}(k)$&lt;/code&gt;, and
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{C}_{\text{up}} = 
+ \begin{bmatrix}
+\frac{1}{2} \mathbb{1} &amp;amp;  \mathbb{1}   \\
+ \mathbf{0} &amp;amp; \frac{1}{2} \mathbf{I}_D
+      \end{bmatrix}  \in {\cal{M}_{\text{up}}}(k)$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{B}_{t+1} \in {\cal{S}_{\text{up}}}(k)$&lt;/code&gt; thanks to the property of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\cal{M}_{\text{up}}(k)$&lt;/code&gt;:
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{h}\big(\mathbf{M}\big) \in {\cal{B}_{\text{up}}}(k) $&lt;/code&gt; for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{M} \in \cal{M}_{\text{up}}(k)$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Our NGD method:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;is a systemic approach to incorporate structures&lt;/li&gt;
+  &lt;li&gt;induces exact and non-singular FIMs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Standard NGD&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Our NGD&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-fig02.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-fig04.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h1 id=&quot;applications&quot;&gt;Applications&lt;/h1&gt;
+
+&lt;h2 id=&quot;structured-2nd-order-methods-for-non-convex-optimization&quot;&gt;Structured 2nd-order Methods for Non-convex Optimization&lt;/h2&gt;
+
+&lt;p&gt;Given an optimization problem
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\mu \in \mathcal{R}^p} \ell(\mu),
+ \end{aligned}\tag{4}\label{4}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;we formulate a new problem over Gaussian &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(\mathbf{w}|\tau)$&lt;/code&gt; with structured covariance.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+   \min_{\tau \in \Omega_\tau} E_{q(w|\tau)} \big[ \ell(\mathbf{w}) \big] +  E_{q(w|\tau)} \big[ \log q(\mathbf{w}|\tau)\big],
+ \end{aligned}\tag{5}\label{5}
+$$&lt;/code&gt; where $\tau=(\mu,\mathbf{S})$ with mean $\mu$ and precision matrix $\mathbf{S}=\Sigma^{-1}$.&lt;/p&gt;
+
+&lt;p&gt;Use our NGD to solve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; with $\mathbf{S}=\mathbf{B}\mathbf{B}^T$, which gives the following update
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mu_{t+1}  &amp;amp; \leftarrow \mu_{t} - \beta \mathbf{S}_t^{-1} \mathbf{g}_{\mu_t},\\
+\mathbf{B}_{t+1}  &amp;amp; \leftarrow   \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)
+ \end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Obtain an update to solve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; with a group-structural invariance:
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+   \mu_{t+1} &amp;amp;  \leftarrow  \mu_t - \beta \mathbf{S}_{t}^{-1} \nabla_{\mu_t} \ell( \mu), \\ 
+  \mathbf{B}_{t+1} &amp;amp; \leftarrow 
+     \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \color{red}{\kappa_{\text{up}}\big(  \mathbf{B}_t^{-1} \nabla_{\mu_t}^2 \ell( \mu)  \mathbf{B}_t^{-T} - \mathbf{I} \big)} \Big)
+ \end{aligned}\tag{6}\label{6}
+$$&lt;/code&gt;
+by using &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt; evaluated at the mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu_t$&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{g}_{\mu_t} \approx \nabla_{\mu_t} \ell( \mu),\,\,\,\,
+ \mathbf{g}_{\Sigma_t} \approx \frac{1}{2} \big[ \nabla_{\mu_t}^2 \ell( \mu) - \mathbf{S}_t\big].
+ \end{aligned}\tag{7}\label{7}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;fieldset class=&quot;field-set&quot;&gt;
+  &lt;legend class=&quot;leg-title&quot;&gt;Group-structural invariance:&lt;/legend&gt;
+  &lt;p&gt;If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$&lt;/code&gt;,  the update in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{6}$&lt;/code&gt; is invariant under any (group) transform &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$&lt;/code&gt; of  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;  such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$&lt;/code&gt;.&lt;/p&gt;
+&lt;/fieldset&gt;
+
+&lt;fieldset class=&quot;field-set&quot;&gt;
+  &lt;legend class=&quot;leg-title&quot;&gt;Time complexity:&lt;/legend&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(k^2 p)$&lt;/code&gt; for triangular structure,&lt;/li&gt;
+    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O( (k_1^2+k_2^2) p)$&lt;/code&gt; for hierarchical structure.&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;p&gt;Implementation using Hessian-vector products (HVPs);&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Off-diagonal: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k$&lt;/code&gt; HVPs (triangular), &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k_1+k_2$&lt;/code&gt; HVPs (hierarchical),&lt;/li&gt;
+    &lt;li&gt;Diagonal: compute/approximate diagonal entries of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_{\mu_t}^2 \ell( \mu)$&lt;/code&gt;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/fieldset&gt;
+
+&lt;p&gt;200-dim non-separable non-convex functions:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/img/icml2021-rbfun.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/img/icml2021-dpfun.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;structured-adaptive-gradient-methods-for-dl&quot;&gt;Structured Adaptive-gradient Methods for DL&lt;/h2&gt;
+
+&lt;p&gt;Consider a block-diagonal Gaussian 
+       &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(\mathbf{w}|\tau)=\prod_{i} q(\mathbf{w}^i|\mu^i,\mathbf{S}^i)$&lt;/code&gt; with a Kronecker product group at each &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$i$&lt;/code&gt;-th layer.&lt;/p&gt;
+
+&lt;p&gt;Obtain adaptive-gradient updates with a structural invariance by
+ approximating &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_{\mu_t}^2 \ell( \mu)$&lt;/code&gt; using the Gauss-Newton in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;fieldset class=&quot;field-set&quot;&gt;
+  &lt;legend class=&quot;leg-title&quot;&gt;Time complexity:&lt;/legend&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(k p)$&lt;/code&gt; for triangular structure,&lt;/li&gt;
+    &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O( (k_1+k_2) p)$&lt;/code&gt; for hierarchical structure.&lt;/li&gt;
+  &lt;/ul&gt;
+
+  &lt;p&gt;Easy to parallelize by Auto-Diff, No sequential conjugate-grad (CG) steps&lt;/p&gt;
+&lt;/fieldset&gt;
+
+&lt;p&gt;Kronecker product of lower-triangular groups for a CNN&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/img/icml2021-stl10.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/img/icml2021-cifar10.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;variational-inference-vi-with-gaussian-mixtures&quot;&gt;Variational Inference (VI) with Gaussian Mixtures&lt;/h2&gt;
+
+&lt;p&gt;Our NGD can be easily exteneded to structured mixture: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(\mathbf{w}|\tau)=\frac{1}{K}\sum_{k=1}^{K}q(\mathbf{w}|\mu_k,\mathbf{S}_k)$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Obtain natural-gradient VI for structured Gaussian mixtures with MC gradients&lt;/p&gt;
+
+&lt;p&gt;Example: approximate a 80-dim mixture of Student’s t distributions&lt;/p&gt;
+
+&lt;p&gt;First 8 marginal distributions of our approximation (mixture with a block upper-triangular group &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=5$&lt;/code&gt;)&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/img/icml2021-tmm80d-01.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;img src=&quot;/img/icml2021-tmm80d-02.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
