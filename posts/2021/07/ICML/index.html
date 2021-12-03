@@ -226,17 +226,11 @@ as optimization over a parametric family <code class="language-plaintext highlig
 $$</code>
 where <code class="language-plaintext highlighter-rouge">$w$</code> is the decision variable,  <code class="language-plaintext highlighter-rouge">$\ell(w)$</code> is a loss function, <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is the parameter space of <code class="language-plaintext highlighter-rouge">$q$</code>, and <code class="language-plaintext highlighter-rouge">$\gamma\ge 0$</code> is a constant.</p>
 
-<p>Gradient Descent to solve <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>:
+<p>Gradient descent and natural-gradient descent  to solve <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\textrm{GD: } \tau_{t+1} \leftarrow \tau_t - \alpha \nabla_{\tau_t} \mathcal{L}(\tau)
-\end{aligned}
-$$</code></p>
-
-<p>Natural-gradient Descent to solve <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>:
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\textrm{Standard NGD: } \tau_{t+1} \leftarrow \tau_t - \beta\,\, \big[ \mathbf{F}_{\tau} (\tau_t) \big]^{-1} \nabla_{\tau_t} \mathcal{L}(\tau)
+\textrm{GD: } &amp;\tau_{t+1} \leftarrow \tau_t - \alpha \nabla_{\tau_t} \mathcal{L}(\tau) \\
+\textrm{Standard NGD: } &amp; \tau_{t+1} \leftarrow \tau_t - \beta\,\, \big[ \mathbf{F}_{\tau} (\tau_t) \big]^{-1} \nabla_{\tau_t} \mathcal{L}(\tau)
 \end{aligned} 
 $$</code></p>
 
@@ -249,7 +243,7 @@ $$</code></p>
 \mathbf{S}_{t+1}  &amp; \leftarrow (1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w^2 \ell(w) \big] }
 \end{aligned} 
 $$</code></li>
-  <li>less sensitive to parameter transforms  than GD</li>
+  <li>is less sensitive to parameter transformations  than GD</li>
   <li>converges faster than GD</li>
 </ul>
 
