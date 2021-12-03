@@ -182,7 +182,7 @@
 
 
 
-  3 minute read
+  4 minute read
 </p>
           
         </header>
@@ -206,7 +206,7 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
   <li>gives new NGD to learn structured covariances of Gaussian, Wishart and their mixtures</li>
 </ul>
 
-<p>Applications:</p>
+<p>Applications of our method:</p>
 <ul>
   <li>deep learning (adaptive-gradient),</li>
   <li>non-convex optimization (structured 2nd-order),</li>
@@ -241,7 +241,7 @@ $$</code></p>
 \begin{aligned}
 \mu_{t+1}  &amp; \leftarrow \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( w) \big] } \\
 \mathbf{S}_{t+1}  &amp; \leftarrow (1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w^2 \ell(w) \big] }
-\end{aligned} 
+\end{aligned} \tag{2}\label{2}
 $$</code></li>
   <li>is less sensitive to parameter transformations  than GD</li>
   <li>converges faster than GD</li>
@@ -250,7 +250,7 @@ $$</code></li>
 <p>Challenges of Standard NGD:</p>
 <ul>
   <li>NGD could violate parameterization constraints</li>
-  <li>Singular FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\tau}(\tau)$</code> of <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code></li>
+  <li>Singular Fisher information matrix (FIM) <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\tau}(\tau)$</code> of <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code></li>
   <li>Limited covariance structures</li>
   <li>Ad-hoc approximations for cost reductions</li>
   <li>Complicated and inefficient NG computation</li>
@@ -361,6 +361,40 @@ $$</code></p>
  = \frac{1}{2}  E_{q}{ \big[ \nabla_w^2 \ell( \mathbf{w}) \big] } - \frac{\gamma}{2} \mathbf{S} 
  \end{aligned}
 $$</code></p>
+
+<p>Update on <code class="language-plaintext highlighter-rouge">$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$</code> is like update of <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{G}_t := E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) ] } -\gamma \mathbf{S}_t$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+&amp;\mathbf{S}_{t+1} =   \underbrace{ \overbrace{(1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) \big] }}^{\text{standard NGD on $\mathbf{S}$ }} + \color{red}{ \frac{\beta^2}{2} \mathbf{G}_t \mathbf{S}_t^{-1}\mathbf{G}_t}
+}_{\color{red}{\text{ RGD with retraction} }}+ O(\beta^3)
+ \end{aligned}
+$$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong></span> matrix in matrix group <code class="language-plaintext highlighter-rouge">$\mathrm{GL}^{p\times p}$</code>.</p>
+
+<hr />
+<h1 id="gaussian-example-with-structured-covariance">Gaussian example with structured covariance</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Dense</th>
+      <th style="text-align: center">Diagonal</th>
+      <th style="text-align: center">lower-triangular</th>
+      <th style="text-align: center">upper-triangular</th>
+      <th style="text-align: center">Hierarchical</th>
+      <th style="text-align: center">Kronecker product</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="/img/icml2021-group-full.png" width="250" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-diag.png" width="250" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-low.png" width="250" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-up.png" width="250" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-hie.png" width="250" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-kro.png" width="250" /></td>
+    </tr>
+  </tbody>
+</table>
 
 <h1 id="references">References</h1>
 <p class="bibliography"><p><span id="lin2021tractable">[1] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Tractable structured natural gradient descent using local parameterizations," <i>International Conference on Machine Learning (ICML)</i> (2021).</span></p></p>

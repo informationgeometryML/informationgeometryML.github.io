@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-02T21:08:37-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-02T23:02:54-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -1182,7 +1182,7 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
   &lt;li&gt;gives new NGD to learn structured covariances of Gaussian, Wishart and their mixtures&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Applications:&lt;/p&gt;
+&lt;p&gt;Applications of our method:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;deep learning (adaptive-gradient),&lt;/li&gt;
   &lt;li&gt;non-convex optimization (structured 2nd-order),&lt;/li&gt;
@@ -1217,7 +1217,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 \begin{aligned}
 \mu_{t+1}  &amp;amp; \leftarrow \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( w) \big] } \\
 \mathbf{S}_{t+1}  &amp;amp; \leftarrow (1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w^2 \ell(w) \big] }
-\end{aligned} 
+\end{aligned} \tag{2}\label{2}
 $$&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;is less sensitive to parameter transformations  than GD&lt;/li&gt;
   &lt;li&gt;converges faster than GD&lt;/li&gt;
@@ -1226,7 +1226,7 @@ $$&lt;/code&gt;&lt;/li&gt;
 &lt;p&gt;Challenges of Standard NGD:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;NGD could violate parameterization constraints&lt;/li&gt;
-  &lt;li&gt;Singular FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_{\tau}(\tau)$&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\tau)$&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Singular Fisher information matrix (FIM) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_{\tau}(\tau)$&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\tau)$&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Limited covariance structures&lt;/li&gt;
   &lt;li&gt;Ad-hoc approximations for cost reductions&lt;/li&gt;
   &lt;li&gt;Complicated and inefficient NG computation&lt;/li&gt;
@@ -1337,6 +1337,40 @@ $$&lt;/code&gt;&lt;/p&gt;
  = \frac{1}{2}  E_{q}{ \big[ \nabla_w^2 \ell( \mathbf{w}) \big] } - \frac{\gamma}{2} \mathbf{S} 
  \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Update on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$&lt;/code&gt; is like update of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{G}_t := E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) ] } -\gamma \mathbf{S}_t$&lt;/code&gt;.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+&amp;amp;\mathbf{S}_{t+1} =   \underbrace{ \overbrace{(1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) \big] }}^{\text{standard NGD on $\mathbf{S}$ }} + \color{red}{ \frac{\beta^2}{2} \mathbf{G}_t \mathbf{S}_t^{-1}\mathbf{G}_t}
+}_{\color{red}{\text{ RGD with retraction} }}+ O(\beta^3)
+ \end{aligned}
+$$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;dense&lt;/strong&gt;&lt;/span&gt; matrix in matrix group &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{GL}^{p\times p}$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;hr /&gt;
+&lt;h1 id=&quot;gaussian-example-with-structured-covariance&quot;&gt;Gaussian example with structured covariance&lt;/h1&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Dense&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Diagonal&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;lower-triangular&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;upper-triangular&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Hierarchical&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Kronecker product&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-full.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-diag.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-low.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-up.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-hie.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-kro.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
 &lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
 &lt;p class=&quot;bibliography&quot;&gt;&lt;p&gt;&lt;span id=&quot;lin2021tractable&quot;&gt;[1] W. Lin, F. Nielsen, M. E. Khan, &amp;amp; M. Schmidt, &quot;Tractable structured natural gradient descent using local parameterizations,&quot; &lt;i&gt;International Conference on Machine Learning (ICML)&lt;/i&gt; (2021).&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Matrix Lie Groups" /><summary type="html">About this work [1]: (Youtube) talk, ICML paper, poster</summary></entry></feed>
