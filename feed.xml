@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-02T21:02:56-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-02T21:08:37-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -1172,7 +1172,7 @@ The half-vectorization of a symmetric &lt;code class=&quot;language-plaintext hi
 &lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;Natural-gradient descent (NGD) on structured parameter spaces  is computationally challenging.
-We propose a flexible and efficient NGD method to incorporate structures.&lt;/p&gt;
+We propose a flexible and efficient NGD method to incorporate structures via matrix groups.&lt;/p&gt;
 
 &lt;p&gt;Our NGD method&lt;/p&gt;
 &lt;ul&gt;
@@ -1264,7 +1264,7 @@ $$&lt;/code&gt;&lt;/li&gt;
 \end{aligned} 
 $$&lt;/code&gt;
 where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\eta_0}^{(t)}$&lt;/code&gt; is
- the natural-gradient at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt; tied to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;, which is computed by the chain rule,
+ the natural-gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\eta_0}^{(t)}$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt; tied to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;, which is computed by the chain rule,
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned} 
       \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;amp;=  \color{green} {\mathbf{F}_{\eta}(\eta_0)^{-1} } 
@@ -1319,7 +1319,7 @@ $$&lt;/code&gt;&lt;/p&gt;
  \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Tractable natural-gradient at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0=\{\delta_0, \mathbf{M}_0\}$&lt;/code&gt; tied to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t=\{\mu_t,\mathbf{B}_t\}$&lt;/code&gt;:&lt;/p&gt;
+&lt;p&gt;Tractable natural-gradient  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\eta_0}^{(t)}$&lt;/code&gt;  at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0=\{\delta_0, \mathbf{M}_0\}$&lt;/code&gt; tied to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t=\{\mu_t,\mathbf{B}_t\}$&lt;/code&gt;:&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -1329,7 +1329,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\mu$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\Sigma}$&lt;/code&gt; are Euclidean gradients of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; computed via Stein’s lemma:
+&lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\mu$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\Sigma}$&lt;/code&gt; are Euclidean gradients of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; computed via Stein’s lemma:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{g}_\mu &amp;amp;= \nabla_{\mu}\mathcal{L}(\tau) = E_{q}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] }, \\

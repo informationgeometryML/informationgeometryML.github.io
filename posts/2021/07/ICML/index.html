@@ -196,7 +196,7 @@
 <h1 id="introduction">Introduction</h1>
 
 <p>Natural-gradient descent (NGD) on structured parameter spaces  is computationally challenging.
-We propose a flexible and efficient NGD method to incorporate structures.</p>
+We propose a flexible and efficient NGD method to incorporate structures via matrix groups.</p>
 
 <p>Our NGD method</p>
 <ul>
@@ -288,7 +288,7 @@ $$</code></li>
 \end{aligned} 
 $$</code>
 where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code> is
- the natural-gradient at <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>, which is computed by the chain rule,
+ the natural-gradient <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code> at <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>, which is computed by the chain rule,
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned} 
       \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;=  \color{green} {\mathbf{F}_{\eta}(\eta_0)^{-1} } 
@@ -343,7 +343,7 @@ $$</code></p>
  \end{aligned}
 $$</code></p>
 
-<p>Tractable natural-gradient at <code class="language-plaintext highlighter-rouge">$\eta_0=\{\delta_0, \mathbf{M}_0\}$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t=\{\mu_t,\mathbf{B}_t\}$</code>:</p>
+<p>Tractable natural-gradient  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code>  at <code class="language-plaintext highlighter-rouge">$\eta_0=\{\delta_0, \mathbf{M}_0\}$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t=\{\mu_t,\mathbf{B}_t\}$</code>:</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -353,7 +353,7 @@ $$</code></p>
 \end{aligned}
 $$</code></p>
 
-<p><code class="language-plaintext highlighter-rouge">$\mathbf{g}_\mu$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\Sigma}$</code> are Euclidean gradients of <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> computed via Stein’s lemma:
+<p>Note that <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\mu$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\Sigma}$</code> are Euclidean gradients of <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> computed via Stein’s lemma:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{g}_\mu &amp;= \nabla_{\mu}\mathcal{L}(\tau) = E_{q}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] }, \\
