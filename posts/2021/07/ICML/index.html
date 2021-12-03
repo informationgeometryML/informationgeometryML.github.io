@@ -528,35 +528,37 @@ by using <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code> e
  \end{aligned}\tag{7}\label{7}
 $$</code></p>
 
+<details>
+	<summary>Group-structural invariance:</summary>
 <fieldset class="field-set">
-  <legend class="leg-title">Group-structural invariance:</legend>
-  <p>If <code class="language-plaintext highlighter-rouge">$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$</code>,  the update in <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code> is invariant under any (group) transform <code class="language-plaintext highlighter-rouge">$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$</code> of  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>  such as <code class="language-plaintext highlighter-rouge">$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$</code>.</p>
-</fieldset>
+    <p>If <code class="language-plaintext highlighter-rouge">$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$</code>,  the update in <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code> is invariant under any (group) transform <code class="language-plaintext highlighter-rouge">$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$</code> of  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>  such as <code class="language-plaintext highlighter-rouge">$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$</code>.</p>
+  </fieldset>
+</details>
 
+<details>
+	<summary>Time complexity:</summary>
 <fieldset class="field-set">
-  <legend class="leg-title">Time complexity:</legend>
-  <ul>
-    <li><code class="language-plaintext highlighter-rouge">$O(k^2 p)$</code> for triangular structure,</li>
-    <li><code class="language-plaintext highlighter-rouge">$O( (k_1^2+k_2^2) p)$</code> for hierarchical structure.</li>
-  </ul>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">$O(k^2 p)$</code> for triangular structure,</li>
+      <li><code class="language-plaintext highlighter-rouge">$O( (k_1^2+k_2^2) p)$</code> for hierarchical structure.</li>
+    </ul>
 
-  <p>Implementation using Hessian-vector products (HVPs);</p>
-  <ul>
-    <li>Off-diagonal: <code class="language-plaintext highlighter-rouge">$k$</code> HVPs (triangular), <code class="language-plaintext highlighter-rouge">$(k_1+k_2)$</code> HVPs (hierarchical),</li>
-    <li>Diagonal: compute/approximate diagonal entries of <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code>.</li>
-  </ul>
-</fieldset>
+    <p>Implementation using Hessian-vector products (HVPs);</p>
+    <ul>
+      <li>Off-diagonal: <code class="language-plaintext highlighter-rouge">$k$</code> HVPs (triangular), <code class="language-plaintext highlighter-rouge">$(k_1+k_2)$</code> HVPs (hierarchical),</li>
+      <li>Diagonal: compute/approximate diagonal entries of <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code>.</li>
+    </ul>
+  </fieldset>
+</details>
 
-<p>200-dim non-separable non-convex functions:</p>
+<details>
+	<summary>Classical non-convex optimization:</summary>
+<fieldset class="field-set">
+    <p>200-dim non-separable non-convex functions:</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><img src="/img/icml2021-rbfun.png" width="500" /></td>
-      <td><img src="/img/icml2021-dpfun.png" width="500" /></td>
-    </tr>
-  </tbody>
-</table>
+    <p><img src="/img/icml2021-rbfun.png" width="500" /> |  <img src="/img/icml2021-dpfun.png" width="500" /></p>
+  </fieldset>
+</details>
 
 <h2 id="structured-adaptive-gradient-methods-for-deep-learning">Structured Adaptive-gradient Methods for Deep Learning</h2>
 
@@ -566,30 +568,30 @@ $$</code></p>
 <p>Obtain adaptive-gradient updates with a structural invariance by
  approximating <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code> using the Gauss-Newton in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>.</p>
 
+<details>
+	<summary>Time complexity:</summary>
 <fieldset class="field-set">
-  <legend class="leg-title">Time complexity:</legend>
-  <ul>
-    <li><code class="language-plaintext highlighter-rouge">$O(k p)$</code> for triangular structure,</li>
-    <li><code class="language-plaintext highlighter-rouge">$O( (k_1+k_2) p)$</code> for hierarchical structure.</li>
-  </ul>
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">$O(k p)$</code> for triangular structure,</li>
+      <li><code class="language-plaintext highlighter-rouge">$O( (k_1+k_2) p)$</code> for hierarchical structure.</li>
+    </ul>
 
-  <p>Implementation:</p>
-  <ul>
-    <li>Automatically parallelized by Auto-Differentiation,</li>
-    <li>No sequential conjugate-gradient (CG) steps.</li>
-  </ul>
-</fieldset>
+    <p>Implementation:</p>
+    <ul>
+      <li>Automatically parallelized by Auto-Differentiation,</li>
+      <li>No sequential conjugate-gradient (CG) steps.</li>
+    </ul>
+  </fieldset>
+</details>
 
-<p>Kronecker product of lower-triangular groups for a CNN</p>
+<details>
+	<summary>Image classifcation problems:</summary>
+<fieldset class="field-set">
+    <p>Kronecker product of lower-triangular groups for a CNN</p>
 
-<table>
-  <tbody>
-    <tr>
-      <td><img src="/img/icml2021-stl10.png" width="500" /></td>
-      <td><img src="/img/icml2021-cifar10.png" width="500" /></td>
-    </tr>
-  </tbody>
-</table>
+    <p><img src="/img/icml2021-stl10.png" width="500" /> |  <img src="/img/icml2021-cifar10.png" width="500" /></p>
+  </fieldset>
+</details>
 
 <h2 id="variational-inference-vi-with-gaussian-mixtures">Variational Inference (VI) with Gaussian Mixtures</h2>
 
@@ -597,19 +599,16 @@ $$</code></p>
 
 <p>Obtain natural-gradient VI for structured Gaussian mixtures with MC gradients</p>
 
-<p>Example: approximate a 80-dim mixture of Student’s t distributions</p>
+<details>
+	<summary>Approximating a 80-dim mixture of Student's t:</summary>
+<fieldset class="field-set">
+    <p>First 8 marginal distributions of our approximation (mixture with a block upper-triangular group <code class="language-plaintext highlighter-rouge">$k=5$</code>)</p>
 
-<p>First 8 marginal distributions of our approximation (mixture with a block upper-triangular group <code class="language-plaintext highlighter-rouge">$k=5$</code>)</p>
+    <p><img src="/img/icml2021-tmm80d-01.png" width="500" /> |  <img src="/img/icml2021-tmm80d-02.png" width="500" /></p>
+  </fieldset>
+</details>
 
-<table>
-  <tbody>
-    <tr>
-      <td><img src="/img/icml2021-tmm80d-01.png" width="500" /></td>
-      <td><img src="/img/icml2021-tmm80d-02.png" width="500" /></td>
-    </tr>
-  </tbody>
-</table>
-
+<hr />
 <h1 id="references">References</h1>
 <p class="bibliography"><p><span id="lin2021tractable">[1] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Tractable structured natural gradient descent using local parameterizations," <i>International Conference on Machine Learning (ICML)</i> (2021).</span></p></p>
 
