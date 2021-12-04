@@ -253,7 +253,7 @@ $$</code></li>
 <ul>
   <li>NGD could violate parameterization constraints</li>
   <li>Singular Fisher information matrix (FIM) <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\tau}(\tau)$</code> of <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code></li>
-  <li>Limited covariance structures</li>
+  <li>Limited precision/covariance structures</li>
   <li>Ad-hoc approximations for cost reductions</li>
   <li>Complicated and inefficient NG computation</li>
 </ul>
@@ -295,7 +295,7 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{
  Standard NGD is a special case of our NGD.</p>
 
 <hr />
-<h1 id="gaussian-example-with-full-covariance">Gaussian Example with Full Covariance</h1>
+<h1 id="gaussian-example-with-full-precision">Gaussian Example with Full Precision</h1>
 
 <p>Notations:</p>
 <ul>
@@ -323,7 +323,7 @@ Maps <code class="language-plaintext highlighter-rouge">$\psi$</code> and  <code
 \begin{aligned}
         \Big\{ \begin{array}{c} \mu \\ \mathbf{S} \end{array} \Big\} = \psi(\lambda) &amp; := \Big \{ \begin{array}{c} \mu \\ \mathbf{B}\mathbf{B}^\top \end{array} \Big \}, \\
        \Big \{ \begin{array}{c} \mu \\ \mathbf{B} \end{array} \Big \} = \phi_{\lambda_t}(\eta) &amp; := \Big \{ \begin{array}{c} \mu_t + \mathbf{B}_t^{-T} \delta \\ \mathbf{B}_t \mathbf{h} (\mathbf{M}) \end{array} \Big \}.
-\end{aligned}
+\end{aligned} \tag{3}\label{3}
 $$</code></p>
 
 <p>Our NGD update in the <code class="language-plaintext highlighter-rouge">$  \lambda $</code> space is shown below, where we assume $\eta_0=\mathbf{0}$.
@@ -352,7 +352,7 @@ $$</code></p>
 \mathbf{g}_\mu = \nabla_{\mu}\mathcal{L}(\tau) = E_{q}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] }, \,\,\,\,\,
 \mathbf{g}_{\Sigma}  = \nabla_{S^{-1}}\mathcal{L}(\tau)
  = \frac{1}{2}  E_{q}{ \big[ \nabla_w^2 \ell( \mathbf{w}) \big] } - \frac{\gamma}{2} \mathbf{S} 
- \end{aligned} \tag{3}\label{3}
+ \end{aligned} \tag{4}\label{4}
 $$</code></p>
 
 <p>Our update on <code class="language-plaintext highlighter-rouge">$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$</code> and $\mu_{t+1}$ is like update of <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> as
@@ -381,7 +381,9 @@ $$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong>
   </tbody>
 </table>
 
-<h1 id="gaussian-example-with-flexiable-structured-covariance">Gaussian Example with Flexiable Structured Covariance</h1>
+<h1 id="gaussian-example-with-flexiable-structured-precision">Gaussian Example with Flexiable Structured Precision</h1>
+
+<p>More flexiable structures in matrix $\mathbf{B}$:</p>
 
 <table>
   <thead>
@@ -443,10 +445,12 @@ $$</code></p>
  \end{aligned}
 $$</code></p>
 
-<p>Maps <code class="language-plaintext highlighter-rouge">$\psi$</code>, <code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> are defined in the previous section. <code class="language-plaintext highlighter-rouge">$\kappa_{\text{up}}(\mathbf{X})$</code> extracts non-zero entries of <code class="language-plaintext highlighter-rouge">${\cal{M}_{\text{up}}}(k)$</code> from <code class="language-plaintext highlighter-rouge">$\mathbf{X}$</code>.</p>
+<p>Maps <code class="language-plaintext highlighter-rouge">$\psi$</code> and <code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> are defined in  <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>.</p>
 
-<p>Our NGD update in the <code class="language-plaintext highlighter-rouge">$  \lambda $</code> space is shown below, where we assume $\eta_0=\mathbf{0}$.
-<code class="language-plaintext highlighter-rouge">$$
+<p>Our NGD update in the auxiliary space is shown below, where we assume $\eta_0=\mathbf{0}$.</p>
+<fieldset class="field-set">
+  <legend class="leg-title"><span style="color:red">Structure-preserving update in $\lambda$ space</span></legend>
+  <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \lambda_{t+1} = 
   \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} =
@@ -454,8 +458,10 @@ $$</code></p>
   =\Big\{ \begin{array}{c}  \mu_t - \beta \mathbf{B}_{t}^{-T} \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ 
 \mathbf{B}_t  \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)  \end{array} \Big\}   
  \end{aligned}
-$$</code>
-where <code class="language-plaintext highlighter-rouge">$\odot$</code> is the elementwise product , <code class="language-plaintext highlighter-rouge">$\kappa_{\text{up}}(\mathbf{X}) \in {\cal{M}_{\text{up}}}(k)$</code>, and
+$$</code></p>
+</fieldset>
+<p>where <code class="language-plaintext highlighter-rouge">$\odot$</code> is the elementwise product ,
+ <code class="language-plaintext highlighter-rouge">$\kappa_{\text{up}}(\mathbf{X}) \in {\cal{M}_{\text{up}}}(k)$</code> extracts non-zero entries of <code class="language-plaintext highlighter-rouge">${\cal{M}_{\text{up}}}(k)$</code> from <code class="language-plaintext highlighter-rouge">$\mathbf{X}$</code>, and
 <code class="language-plaintext highlighter-rouge">$ \mathbf{C}_{\text{up}} = 
  \begin{bmatrix}
 \frac{1}{2} \mathbb{1} &amp;  \mathbb{1}   \\
@@ -474,8 +480,8 @@ where <code class="language-plaintext highlighter-rouge">$\odot$</code> is the e
 <table>
   <thead>
     <tr>
-      <th style="text-align: center">Existing NG approach</th>
-      <th style="text-align: center">Our NGD</th>
+      <th style="text-align: center">Existing NG approach for rank-one covariance</th>
+      <th style="text-align: center">Our NGD for rank-one covariance</th>
     </tr>
   </thead>
   <tbody>
@@ -494,44 +500,45 @@ where <code class="language-plaintext highlighter-rouge">$\odot$</code> is the e
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \min_{\mu \in \mathcal{R}^p} \ell(\mu),
- \end{aligned}\tag{4}\label{4}
+ \end{aligned}\tag{5}\label{5}
 $$</code></p>
 
-<p>we formulate a new problem over Gaussian <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)$</code> with structured covariance.
+<p>we formulate a new problem over Gaussian <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)$</code> with structured precision.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
    \min_{\tau \in \Omega_\tau} E_{q(w|\tau)} \big[ \ell(\mathbf{w}) \big] +  E_{q(w|\tau)} \big[ \log q(\mathbf{w}|\tau)\big],
- \end{aligned}\tag{5}\label{5}
+ \end{aligned}\tag{6}\label{6}
 $$</code> where $\tau=(\mu,\mathbf{S})$ with mean $\mu$ and precision matrix $\mathbf{S}=\Sigma^{-1}$.</p>
 
-<p>Use our NGD to solve <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> with $\mathbf{S}=\mathbf{B}\mathbf{B}^T$, which gives the following update
+<p>Use our NGD to solve <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code> with $\mathbf{S}=\mathbf{B}\mathbf{B}^T$</p>
+<ul>
+  <li>give the following update
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mu_{t+1}  &amp; \leftarrow \mu_{t} - \beta \mathbf{S}_t^{-1} \mathbf{g}_{\mu_t},\\
 \mathbf{B}_{t+1}  &amp; \leftarrow   \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)
  \end{aligned}
-$$</code></p>
-
-<p>Obtain an update to solve <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> with a group-structural invariance:
+$$</code></li>
+  <li>obtain an update to solve <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> with a group-structural invariance:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-   \mu_{t+1} &amp;  \leftarrow  \mu_t - \beta \mathbf{S}_{t}^{-1} \nabla_{\mu_t} \ell( \mu), \\ 
-  \mathbf{B}_{t+1} &amp; \leftarrow 
-     \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \color{red}{\kappa_{\text{up}}\big(  \mathbf{B}_t^{-1} \nabla_{\mu_t}^2 \ell( \mu)  \mathbf{B}_t^{-T} - \mathbf{I} \big)} \Big)
- \end{aligned}\tag{6}\label{6}
-$$</code>
-by using <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code> evaluated at the mean <code class="language-plaintext highlighter-rouge">$\mu_t$</code>
+ \mu_{t+1} &amp;  \leftarrow  \mu_t - \beta \mathbf{S}_{t}^{-1} \nabla_{\mu_t} \ell( \mu), \\ 
+\mathbf{B}_{t+1} &amp; \leftarrow 
+   \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \color{red}{\kappa_{\text{up}}\big(  \mathbf{B}_t^{-1} \nabla_{\mu_t}^2 \ell( \mu)  \mathbf{B}_t^{-T} - \mathbf{I} \big)} \Big)
+ \end{aligned}\tag{7}\label{7}
+$$</code> by using <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> evaluated at the mean <code class="language-plaintext highlighter-rouge">$\mu_t$</code>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{g}_{\mu_t} \approx \nabla_{\mu_t} \ell( \mu),\,\,\,\,
  \mathbf{g}_{\Sigma_t} \approx \frac{1}{2} \big[ \nabla_{\mu_t}^2 \ell( \mu) - \mathbf{S}_t\big].
- \end{aligned}\tag{7}\label{7}
-$$</code></p>
+ \end{aligned}\tag{8}\label{8}
+$$</code></li>
+</ul>
 
 <details>
 	<summary>Group-structural invariance:</summary>
 <fieldset class="field-set">
-    <p>If <code class="language-plaintext highlighter-rouge">$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$</code>,  the update in <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code> is invariant under any (group) transform <code class="language-plaintext highlighter-rouge">$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$</code> of  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>  such as <code class="language-plaintext highlighter-rouge">$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$</code>.</p>
+    <p>If <code class="language-plaintext highlighter-rouge">$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$</code>,  the update in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is invariant under any (group) transform <code class="language-plaintext highlighter-rouge">$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$</code> of  <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>  such as <code class="language-plaintext highlighter-rouge">$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$</code>.</p>
   </fieldset>
 </details>
 
@@ -565,8 +572,8 @@ $$</code></p>
 <p>Consider a block-diagonal Gaussian 
        <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)=\prod_{i} q(\mathbf{w}^i|\mu^i,\mathbf{S}^i)$</code> with a Kronecker product group at each <code class="language-plaintext highlighter-rouge">$i$</code>-th layer.</p>
 
-<p>Obtain adaptive-gradient updates with a structural invariance by
- approximating <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code> using the Gauss-Newton in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>.</p>
+<p>Our method gives adaptive-gradient updates with a group-structural invariance by
+ approximating <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code> using the Gauss-Newton in <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code>.</p>
 
 <details>
 	<summary>Time complexity:</summary>
@@ -585,7 +592,7 @@ $$</code></p>
 </details>
 
 <details>
-	<summary>Image classifcation problems:</summary>
+	<summary>Image classification problems:</summary>
 <fieldset class="field-set">
     <p>Kronecker product of lower-triangular groups for a CNN</p>
 
@@ -593,11 +600,13 @@ $$</code></p>
   </fieldset>
 </details>
 
-<h2 id="variational-inference-vi-with-gaussian-mixtures">Variational Inference (VI) with Gaussian Mixtures</h2>
+<h2 id="variational-inference-with-gaussian-mixtures">Variational Inference with Gaussian Mixtures</h2>
 
-<p>Our NGD can be easily exteneded to structured mixture: <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)=\frac{1}{K}\sum_{k=1}^{K}q(\mathbf{w}|\mu_k,\mathbf{S}_k)$</code></p>
-
-<p>Obtain natural-gradient VI for structured Gaussian mixtures with MC gradients</p>
+<p>Our NGD</p>
+<ul>
+  <li>is applied to structured mixture: <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)=\frac{1}{K}\sum_{k=1}^{K}q(\mathbf{w}|\mu_k,\mathbf{S}_k)$</code></li>
+  <li>obtains natural-gradient variational inference for structured Gaussian mixtures with MC gradients</li>
+</ul>
 
 <details>
 	<summary>Approximating a 80-dim mixture of Student's t:</summary>
