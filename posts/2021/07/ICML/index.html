@@ -276,8 +276,8 @@ $$</code></li>
   <legend class="leg-title"><span style="color:red">Our NGD:</span></legend>
   <p><code class="language-plaintext highlighter-rouge">$$ 
 \begin{aligned} 
-\lambda_{t+1} &amp; \leftarrow  \phi_{\lambda_t} \big( \overbrace{\eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} }^{ \text{NGD in local space} } \big) \,\,\,\, \textrm{(update in the  auxiliary space)}\\
-\tau_{t+1} &amp; \leftarrow \psi\big( \lambda_{t+1} \big) \,\,\,\, \textrm{(update in the  global space)}
+\lambda_{t+1} &amp; \leftarrow  \phi_{\lambda_t} \big( \overbrace{\eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} }^{ \text{NGD in local space} } \big) \,\,\,\, \textrm{(update in auxiliary space)}\\
+\tau_{t+1} &amp; \leftarrow \psi\big( \lambda_{t+1} \big) \,\,\,\, \textrm{(update in  global space)}
 \end{aligned} 
 $$</code></p>
 </fieldset>
@@ -342,7 +342,7 @@ $$</code></p>
 \begin{aligned}
     \hat{\mathbf{g}}_{\eta_0}^{(t)} =
  \Big(  \begin{array}{c} \hat{\mathbf{g}}_{\delta_0}^{(t)}\\ \mathrm{vec}(  \hat{\mathbf{g}}_{M_0}^{(t)})\end{array}   \Big)
-=   \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big]
+= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big]
 \end{aligned}
 $$</code></p>
 
