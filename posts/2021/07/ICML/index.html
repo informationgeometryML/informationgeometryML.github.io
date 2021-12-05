@@ -182,7 +182,7 @@
 
 
 
-  7 minute read
+  8 minute read
 </p>
           
         </header>
@@ -224,7 +224,7 @@ as optimization over a parametric family <code class="language-plaintext highlig
    \min_{ \tau \in \Omega_\tau } \mathcal{L}(\tau):= \mathrm{E}_{q(\text{w}| \tau )} \big[ \ell(\mathbf{w}) \big] + \gamma \mathrm{E}_{q(\text{w} |\tau )} \big[ \log q(w|\tau) \big] 
 \end{aligned} \tag{1}\label{1}
 $$</code>
-where <code class="language-plaintext highlighter-rouge">$w$</code> is the decision variable,  <code class="language-plaintext highlighter-rouge">$\ell(\mathbf{w})$</code> is a loss function, <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is the parameter space of <code class="language-plaintext highlighter-rouge">$q$</code>, and <code class="language-plaintext highlighter-rouge">$\gamma\ge 0$</code> is a constant.</p>
+where <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> is the decision variable,  <code class="language-plaintext highlighter-rouge">$\ell(\mathbf{w})$</code> is a loss function, <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is the parameter space of <code class="language-plaintext highlighter-rouge">$q$</code>, and <code class="language-plaintext highlighter-rouge">$\gamma\ge 0$</code> is a constant.</p>
 
 <p>Gradient descent and natural-gradient descent  to solve <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>:
 <code class="language-plaintext highlighter-rouge">$$
@@ -249,7 +249,7 @@ $$</code></li>
 
 <p><img src="/img/icml2021-fig01.png" width="500" /></p>
 
-<p>Challenges of Standard NGD:</p>
+<p>Challenges of standard NGD:</p>
 <ul>
   <li>NGD could violate parameterization constraints</li>
   <li>Singular Fisher information matrix (FIM) <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\tau}(\tau)$</code> of <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code></li>
@@ -276,8 +276,8 @@ $$</code></li>
   <legend class="leg-title"><span style="color:red">Our NGD:</span></legend>
   <p><code class="language-plaintext highlighter-rouge">$$ 
 \begin{aligned} 
-\lambda_{t+1} &amp; \leftarrow  \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big) \\
-\tau_{t+1} &amp; \leftarrow \psi\big( \lambda_{t+1} \big)
+\lambda_{t+1} &amp; \leftarrow  \phi_{\lambda_t} \big( \overbrace{\eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} }^{ \text{NGD in local space} } \big) \,\,\,\, \textrm{(update in the  auxiliary space)}\\
+\tau_{t+1} &amp; \leftarrow \psi\big( \lambda_{t+1} \big) \,\,\,\, \textrm{(update in the  global space)}
 \end{aligned} 
 $$</code></p>
 </fieldset>
