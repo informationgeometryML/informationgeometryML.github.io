@@ -509,9 +509,9 @@ $$</code></p>
 \begin{aligned}
    \min_{\tau \in \Omega_\tau} E_{q(w|\tau)} \big[ \ell(\mathbf{w}) \big] +  E_{q(w|\tau)} \big[ \log q(\mathbf{w}|\tau)\big],
  \end{aligned}\tag{6}\label{6}
-$$</code> where $\tau=(\mu,\mathbf{S})$ with mean $\mu$ and precision matrix $\mathbf{S}=\Sigma^{-1}$.</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{B}$</code> is a block upper-triangular group member,  $\tau=(\mu,\mathbf{S})$ with mean $\mu$ and precision matrix $\mathbf{S}=\mathbf{B}\mathbf{B}^T$.</p>
 
-<p>Use our NGD to solve <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code> with $\mathbf{S}=\mathbf{B}\mathbf{B}^T$</p>
+<p>Use our NGD to solve <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code></p>
 <ul>
   <li>give the following update
 <code class="language-plaintext highlighter-rouge">$$
@@ -533,7 +533,7 @@ $$</code> by using <code class="language-plaintext highlighter-rouge">$\eqref{4}
 \mathbf{g}_{\mu_t} \approx \nabla_{\mu_t} \ell( \mu),\,\,\,\,
  \mathbf{g}_{\Sigma_t} \approx \frac{1}{2} \big[ \nabla_{\mu_t}^2 \ell( \mu) - \mathbf{S}_t\big].
  \end{aligned}\tag{8}\label{8}
-$$</code></li>
+$$</code> where $\Sigma=\mathbf{S}^{-1}$ is the covariance.</li>
 </ul>
 
 <details>
