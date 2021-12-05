@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Structured Natural Gradient Descent (ICML 2021) - Information Geometry in Machine Learning</title>
-<meta name="description" content="About this work [1]: (Youtube) talk, ICML paper, workshop paper,poster">
+<meta name="description" content="More about this work [1]: (Youtube) talk, ICML paper, workshop paper,poster">
 
 
 
@@ -21,7 +21,7 @@
 <meta property="og:url" content="/posts/2021/07/ICML/">
 
 
-  <meta property="og:description" content="About this work [1]: (Youtube) talk, ICML paper, workshop paper,poster">
+  <meta property="og:description" content="More about this work [1]: (Youtube) talk, ICML paper, workshop paper,poster">
 
 
 
@@ -167,7 +167,7 @@
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <meta itemprop="headline" content="Structured Natural Gradient Descent (ICML 2021)">
-    <meta itemprop="description" content="About this work [1]: (Youtube) talk, ICML paper, workshop paper,poster">
+    <meta itemprop="description" content="More about this work [1]: (Youtube) talk, ICML paper, workshop paper,poster">
     <meta itemprop="datePublished" content="July 05, 2021">
     
 
@@ -190,7 +190,7 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>About this work <a class="citation" href="#lin2021tractable">[1]</a>: <a href="https://www.youtube.com/watch?v=vEY1ZxDJX8o&amp;t=11s">(Youtube) talk</a>, <a href="https://arxiv.org/abs/2102.07405">ICML paper</a>, <a href="https://arxiv.org/abs/2107.10884">workshop paper</a>,
+        <p>More about this work <a class="citation" href="#lin2021tractable">[1]</a>: <a href="https://www.youtube.com/watch?v=vEY1ZxDJX8o&amp;t=11s">(Youtube) talk</a>, <a href="https://arxiv.org/abs/2102.07405">ICML paper</a>, <a href="https://arxiv.org/abs/2107.10884">workshop paper</a>,
 <a href="/img/poster.pdf">poster</a></p>
 
 <h1 id="introduction">Introduction</h1>
@@ -236,7 +236,7 @@ $$</code></p>
 
 <p>Advantages of NGD:</p>
 <ul>
-  <li>recovers a Newton-like update for Gaussian <code class="language-plaintext highlighter-rouge">$q$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code> and precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.
+  <li>recovers a Newton-like update for Gaussian family <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\mu,\mathbf{S})$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau=(\mu,\mathbf{S})$</code>, mean <code class="language-plaintext highlighter-rouge">$\mu$</code>, and precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mu_{t+1}  &amp; \leftarrow \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( \mathbf{w}) \big] } \\
@@ -359,9 +359,11 @@ $$</code></p>
 \begin{aligned}
 &amp; \mu_{t+1}   = \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] } \\
 &amp;\mathbf{S}_{t+1} =   \underbrace{ \overbrace{(1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) \big] }}^{\text{standard NGD on $\mathbf{S}$ }} + \color{red}{ \frac{\beta^2}{2} \mathbf{G}_t \mathbf{S}_t^{-1}\mathbf{G}_t}
-}_{\color{red}{\text{ RGD with retraction} }}+ O(\beta^3)
+}_{\color{red}{\text{ RGD with retraction}}}+ O(\beta^3)
  \end{aligned}
 $$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong></span> matrix in matrix group <code class="language-plaintext highlighter-rouge">$\mathrm{GL}^{p\times p}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{G}_t := E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) ] } -\gamma \mathbf{S}_t$</code>.</p>
+
+<p>The second-order term shown in red is a correction term <a class="citation" href="#lin2020handling">[5]</a> used as a retraction map in Riemannian gradient descent (RGD).  A higher-order term <code class="language-plaintext highlighter-rouge">$O(\beta^3)$</code> will be used for structured precision.</p>
 
 <p>Well-known structures in matrix $\mathbf{B}$ are illustrated in the following figure.</p>
 
@@ -625,7 +627,8 @@ $$</code> where $\Sigma=\mathbf{S}^{-1}$ is the covariance.</li>
 <p class="bibliography"><p><span id="lin2021tractable">[1] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Tractable structured natural gradient descent using local parameterizations," <i>International Conference on Machine Learning (ICML)</i> (2021).</span></p>
 <p><span id="glasmachers2010exponential">[2] T. Glasmachers, T. Schaul, S. Yi, D. Wierstra, &amp; J. Schmidhuber, "Exponential natural evolution strategies," <i>Proceedings of the 12th annual conference on Genetic and evolutionary computation</i> (2010), pp. 393–400.</span></p>
 <p><span id="lin2021structured">[3] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Structured second-order methods via natural gradient descent," <i>arXiv preprint arXiv:2107.10884</i> (2021).</span></p>
-<p><span id="lin2019stein">[4] W. Lin, M. E. Khan, &amp; M. Schmidt, "Stein’s Lemma for the Reparameterization Trick with Exponential Family Mixtures," <i>arXiv preprint arXiv:1910.13398</i> (2019).</span></p></p>
+<p><span id="lin2019stein">[4] W. Lin, M. E. Khan, &amp; M. Schmidt, "Stein’s Lemma for the Reparameterization Trick with Exponential Family Mixtures," <i>arXiv preprint arXiv:1910.13398</i> (2019).</span></p>
+<p><span id="lin2020handling">[5] W. Lin, M. Schmidt, &amp; M. E. Khan, "Handling the positive-definite constraint in the bayesian learning rule," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 6116–6126.</span></p></p>
 
 
         
