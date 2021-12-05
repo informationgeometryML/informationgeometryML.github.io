@@ -276,8 +276,8 @@ $$</code></li>
   <legend class="leg-title"><span style="color:red">Our NGD:</span></legend>
   <p><code class="language-plaintext highlighter-rouge">$$ 
 \begin{aligned} 
-\lambda_{t+1} &amp; \leftarrow  \phi_{\lambda_t} \big( \overbrace{\eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} }^{ \text{NGD in local space} } \big) \,\,\,\, \textrm{(update in auxiliary space)}\\
-\tau_{t+1} &amp; \leftarrow \psi\big( \lambda_{t+1} \big) \,\,\,\, \textrm{(update in  global space)}
+\lambda_{t+1} &amp; \leftarrow  \phi_{\lambda_t} \big( \overbrace{\eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} }^{ \text{NGD in local space} } \big) \,\,\,\, \textrm{(structure-preserving update in auxiliary space)}\\
+\tau_{t+1} &amp; \leftarrow \psi\big( \lambda_{t+1} \big) \,\,\,\, \textrm{(update in global space)}
 \end{aligned} 
 $$</code></p>
 </fieldset>
@@ -470,7 +470,7 @@ $$</code></p>
  \mathbf{0} &amp; \frac{1}{2} \mathbf{I}_D
       \end{bmatrix}  \in {\cal{M}_{\text{up}}}(k)$</code>.</p>
 
-  <p>Note that <code class="language-plaintext highlighter-rouge">$ \mathbf{B}_{t+1} \in {\cal{S}_{\text{up}}}(k)$</code> thanks to the property of <code class="language-plaintext highlighter-rouge">$\cal{M}_{\text{up}}(k)$</code>:
+  <p>Note that <code class="language-plaintext highlighter-rouge">$ \mathbf{B}_{t+1} \in {\cal{B}_{\text{up}}}(k)$</code> thanks to the property of <code class="language-plaintext highlighter-rouge">$\cal{M}_{\text{up}}(k)$</code>:
 <code class="language-plaintext highlighter-rouge">$\mathbf{h}\big(\mathbf{M}\big) \in {\cal{B}_{\text{up}}}(k) $</code> for any <code class="language-plaintext highlighter-rouge">$\mathbf{M} \in \cal{M}_{\text{up}}(k)$</code>.</p>
 </blockquote>
 
