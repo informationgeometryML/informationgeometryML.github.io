@@ -202,14 +202,14 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
 <ul>
   <li>generalizes the exponential natural evolutionary strategy <a class="citation" href="#glasmachers2010exponential">[2]</a></li>
   <li>recovers existing  Newton-like algorithms</li>
-  <li>yields new structured second-order algorithms and structured adaptive-gradient methods <a class="citation" href="#lin2021structured">[3]</a></li>
+  <li>yields new structured 2nd-order methods and adaptive-gradient methods with group-structural invariance <a class="citation" href="#lin2021structured">[3]</a></li>
   <li>gives new NGD to learn structured covariances of Gaussian, Wishart and their mixtures</li>
 </ul>
 
 <p>Applications of our method:</p>
 <ul>
-  <li>deep learning (adaptive-gradient),</li>
-  <li>non-convex optimization (structured 2nd-order with group-structural invariance),</li>
+  <li>deep learning (structured adaptive-gradient),</li>
+  <li>non-convex optimization (structured 2nd-order),</li>
   <li>evolution strategies (gradient-free),</li>
   <li>variational inference (multimodal density with Monte Carlo gradient).</li>
 </ul>
@@ -251,7 +251,7 @@ $$</code></li>
 
 <p>Challenges of standard NGD:</p>
 <ul>
-  <li>NGD could violate parameterization constraints</li>
+  <li>NGD could violate parameterization constraints (e.g., <code class="language-plaintext highlighter-rouge">$\mathbf{S}_{t+1}$</code> in <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> may not be positive-definite )</li>
   <li>Singular Fisher information matrix (FIM) <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\tau}(\tau)$</code> of <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code></li>
   <li>Limited precision/covariance structures</li>
   <li>Ad-hoc approximations for cost reductions</li>
@@ -342,7 +342,7 @@ $$</code></p>
 \begin{aligned}
     \hat{\mathbf{g}}_{\eta_0}^{(t)} =
  \Big(  \begin{array}{c} \hat{\mathbf{g}}_{\delta_0}^{(t)}\\ \mathrm{vec}(  \hat{\mathbf{g}}_{M_0}^{(t)})\end{array}   \Big)
-= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big]
+= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big]
 \end{aligned}
 $$</code></p>
 
