@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-04T17:42:33-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-04T17:47:44-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -1384,10 +1384,13 @@ $$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;A structured Gaussian example: Auxiliary  parameter $\mathbf{B}$ lives in  a structured space (matrix Lie group):  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{B}_{\text{up}}}(k)$&lt;/code&gt;,
+&lt;p&gt;A structured Gaussian example:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Auxiliary  parameter $\mathbf{B}$ lives in  a structured space (matrix Lie group):  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{B}_{\text{up}}}(k)$&lt;/code&gt;,
 a &lt;span style=&quot;color:red&quot;&gt;block upper-triangular&lt;/span&gt; sub-group of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{GL}^{p \times p}$&lt;/code&gt;;&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 {\cal{B}_{\text{up}}}(k)  := \Big\{ 
 \begin{bmatrix}
@@ -1398,12 +1401,12 @@ a &lt;span style=&quot;color:red&quot;&gt;block upper-triangular&lt;/span&gt; su
  \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=0$&lt;/code&gt;, the space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{B}_{\text{up}}}(0) = {\cal D}^{p \times p}_{++}$&lt;/code&gt; becomes  the diagonal case.
+  &lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=0$&lt;/code&gt;, the space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{B}_{\text{up}}}(0) = {\cal D}^{p \times p}_{++}$&lt;/code&gt; becomes  the diagonal case.
 When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=p$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{B}_{\text{up}}}(p) = \mathrm{GL}^{p\times p}$&lt;/code&gt; becomes the dense case.&lt;/p&gt;
 
-&lt;p&gt;Consider a local parameter space (Lie sub-algebra): &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{M}_{\text{up}}}(k)$&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;Consider a local parameter space (Lie sub-algebra): &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{M}_{\text{up}}}(k)$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 {\cal{M}_{\text{up}}}(k):  = \Big\{ 
 \begin{bmatrix}
@@ -1414,7 +1417,7 @@ When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=p$&lt
  \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;The global, auxiliary, and local parameterizations :
+  &lt;p&gt;The global, auxiliary, and local parameterizations :
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
        \tau &amp;amp;= \Big\{\mu \in \mathcal{R}^p,  \mathbf{S}=\mathbf{B} \mathbf{B}^T \in \mathcal{S}_{++}^{p\times p} | \mathbf{B} \in {\cal{B}_{\text{up}}}(k) \Big\}, \\
@@ -1423,12 +1426,11 @@ $$&lt;/code&gt;&lt;/p&gt;
  \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Maps &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; are defined in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Our NGD update in the auxiliary space is shown below, where we assume $\eta_0=\mathbf{0}$.&lt;/p&gt;
-&lt;fieldset class=&quot;field-set&quot;&gt;
-  &lt;legend class=&quot;leg-title&quot;&gt;&lt;span style=&quot;color:red&quot;&gt;Structure-preserving update in $\lambda$ space&lt;/span&gt;&lt;/legend&gt;
-  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+  &lt;p&gt;Maps &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; are defined in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt;.
+Our NGD update in the auxiliary space is shown below, where we assume $\eta_0=\mathbf{0}$.&lt;/p&gt;
+  &lt;fieldset class=&quot;field-set&quot;&gt;
+    &lt;legend class=&quot;leg-title&quot;&gt;&lt;span style=&quot;color:red&quot;&gt;Structure-preserving update in $\lambda$ space&lt;/span&gt;&lt;/legend&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \lambda_{t+1} = 
   \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} =
@@ -1437,19 +1439,20 @@ $$&lt;/code&gt;&lt;/p&gt;
 \mathbf{B}_t  \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)  \end{array} \Big\}   
  \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
-&lt;/fieldset&gt;
-&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\odot$&lt;/code&gt; is the elementwise product ,
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\kappa_{\text{up}}(\mathbf{X}) \in {\cal{M}_{\text{up}}}(k)$&lt;/code&gt; extracts non-zero entries of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{M}_{\text{up}}}(k)$&lt;/code&gt; from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{X}$&lt;/code&gt;, and
+  &lt;/fieldset&gt;
+  &lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\odot$&lt;/code&gt; is the elementwise product ,
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\kappa_{\text{up}}(\mathbf{X}) \in {\cal{M}_{\text{up}}}(k)$&lt;/code&gt; extracts non-zero entries of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{M}_{\text{up}}}(k)$&lt;/code&gt; from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{X}$&lt;/code&gt;, and
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{C}_{\text{up}} = 
  \begin{bmatrix}
 \frac{1}{2} \mathbb{1} &amp;amp;  \mathbb{1}   \\
  \mathbf{0} &amp;amp; \frac{1}{2} \mathbf{I}_D
       \end{bmatrix}  \in {\cal{M}_{\text{up}}}(k)$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{B}_{t+1} \in {\cal{S}_{\text{up}}}(k)$&lt;/code&gt; thanks to the property of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\cal{M}_{\text{up}}(k)$&lt;/code&gt;:
+  &lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{B}_{t+1} \in {\cal{S}_{\text{up}}}(k)$&lt;/code&gt; thanks to the property of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\cal{M}_{\text{up}}(k)$&lt;/code&gt;:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{h}\big(\mathbf{M}\big) \in {\cal{B}_{\text{up}}}(k) $&lt;/code&gt; for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{M} \in \cal{M}_{\text{up}}(k)$&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
 
-&lt;p&gt;Our NGD method:&lt;/p&gt;
+&lt;p&gt;In summary, our NGD method:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;is a systemic approach to incorporate structures&lt;/li&gt;
   &lt;li&gt;induces exact and non-singular FIMs&lt;/li&gt;
