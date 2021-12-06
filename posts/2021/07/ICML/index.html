@@ -307,7 +307,7 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{
   <li><code class="language-plaintext highlighter-rouge">$\mathrm{GL}^{p\times p}$</code>: Invertible Matrices (General Linear Group),</li>
   <li><code class="language-plaintext highlighter-rouge">$\mathcal{D}^{p\times p}$</code>: Diagonal Matrices,</li>
   <li><code class="language-plaintext highlighter-rouge">$\mathcal{D}_{++}^{p\times p}$</code>: Diagonal and invertible Matrices (Diagonal Matrix Group),</li>
-  <li><code class="language-plaintext highlighter-rouge">$\mathcal{S}_{++}^{p\times p}$</code>: Positive-definite Matrices,</li>
+  <li><code class="language-plaintext highlighter-rouge">$\mathcal{S}_{++}^{p\times p}$</code>: (Symmetric) positive-definite Matrices,</li>
   <li><code class="language-plaintext highlighter-rouge">$\mathcal{S}^{p\times p}$</code>: Symmetric Matrices.</li>
 </ul>
 
@@ -316,7 +316,7 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{
 <p>The global, auxiliary, and local parameterizations are:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-        \tau &amp;= \Big\{\mu \in \mathcal{R}^p, \mathbf{S} \in \mathcal{S}_{++}^{p\times p} \Big\},  &amp; \mathbf{S}: \text{ strictly positive-definite matrix space } \\
+        \tau &amp;= \Big\{\mu \in \mathcal{R}^p, \mathbf{S} \in \mathcal{S}_{++}^{p\times p} \Big\},  &amp; \mathbf{S}: \text{positive-definite matrix space } \\
         \lambda &amp; = \Big\{ \mu \in  \mathcal{R}^p , \mathbf{B} \in\mathrm{GL}^{p\times p} \Big\}, &amp;\mathbf{B}: \text{ (closed) matrix Lie group}\\
         \eta &amp;= \Big\{ \delta\in  \mathcal{R}^p, \mathbf{M} \in\mathcal{S}^{p\times p}  \Big\}, &amp; \mathbf{M}: \text{ Lie sub-algebra }
 \end{aligned}
@@ -331,16 +331,15 @@ Maps <code class="language-plaintext highlighter-rouge">$\psi$</code> and  <code
 \end{aligned} \tag{3}\label{3}
 $$</code></p>
 
-<p>Our NGD update in the <code class="language-plaintext highlighter-rouge">$  \lambda $</code> space is shown below, where we assume $\eta_0=\mathbf{0}$.
+<p>Our NGD update in <code class="language-plaintext highlighter-rouge">$  \lambda $</code> space is shown below, where we assume $\eta_0=\mathbf{0}$.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
   \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} = \lambda_{t+1} = 
   \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big)
   =\Big\{ \begin{array}{c}  \mu_t - \beta \mathbf{B}_{t}^{-T} \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathbf{B}_t  \mathbf{h}\big(\beta \mathbf{B}_t^{-1}\mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \end{array} \Big\} 
  \end{aligned}
-$$</code></p>
-
-<p>Tractable natural-gradient  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code>  at <code class="language-plaintext highlighter-rouge">$\eta_0=\{\delta_0, \mathbf{M}_0\}$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t=\{\mu_t,\mathbf{B}_t\}$</code>:</p>
+$$</code>
+where tractable natural-gradient  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code>  at <code class="language-plaintext highlighter-rouge">$\eta_0=\{\delta_0, \mathbf{M}_0\}$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t=\{\mu_t,\mathbf{B}_t\}$</code>:</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
