@@ -513,16 +513,16 @@ $$</code></p>
  \end{aligned}\tag{6}\label{6}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$</code> is a block upper-triangular group member,  $\tau=(\mu,\mathbf{S})$ with mean $\mu$ and precision matrix $\mathbf{S}=\mathbf{B}\mathbf{B}^T$.</p>
 
-<p>Use our NGD to solve <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code></p>
+<p>Using our NGD to solve <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code></p>
 <ul>
-  <li>give the following update
+  <li>gives the following update
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mu_{t+1}  &amp; \leftarrow \mu_{t} - \beta \mathbf{S}_t^{-1} \mathbf{g}_{\mu_t},\\
 \mathbf{B}_{t+1}  &amp; \leftarrow   \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)
  \end{aligned}
 $$</code></li>
-  <li>obtain an update to solve <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> with group-structural invariance:
+  <li>obtains an update to solve <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> with group-structural invariance:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
  \mu_{t+1} &amp;  \leftarrow  \mu_t - \beta \mathbf{S}_{t}^{-1} \nabla_{\mu_t} \ell( \mu), \\ 
