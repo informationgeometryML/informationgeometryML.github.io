@@ -615,8 +615,8 @@ $$</code> where $\Sigma=\mathbf{S}^{-1}$ is the covariance.</li>
 
 <p>Our NGD</p>
 <ul>
-  <li>can be applied to structured mixture: <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)=\frac{1}{K}\sum_{k=1}^{K}q(\mathbf{w}|\mu_k,\mathbf{S}_k)$</code></li>
-  <li>obtains stochastic natural-gradient variational inference with structured Gaussian mixtures approximations using MC gradients</li>
+  <li>can use structured Gaussian mixtures as flexiable variational distributions: <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)=\frac{1}{K}\sum_{k=1}^{K}q(\mathbf{w}|\mu_k,\mathbf{S}_k)$</code></li>
+  <li>gives efficient stochastic natural-gradient variational methods beyond mean-field</li>
 </ul>
 
 <details>
