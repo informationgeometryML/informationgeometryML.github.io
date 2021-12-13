@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part III: Invariance of Natural-Gradients - Information Geometry in Machine Learning</title>
-<meta name="description" content="Warning: working in Progress (incomplete)">
+<meta name="description" content="GoalThis blog post should help readers to understand the invariance of natural-gradients.We will also discuss why the Euclidean steepest direction is NOT invariant.">
 
 
 
@@ -21,7 +21,7 @@
 <meta property="og:url" content="/posts/2021/11/Geomopt03/">
 
 
-  <meta property="og:description" content="Warning: working in Progress (incomplete)">
+  <meta property="og:description" content="GoalThis blog post should help readers to understand the invariance of natural-gradients.We will also discuss why the Euclidean steepest direction is NOT invariant.">
 
 
 
@@ -167,7 +167,7 @@
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <meta itemprop="headline" content="Part III: Invariance of Natural-Gradients">
-    <meta itemprop="description" content="Warning: working in Progress (incomplete)">
+    <meta itemprop="description" content="GoalThis blog post should help readers to understand the invariance of natural-gradients.We will also discuss why the Euclidean steepest direction is NOT invariant.">
     <meta itemprop="datePublished" content="November 02, 2021">
     
 
@@ -190,9 +190,7 @@
 
       <section class="page__content" itemprop="text">
         
-        <p>Warning: working in Progress (incomplete)</p>
-
-<h2 id="goal">Goal</h2>
+        <h2 id="goal">Goal</h2>
 <p>This blog post should help readers to understand the invariance of natural-gradients.
 We will also discuss why the Euclidean steepest direction is NOT invariant.</p>
 
@@ -204,7 +202,7 @@ We will also discuss why the Euclidean steepest direction is NOT invariant.</p>
 Since a curve and its tangent direction are geometric obejects, they should be invariant to the choice of parametrization.
 In other words, geometric properties should be persevered in any valid coordinate system. This is a coordinate-free argument.</p>
 
-<p>The argument could be abstract for beginners. To be more concrete, we consider the corresponding coordinate-dependent argument: geometric properties should remain unchanged if we perform a (valid) parameter transformation.</p>
+<p>The argument could be abstract for beginners. To be more concrete, we consider the corresponding coordinate-dependent argument: geometric properties should remain unchanged if we perform a (valid) parameter transformation. This coordinate-dependent argument also gives us a rule to compute natrual-gradients under a parameter transformation.</p>
 
 <p>In this blog post, we will show that two key <strong>geometric properties</strong> remains the same under an <strong>intrinsic</strong> parameter transformation.</p>
 <ol>
@@ -212,7 +210,7 @@ In other words, geometric properties should be persevered in any valid coordinat
   <li>Length of a Riemannian vector/gradient induced by the Fisher-Rao metric</li>
 </ol>
 
-<p>Thanks to these properties, we can easily show that the optimal solution of the <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a> considered in Part II is equivalent  under an intrinsic parameter transformation  since both the length and the directional derivative remain the same.</p>
+<p>Thanks to these properties, we will show that the optimal solution of the <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a> considered in Part II is equivalent  under an intrinsic parameter transformation.</p>
 
 <p>In <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, we consider a point $\mathbf{x}_0$ in a manifold $\mathcal{M}$, a (1-dimensional) curve $\gamma(t)$, and a smooth scalar function $h: \mathcal{M} \to \mathcal{R}$.
 Given an intrinsic parametrization $\tau$ containing the point, we consider the following parametric representations.</p>
@@ -300,7 +298,7 @@ Notice that <code class="language-plaintext highlighter-rouge">$\nabla h_\lambda
  \frac{d h_\lambda({\gamma}_\lambda(t)) }{d t} \Big|_{t=0} &amp; =\sum_{i}  (g_\lambda)_i (\hat{g}_\lambda)^i =  {\mathbf{g}}_\lambda \hat{\mathbf{g}}_\lambda
 \end{aligned}\tag{2}\label{2}
 $$</code>
-where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau$</code> (e.g.,  <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau=(\nabla h_\tau(\tau_0) )^T$</code>) are <strong>row</strong> vectors while <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code> (e.g., <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau=\mathbf{v}_\tau(\tau_0) =\frac{d \gamma_\tau(0) }{d t}$</code>) are <strong>column</strong> vectors. Moreover, <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau$</code> are Euclidean gradients while  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code>  are  Riemannian gradients.</p>
+where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau$</code> (e.g.,  <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau=(\nabla h_\tau(\tau_0) )^T$</code>) are <span style="color:red"><strong>row</strong></span> vectors while <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code> (e.g., <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau=\mathbf{v}_\tau(\tau_0) =\frac{d \gamma_\tau(0) }{d t}$</code>) are <span style="color:red"><strong>column</strong></span> vectors. Moreover, <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau$</code> are Euclidean gradients while  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code>  are  Riemannian gradients.</p>
 
 <p>By <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> and <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, we have the following identity obtained from the <strong>geometric property</strong> of directional derivatives.
 <code class="language-plaintext highlighter-rouge">$$
@@ -309,7 +307,7 @@ where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda$</c
 \end{aligned}\tag{3}\label{3}
 $$</code></p>
 
-<p>Now, we discuss the parameter transform between $\tau$ and $\lambda$, where we can express $\lambda$ in terms of $\tau$ denoted by $\lambda(\tau)$.</p>
+<p>Now, we discuss the parameter transformation between $\tau$ and $\lambda$, where we can express $\lambda$ in terms of $\tau$ denoted by $\lambda(\tau)$.</p>
 
 <p>By the (standard) chain rule for a Euclidean gradient, we has
 <code class="language-plaintext highlighter-rouge">$$
