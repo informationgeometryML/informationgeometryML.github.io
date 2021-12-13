@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-13T14:30:03-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-13T14:58:11-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -237,7 +237,7 @@ $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand the invariance of natural-gradients.
-We will also discuss why the Euclidean steepest direction is NOT invariant while the gradient direction in Newton’s method is invariant.&lt;/p&gt;
+We will also discuss why the Euclidean steepest direction is NOT invariant.&lt;/p&gt;
 
 &lt;p&gt;We will give an informal introduction with a focus on high level of ideas.&lt;/p&gt;
 
@@ -540,8 +540,9 @@ The space of natural-gradients evaluated at the same point is called a tangent s
 
 &lt;h1 id=&quot;euclidean-steepest-direction-and-directional-derivative&quot;&gt;Euclidean steepest direction and directional derivative&lt;/h1&gt;
 &lt;hr /&gt;
-&lt;p&gt;Before we discuss natural-gradients, we first revisit Euclidean gradients.
-We will show a Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we extend the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a natural-gradient.&lt;/p&gt;
+&lt;p&gt;Before we discuss natural-gradients, we first revisit Euclidean gradients.&lt;/p&gt;
+
+&lt;p&gt;We will show a Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we extend the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a natural-gradient.&lt;/p&gt;
 
 &lt;p&gt;Given a smooth scalar function $\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$ in a &lt;strong&gt;vector space&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, we can define the (Euclidean) steepest direction at current &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; as the optimal solution to the following optimization problem. We can express the optimization problem in terms of a &lt;strong&gt;directional derivative&lt;/strong&gt; along vector $\mathbf{v}$. We assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -630,7 +631,7 @@ The main reason is that &lt;code class=&quot;language-plaintext highlighter-roug
 &lt;h1 id=&quot;riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
-Now, we can introduce the Riemannian steepest direction.&lt;/p&gt;
+Now, we can introduce the Riemannian steepest direction. We will use this to define/compute natrual-gradients.&lt;/p&gt;
 
 &lt;p&gt;Given  a smooth scalar funcion defined in a manifold $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$ under an intrinsic parameterization $\mathbf{\tau}$. We can define the Riemannian steepest direction as the optimal solution to the following optimization problem.  The optimization problem is expressed in terms of a directional derivative along Riemannian vector $\mathbf{v}$, where we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -647,7 +648,7 @@ L(\mathbf{v},\lambda) =  ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v} + \lambd
 \end{aligned}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\mathbf{\tau}_0)$&lt;/code&gt; is FIM evaluated at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;One of the KKT necessary conditions implies that
+&lt;p&gt;One of the Karush–Kuhn–Tucker (KKT) necessary conditions implies that
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{0} = \nabla_{v} L(\mathbf{v}_{\text{opt}},\lambda) = \nabla_\tau f(\mathbf{\tau}_0) + 2 \lambda \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}_{\text{opt}}
@@ -706,7 +707,7 @@ We specify an intrinsic parameterization $\mathbf{\tau}$ of the  family as &lt;c
 &lt;p&gt;In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
 Now, we will disucss a more abstract concept of Riemannian vectors without a parametrization. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transform-and-invariance&quot;&gt;Part III&lt;/a&gt;.  In physics, this invariance means that a law of physics should be independent of the choice of (reference) coordinate systems.&lt;/p&gt;
 
-&lt;p&gt;A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$  in the manifold under the parametrization $\tau$. 
+&lt;p&gt;A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$ of a smooth curve in the manifold under the parametrization $\tau$. 
 The set of tangent vectors evaluated at $\mathbf{\tau}_0$ is called the tangent space at the corresponding point. 
 We will illustrate this by an example.&lt;/p&gt;
 
@@ -743,7 +744,7 @@ Under parametrization $\mathbf{\tau}$, we have the following parametric represen
 
 &lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Note that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; is considered a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is considered a Riemannian gradient, which is a representation of the tangent vector of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma$&lt;/code&gt; at point $\mathbf{x}_0$.&lt;/p&gt;
+&lt;p&gt;Note that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; is a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is  a Riemannian gradient, which is a representation of the tangent vector of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma$&lt;/code&gt; at point $\mathbf{x}_0$.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: Be aware of the differences shown in the table.&lt;/p&gt;
 
@@ -812,8 +813,9 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 &lt;/blockquote&gt;
 
 &lt;p&gt;Last but not least,
-we can also define vector additions and real scalar products in a tangent vector space  by using tangent directions of curves in the manifold with/without a parameterization.
-In other words, a vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; which is a parametric representation of a set of &lt;strong&gt;points&lt;/strong&gt; in a manifold.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. The main propose of this post is to show how to compute/define a natural-gradient. The space of natural-gradients evaluated at the same point is called a tangent space at that point.</summary></entry><entry><title type="html">Part I: Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+we can also define vector additions and real scalar products in a tangent vector space  by using tangent directions of curves in the manifold with/without a parameterization.&lt;/p&gt;
+
+&lt;p&gt;A vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; which is a parametric representation of a set of &lt;strong&gt;points&lt;/strong&gt; in a manifold.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. The main propose of this post is to show how to compute/define a natural-gradient. The space of natural-gradients evaluated at the same point is called a tangent space at that point.</summary></entry><entry><title type="html">Part I: Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;The FIM plays an essential role in statistics and machine learning&lt;/li&gt;

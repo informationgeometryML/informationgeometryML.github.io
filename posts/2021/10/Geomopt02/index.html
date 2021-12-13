@@ -199,8 +199,9 @@ The space of natural-gradients evaluated at the same point is called a tangent s
 
 <h1 id="euclidean-steepest-direction-and-directional-derivative">Euclidean steepest direction and directional derivative</h1>
 <hr />
-<p>Before we discuss natural-gradients, we first revisit Euclidean gradients.
-We will show a Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we extend the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a natural-gradient.</p>
+<p>Before we discuss natural-gradients, we first revisit Euclidean gradients.</p>
+
+<p>We will show a Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we extend the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a natural-gradient.</p>
 
 <p>Given a smooth scalar function $\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$ in a <strong>vector space</strong> <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, we can define the (Euclidean) steepest direction at current <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> as the optimal solution to the following optimization problem. We can express the optimization problem in terms of a <strong>directional derivative</strong> along vector $\mathbf{v}$. We assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.
 <code class="language-plaintext highlighter-rouge">$$
@@ -289,7 +290,7 @@ The main reason is that <code class="language-plaintext highlighter-rouge">$\tau
 <h1 id="riemannian-steepest-direction">Riemannian steepest direction</h1>
 <hr />
 <p>Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
-Now, we can introduce the Riemannian steepest direction.</p>
+Now, we can introduce the Riemannian steepest direction. We will use this to define/compute natrual-gradients.</p>
 
 <p>Given  a smooth scalar funcion defined in a manifold $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$ under an intrinsic parameterization $\mathbf{\tau}$. We can define the Riemannian steepest direction as the optimal solution to the following optimization problem.  The optimization problem is expressed in terms of a directional derivative along Riemannian vector $\mathbf{v}$, where we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.
 <code class="language-plaintext highlighter-rouge">$$
@@ -306,7 +307,7 @@ L(\mathbf{v},\lambda) =  ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v} + \lambd
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\mathbf{\tau}_0)$</code> is FIM evaluated at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
 
-<p>One of the KKT necessary conditions implies that
+<p>One of the Karush–Kuhn–Tucker (KKT) necessary conditions implies that
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{0} = \nabla_{v} L(\mathbf{v}_{\text{opt}},\lambda) = \nabla_\tau f(\mathbf{\tau}_0) + 2 \lambda \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}_{\text{opt}}
@@ -365,7 +366,7 @@ We specify an intrinsic parameterization $\mathbf{\tau}$ of the  family as <code
 <p>In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
 Now, we will disucss a more abstract concept of Riemannian vectors without a parametrization. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in <a href="/posts/2021/11/Geomopt03/#parameter-transform-and-invariance">Part III</a>.  In physics, this invariance means that a law of physics should be independent of the choice of (reference) coordinate systems.</p>
 
-<p>A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$  in the manifold under the parametrization $\tau$. 
+<p>A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$ of a smooth curve in the manifold under the parametrization $\tau$. 
 The set of tangent vectors evaluated at $\mathbf{\tau}_0$ is called the tangent space at the corresponding point. 
 We will illustrate this by an example.</p>
 
@@ -402,7 +403,7 @@ Under parametrization $\mathbf{\tau}$, we have the following parametric represen
 
 <p><img src="/img/sphere.png" width="500" /></p>
 
-<p>Note that  <code class="language-plaintext highlighter-rouge">$\tau_0$</code> is considered a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is considered a Riemannian gradient, which is a representation of the tangent vector of curve <code class="language-plaintext highlighter-rouge">$\gamma$</code> at point $\mathbf{x}_0$.</p>
+<p>Note that  <code class="language-plaintext highlighter-rouge">$\tau_0$</code> is a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is  a Riemannian gradient, which is a representation of the tangent vector of curve <code class="language-plaintext highlighter-rouge">$\gamma$</code> at point $\mathbf{x}_0$.</p>
 
 <p><strong>Warning</strong>: Be aware of the differences shown in the table.</p>
 
@@ -471,8 +472,9 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 </blockquote>
 
 <p>Last but not least,
-we can also define vector additions and real scalar products in a tangent vector space  by using tangent directions of curves in the manifold with/without a parameterization.
-In other words, a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> which is a parametric representation of a set of <strong>points</strong> in a manifold.</p>
+we can also define vector additions and real scalar products in a tangent vector space  by using tangent directions of curves in the manifold with/without a parameterization.</p>
+
+<p>A vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> which is a parametric representation of a set of <strong>points</strong> in a manifold.</p>
 
 
         
