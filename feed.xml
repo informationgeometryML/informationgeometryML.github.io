@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-12T01:17:00-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-13T14:30:03-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -825,7 +825,7 @@ In other words, a vector space structure is an integral part of a tangent &lt;st
 &lt;h1 id=&quot;motivation&quot;&gt;Motivation&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;Let’s start with some motivation: why should we care about geometric structures of probability distributions?
-Probability distributions form the backbone of majority of machine-learning approaches, for example, any approach that use probabilistic modeling is built upon such distributions. 
+Probability distributions form the backbone of majority of machine-learning approaches, for example, any approach that uses probabilistic modeling is built upon such distributions. 
 For all such cases, we can exploit the underlying geometric structure, induced by the Fisher-Rao metric, which is the topic of this blog. 
 Below, we give some common examples from machine learning, where probability  distributions naturally arise.&lt;/p&gt;
 
@@ -836,7 +836,7 @@ Below, we give some common examples from machine learning, where probability  di
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \min_{\tau} \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2  &amp;amp; = \max_{\tau} \frac{1}{n}  \sum_{i=1}^{n}  \log \mathcal{N}(y_i | x_i^T\tau,1) \\
-&amp;amp; \approx \int [ \log p(x,y | \tau) ]  d p(x,y | \tau)
+&amp;amp; \approx \int [ \log p(x,y | \tau) ]  d p(x,y | \tau) =  E_{ \color{red}  { p(x,y | \tau) } } [ \log  p(x,y | \tau)    ] 
 \end{aligned} \tag{1}\label{1}
 $$&lt;/code&gt;
 Here &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $&lt;/code&gt; is assumed to be the data-generating distribution, and the least-square loss is the finite-sample approximation of the expectation. The normal distribution is denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{N} (y | x^T\tau,1) $&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ x^T\tau $&lt;/code&gt; and variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ 1 $&lt;/code&gt;.&lt;/p&gt;
@@ -916,13 +916,14 @@ The following figure illustrates four distributions in a Gaussian family denoted
 We can not use an arbitrary differentiable parameterization to represent a geometric structure.
 This structure is also known as a manifold structure. A (smooth) manifold should be locally like a “flat” vector space. For example, consider the (curved) Earth surface. It looks like a (locally) flat space to us.&lt;/p&gt;
 
-&lt;p&gt;The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined.
+&lt;p&gt;The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined (finite).
 These properties will play a key role in &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space&quot;&gt;Part IV&lt;/a&gt; for natural-gradient descent.&lt;/p&gt;
 
 &lt;p&gt;We require that a manifold should be locally like a vector space denoted by $ E $ under a parameterization.
-A local vector-space structure means that we can do &lt;strong&gt;local vector additions&lt;/strong&gt; and &lt;strong&gt;local real scalar products&lt;/strong&gt; (see &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; for the details.)
-Intuitively, this vector-space structure means that a local (small) perturbation $ E $ at each point should not take out of the parameter space.
-Technically, the parameter space denoted by $\Omega_\tau$ should be an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of a parameter array.
+A local vector-space structure means that we can do &lt;strong&gt;local vector additions&lt;/strong&gt; and &lt;strong&gt;local real scalar products&lt;/strong&gt; (see &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; for the details.)&lt;/p&gt;
+
+&lt;p&gt;Intuitively, this vector-space structure means that a local (small) perturbation $ E $ at each point should not take out of the parameter space.
+Technically, the parameter space denoted by $\Omega_\tau$ should be an &lt;strong&gt;open&lt;/strong&gt; set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of a parameter array.
 As we will see soon, FIM is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt;-by-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; matrix.&lt;/p&gt;
 
 &lt;p&gt;To illustrate this, let’s consider a unit circle in $\mathcal{R}^2$ as shown in the Figure.
@@ -952,7 +953,7 @@ Clearly, a point $ (0,1) $ highlighted in green is in the circle, where we consi
 
   &lt;p&gt;Let’s define a map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f : [0,2\pi) \rightarrow \mathcal{S}^1 $&lt;/code&gt; such that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\theta) = (\sin \theta, \cos \theta ) $&lt;/code&gt;, where we use $\mathcal{S}^1$ to denote the circle.&lt;/p&gt;
 
-  &lt;p&gt;A (global) parametrization of the circle is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ f(\theta) | \theta \in [0,2\pi)  \}$&lt;/code&gt;. We use one (scalar) parameter in this parametrization.&lt;/p&gt;
+  &lt;p&gt;A (global) parametrization of the circle is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ f(\theta) | \theta \in [0,2\pi)  \}$&lt;/code&gt;, where we use one (scalar) parameter.&lt;/p&gt;
 
   &lt;p&gt;This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$. Moreover, its inverse map $f^{-1}$ is &lt;strong&gt;not&lt;/strong&gt; continous at point $(0,1) \in  \mathcal{S}^1$.&lt;/p&gt;
 
@@ -978,9 +979,9 @@ Clearly, a point $ (0,1) $ highlighted in green is in the circle, where we consi
 We say a parametrization is &lt;strong&gt;intrinsic&lt;/strong&gt; if the following condition for parameter (array) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau $&lt;/code&gt; holds:&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Regularity Condition&lt;/strong&gt;:  The set of partial derivatives 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \partial_{\tau_i} \log p(w\|\tau) \} $&lt;/code&gt;  should be linearly independent for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ w $&lt;/code&gt; and any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \partial_{\tau_i} \log p(w|\tau) \} $&lt;/code&gt;  should be linearly independent for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ w $&lt;/code&gt; and any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Note that this regularity condition implicitly assumes that the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where K is the number of entries in parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.
+&lt;p&gt;Note that this regularity condition implicitly assumes that the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt; due to the definition of the partial derivatives, where K is the number of entries in parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.
 We will discuss more about this at &lt;a href=&quot;#caveats-of-the-fisher-matrix-computation&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;We will use the following examples to illustrate this condition.&lt;/p&gt;
@@ -1049,11 +1050,12 @@ The main reason is that the parameter space is not open in $\mathcal{R}^2$.&lt;/
 Note that the metric could be ill-defined since the expectation may not exist.&lt;/p&gt;
 
 &lt;p&gt;Given a parameterization,  we can express the metric in a matrix form as
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}(\tau) := E_{p(w\|\tau) }  [ \Big( \nabla_{\tau} \log p(w\|\tau ) \Big)  \Big(\nabla_{\tau} \log (w\|\tau) \Big)^T ]$&lt;/code&gt;,
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}(\tau) := E_{p(wh|\tau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ]$&lt;/code&gt;,
 where $K$ is the number of entries of parameter array $\tau$ and 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w\|\tau ) := [ \partial_{\tau_1} \log p(w\|\tau ), \cdots, \partial_{\tau_K} \log p(w\|\tau ) ]^T  $&lt;/code&gt; is a column vector.
-The matrix form is also known as the &lt;strong&gt;Fisher information matrix&lt;/strong&gt; (FIM). Obviously, FIM depends on the choice of parameterizations. In many cases,  we could also compute FIM as
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}(\tau) := - E_{p(w\|\tau) }  [  \nabla_{\tau}^2 \log p(w\|\tau )  ]$&lt;/code&gt;.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $&lt;/code&gt; is a column vector.&lt;/p&gt;
+
+&lt;p&gt;The matrix form is also known as the &lt;strong&gt;Fisher information matrix&lt;/strong&gt; (FIM). Obviously, FIM depends on the choice of parameterizations. In many cases,  we could also compute FIM as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;The regularity condition guarantees that FIM is non-singular if the matrix exists.
 The condition is also related to the model identification in maximum likelihood estimation.&lt;/p&gt;
@@ -1077,10 +1079,10 @@ It is possible to define FIM under a non-intrinstic parameterization. However, F
 &lt;blockquote&gt;
   &lt;p&gt;Example 1 (Ill-defined FIM):&lt;/p&gt;
 
-  &lt;p&gt;Consider Bernoulli family  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big\| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;.
+  &lt;p&gt;Consider Bernoulli family  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;.
 The following computation is not correct. Do you make similar mistakes like this?&lt;/p&gt;
 
-  &lt;p&gt;Let &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$  p(w\|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;. The derivative is
+  &lt;p&gt;Let &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;. The derivative is
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$  
 \begin{aligned}
 \nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T 
@@ -1100,12 +1102,12 @@ This computation is not correct. Do you know why it is not correct?&lt;/p&gt;
   &lt;p&gt;By definition, a Bernoulli distribution is valid only when the constraint holds. 
 Thus, the constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt; must be satisifed when we compute the Fisher matrix since the computation involves the expectation of this distribution.&lt;/p&gt;
 
-  &lt;p&gt;Note that the gradient is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w\|\tau ) := [ \partial_{\pi_0} \log p(w\|\tau ), \partial_{\pi_1} \log p(w\|\tau ) ]^T $&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;Note that the gradient is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $&lt;/code&gt;.&lt;/p&gt;
 
-  &lt;p&gt;Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \partial_{\pi_0} \log p(w\|\tau )$&lt;/code&gt;, we fix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; and allow &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_0$&lt;/code&gt; to change.
+  &lt;p&gt;Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \partial_{\pi_0} \log p(w|\tau )$&lt;/code&gt;, we fix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; and allow &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_0$&lt;/code&gt; to change.
 However, given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; is fixed and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0 $&lt;/code&gt; is fully determined by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; due to the equality constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt;. 
-Therefore, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$  \partial_{\pi_0} \log p(w\|\tau ) $&lt;/code&gt; is not well-defined.
-In other words, the above Fisher matrix computation is not correct since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w\|\tau ) $&lt;/code&gt; does not exist.&lt;/p&gt;
+Therefore, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$  \partial_{\pi_0} \log p(w|\tau ) $&lt;/code&gt; is not well-defined.
+In other words, the above Fisher matrix computation is not correct since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w|\tau ) $&lt;/code&gt; does not exist.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
@@ -1123,52 +1125,48 @@ In other words, the above Fisher matrix computation is not correct since &lt;cod
 &lt;p&gt;We can define the dimension of a manifold by using the dimension of an intrinsic parametrization. Mathematically, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom.
 We now illustrate this by examples.&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Example 1 (Manifold):&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;unit circle&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;open unit ball&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;closed ball&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/circle-org.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/open-ball.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/closed-ball.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1-dim manifold&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;2-dim manifold&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;non-manifold, which is indeed a manifold with (closed) boundary&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
 
-  &lt;p&gt;The unit circle dicussed before is a 1-dimensional manifold.&lt;/p&gt;
+&lt;p&gt;We will disucss more about the following stastical  manifolds in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;.&lt;/p&gt;
 
-  &lt;p&gt;&lt;img src=&quot;/img/circle-org.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Example 2 (Manifold):&lt;/p&gt;
-
-  &lt;p&gt;The open unit ball is a 2-dimensional manifold.&lt;/p&gt;
-
-  &lt;p&gt;&lt;img src=&quot;/img/open-ball.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Example 3 (Non-manifold):&lt;/p&gt;
-
-  &lt;p&gt;The closed unit ball is &lt;strong&gt;not&lt;/strong&gt; a manifold.&lt;/p&gt;
-
-  &lt;p&gt;&lt;img src=&quot;/img/closed-ball.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/p&gt;
-
-  &lt;p&gt;The main reason is that its boundary does not have the same degrees of freedom as its interior.&lt;/p&gt;
-
-  &lt;p&gt;The closed ball is indeed a manifold with (closed) boundary. We will not consider such cases in these blog posts.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Example 4 (Stastical manifold):&lt;/p&gt;
-
-  &lt;p&gt;Consider a 1-dimensional  Gaussian family.
-We specify an intrinsic parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}$&lt;/code&gt;  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;. &lt;br /&gt;&lt;/p&gt;
-
-  &lt;p&gt;This Gaussian family is a  2-dimensional manifold.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Example 5 (Stastical manifold):&lt;/p&gt;
-
-  &lt;p&gt;Consider a $d$-dimensional Gaussian family with zero mean.
-We specify an intrinsic parameterization $\mathbf{\tau}$  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \mathrm{vech}(\mathbf{\Sigma})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization function&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt;. 
-The half-vectorization of a symmetric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d \times d$&lt;/code&gt; matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt; denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{\Sigma})$&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d + 1)}{2}$&lt;/code&gt;-dim array obtained by vectorizing only the lower triangular part of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;p&gt;This Gaussian family is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d+1)}{2}$&lt;/code&gt;-dimensional manifold. We will disucss more about this family in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that, The FIM plays an essential role in statistics and machine learning For a parametric distribution, it induces a Riemannian geometric-structure</summary></entry><entry><title type="html">Structured Natural Gradient Descent (ICML 2021)</title><link href="/posts/2021/07/ICML/" rel="alternate" type="text/html" title="Structured Natural Gradient Descent (ICML 2021)" /><published>2021-07-05T00:00:00-07:00</published><updated>2021-07-05T00:00:00-07:00</updated><id>/posts/2021/07/GeomProj01</id><content type="html" xml:base="/posts/2021/07/ICML/">&lt;p&gt;More about this work &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[1]&lt;/a&gt;: &lt;a href=&quot;https://www.youtube.com/watch?v=vEY1ZxDJX8o&amp;amp;t=11s&quot;&gt;(Youtube) talk&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2102.07405&quot;&gt;ICML paper&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2107.10884&quot;&gt;workshop paper&lt;/a&gt;,
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;1-dim Gaussian with zero mean&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;$d$-dimensional Gaussian with zero mean&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |0,\sigma) \Big|  \sigma&amp;gt;0 \}$&lt;/code&gt; &lt;br /&gt; under intrinsic parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \sigma $&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$&lt;/code&gt;  &lt;br /&gt; under intrinsic parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \mathrm{vech}(\mathbf{\Sigma})$&lt;/code&gt; is  a $\frac{d(d+1)}{2}$-dim array.  &lt;br /&gt;  Map $\mathrm{MatH}()$ is the inverse map of &lt;br /&gt; the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization function&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt;. &lt;br /&gt;   &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{\Sigma})$&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d + 1)}{2}$&lt;/code&gt;-dim array &lt;br /&gt;  obtained by vectorizing only the lower triangular part of (symmetric) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\Sigma}$&lt;/code&gt;.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;1-dim stastical manifold&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d+1)}{2}$&lt;/code&gt;-dim stastical  manifold&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that, The FIM plays an essential role in statistics and machine learning For a parametric distribution, it induces a Riemannian geometric-structure</summary></entry><entry><title type="html">Structured Natural Gradient Descent (ICML 2021)</title><link href="/posts/2021/07/ICML/" rel="alternate" type="text/html" title="Structured Natural Gradient Descent (ICML 2021)" /><published>2021-07-05T00:00:00-07:00</published><updated>2021-07-05T00:00:00-07:00</updated><id>/posts/2021/07/GeomProj01</id><content type="html" xml:base="/posts/2021/07/ICML/">&lt;p&gt;More about this work &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[1]&lt;/a&gt;: &lt;a href=&quot;https://www.youtube.com/watch?v=vEY1ZxDJX8o&amp;amp;t=11s&quot;&gt;(Youtube) talk&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2102.07405&quot;&gt;ICML paper&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2107.10884&quot;&gt;workshop paper&lt;/a&gt;,
 &lt;a href=&quot;/img/poster.pdf&quot;&gt;poster&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
