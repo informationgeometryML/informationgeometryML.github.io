@@ -460,7 +460,7 @@ $$</code></p>
 &amp;= [\mathbf{J}^{-1} \hat{\mathbf{g}}_\lambda]^T \mathbf{F}_{\tau} (\tau_0) \mathbf{J}^{-1} \hat{\mathbf{g}}_\lambda \\
 &amp;= [\hat{\mathbf{g}}_\lambda]^T [ \mathbf{J}^{-T}  \mathbf{F}_{\tau} (\tau_0) \mathbf{J}^{-1} ] \hat{\mathbf{g}}_\lambda \\
 &amp;= [\hat{\mathbf{g}}_\lambda]^T  \mathbf{F}_{\lambda} (\lambda_0)  \hat{\mathbf{g}}_\lambda = \| \hat{\mathbf{g}}_\lambda \|^2_{F_{\lambda_0}}
-\end{aligned}
+\end{aligned}\tag{8}\label{8}
 $$</code></p>
 
 <h1 id="riemannian-steepest-direction-is-invariant">Riemannian Steepest Direction is Invariant</h1>
@@ -479,7 +479,8 @@ $$</code></p>
 \end{aligned}
 $$</code></p>
 
-<p>We can easily to verify the following identities.
+<p>We can easily to verify the following identities since
+<code class="language-plaintext highlighter-rouge">$ \|\hat{\mathbf{g}}_\lambda\|_{ F_{\lambda_0} } =  \|\hat{\mathbf{g}}_\tau\|_{ F_{\tau_0} }  $</code>  in <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{g}_\tau^T   \mathbf{v}^{(opt)}_{\tau}   &amp; =   \mathbf{g}_\lambda^T  \mathbf{v}^{(opt)}_{\lambda} &amp; \,\,\, \text{(invariance of a directional derivative)}  \\
