@@ -204,14 +204,6 @@ In other words, geometric properties should be persevered in any valid coordinat
 
 <p>The argument could be abstract for beginners. To be more concrete, we consider the corresponding coordinate-dependent argument: geometric properties should remain unchanged if we perform a (valid) parameter transformation. This coordinate-dependent argument also gives us a rule to compute natrual-gradients under a parameter transformation.</p>
 
-<p>We will show that two key <strong>geometric properties</strong> remains the same under any <strong>intrinsic</strong> parameter transformation.</p>
-<ol>
-  <li>Directional derivative</li>
-  <li>Length of a Riemannian vector/gradient induced by the Fisher-Rao metric</li>
-</ol>
-
-<p>Thanks to these properties, we will show that the optimal solution of the <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a> considered in Part II is equivalent under an intrinsic parameter transformation. This is in contrast with the Euclidean steepest direction which is not invaraint under an intrinsic parameter transformation.</p>
-
 <p>The transformation rules are summarized in the following table</p>
 
 <table>
@@ -228,7 +220,7 @@ In other words, geometric properties should be persevered in any valid coordinat
     </tr>
     <tr>
       <td style="text-align: left">Euclidean steepest descent direction (normalized Euclidean gradient)</td>
-      <td style="text-align: center">NA</td>
+      <td style="text-align: center">N/A</td>
     </tr>
     <tr>
       <td style="text-align: left">Riemannian gradient</td>
@@ -240,6 +232,14 @@ In other words, geometric properties should be persevered in any valid coordinat
     </tr>
   </tbody>
 </table>
+
+<p>We will show that two key <strong>geometric properties</strong> remains the same under any <strong>intrinsic</strong> parameter transformation.</p>
+<ol>
+  <li>Directional derivative</li>
+  <li>Length of a Riemannian vector/gradient induced by the Fisher-Rao metric</li>
+</ol>
+
+<p>Thanks to these properties, we will show that the optimal solution of the <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a> considered in Part II is equivalent under an intrinsic parameter transformation. This is in contrast with the Euclidean steepest direction which is not invaraint under an intrinsic parameter transformation.</p>
 
 <p>In <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, we consider a point $\mathbf{x}_0$ in a manifold $\mathcal{M}$, a (1-dimensional) curve $\gamma(t)$, and a smooth scalar function $h: \mathcal{M} \to \mathcal{R}$.
 Given an intrinsic parametrization $\tau$ containing the point, we consider the following parametric representations.</p>
@@ -477,12 +477,12 @@ $$</code></p>
 \end{aligned}
 $$</code></p>
 
-<p>We can easily to verify the following identity
+<p>We can easily to verify the following identities.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{g}_\tau^T   \mathbf{v}^{(opt)}_{\tau}  &amp;=   \mathbf{g}_\lambda^T  \mathbf{v}^{(opt)}_{\lambda} &amp; \,\,\, \text{(invariance of directional derivative)}  \\
+\mathbf{g}_\tau^T   \mathbf{v}^{(opt)}_{\tau}   &amp; =   \mathbf{g}_\lambda^T  \mathbf{v}^{(opt)}_{\lambda} &amp; \,\,\, \text{(invariance of a directional derivative)}  \\
 \|  \mathbf{v}^{(opt)}_{\tau} \|^2_{\color{red}{F_{\tau_0}}} &amp; = \|  \mathbf{v}^{(opt)}_{\lambda} \|^2_{\color{red}{F_{\lambda_0}} } &amp; \,\,\, \text{(invariance of the length of the Riemannian steepest direction)}  \\
-\mathbf{v}^{(opt)}_{\tau} &amp; = \mathbf{J}^{-1}  \mathbf{v}^{(opt)}_{\lambda} &amp; \,\,\, \text{(parameter transformation for the Riemannian steepest direction)}  
+\mathbf{v}^{(opt)}_{\tau} &amp; = \mathbf{J}^{-1}  \mathbf{v}^{(opt)}_{\lambda} &amp; \,\,\, \text{(transformation rule for the Riemannian steepest direction)}  
 \end{aligned}.
 $$</code> 
 In other words, the Riemannian steepest direction (which is indeed  a normalized Riemannian gradient) is also transformed according to the transformation rule for a Riemannian gradient in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>.</p>
