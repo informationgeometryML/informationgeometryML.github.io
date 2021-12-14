@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-14T00:35:58-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-14T00:39:55-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -319,7 +319,7 @@ Given an intrinsic parametrization $\tau$ containing the point, we consider the 
 \begin{aligned}
 h(\gamma(t)) = h_\tau(\gamma_\tau(t)) = h_\lambda(\gamma_\lambda(t))
 \end{aligned}
-$$&lt;/code&gt; where we consider $t$ is fixed.&lt;/p&gt;
+$$&lt;/code&gt; where we consider $t$ to be fixed.&lt;/p&gt;
 
 &lt;p&gt;Technically speaking,  domain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau$&lt;/code&gt; of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(t)$&lt;/code&gt; and  domain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\lambda$&lt;/code&gt; of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\lambda(t)$&lt;/code&gt; may be different. However, both domains are open intervals containing 0 since both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(0)=\tau_0$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\lambda(0)=\lambda_0$&lt;/code&gt;  are parametric representations of the same point $\mathbf{x}_0$.&lt;/p&gt;
 
@@ -425,8 +425,9 @@ $$&lt;/code&gt;&lt;/p&gt;
 \begin{aligned}
 \mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}
 \end{aligned}\tag{6}\label{6},
-$$&lt;/code&gt;
-where &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;row&lt;/strong&gt;&lt;/span&gt; vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_\tau^T$&lt;/code&gt; can be computed via a vector-Jacobian product in any standard Auto-Diff toolbox given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_\lambda$&lt;/code&gt; is pre-computed.&lt;/p&gt;
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Note: &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;row&lt;/strong&gt;&lt;/span&gt; vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_\tau^T$&lt;/code&gt; can be computed via a vector-Jacobian product in any standard Auto-Diff toolbox given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_\lambda$&lt;/code&gt; is pre-computed.&lt;/p&gt;
 
 &lt;p&gt;By Eq &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt;, we obtain the transformation rule for Riemannian gradients as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -435,14 +436,15 @@ where &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;row&lt;/strong&gt;&l
 \end{aligned}\tag{7}\label{7}
 $$&lt;/code&gt; where $\mathbf{Q}:=\mathbf{J}^{-1}$ is also a Jacobian matrix and $Q_{ki}=\frac{\partial \tau^k(\lambda)}{\partial \lambda^i}$ is the $(k,i)$ entry of matrix $\mathbf{Q}$.&lt;/p&gt;
 
+&lt;p&gt;Note: &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;column&lt;/strong&gt;&lt;/span&gt; vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\tau$&lt;/code&gt; can be computed via a Jacobian-vector product used in forward-mode differentiation given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\lambda$&lt;/code&gt; is pre-computed.&lt;/p&gt;
+
 &lt;p&gt;The elementwise expression of the transformation rule for Riemannian gradients (denoted by a column vector) is
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 (g_\tau)^k
  = \sum_{i}  \frac{ \partial \tau^k(\lambda)  }{\color{red} {\partial  \lambda^i} }  \color{red} {(g_\lambda)^i}
 \end{aligned},
-$$&lt;/code&gt; 
-where  &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;column&lt;/strong&gt;&lt;/span&gt; vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\tau$&lt;/code&gt; can be computed via a Jacobian-vector product used in forward-mode differentiation given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\lambda$&lt;/code&gt; is pre-computed.&lt;/p&gt;
+$$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;Note that these transformation rules are valid  when the Jacobian matrix is square and non-singular.
 As we discussed in Part I about &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;intrinsic parameterizations&lt;/a&gt;, the transformation map between $\tau$ and $\lambda$ must be bi-jective, which implies the Jacoabian matrix is square. 
