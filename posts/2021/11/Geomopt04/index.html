@@ -182,7 +182,7 @@
 
 
 
-  10 minute read
+  12 minute read
 </p>
           
         </header>
@@ -209,7 +209,7 @@ The following figure illustrates the difference between the <strong>domain</stro
 <h1 id="natural-gradient-descent-in-an-intrinsic-parameter-space">Natural-gradient Descent in an Intrinsic Parameter Space</h1>
 <hr />
 
-<p>Using intrinstic parametrization $\tau$, we can perform a natural-gradient update known as natural-gradient descent. 
+<p>Using intrinstic parametrization $\tau$, we can perform a natural-gradient update known as natural-gradient descent (NGD). 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \tau_{k} - \alpha \hat{\mathbf{g}}_{\tau_k} 
@@ -224,7 +224,7 @@ Using a small step-size could be an issue since it can greatly slow down the pro
 descent in practice.</p>
 
 <blockquote>
-  <p>Example:</p>
+  <p>Example: (NGD in a constrained space)</p>
 
   <p>Consider a 1-dimensional  Gaussian family.
 We specify an intrinsic parameterization $\mathbf{\tau}$  as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = (\mu,\sigma) $</code>. <br /></p>
@@ -293,7 +293,9 @@ The update in  <code class="language-plaintext highlighter-rouge">$\eqref{3}$</c
 \end{aligned}
 $$</code></p>
 
-<p>Therefore, it is easy to show that $\tau_k = \mathbf{U}^{-1} \lambda_k$ by induction. Updates in <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code> and <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> are equivalent when $\alpha$ is small enough.</p>
+<p>When <code class="language-plaintext highlighter-rouge">$\alpha$</code> is small enough, we have  <code class="language-plaintext highlighter-rouge">$\tau_1 \in \Omega_\tau$</code> and <code class="language-plaintext highlighter-rouge">$\lambda_1 \in \Omega_\lambda$</code>.
+It is easy to show that <code class="language-plaintext highlighter-rouge">$\tau_k = \mathbf{U}^{-1} \lambda_k$</code> by induction.
+Therefore, updates in <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code> and <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> are equivalent.</p>
 
 <h1 id="riemannian-gradient-descent-and-its-non-linear-invariance">Riemannian Gradient Descent and its (Non-linear) Invariance</h1>
 
@@ -381,68 +383,179 @@ Given such a  “distance”, we can perform the unconstrained proximal-gradient
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\tau_k}$</code> is a Eulcidean gradient and the parameter space is unconstrained.</p>
 
-<p>When $\mathrm{D}(y,\tau_k)$ is a secord-order Taylor approximation of any f-divergence (e.g., the KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [q(w|\tau_k) || q(w|y)]$</code>)  at $\tau_k$, this  proximal-gradient descent  recovers natural-gradient descent.</p>
+<p>When <code class="language-plaintext highlighter-rouge">$\mathrm{D}(y,\tau_k)$</code> is a secord-order Taylor approximation of  the KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [q(w|\tau_k) || q(w|y)]$</code> at <code class="language-plaintext highlighter-rouge">$y=\tau_k$</code>, this  proximal-gradient descent  recovers natural-gradient descent.</p>
 
-<p>In Part V, we will show that  <code class="language-plaintext highlighter-rouge">$\mathrm{D}(y,\tau_k)$</code> can also be the exact KL divergence for  expoential family.
+<p>In Part V, we will show that  <code class="language-plaintext highlighter-rouge">$\mathrm{D}(y,\tau_k)$</code> can also be an exact KL divergence for  expoential family.
 In such cases,  unconstrained mirror descent also recovers natural-gradient descent.</p>
 
 <p><span style="color:red"><strong>Warning</strong></span>:
 The connection bewteen natural-gradient descent and proximal-gradient/mirror descent breaks down when
 the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is constrained and open. In constraint cases, these methods are distinct.</p>
 
-<h1 id="natural-gradient-descent-in-non-intrinsic-parameter-spaces">Natural-gradient Descent in Non-intrinsic Parameter Spaces</h1>
+<h1 id="natural-gradient-descent-in-non-intrinstic-parameter-spaces">Natural-gradient Descent in Non-intrinstic Parameter Spaces</h1>
 <hr />
 <p>As mentioned in <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">Part I</a>, an intrinsic parametrization creates a nice parameter space (e.g., a local vector space structure) and guarantees a non-singular FIM.
 We now discuss issues when it comes to  natural-gradient descent over non-intrinsic parametrizations including overparameterization.</p>
 
-<p>The first issue of using a non-intrinsic parametrization is that we may not have a local vector space structure in the parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM is not well-defined in such cases. We will illustrated by an example.
-Another example (Von Mises–Fisher family) will be given in Part V.</p>
+<ol>
+  <li>We may not have a local vector space structure in a non-intrinstic parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM is not well-defined in such cases. We will illustrate this by an example.
+Another example (Von Mises–Fisher family) will be given in Part V.
+    <blockquote>
+      <p>Example: (Invalid NGD)</p>
 
-<blockquote>
-  <p>Example: Bernoulli family:</p>
+      <p>Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
+As we shown in <a href="/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation">Part I</a>, the FIM is ill-defined due to this eqaulity constraint.
+Moreover, the NGD update will violate the eqaulity constraint.</p>
+    </blockquote>
+  </li>
+  <li>The FIM is singular in a non-intrinstic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example. Moreover, natural-gradient descent in non-intrinsic parameter spaces could easily violate parameter constraints.
+    <blockquote>
+      <p>Example:  (Parameter constraint violation)</p>
 
-  <p>Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
-As we shown in <a href="/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation">Part I</a>, the FIM is ill-defined due to this eqaulity constraint.</p>
-</blockquote>
+      <p>Consider a univarate  Gaussian family with zero mean <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |0,  \sigma_1 \sigma_2) \Big|  \sigma_1&gt;0, \sigma_2 &gt; 0  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = (\sigma_1,\sigma_2) $</code>, where <code class="language-plaintext highlighter-rouge">$ \sigma_1 \sigma_2$</code> is the varaince of this Gaussian family.</p>
 
-<p>The second issue is that we have to deal with a singular FIM. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and the singular FIM often destroy structures of FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example. Moreover, natural-gradient descent in non-intrinsic parameter spaces could easily violate parameter constraints.</p>
+      <p>Natural-gradient descent in this parameter space $\Omega_\tau$ could easily violate the parameter constraints when $\sigma_1$ is very closed to $0$ even when the variance $\sigma_1 \sigma_2 $ is big enough.</p>
 
-<blockquote>
-  <p>Example:  (parameter constraint violation)</p>
-
-  <p>Consider a univarate  Gaussian family with zero mean <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |0,  \sigma_1 \sigma_2) \Big|  \sigma_1&gt;0, \sigma_2 &gt; 0  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = (\sigma_1,\sigma_2) $</code>, where <code class="language-plaintext highlighter-rouge">$ \sigma_1 \sigma_2$</code> is the varaince of this Gaussian family.</p>
-
-  <p>Natural-gradient descent in this parameter space $\Omega_\tau$ could easily violate the parameter constraints when $\sigma_1$ is very closed to $0$ even when the variance $\sigma_1 \sigma_2 $ is big enough.</p>
-
-  <p>On the other hand, consider an intrinsic parameterization of this family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |0,  \sigma) \Big|  \sigma &gt; 0  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda = \sigma $</code>, where <code class="language-plaintext highlighter-rouge">$ \sigma$</code> is the varaince of this Gaussian family.
+      <p>On the other hand, consider an intrinsic parameterization of this family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |0,  \sigma) \Big|  \sigma &gt; 0  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda = \sigma $</code>, where <code class="language-plaintext highlighter-rouge">$ \sigma$</code> is the varaince of this Gaussian family.
 Natural-gradient descent in this parameter space $\Omega_\lambda$ less likely violate the parameter constraints when the variance $\sigma$ is big enough.</p>
-</blockquote>
+    </blockquote>
 
-<blockquote>
-  <p>Example:  (high iteation cost)</p>
+    <blockquote>
+      <p>Example:  (High iteation cost)</p>
 
-  <p>Consider a $d$-dimensional Gaussian mixture family <code class="language-plaintext highlighter-rouge">$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $</code>. This is a non-intrinstic parameterization.</p>
+      <p>Consider a $d$-dimensional Gaussian mixture family <code class="language-plaintext highlighter-rouge">$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $</code>. This is a non-intrinstic parameterization.</p>
 
-  <p>If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
+      <p>If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
 The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.</p>
 
-  <p>Now, consider the equivalent Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda =( \mu_0,\Sigma_0 ) $</code>, where $\lambda$ is an intrinsic parameterization of the Gaussian family.</p>
+      <p>Now, consider the equivalent Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda =( \mu_0,\Sigma_0 ) $</code>, where $\lambda$ is an intrinsic parameterization of the Gaussian family.</p>
 
-  <p>As we will shown in Part V, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.</p>
-</blockquote>
-
-<p>To reduce the iteration cost of computing natural-gradients, it is tempting to use an emprical FIM with a scalar damping term to handle the singularity of the FIM. However,
+      <p>As we will shown in Part V, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.</p>
+    </blockquote>
+  </li>
+  <li>It is tempting to approximate the FIM by an emprical FIM with a scalar damping term and use Woodbury matrix identity to reduce the iteration cost of computing natural-gradients. However,
 an emprical FIM can be a bad approximation to the exact FIM.
-Moreover, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.</p>
+Moreover, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.</li>
+</ol>
 
 <h1 id="euclidean-gradient-descent-is-not-linearly-invariant">Euclidean Gradient Descent is NOT (Linearly) Invariant</h1>
-<p>to do:
-add an exapmle</p>
+<p>For simplicity, consider an unconstrained optimization problem.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\tau \in \mathcal{R}^K } h_\tau(\tau)
+\end{aligned}
+$$</code></p>
+
+<p>Euclidean gradient descent (GD) in parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \tau_{k} - \alpha {\mathbf{g}}_{\tau_k} 
+\end{aligned}\tag{5}\label{5}
+$$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_{\tau_k} := \nabla_\tau h_\tau(\tau_k)$</code> is a Euclidean gradient.</p>
+
+<p>Consider a reparametrization  <code class="language-plaintext highlighter-rouge">$\lambda$</code> so that <code class="language-plaintext highlighter-rouge">$\lambda=\mathbf{U} \tau$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{U}$</code> is a constant (square) invertible matrix. 
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\lambda \in \mathcal{R}^K } h_\lambda(\lambda):= h_\tau( \mathbf{U}^{-1} \lambda)
+\end{aligned}
+$$</code></p>
+
+<p>The Euclidean gradient descent (GD) in parametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code> is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\lambda_{k+1} \leftarrow \lambda_{k} - \alpha {\mathbf{g}}_{\lambda_k} 
+\end{aligned}\tag{6}\label{6}
+$$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_{\lambda_k} := \nabla_\lambda h_\lambda(\lambda_k)$</code> is a Euclidean gradient.</p>
+
+<p>Notice that Euclidean gradient follows the <a href="/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance">transformation rule</a> as</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}
+\end{aligned}
+$$</code> where  <code class="language-plaintext highlighter-rouge">$J_{ki}:=\frac{\partial \lambda^k(\tau) }{ \partial \tau^i }$</code></p>
+
+<p>We can verify that <code class="language-plaintext highlighter-rouge">$\mathbf{J}=\mathbf{U}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau = \mathbf{U}^T \mathbf{g}_\lambda $</code>.</p>
+
+<p>Notice that <code class="language-plaintext highlighter-rouge">$\tau_0 = \mathbf{U}^{-1} \lambda_0$</code> by construction.
+The update in  <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> at iteration $k=1$ then can be re-expressed as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\tau_{1} \leftarrow \tau_{0} -  \alpha  {\mathbf{g}}_{\tau_0} = \mathbf{U}^{-1} \lambda_0 -  \alpha  \mathbf{U}^{T}  {\mathbf{g}}_{\lambda_0} \neq \mathbf{U}^{-1} \lambda_1
+\end{aligned}
+$$</code></p>
+
+<p>It is easy to see that
+updates in <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> and <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code> are NOT equivalent.
+Therefore,  Euclidean gradient descent is not invariant.</p>
 
 <h1 id="newtons-method-is-linearly-invariant">Newton’s Method is Linearly Invariant</h1>
 
-<p>to do:
-add an exapmle</p>
+<p>For simplicity, consider an unconstrained optimization problem over a strongly convex funcion <code class="language-plaintext highlighter-rouge">$h_\tau$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\tau \in \mathcal{R}^K } h_\tau(\tau)
+\end{aligned}
+$$</code></p>
+
+<p>Newton’s method in parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \tau_{k} - \alpha \mathbf{H}^{-1}_\tau(\tau_k) {\mathbf{g}}_{\tau_k} 
+\end{aligned}\tag{7}\label{7}
+$$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_{\tau_k} := \nabla_\tau h_\tau(\tau_k)$</code> is a Euclidean gradient and <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\tau_k):=\nabla_\tau^2 h_\tau(\tau_k)$</code> is the Hessian.</p>
+
+<p>Consider a reparametrization  <code class="language-plaintext highlighter-rouge">$\lambda$</code> so that <code class="language-plaintext highlighter-rouge">$\lambda=\mathbf{U} \tau$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{U}$</code> is a constant (square) invertible matrix. 
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\lambda \in \mathcal{R}^K } h_\lambda(\lambda):= h_\tau( \mathbf{U}^{-1} \lambda)
+\end{aligned}
+$$</code></p>
+
+<p>The Euclidean gradient descent (GD) in parametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code> is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\lambda_{k+1} \leftarrow \lambda_{k} - \alpha \mathbf{H}^{-1}_\lambda(\lambda_k) {\mathbf{g}}_{\lambda_k} 
+\end{aligned}\tag{8}\label{8}
+$$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_{\lambda_k} := \nabla_\lambda h_\lambda(\lambda_k)$</code> is a Euclidean gradient and
+<code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\lambda_k):=\nabla_\lambda^2 h_\lambda(\lambda_k)$</code> is the Hessian.</p>
+
+<p>As we discussed in the previous section, 
+ Euclidean gradient follows the <a href="/posts/2021/11/Geomopt03/
+#parameter-transformation-and-invariance">transformation rule</a> as <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}$</code>, where
+<code class="language-plaintext highlighter-rouge">$\mathbf{J}=\mathbf{U}$</code>.</p>
+
+<p>Surprisingly, for a linear transformation, the Hessian follows the transformation rule like the Fisher information
+matrix as</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{H}_{\tau} (\tau_k) &amp;= \nabla_\tau ( \mathbf{g}_{\tau_k} ) \\
+&amp;=\nabla_\tau ( \mathbf{J}^T \mathbf{g}_{\lambda_k} ) \\
+&amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) \,\,\,\,\text{(for a linear transform, } \mathbf{J} \text{ is a
+constant matrix)}   \\
+&amp;=\mathbf{J}^T\nabla_\lambda (  \mathbf{g}_{\lambda_k} )\mathbf{J} \\ 
+&amp;=\mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} 
+\end{aligned}
+$$</code></p>
+
+<p><span style="color:red"><strong>Warning</strong></span>: The Hessian is not valid metric since it does not follow the transformation
+rule like the Fisher-Rao metric for  any non-linear (intrinstic) transformation.</p>
+
+<p>Therefore, the direction in Newton’s method is transformed like natural-gradient in linear cases.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\tilde{\mathbf{g}}_{\tau_k} &amp;:= \mathbf{H}^{-1}_\tau(\tau_k) \mathbf{g}_{\tau_k} \\
+&amp;= [ \mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} ]^{-1} \mathbf{g}_{\tau_k} \\
+&amp;=  \mathbf{J}^{-1} \mathbf{H}^{-1}_{\lambda} (\lambda_k)\mathbf{J}^{-T} [ \mathbf{J}^{T}\mathbf{g}_{\lambda_k} ] \\
+&amp;=  \mathbf{J}^{-1} \mathbf{H}^{-1}_{\lambda} (\lambda_k) \mathbf{g}_{\lambda_k}  \\
+&amp;=  \mathbf{J}^{-1}  \tilde{\mathbf{g}}_{\lambda_k}  \\
+&amp;=  \mathbf{Q}  \tilde{\mathbf{g}}_{\lambda_k}  \\
+\end{aligned} 
+$$</code> where by the definition we have <code class="language-plaintext highlighter-rouge">$\mathbf{Q}:= \mathbf{J}^{-1}$</code>.</p>
+
+<p>The consequence is that Newton’s method like natural-gradient descent is linearly invariant.</p>
 
 
         

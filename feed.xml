@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-14T12:19:03-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural Gradient Descent for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural Gradient Descent for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-14T14:28:27-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural Gradient Descent for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural Gradient Descent for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -17,7 +17,7 @@ The following figure illustrates the difference between the &lt;strong&gt;domain
 &lt;h1 id=&quot;natural-gradient-descent-in-an-intrinsic-parameter-space&quot;&gt;Natural-gradient Descent in an Intrinsic Parameter Space&lt;/h1&gt;
 &lt;hr /&gt;
 
-&lt;p&gt;Using intrinstic parametrization $\tau$, we can perform a natural-gradient update known as natural-gradient descent. 
+&lt;p&gt;Using intrinstic parametrization $\tau$, we can perform a natural-gradient update known as natural-gradient descent (NGD). 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \tau_{k} - \alpha \hat{\mathbf{g}}_{\tau_k} 
@@ -32,7 +32,7 @@ Using a small step-size could be an issue since it can greatly slow down the pro
 descent in practice.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Example:&lt;/p&gt;
+  &lt;p&gt;Example: (NGD in a constrained space)&lt;/p&gt;
 
   &lt;p&gt;Consider a 1-dimensional  Gaussian family.
 We specify an intrinsic parameterization $\mathbf{\tau}$  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;. &lt;br /&gt;&lt;/p&gt;
@@ -101,7 +101,9 @@ The update in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&g
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Therefore, it is easy to show that $\tau_k = \mathbf{U}^{-1} \lambda_k$ by induction. Updates in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; are equivalent when $\alpha$ is small enough.&lt;/p&gt;
+&lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha$&lt;/code&gt; is small enough, we have  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_1 \in \Omega_\tau$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_1 \in \Omega_\lambda$&lt;/code&gt;.
+It is easy to show that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_k = \mathbf{U}^{-1} \lambda_k$&lt;/code&gt; by induction.
+Therefore, updates in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; are equivalent.&lt;/p&gt;
 
 &lt;h1 id=&quot;riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;Riemannian Gradient Descent and its (Non-linear) Invariance&lt;/h1&gt;
 
@@ -189,68 +191,179 @@ Given such a  “distance”, we can perform the unconstrained proximal-gradient
 \end{aligned}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient and the parameter space is unconstrained.&lt;/p&gt;
 
-&lt;p&gt;When $\mathrm{D}(y,\tau_k)$ is a secord-order Taylor approximation of any f-divergence (e.g., the KL divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{KL} [q(w|\tau_k) || q(w|y)]$&lt;/code&gt;)  at $\tau_k$, this  proximal-gradient descent  recovers natural-gradient descent.&lt;/p&gt;
+&lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; is a secord-order Taylor approximation of  the KL divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{KL} [q(w|\tau_k) || q(w|y)]$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y=\tau_k$&lt;/code&gt;, this  proximal-gradient descent  recovers natural-gradient descent.&lt;/p&gt;
 
-&lt;p&gt;In Part V, we will show that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; can also be the exact KL divergence for  expoential family.
+&lt;p&gt;In Part V, we will show that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; can also be an exact KL divergence for  expoential family.
 In such cases,  unconstrained mirror descent also recovers natural-gradient descent.&lt;/p&gt;
 
 &lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Warning&lt;/strong&gt;&lt;/span&gt;:
 The connection bewteen natural-gradient descent and proximal-gradient/mirror descent breaks down when
 the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is constrained and open. In constraint cases, these methods are distinct.&lt;/p&gt;
 
-&lt;h1 id=&quot;natural-gradient-descent-in-non-intrinsic-parameter-spaces&quot;&gt;Natural-gradient Descent in Non-intrinsic Parameter Spaces&lt;/h1&gt;
+&lt;h1 id=&quot;natural-gradient-descent-in-non-intrinstic-parameter-spaces&quot;&gt;Natural-gradient Descent in Non-intrinstic Parameter Spaces&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;As mentioned in &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;Part I&lt;/a&gt;, an intrinsic parametrization creates a nice parameter space (e.g., a local vector space structure) and guarantees a non-singular FIM.
 We now discuss issues when it comes to  natural-gradient descent over non-intrinsic parametrizations including overparameterization.&lt;/p&gt;
 
-&lt;p&gt;The first issue of using a non-intrinsic parametrization is that we may not have a local vector space structure in the parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM is not well-defined in such cases. We will illustrated by an example.
-Another example (Von Mises–Fisher family) will be given in Part V.&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;We may not have a local vector space structure in a non-intrinstic parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM is not well-defined in such cases. We will illustrate this by an example.
+Another example (Von Mises–Fisher family) will be given in Part V.
+    &lt;blockquote&gt;
+      &lt;p&gt;Example: (Invalid NGD)&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Example: Bernoulli family:&lt;/p&gt;
+      &lt;p&gt;Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
+As we shown in &lt;a href=&quot;/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation&quot;&gt;Part I&lt;/a&gt;, the FIM is ill-defined due to this eqaulity constraint.
+Moreover, the NGD update will violate the eqaulity constraint.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The FIM is singular in a non-intrinstic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example. Moreover, natural-gradient descent in non-intrinsic parameter spaces could easily violate parameter constraints.
+    &lt;blockquote&gt;
+      &lt;p&gt;Example:  (Parameter constraint violation)&lt;/p&gt;
 
-  &lt;p&gt;Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
-As we shown in &lt;a href=&quot;/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation&quot;&gt;Part I&lt;/a&gt;, the FIM is ill-defined due to this eqaulity constraint.&lt;/p&gt;
-&lt;/blockquote&gt;
+      &lt;p&gt;Consider a univarate  Gaussian family with zero mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |0,  \sigma_1 \sigma_2) \Big|  \sigma_1&amp;gt;0, \sigma_2 &amp;gt; 0  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\sigma_1,\sigma_2) $&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \sigma_1 \sigma_2$&lt;/code&gt; is the varaince of this Gaussian family.&lt;/p&gt;
 
-&lt;p&gt;The second issue is that we have to deal with a singular FIM. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and the singular FIM often destroy structures of FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example. Moreover, natural-gradient descent in non-intrinsic parameter spaces could easily violate parameter constraints.&lt;/p&gt;
+      &lt;p&gt;Natural-gradient descent in this parameter space $\Omega_\tau$ could easily violate the parameter constraints when $\sigma_1$ is very closed to $0$ even when the variance $\sigma_1 \sigma_2 $ is big enough.&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Example:  (parameter constraint violation)&lt;/p&gt;
-
-  &lt;p&gt;Consider a univarate  Gaussian family with zero mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |0,  \sigma_1 \sigma_2) \Big|  \sigma_1&amp;gt;0, \sigma_2 &amp;gt; 0  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\sigma_1,\sigma_2) $&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \sigma_1 \sigma_2$&lt;/code&gt; is the varaince of this Gaussian family.&lt;/p&gt;
-
-  &lt;p&gt;Natural-gradient descent in this parameter space $\Omega_\tau$ could easily violate the parameter constraints when $\sigma_1$ is very closed to $0$ even when the variance $\sigma_1 \sigma_2 $ is big enough.&lt;/p&gt;
-
-  &lt;p&gt;On the other hand, consider an intrinsic parameterization of this family as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |0,  \sigma) \Big|  \sigma &amp;gt; 0  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda = \sigma $&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \sigma$&lt;/code&gt; is the varaince of this Gaussian family.
+      &lt;p&gt;On the other hand, consider an intrinsic parameterization of this family as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |0,  \sigma) \Big|  \sigma &amp;gt; 0  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda = \sigma $&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \sigma$&lt;/code&gt; is the varaince of this Gaussian family.
 Natural-gradient descent in this parameter space $\Omega_\lambda$ less likely violate the parameter constraints when the variance $\sigma$ is big enough.&lt;/p&gt;
-&lt;/blockquote&gt;
+    &lt;/blockquote&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Example:  (high iteation cost)&lt;/p&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;Example:  (High iteation cost)&lt;/p&gt;
 
-  &lt;p&gt;Consider a $d$-dimensional Gaussian mixture family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $&lt;/code&gt;. This is a non-intrinstic parameterization.&lt;/p&gt;
+      &lt;p&gt;Consider a $d$-dimensional Gaussian mixture family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $&lt;/code&gt;. This is a non-intrinstic parameterization.&lt;/p&gt;
 
-  &lt;p&gt;If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
+      &lt;p&gt;If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
 The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.&lt;/p&gt;
 
-  &lt;p&gt;Now, consider the equivalent Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda =( \mu_0,\Sigma_0 ) $&lt;/code&gt;, where $\lambda$ is an intrinsic parameterization of the Gaussian family.&lt;/p&gt;
+      &lt;p&gt;Now, consider the equivalent Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda =( \mu_0,\Sigma_0 ) $&lt;/code&gt;, where $\lambda$ is an intrinsic parameterization of the Gaussian family.&lt;/p&gt;
 
-  &lt;p&gt;As we will shown in Part V, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;To reduce the iteration cost of computing natural-gradients, it is tempting to use an emprical FIM with a scalar damping term to handle the singularity of the FIM. However,
+      &lt;p&gt;As we will shown in Part V, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/li&gt;
+  &lt;li&gt;It is tempting to approximate the FIM by an emprical FIM with a scalar damping term and use Woodbury matrix identity to reduce the iteration cost of computing natural-gradients. However,
 an emprical FIM can be a bad approximation to the exact FIM.
-Moreover, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.&lt;/p&gt;
+Moreover, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.&lt;/li&gt;
+&lt;/ol&gt;
 
 &lt;h1 id=&quot;euclidean-gradient-descent-is-not-linearly-invariant&quot;&gt;Euclidean Gradient Descent is NOT (Linearly) Invariant&lt;/h1&gt;
-&lt;p&gt;to do:
-add an exapmle&lt;/p&gt;
+&lt;p&gt;For simplicity, consider an unconstrained optimization problem.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\tau \in \mathcal{R}^K } h_\tau(\tau)
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Euclidean gradient descent (GD) in parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \tau_{k} - \alpha {\mathbf{g}}_{\tau_k} 
+\end{aligned}\tag{5}\label{5}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_{\tau_k} := \nabla_\tau h_\tau(\tau_k)$&lt;/code&gt; is a Euclidean gradient.&lt;/p&gt;
+
+&lt;p&gt;Consider a reparametrization  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt; so that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda=\mathbf{U} \tau$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{U}$&lt;/code&gt; is a constant (square) invertible matrix. 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\lambda \in \mathcal{R}^K } h_\lambda(\lambda):= h_\tau( \mathbf{U}^{-1} \lambda)
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The Euclidean gradient descent (GD) in parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\lambda_{k+1} \leftarrow \lambda_{k} - \alpha {\mathbf{g}}_{\lambda_k} 
+\end{aligned}\tag{6}\label{6}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_{\lambda_k} := \nabla_\lambda h_\lambda(\lambda_k)$&lt;/code&gt; is a Euclidean gradient.&lt;/p&gt;
+
+&lt;p&gt;Notice that Euclidean gradient follows the &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance&quot;&gt;transformation rule&lt;/a&gt; as&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}
+\end{aligned}
+$$&lt;/code&gt; where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$J_{ki}:=\frac{\partial \lambda^k(\tau) }{ \partial \tau^i }$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We can verify that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}=\mathbf{U}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau = \mathbf{U}^T \mathbf{g}_\lambda $&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Notice that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0 = \mathbf{U}^{-1} \lambda_0$&lt;/code&gt; by construction.
+The update in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; at iteration $k=1$ then can be re-expressed as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{1} \leftarrow \tau_{0} -  \alpha  {\mathbf{g}}_{\tau_0} = \mathbf{U}^{-1} \lambda_0 -  \alpha  \mathbf{U}^{T}  {\mathbf{g}}_{\lambda_0} \neq \mathbf{U}^{-1} \lambda_1
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;It is easy to see that
+updates in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{6}$&lt;/code&gt; are NOT equivalent.
+Therefore,  Euclidean gradient descent is not invariant.&lt;/p&gt;
 
 &lt;h1 id=&quot;newtons-method-is-linearly-invariant&quot;&gt;Newton’s Method is Linearly Invariant&lt;/h1&gt;
 
-&lt;p&gt;to do:
-add an exapmle&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part III: Invariance of Natural-Gradients</title><link href="/posts/2021/11/Geomopt03/" rel="alternate" type="text/html" title="Part III: Invariance of Natural-Gradients" /><published>2021-11-02T00:00:00-07:00</published><updated>2021-11-02T00:00:00-07:00</updated><id>/posts/2021/11/Geomopt03</id><content type="html" xml:base="/posts/2021/11/Geomopt03/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+&lt;p&gt;For simplicity, consider an unconstrained optimization problem over a strongly convex funcion &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h_\tau$&lt;/code&gt;.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\tau \in \mathcal{R}^K } h_\tau(\tau)
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Newton’s method in parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \tau_{k} - \alpha \mathbf{H}^{-1}_\tau(\tau_k) {\mathbf{g}}_{\tau_k} 
+\end{aligned}\tag{7}\label{7}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_{\tau_k} := \nabla_\tau h_\tau(\tau_k)$&lt;/code&gt; is a Euclidean gradient and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{H}_\tau(\tau_k):=\nabla_\tau^2 h_\tau(\tau_k)$&lt;/code&gt; is the Hessian.&lt;/p&gt;
+
+&lt;p&gt;Consider a reparametrization  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt; so that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda=\mathbf{U} \tau$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{U}$&lt;/code&gt; is a constant (square) invertible matrix. 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\lambda \in \mathcal{R}^K } h_\lambda(\lambda):= h_\tau( \mathbf{U}^{-1} \lambda)
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The Euclidean gradient descent (GD) in parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\lambda_{k+1} \leftarrow \lambda_{k} - \alpha \mathbf{H}^{-1}_\lambda(\lambda_k) {\mathbf{g}}_{\lambda_k} 
+\end{aligned}\tag{8}\label{8}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_{\lambda_k} := \nabla_\lambda h_\lambda(\lambda_k)$&lt;/code&gt; is a Euclidean gradient and
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{H}_\tau(\lambda_k):=\nabla_\lambda^2 h_\lambda(\lambda_k)$&lt;/code&gt; is the Hessian.&lt;/p&gt;
+
+&lt;p&gt;As we discussed in the previous section, 
+ Euclidean gradient follows the &lt;a href=&quot;/posts/2021/11/Geomopt03/
+#parameter-transformation-and-invariance&quot;&gt;transformation rule&lt;/a&gt; as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}$&lt;/code&gt;, where
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}=\mathbf{U}$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Surprisingly, for a linear transformation, the Hessian follows the transformation rule like the Fisher information
+matrix as&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{H}_{\tau} (\tau_k) &amp;amp;= \nabla_\tau ( \mathbf{g}_{\tau_k} ) \\
+&amp;amp;=\nabla_\tau ( \mathbf{J}^T \mathbf{g}_{\lambda_k} ) \\
+&amp;amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) \,\,\,\,\text{(for a linear transform, } \mathbf{J} \text{ is a
+constant matrix)}   \\
+&amp;amp;=\mathbf{J}^T\nabla_\lambda (  \mathbf{g}_{\lambda_k} )\mathbf{J} \\ 
+&amp;amp;=\mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} 
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Warning&lt;/strong&gt;&lt;/span&gt;: The Hessian is not valid metric since it does not follow the transformation
+rule like the Fisher-Rao metric for  any non-linear (intrinstic) transformation.&lt;/p&gt;
+
+&lt;p&gt;Therefore, the direction in Newton’s method is transformed like natural-gradient in linear cases.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tilde{\mathbf{g}}_{\tau_k} &amp;amp;:= \mathbf{H}^{-1}_\tau(\tau_k) \mathbf{g}_{\tau_k} \\
+&amp;amp;= [ \mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} ]^{-1} \mathbf{g}_{\tau_k} \\
+&amp;amp;=  \mathbf{J}^{-1} \mathbf{H}^{-1}_{\lambda} (\lambda_k)\mathbf{J}^{-T} [ \mathbf{J}^{T}\mathbf{g}_{\lambda_k} ] \\
+&amp;amp;=  \mathbf{J}^{-1} \mathbf{H}^{-1}_{\lambda} (\lambda_k) \mathbf{g}_{\lambda_k}  \\
+&amp;amp;=  \mathbf{J}^{-1}  \tilde{\mathbf{g}}_{\lambda_k}  \\
+&amp;amp;=  \mathbf{Q}  \tilde{\mathbf{g}}_{\lambda_k}  \\
+\end{aligned} 
+$$&lt;/code&gt; where by the definition we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{Q}:= \mathbf{J}^{-1}$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The consequence is that Newton’s method like natural-gradient descent is linearly invariant.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part III: Invariance of Natural-Gradients</title><link href="/posts/2021/11/Geomopt03/" rel="alternate" type="text/html" title="Part III: Invariance of Natural-Gradients" /><published>2021-11-02T00:00:00-07:00</published><updated>2021-11-02T00:00:00-07:00</updated><id>/posts/2021/11/Geomopt03</id><content type="html" xml:base="/posts/2021/11/Geomopt03/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand the invariance of natural-gradients.
 We will also discuss why the Euclidean steepest direction is NOT invariant.&lt;/p&gt;
 
@@ -406,7 +519,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 \tag{4}\label{4}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Let $J_{ki}:=\frac{\partial \lambda^k(\tau) }{ \partial \tau^i }$ denotes the $(k,i)$ entry of the Jacobian matrix. We illustrate our matrix notation in a 2D case as below.&lt;/p&gt;
+&lt;p&gt;Let &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$J_{ki}:=\frac{\partial \lambda^k(\tau) }{ \partial \tau^i }$&lt;/code&gt; denotes the $(k,i)$ entry of the Jacobian matrix. We illustrate our matrix notation in a 2D case as below.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
