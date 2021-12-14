@@ -542,7 +542,7 @@ $$</code></p>
 <p><span style="color:red"><strong>Warning</strong></span>: The Hessian is not valid metric since it does not follow the transformation
 rule like the Fisher-Rao metric for  any non-linear (intrinstic) transformation.</p>
 
-<p>Therefore, the direction in Newton’s method is transformed like natural-gradient in linear cases.</p>
+<p>Therefore, the direction in Newton’s method denoted by <code class="language-plaintext highlighter-rouge">$\tilde{\mathbf{g}}_{\tau_k} := \mathbf{H}^{-1}_\tau(\tau_k) \mathbf{g}_{\tau_k}$</code> is transformed like natural-gradient in linear cases.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -553,7 +553,7 @@ rule like the Fisher-Rao metric for  any non-linear (intrinstic) transformation.
 &amp;=  \mathbf{J}^{-1}  \tilde{\mathbf{g}}_{\lambda_k}  \\
 &amp;=  \mathbf{Q}  \tilde{\mathbf{g}}_{\lambda_k}  \\
 \end{aligned} 
-$$</code> where by the definition we have <code class="language-plaintext highlighter-rouge">$\mathbf{Q}:= \mathbf{J}^{-1}$</code>.</p>
+$$</code> where by the definition we have <code class="language-plaintext highlighter-rouge">$\mathbf{Q}= \mathbf{J}^{-1}$</code>.</p>
 
 <p>The consequence is that Newton’s method like natural-gradient descent is linearly invariant.</p>
 
