@@ -54,6 +54,11 @@ var store = [{
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/11/Geomopt04/",
         "teaser":null},{
+        "title": "Part V: Efficient Natural Gradient Descent for Exponential Family",
+        "excerpt":"Warning: working in Progress (incomplete) ","categories": [],
+        "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold","Exponential Family"],
+        "url": "/posts/2021/12/Geomopt05/",
+        "teaser":null},{
         "title": "Paper Title Number 1",
         "excerpt":"This paper is about the number 1. The number 2 is left for future work. Download paper here Recommended citation: Your Name, You. (2009). “Paper Title Number 1.” Journal 1. 1(1). ","categories": [],
         "tags": [],

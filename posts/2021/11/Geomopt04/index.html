@@ -405,7 +405,7 @@ Another example (Von Mises–Fisher family) will be given in Part V.</p>
 As we shown in <a href="/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation">Part I</a>, the FIM is ill-defined due to this eqaulity constraint.</p>
 </blockquote>
 
-<p>The second issue is that we have to deal with a singular FIM. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and the singular FIM often destroy structures in a non-singular FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example. Moreover, natural-gradient descent in non-intrinsic parameter spaces could easily violate parameter constraints.</p>
+<p>The second issue is that we have to deal with a singular FIM. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and the singular FIM often destroy structures of FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example. Moreover, natural-gradient descent in non-intrinsic parameter spaces could easily violate parameter constraints.</p>
 
 <blockquote>
   <p>Example:  (parameter constraint violation)</p>
@@ -523,7 +523,8 @@ add an exapmle</p>
 ">Previous</a>
     
     
-      <a href="#" class="pagination--pager disabled">Next</a>
+      <a href="/posts/2021/12/Geomopt05/" class="pagination--pager" title="Part V: Efficient Natural Gradient Descent for Exponential Family
+">Next</a>
     
   </nav>
 
@@ -537,6 +538,34 @@ add an exapmle</p>
     <div class="page__related">
       <h4 class="page__related-title">You may also enjoy</h4>
       <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/12/Geomopt05/" rel="permalink">Part V: Efficient Natural Gradient Descent for Exponential Family
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  less than 1 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
         
           
 
@@ -620,35 +649,6 @@ The main propose...</p>
 This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,
 
   The FIM plays an ess...</p>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/posts/2021/07/ICML/" rel="permalink">Structured Natural Gradient Descent (ICML 2021)
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  9 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">More about this work [1]: (Youtube) talk, ICML paper, workshop paper,
-poster
-
-</p>
   </article>
 </div>
         
