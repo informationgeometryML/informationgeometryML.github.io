@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-14T14:30:18-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural Gradient Descent for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural Gradient Descent for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-14T14:49:06-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural Gradient Descent for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural Gradient Descent for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -86,7 +86,7 @@ For simplicity,  we further assume &lt;code class=&quot;language-plaintext highl
 \end{aligned}\tag{4}\label{4}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\lambda_k} := [\mathbf{F}_\lambda(\lambda_k) ]^{-1} \nabla_\lambda h_\lambda(\lambda_k)$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Recall that we have the &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance&quot;&gt;transformation rule&lt;/a&gt; for natural gradients as
+&lt;p&gt;Recall that we have the &lt;a href=&quot;/posts/2021/11/Geomopt03/#transformation-rules-for-natural-gradients-and-euclidean-gradients&quot;&gt;transformation rule&lt;/a&gt; for natural gradients as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \hat{\mathbf{g}}_\tau= \mathbf{Q}  \hat{\mathbf{g}}_\lambda 
@@ -275,7 +275,8 @@ $$&lt;/code&gt;&lt;/p&gt;
 \end{aligned}\tag{6}\label{6}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\mathbf{g}}_{\lambda_k} := \nabla_\lambda h_\lambda(\lambda_k)$&lt;/code&gt; is a Euclidean gradient.&lt;/p&gt;
 
-&lt;p&gt;Notice that Euclidean gradient follows the &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance&quot;&gt;transformation rule&lt;/a&gt; as&lt;/p&gt;
+&lt;p&gt;hi
+Notices that Euclidean gradients follow the &lt;a href=&quot;/posts/2021/11/Geomopt03/#transformation-rules-for-natural-gradients-and-euclidean-gradients&quot;&gt;transformation rule&lt;/a&gt;  as&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -329,18 +330,17 @@ $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{H}_\tau(\lambda_k):=\nabla_\lambda^2 h_\lambda(\lambda_k)$&lt;/code&gt; is the Hessian.&lt;/p&gt;
 
 &lt;p&gt;As we discussed in the previous section, 
- Euclidean gradient follows the &lt;a href=&quot;/posts/2021/11/Geomopt03/
-#parameter-transformation-and-invariance&quot;&gt;transformation rule&lt;/a&gt; as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}$&lt;/code&gt;, where
+Euclidean gradients follow the &lt;a href=&quot;/posts/2021/11/Geomopt03/#transformation-rules-for-natural-gradients-and-euclidean-gradients&quot;&gt;transformation rule&lt;/a&gt;  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}$&lt;/code&gt;, where
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}=\mathbf{U}$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Surprisingly, for a linear transformation, the Hessian follows the transformation rule like the Fisher information
+&lt;p&gt;Surprisingly, for a linear transformation, the Hessian follows the &lt;a href=&quot;/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix&quot;&gt;transformation rule&lt;/a&gt;  like the Fisher information
 matrix as&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{H}_{\tau} (\tau_k) &amp;amp;= \nabla_\tau ( \mathbf{g}_{\tau_k} ) \\
 &amp;amp;=\nabla_\tau ( \mathbf{J}^T \mathbf{g}_{\lambda_k} ) \\
-&amp;amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) \,\,\,\,\text{(for a linear transform, } \mathbf{J} \text{ is a
+&amp;amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) \,\,\,\,\text{(for a linear transformation, } \mathbf{J} \text{ is a
 constant matrix)}   \\
 &amp;amp;=\mathbf{J}^T\nabla_\lambda (  \mathbf{g}_{\lambda_k} )\mathbf{J} \\ 
 &amp;amp;=\mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} 
@@ -439,6 +439,8 @@ Given an intrinsic parametrization $\tau$ containing the point, we consider the 
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
+
+&lt;h2 id=&quot;transformation-rules-for-natural-gradients-and-euclidean-gradients&quot;&gt;Transformation Rules for Natural Gradients and Euclidean Gradients&lt;/h2&gt;
 
 &lt;p&gt;Intuitively, the following identity should hold for any two (intrinsic) parametrizations $\tau$ and $\lambda$.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -576,7 +578,9 @@ $$&lt;/code&gt;&lt;/p&gt;
 As we discussed in Part I about &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;intrinsic parameterizations&lt;/a&gt;, the transformation map between $\tau$ and $\lambda$ must be bi-jective, which implies the Jacoabian matrix is square. 
 Moreover, the map and its inverse map should be smooth, which implies that the Jacobian matrix is well-defined and non-singular.&lt;/p&gt;
 
-&lt;p&gt;Finally, we give a transformation rule for the Fisher information matrix as defined at &lt;a href=&quot;/posts/2021/09/Geomopt01/#fisher-rao-metric&quot;&gt;Part I&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;transformation-rule-for-the-fisher-information-matrix&quot;&gt;Transformation Rule for the Fisher Information Matrix&lt;/h2&gt;
+
+&lt;p&gt;Now, we give a transformation rule for the Fisher information matrix as defined at &lt;a href=&quot;/posts/2021/09/Geomopt01/#fisher-rao-metric&quot;&gt;Part I&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}

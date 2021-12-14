@@ -278,7 +278,7 @@ For simplicity,  we further assume <code class="language-plaintext highlighter-r
 \end{aligned}\tag{4}\label{4}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\lambda_k} := [\mathbf{F}_\lambda(\lambda_k) ]^{-1} \nabla_\lambda h_\lambda(\lambda_k)$</code></p>
 
-<p>Recall that we have the <a href="/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance">transformation rule</a> for natural gradients as
+<p>Recall that we have the <a href="/posts/2021/11/Geomopt03/#transformation-rules-for-natural-gradients-and-euclidean-gradients">transformation rule</a> for natural gradients as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \hat{\mathbf{g}}_\tau= \mathbf{Q}  \hat{\mathbf{g}}_\lambda 
@@ -467,7 +467,8 @@ $$</code></p>
 \end{aligned}\tag{6}\label{6}
 $$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_{\lambda_k} := \nabla_\lambda h_\lambda(\lambda_k)$</code> is a Euclidean gradient.</p>
 
-<p>Notice that Euclidean gradient follows the <a href="/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance">transformation rule</a> as</p>
+<p>hi
+Notices that Euclidean gradients follow the <a href="/posts/2021/11/Geomopt03/#transformation-rules-for-natural-gradients-and-euclidean-gradients">transformation rule</a>  as</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -521,18 +522,17 @@ $$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}
 <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\lambda_k):=\nabla_\lambda^2 h_\lambda(\lambda_k)$</code> is the Hessian.</p>
 
 <p>As we discussed in the previous section, 
- Euclidean gradient follows the <a href="/posts/2021/11/Geomopt03/
-#parameter-transformation-and-invariance">transformation rule</a> as <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}$</code>, where
+Euclidean gradients follow the <a href="/posts/2021/11/Geomopt03/#transformation-rules-for-natural-gradients-and-euclidean-gradients">transformation rule</a>  as <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}$</code>, where
 <code class="language-plaintext highlighter-rouge">$\mathbf{J}=\mathbf{U}$</code>.</p>
 
-<p>Surprisingly, for a linear transformation, the Hessian follows the transformation rule like the Fisher information
+<p>Surprisingly, for a linear transformation, the Hessian follows the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a>  like the Fisher information
 matrix as</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{H}_{\tau} (\tau_k) &amp;= \nabla_\tau ( \mathbf{g}_{\tau_k} ) \\
 &amp;=\nabla_\tau ( \mathbf{J}^T \mathbf{g}_{\lambda_k} ) \\
-&amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) \,\,\,\,\text{(for a linear transform, } \mathbf{J} \text{ is a
+&amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) \,\,\,\,\text{(for a linear transformation, } \mathbf{J} \text{ is a
 constant matrix)}   \\
 &amp;=\mathbf{J}^T\nabla_\lambda (  \mathbf{g}_{\lambda_k} )\mathbf{J} \\ 
 &amp;=\mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} 
