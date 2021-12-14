@@ -198,19 +198,19 @@ We will also discuss why the Euclidean steepest direction is NOT invariant.</p>
 
 <h1 id="parameter-transformation-and-invariance">Parameter Transformation and Invariance</h1>
 <hr />
-<p>In <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, we show that a Riemannian gradient is a parametric representation of the tangent direction of a curve in a  manifold.
+<p>In <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, we have shown that a Riemannian gradient is a parametric representation of the tangent direction of a curve in a  manifold.
 Since a curve and its tangent direction are geometric obejects, they should be invariant to the choice of parametrization.
 In other words, geometric properties should be persevered in any valid coordinate system. This is a coordinate-free argument.</p>
 
 <p>The argument could be abstract for beginners. To be more concrete, we consider the corresponding coordinate-dependent argument: geometric properties should remain unchanged if we perform a (valid) parameter transformation. This coordinate-dependent argument also gives us a rule to compute natrual-gradients under a parameter transformation.</p>
 
-<p>In this blog post, we will show that two key <strong>geometric properties</strong> remains the same under an <strong>intrinsic</strong> parameter transformation.</p>
+<p>We will show that two key <strong>geometric properties</strong> remains the same under any <strong>intrinsic</strong> parameter transformation.</p>
 <ol>
   <li>Directional derivative</li>
   <li>Length of a Riemannian vector/gradient induced by the Fisher-Rao metric</li>
 </ol>
 
-<p>Thanks to these properties, we will show that the optimal solution of the <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a> considered in Part II is equivalent  under an intrinsic parameter transformation.</p>
+<p>Thanks to these properties, we will show that the optimal solution of the <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a> considered in Part II is equivalent under an intrinsic parameter transformation. This is in contrast with the Euclidean steepest direction which is not invaraint under an intrinsic parameter transformation.</p>
 
 <p>In <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, we consider a point $\mathbf{x}_0$ in a manifold $\mathcal{M}$, a (1-dimensional) curve $\gamma(t)$, and a smooth scalar function $h: \mathcal{M} \to \mathcal{R}$.
 Given an intrinsic parametrization $\tau$ containing the point, we consider the following parametric representations.</p>
@@ -265,7 +265,7 @@ $$</code> where $\nabla$ is the standard (coordinate) derivative.</p>
 <p>Recall that in <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>,  we have shown that <code class="language-plaintext highlighter-rouge">$\frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$</code> is a  parametric representation of a Riemannian vector, which is a Riemannian gradient.
 Notice that <code class="language-plaintext highlighter-rouge">$\nabla h_\lambda(\mathbf{\lambda}_0)$</code> is a Euclidean gradient.</p>
 
-<p>We will use the following the notations to simplify expressions.</p>
+<p>We will use the following notations to simplify expressions.</p>
 
 <table>
   <thead>
@@ -294,16 +294,16 @@ Notice that <code class="language-plaintext highlighter-rouge">$\nabla h_\lambda
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
- \frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0} &amp;= \sum_{i}  (g_\tau)_i  (\hat{g}_\tau)^i  = {\mathbf{g}_\tau} \hat{\mathbf{g}}_\tau \\ 
- \frac{d h_\lambda({\gamma}_\lambda(t)) }{d t} \Big|_{t=0} &amp; =\sum_{i}  (g_\lambda)_i (\hat{g}_\lambda)^i =  {\mathbf{g}}_\lambda \hat{\mathbf{g}}_\lambda
+ \frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0} &amp;= \sum_{i}  (g_\tau)_i  (\hat{g}_\tau)^i  = \mathbf{g}_\tau^T \hat{\mathbf{g}}_\tau \\ 
+ \frac{d h_\lambda({\gamma}_\lambda(t)) }{d t} \Big|_{t=0} &amp; =\sum_{i}  (g_\lambda)_i (\hat{g}_\lambda)^i =  {\mathbf{g}}_\lambda^T \hat{\mathbf{g}}_\lambda
 \end{aligned}\tag{2}\label{2}
 $$</code>
-where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau$</code> (e.g.,  <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau=(\nabla h_\tau(\tau_0) )^T$</code>) are <span style="color:red"><strong>row</strong></span> vectors while <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code> (e.g., <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau=\mathbf{v}_\tau(\tau_0) =\frac{d \gamma_\tau(0) }{d t}$</code>) are <span style="color:red"><strong>column</strong></span> vectors. Moreover, <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau$</code> are Euclidean gradients while  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code>  are  Riemannian gradients.</p>
+where  <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau$</code> are Euclidean gradients (e.g.,  <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau=\nabla h_\tau(\tau_0) $</code>)  while  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> and <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code>  are  Riemannian gradients (e.g., <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau=\mathbf{v}_\tau(\tau_0) =\frac{d \gamma_\tau(0) }{d t}$</code>) .</p>
 
 <p>By <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> and <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, we have the following identity obtained from the <strong>geometric property</strong> of directional derivatives.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
- \mathbf{g}_\tau \hat{\mathbf{g}}_\tau  =  \mathbf{g}_\lambda \hat{\mathbf{g}}_\lambda 
+ \mathbf{g}_\tau^T \hat{\mathbf{g}}_\tau  =  \mathbf{g}_\lambda^T \hat{\mathbf{g}}_\lambda 
 \end{aligned}\tag{3}\label{3}
 $$</code></p>
 
@@ -317,7 +317,7 @@ $$</code></p>
 \tag{4}\label{4}
 $$</code></p>
 
-<p>Let $J_{ki}:=\frac{\partial \lambda^k(\tau) }{ \partial \tau^i }$ denotes the $(k,i)$ entry of the Jacobian matrix. We can express the Jacobian matrix as below.</p>
+<p>Let $J_{ki}:=\frac{\partial \lambda^k(\tau) }{ \partial \tau^i }$ denotes the $(k,i)$ entry of the Jacobian matrix. We illustrate our matrix notation in a 2D case as below.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -347,16 +347,16 @@ $$</code></p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{g}_\tau =  \mathbf{g}_\lambda \mathbf{J}
-\end{aligned},
+\mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}
+\end{aligned}\tag{6}\label{6},
 $$</code>
-where row vector <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_\tau$</code> can be computed via a vector-Jacobian product in any standard Auto-Diff toolbox given that <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_\lambda$</code> is pre-computed.</p>
+where <span style="color:red"><strong>row</strong></span> vector <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_\tau^T$</code> can be computed via a vector-Jacobian product in any standard Auto-Diff toolbox given that <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_\lambda$</code> is pre-computed.</p>
 
 <p>By Eq <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>, we obtain the transformation rule for Riemannian gradients as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
  \hat{\mathbf{g}}_\tau= \mathbf{J}^{-1}  \hat{\mathbf{g}}_\lambda 
-\end{aligned}
+\end{aligned}\tag{7}\label{7}
 $$</code> where $\mathbf{Q}:=\mathbf{J}^{-1}$ is also a Jacobian matrix and $Q_{ki}=\frac{\partial \tau^k(\lambda)}{\partial \lambda^i}$ is the $(k,i)$ entry of matrix $\mathbf{Q}$.</p>
 
 <p>The elementwise expression of the transformation rule for Riemannian gradients (denoted by a column vector) is
@@ -366,7 +366,7 @@ $$</code> where $\mathbf{Q}:=\mathbf{J}^{-1}$ is also a Jacobian matrix and $Q_{
  = \sum_{i}  \frac{ \partial \tau^k(\lambda)  }{\color{red} {\partial  \lambda^i} }  \color{red} {(g_\lambda)^i}
 \end{aligned},
 $$</code> 
-where  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code> can be computed via a Jacobian-vector product used in forward-mode differentiation given that <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> is pre-computed.</p>
+where  <span style="color:red"><strong>column</strong></span> vector <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code> can be computed via a Jacobian-vector product used in forward-mode differentiation given that <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> is pre-computed.</p>
 
 <p>Note that these transformation rules are valid  when the Jacobian matrix is square and non-singular.
 As we discussed in Part I about <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">intrinsic parameterizations</a>, the transformation map between $\tau$ and $\lambda$ must be bi-jective, which implies the Jacoabian matrix is square. 
@@ -425,25 +425,38 @@ $$</code></p>
 <p>We can see that the length of a Riemannian vector is also invariant.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\| \hat{\mathbf{g}}_\tau \|^2_{F_\tau} &amp;= [\hat{\mathbf{g}}_\tau]^T \mathbf{F}_{\tau} (\tau_0) \hat{\mathbf{g}}_\tau \\
+\| \hat{\mathbf{g}}_\tau \|^2_{F_{\tau_0}} &amp;= [\hat{\mathbf{g}}_\tau]^T \mathbf{F}_{\tau} (\tau_0) \hat{\mathbf{g}}_\tau \\
 &amp;= [\mathbf{J}^{-1} \hat{\mathbf{g}}_\lambda]^T \mathbf{F}_{\tau} (\tau_0) \mathbf{J}^{-1} \hat{\mathbf{g}}_\lambda \\
 &amp;= [\hat{\mathbf{g}}_\lambda]^T [ \mathbf{J}^{-T}  \mathbf{F}_{\tau} (\tau_0) \mathbf{J}^{-1} ] \hat{\mathbf{g}}_\lambda \\
-&amp;= [\hat{\mathbf{g}}_\lambda]^T  \mathbf{F}_{\lambda} (\lambda_0)  \hat{\mathbf{g}}_\lambda = \| \hat{\mathbf{g}}_\lambda \|^2_{F_\lambda}
+&amp;= [\hat{\mathbf{g}}_\lambda]^T  \mathbf{F}_{\lambda} (\lambda_0)  \hat{\mathbf{g}}_\lambda = \| \hat{\mathbf{g}}_\lambda \|^2_{F_{\lambda_0}}
 \end{aligned}
 $$</code></p>
 
 <h1 id="riemannian-steepest-direction-is-invariant">Riemannian Steepest Direction is Invariant</h1>
 <hr />
-<p>Now, we can show that the optimal solution of <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a> considered in Part II  under parametrization $\tau$ and $\lambda$ are equivalent since both the length and the directional derivative remain the same.
+<p>Now, we can show that the optimal solution of <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a> considered in Part II  under parametrization $\tau$ and $\lambda$ are equivalent since both the length and the directional derivative remain the same.</p>
+
+<p>Denote Euclidean gradients as <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda:= \nabla  f_\lambda(\mathbf{\lambda}_0) $</code> and  <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau:= \nabla  f_\tau(\mathbf{\tau}_0)  = \nabla  f_\lambda(\mathbf{\lambda}(\tau_0)) $</code>, which follows the parameter transformation rule in  <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code>.</p>
+
+<p>Now, consider Riemannian gradients as <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda:= \mathbf{F}_{\lambda}^{-1}(\mathbf{\lambda}_0)  \mathbf{g}_\lambda $</code> and  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau:= \mathbf{F}_{\tau}^{-1}(\mathbf{\tau}_0) \mathbf{g}_\tau $</code>. We can verify that these Riemannian gradients follow the parameter transformation rule in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>.</p>
+
+<p>Recall that the optimal solution of the Riemannian steepest direction is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-(\nabla  f_\tau(\mathbf{\tau}_0)  )^T   \mathbf{v}^{(opt)}_{\tau}  &amp;=   (\nabla  f_\lambda(\mathbf{\lambda}_0) )^T \mathbf{v}^{(opt)}_{\lambda} &amp; \,\,\, \text{(invariance of directional derivative)}  \\
-[\nabla  f_\tau(\mathbf{\tau}_0)]^T &amp; =  [\nabla  f_\lambda(\mathbf{\lambda}_0)]^T \mathbf{J} &amp; \,\,\, \text{(parameter transformation for a Euclidean gradient)} \\
+\mathbf{v}_{\lambda}^{(opt)}= -\frac{ \mathbf{F_\lambda}^{-1}(\mathbf{\lambda}_0) \nabla_\lambda f(\mathbf{\lambda}_0) }{\| \mathbf{F_\lambda}^{-1}(\mathbf{\lambda}_0)\nabla_\lambda f(\mathbf{\lambda}_0) \|_{F_{\lambda_0}}} = -\frac{\hat{\mathbf{g}}_\lambda}{\|\hat{\mathbf{g}}_\lambda\|_{ F_{\lambda_0} } } \\
+\mathbf{v}_{\tau}^{(opt)}= -\frac{ \mathbf{F_\tau}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F_\tau}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_{F_{\tau_0}}} = -\frac{\hat{\mathbf{g}}_\tau}{\|\hat{\mathbf{g}}_\tau\|_{ F_{\tau_0} } } 
+\end{aligned}
+$$</code></p>
+
+<p>We can easily to verify the following identity
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{g}_\tau^T   \mathbf{v}^{(opt)}_{\tau}  &amp;=   \mathbf{g}_\lambda^T  \mathbf{v}^{(opt)}_{\lambda} &amp; \,\,\, \text{(invariance of directional derivative)}  \\
 \|  \mathbf{v}^{(opt)}_{\tau} \|^2_{\color{red}{F_{\tau_0}}} &amp; = \|  \mathbf{v}^{(opt)}_{\lambda} \|^2_{\color{red}{F_{\lambda_0}} } &amp; \,\,\, \text{(invariance of the length of the Riemannian steepest direction)}  \\
 \mathbf{v}^{(opt)}_{\tau} &amp; = \mathbf{J}^{-1}  \mathbf{v}^{(opt)}_{\lambda} &amp; \,\,\, \text{(parameter transformation for the Riemannian steepest direction)}  
 \end{aligned}.
 $$</code> 
-In other words, the Riemannian steepest direction (which is indeed  a normalized Riemannian gradient) is transformed according to the transformation rule for a Riemannian gradient.</p>
+In other words, the Riemannian steepest direction (which is indeed  a normalized Riemannian gradient) is also transformed according to the transformation rule for a Riemannian gradient.</p>
 
 <p>As we will discuss in <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-is-linearly-invariant">Part IV</a>, this invariance property implies that natural-gradient descent is linearly invariant.</p>
 
@@ -451,27 +464,19 @@ In other words, the Riemannian steepest direction (which is indeed  a normalized
 <hr />
 <p>Recall that we have shown that a Euclidean gradient is the optimal solution of  <a href="/posts/2021/10/Geomopt02/#euclidean-steepest-direction-and directional-derivative">Euclidean steepest direction</a> in Part II.</p>
 
-<p>By the standard chain rule, we have the parameter transformation rule of a Euclidean gradient as</p>
-
-<p><code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\mathbf{g}_\tau =  \mathbf{g}_\lambda \mathbf{J}
-\end{aligned},
-$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda$</code> are the same Euclidean gradient under parameterization <code class="language-plaintext highlighter-rouge">$\tau$</code> and <code class="language-plaintext highlighter-rouge">$\lambda$</code>, respectively,  and <code class="language-plaintext highlighter-rouge">$\mathbf{J}$</code> is the Jacobian matrix defined at Eq. <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>.</p>
-
 <p>We can show that the (standard) length of a Euclidean gradient is not invariant under a parameter transformation due to the Jacobian matrix (i.e., <code class="language-plaintext highlighter-rouge">$\| \mathbf{g}_\tau \| \neq \| \mathbf{g}_\lambda \|$</code>). This is a reason why we use the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> to define the length of a gradient vector.</p>
 
-<p>Let <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda:= (\nabla  f_\lambda(\mathbf{\lambda}_0) )^T$</code> and  <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau:= (\nabla  f_\tau(\mathbf{\tau}_0) )^T = (\nabla  f_\lambda(\mathbf{\lambda}(\tau_0)) )^T$</code></p>
+<p>Note that we denote the Euclidean gradients as <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda:= \nabla  f_\lambda(\mathbf{\lambda}_0) $</code> and  <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau:= \nabla  f_\tau(\mathbf{\tau}_0)  = \nabla  f_\lambda(\mathbf{\lambda}(\tau_0)) $</code></p>
 
 <p>Recall that the optimal solution of the <a href="/posts/2021/10/Geomopt02/#euclidean-steepest-direction-and-directional-derivative">Euclidean steepest direction</a> is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{v}_{\lambda}^{(opt)}= -\frac{\nabla_\lambda f_\lambda(\mathbf{\lambda}_0) }{\|\nabla_\lambda f_\lambda(\mathbf{\lambda}_0)  \|} = -\frac{\mathbf{g}_\lambda^T}{\|\mathbf{g}_\lambda\|} \\
-\mathbf{v}_{\tau}^{(opt)}= -\frac{\nabla_\tau f_\tau(\mathbf{\tau}_0) }{\|\nabla_\tau f_{\tau}(\mathbf{\tau}_0) \|} = -\frac{\mathbf{g}_\tau^T}{\|\mathbf{g}_\tau\|} 
+\mathbf{v}_{\lambda}^{(opt)}= -\frac{\nabla_\lambda f_\lambda(\mathbf{\lambda}_0) }{\|\nabla_\lambda f_\lambda(\mathbf{\lambda}_0)  \|} = -\frac{\mathbf{g}_\lambda}{\|\mathbf{g}_\lambda\|} \\
+\mathbf{v}_{\tau}^{(opt)}= -\frac{\nabla_\tau f_\tau(\mathbf{\tau}_0) }{\|\nabla_\tau f_{\tau}(\mathbf{\tau}_0) \|} = -\frac{\mathbf{g}_\tau}{\|\mathbf{g}_\tau\|} 
 \end{aligned}
 $$</code></p>
 
-<p>The optimal solution does not obey the parameter transformation rule for Euclidean gradients.
+<p>Unfortunately, the Euclidean steepest direction  does NOT obey the parameter transformation rule for Euclidean gradients in  <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 (\mathbf{v}_{\tau}^{(opt)})^T \neq (\mathbf{v}_{\lambda}^{(opt)})^T \mathbf{J} 
@@ -481,12 +486,12 @@ $$</code></p>
 <p>Moreover, the optimal value of the Euclidean steepest direction is not invariant under a parameter transformation as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-(\nabla  f_\lambda(\mathbf{\lambda}_0) )^T \mathbf{v}^{(opt)}_{\lambda}  = - \|\mathbf{g}_\lambda\| \neq - \|\mathbf{g}_\tau\| =(\nabla  f_\tau(\mathbf{\tau}_0) )^T \mathbf{v}^{(opt)}_{\tau} 
+\mathbf{g}_\lambda^T \mathbf{v}^{(opt)}_{\lambda}  = - \|\mathbf{g}_\lambda\| \neq - \|\mathbf{g}_\tau\| = \mathbf{g}_\tau^T \mathbf{v}^{(opt)}_{\tau} 
 \end{aligned}
 $$</code></p>
 
 <p>In summary, the Euclidean steepest direction (which is a normalized Euclidean gradient) is NOT transformed according to the transformation rule for a Euclidean gradient.
-This also implies that Euclidean gradient descent is not invariant under a parameter transformation. We will cover more about this in Part IV.</p>
+This also implies that Euclidean gradient descent is not invariant under a parameter transformation. We will cover more about this in <a href="/posts/2021/11/Geomopt04/">Part IV</a></p>
 
 
         
