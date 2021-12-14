@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-14T01:01:07-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-14T12:08:24-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -7,7 +7,7 @@
 
 &lt;h1 id=&quot;two-kinds-of-spaces&quot;&gt;Two kinds of Spaces&lt;/h1&gt;
 &lt;hr /&gt;
-&lt;p&gt;As we disucssed in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, the parameter space $\Omega_\tau$ and the tangent space denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T\mathcal{M}_{\tau_0}$&lt;/code&gt; at point $\tau_0$ are different spaces. Recall that the tangent space is a vector space and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T\mathcal{M}_{\tau_0}=\mathcal{R}^K$&lt;/code&gt; while the parameter space $\Omega_\tau$ is like a local vector space in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where $K$ is the dimension of the manifold. Moreover, $\Omega_\tau \subset T\mathcal{M}_{\tau_0}$ since  $\tau$ is an &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;intrinsic parametrization&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;As we disucssed in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, the parameter space $\Omega_\tau$ and the tangent space denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T\mathcal{M}_{\tau_0}$&lt;/code&gt; at point $\tau_0$ are different spaces. Recall that the tangent space is a vector space and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T\mathcal{M}_{\tau_0}=\mathcal{R}^K$&lt;/code&gt; while the parameter space $\Omega_\tau$ is like a local vector space in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where $K$ is the dimension of the manifold. Moreover, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is often an open (proper) subset of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T\mathcal{M}_{\tau_0}$&lt;/code&gt; since  $\tau$ is an &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;intrinsic parametrization&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;In a manifold case, we have to explicitly distinguish the difference between the representation of a point/parameter and a (Riemannian) vector/gradient.
 The following figure illustrates the difference between the &lt;strong&gt;domain&lt;/strong&gt; of these two spaces. Moreover, the &lt;strong&gt;norm/distance&lt;/strong&gt; in each of these two spaces is defined differently.&lt;/p&gt;
@@ -97,21 +97,17 @@ $$&lt;/code&gt; where $Q_{ji}=\frac{\partial \tau^j(\lambda)}{\partial \lambda^i
 The update in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt; at iteration $k=1$ then can be re-expressed as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\tau_{1} \leftarrow \tau_{0} -  \alpha  \hat{\mathbf{g}}_{\tau_0} = \mathbf{U}^{-1} \lambda_0 -  \alpha  \mathbf{U}^{-1}  \hat{\mathbf{g}}_{\lambda_0} 
+\tau_{1} \leftarrow \tau_{0} -  \alpha  \hat{\mathbf{g}}_{\tau_0} = \mathbf{U}^{-1} \lambda_0 -  \alpha  \mathbf{U}^{-1}  \hat{\mathbf{g}}_{\lambda_0} = \mathbf{U}^{-1} \lambda_1
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Therefore, it is easy to show that $\tau_k = \mathbf{U}^{-1} \lambda_k$ by induction. Updates in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; are equivalent when $t$ is small enough.&lt;/p&gt;
-
-&lt;h1 id=&quot;euclidean-gradient-descent-is-not-linearly-invariant&quot;&gt;Euclidean Gradient Descent is NOT (Linearly) Invariant&lt;/h1&gt;
-&lt;p&gt;to do:
-add an exapmle&lt;/p&gt;
+&lt;p&gt;Therefore, it is easy to show that $\tau_k = \mathbf{U}^{-1} \lambda_k$ by induction. Updates in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; are equivalent when $\alpha$ is small enough.&lt;/p&gt;
 
 &lt;h1 id=&quot;riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;Riemannian Gradient Descent and its (Non-linear) Invariance&lt;/h1&gt;
 
 &lt;p&gt;Now we discuss a gradient-based method that is invariant to any intrinsic parameter transformation.
 We will first introduce the concept of a (one-dimensional) geodesic $\gamma(t)$, which is the “shortest curve” on a manifold with a Riemannian metric (e.g., the Fisher-Rao metric).
-Recall that in  &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold.&lt;/p&gt;
+Recall that in  &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold, which is known as the Rao distance in statistics.&lt;/p&gt;
 
 &lt;p&gt;Consider an intrinsic parametrization $\tau$, where $\gamma_\tau(t)$ is the parameter representation of the geodesic.
 To specify a geodesic, we need to provide a starting point $\tau_0$ on the manifold and a Riemannian gradient $\mathbf{v}_{\tau_0}$ evluated at point $\tau_0$.
@@ -144,17 +140,22 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;The invariance of this update is due to the uniqueness of ODE and transformation rules for natural-gradients, Fisher information matrix, and Christoffel symbols. We will not discuss this further in this post to avoid complicated derivations. 
 Although Riemannian gradient descent is nice, the expoential map or the geodesic often does not have a closed form expression.&lt;/p&gt;
 
-&lt;h1 id=&quot;natural-gradient-descent-as-inexact-riemannian-gradient-descent&quot;&gt;Natural-gradient Descent as Inexact Riemannian Gradient Descent&lt;/h1&gt;
+&lt;h1 id=&quot;many-faces-of-natural-gradient-descent&quot;&gt;Many faces of Natural-gradient Descent&lt;/h1&gt;
+
+&lt;h2 id=&quot;natural-gradient-descent-as-inexact-riemannian-gradient-descent&quot;&gt;Natural-gradient Descent as Inexact Riemannian Gradient Descent&lt;/h2&gt;
 
 &lt;p&gt;Natural-gradient descent can be viewed as a first-order (linear) approximation of the geodesic, which implies that natural-gradient descent is indeed an inexact Riemannian gradient update.
-Natural-gradient descent only is linearly invariant due to the approximation.&lt;/p&gt;
+Natural-gradient descent is linearly invariant due to the approximation.&lt;/p&gt;
 
 &lt;p&gt;Consider a first-order Taylor approximation at $t=0$ of the geodesic shown below.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \gamma_\tau(t) \approx  \gamma_\tau(0) + \frac{d  \gamma_\tau(t)}{d t} \Big|_{t=0} (t-0)  
 \end{aligned}
-$$&lt;/code&gt; Note that this approximation does not guarantee that the approximated geodesic stays on the manifold for all $t \neq 0$.&lt;/p&gt;
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Warning&lt;/strong&gt;&lt;/span&gt;:
+This approximation does not guarantee that the approximated geodesic stays on the manifold for all $t \neq 0$.&lt;/p&gt;
 
 &lt;p&gt;Recall that the  expoential map  is defined via the geodesic  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(1)$&lt;/code&gt;.
 We can similarly define an approximated  expoential map (A.K.A. the Euclidean retraction map)  as
@@ -171,26 +172,45 @@ $$&lt;/code&gt;&lt;/p&gt;
 \end{aligned}
 $$&lt;/code&gt; which recovers natural-gradient descent.&lt;/p&gt;
 
-&lt;h1 id=&quot;issues-of-natural-gradient-descent-in-non-intrinsic-parameter-spaces&quot;&gt;Issues of Natural-gradient Descent in Non-intrinsic Parameter Spaces&lt;/h1&gt;
+&lt;h2 id=&quot;natural-gradient-descent-as-unconstrained-proximal-gradient-descent&quot;&gt;Natural-gradient Descent as Unconstrained Proximal-gradient Descent&lt;/h2&gt;
+
+&lt;p&gt;In this section, we will make an additional but key assumption: the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau=\mathcal{R}^K$&lt;/code&gt; has a global (unconstrained) vector space structure.
+This assumption, in general, does not hold. However, we present this viewpoint since it closely relates to optimization
+methods.&lt;/p&gt;
+
+&lt;p&gt;As we mentioned before, the &lt;strong&gt;distances&lt;/strong&gt; in the gradient space and the parameter space are defined differently. 
+In the &lt;a href=&quot;#riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;previous section&lt;/a&gt;, we use the geodesic to define the distance between two points in a parameter space.&lt;/p&gt;
+
+&lt;p&gt;We could also use other “distances” denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(.,.)$&lt;/code&gt; (e.g., Kullback–Leibler divergence or f-divergence) to define the length between two points in a parameter space.
+Given such a  “distance”, we can perform the unconstrained proximal-gradient descent as shown below.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{k+1} = \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \mathrm{D}(y,\tau_k) \}
+\end{aligned}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient and the parameter space is unconstrained.&lt;/p&gt;
+
+&lt;p&gt;When $\mathrm{D}(y,\tau_k)$ is a secord-order Taylor approximation of any f-divergence (e.g., the KL divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{KL} [q(w|\tau_k) || q(w|y)]$&lt;/code&gt;)  at $\tau_k$, this  proximal-gradient descent  recovers natural-gradient descent.&lt;/p&gt;
+
+&lt;p&gt;In Part V, we will show that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; can also be the exact KL divergence for  expoential family.
+In such cases,  unconstrained mirror descent also recovers natural-gradient descent.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Warning&lt;/strong&gt;&lt;/span&gt;:
+The connection bewteen natural-gradient descent and proximal-gradient/mirror descent breaks down when
+the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is constrained and open. In constraint cases, these methods are distinct.&lt;/p&gt;
+
+&lt;h1 id=&quot;natural-gradient-descent-in-non-intrinsic-parameter-spaces&quot;&gt;Natural-gradient Descent in Non-intrinsic Parameter Spaces&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;As mentioned in &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;Part I&lt;/a&gt;, an intrinsic parametrization creates a nice parameter space (e.g., a local vector space structure) and guarantees a non-singular FIM.
 We now discuss issues when it comes to  natural-gradient descent over non-intrinsic parametrizations including overparameterization.&lt;/p&gt;
 
-&lt;p&gt;The first issue of using a non-intrinsic parametrization is that we may not have a local vector space structure in the parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM is not well-defined in such cases. We will illustrated by examples.&lt;/p&gt;
+&lt;p&gt;The first issue of using a non-intrinsic parametrization is that we may not have a local vector space structure in the parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM is not well-defined in such cases. We will illustrated by an example.
+Another example (Von Mises–Fisher family) will be given in Part V.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Example: Bernoulli family:&lt;/p&gt;
 
   &lt;p&gt;Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
 As we shown in &lt;a href=&quot;/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation&quot;&gt;Part I&lt;/a&gt;, the FIM is ill-defined due to this eqaulity constraint.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Example: Von Mises–Fisher family:&lt;/p&gt;
-
-  &lt;p&gt;Consider $2$-dimensional Von Mises–Fisher  family  $ \{  C(\kappa) \exp(\kappa (w_1\mu_1+w_2\mu_2) ) \Big| \kappa&amp;gt;0, \mu_1^2+\mu_2^2 =1  \}$ with parameter $\tau = (\kappa,\mu_1,\mu_2)$, where $ C(\kappa)$ is the normalization constant, $\mathbf{w}=(w_1,w_2)$ is a random unit vector defined in a circle,
-$\kappa$ is a positive scalar, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\mu}=(\mu_1,\mu_2)$&lt;/code&gt; is also a unit vector.
-We can show that the FIM is ill-defined under this parametrization due to this eqaulity constraint.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;The second issue is that we have to deal with a singular FIM. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and the singular FIM often destroy structures in a non-singular FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example. Moreover, natural-gradient descent in non-intrinsic parameter spaces could easily violate parameter constraints.&lt;/p&gt;
@@ -202,42 +222,35 @@ We can show that the FIM is ill-defined under this parametrization due to this e
 
   &lt;p&gt;Natural-gradient descent in this parameter space $\Omega_\tau$ could easily violate the parameter constraints when $\sigma_1$ is very closed to $0$ even when the variance $\sigma_1 \sigma_2 $ is big enough.&lt;/p&gt;
 
-  &lt;p&gt;Let’s consider an intrinsic parameterization of this family as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |0,  \sigma) \Big|  \sigma &amp;gt; 0  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda = \sigma $&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \sigma$&lt;/code&gt; is the varaince of this Gaussian family.
-Natural-gradient descent in this parameter space $\Omega_\lambda$ less likely violate the parameter constraints when the variance $\sigma_1 \sigma_2 $ is big enough.&lt;/p&gt;
+  &lt;p&gt;On the other hand, consider an intrinsic parameterization of this family as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |0,  \sigma) \Big|  \sigma &amp;gt; 0  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda = \sigma $&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \sigma$&lt;/code&gt; is the varaince of this Gaussian family.
+Natural-gradient descent in this parameter space $\Omega_\lambda$ less likely violate the parameter constraints when the variance $\sigma$ is big enough.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Example:  (high iteation cost)&lt;/p&gt;
 
-  &lt;p&gt;Consider a $d$-dimensional Gaussian mixture family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $&lt;/code&gt;.
-If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.&lt;/p&gt;
+  &lt;p&gt;Consider a $d$-dimensional Gaussian mixture family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $&lt;/code&gt;. This is a non-intrinstic parameterization.&lt;/p&gt;
 
-  &lt;p&gt;The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.&lt;/p&gt;
+  &lt;p&gt;If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
+The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.&lt;/p&gt;
 
   &lt;p&gt;Now, consider the equivalent Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda =( \mu_0,\Sigma_0 ) $&lt;/code&gt;, where $\lambda$ is an intrinsic parameterization of the Gaussian family.&lt;/p&gt;
 
   &lt;p&gt;As we will shown in Part V, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;To reduce the iteration cost of computing natural-gradients, it is tempting to use an emprical FIM with a scalar damping term to handle the singularity of the FIM. However, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.&lt;/p&gt;
+&lt;p&gt;To reduce the iteration cost of computing natural-gradients, it is tempting to use an emprical FIM with a scalar damping term to handle the singularity of the FIM. However,
+an emprical FIM can be a bad approximation to the exact FIM.
+Moreover, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.&lt;/p&gt;
 
-&lt;h1 id=&quot;natural-gradient-descent-as-an-proximal-gradient-method&quot;&gt;Natural-gradient Descent as an Proximal Gradient Method&lt;/h1&gt;
-&lt;p&gt;As we mentioned before, the &lt;strong&gt;distances&lt;/strong&gt; in  the gradient space and the parameter space are defined differently. 
-In the &lt;a href=&quot;#riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;previous section&lt;/a&gt;, we use the geodesic to define the distance between two points in a parameter space.&lt;/p&gt;
+&lt;h1 id=&quot;euclidean-gradient-descent-is-not-linearly-invariant&quot;&gt;Euclidean Gradient Descent is NOT (Linearly) Invariant&lt;/h1&gt;
+&lt;p&gt;to do:
+add an exapmle&lt;/p&gt;
 
-&lt;p&gt;We could also use other “distances” denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(.,.)$&lt;/code&gt; (e.g., Kullback–Leibler divergence or f-divergence) to define the length between two points in a parameter space.
-Given such of definition of “distance”, we could obtain new gradient-based updates via the proximal gradient framework as shown below.
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-\tau_{k+1} = \arg\min_{y \in  \Omega_\tau  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \mathrm{D}(y,\tau_k) \}
-\end{aligned}
-$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient.&lt;/p&gt;
+&lt;h1 id=&quot;newtons-method-is-linearly-invariant&quot;&gt;Newton’s Method is Linearly Invariant&lt;/h1&gt;
 
-&lt;p&gt;When $\mathrm{D}(y,\tau_k)$ is a secord-order Taylor approximation of the KL divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{KL} [q(w|\tau_k) || q(w|y)]$&lt;/code&gt; (in general, any f-divergence)  at $\tau_k$,  proximal gradient descent also recovers natural-gradient method when the parameter space $\Omega_\tau=\mathcal{R}^K$ is unconstrainted.&lt;/p&gt;
-
-&lt;p&gt;In Part V, we will show that proximal gradient descent recovers natural-gradient descent for expoential family where $\mathrm{D}(y,\tau_k)$ can also be the exact KL divergence.&lt;/p&gt;
-
-&lt;p&gt;In the expoential family cases, we will show in Part V that natural-gradient method becomes mirror descent under the natural-parameterization $\tau$ as long as the parameter space $\Omega_\tau=\mathcal{R}^K$ is unconstrainted.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part III: Invariance of Natural-Gradients</title><link href="/posts/2021/11/Geomopt03/" rel="alternate" type="text/html" title="Part III: Invariance of Natural-Gradients" /><published>2021-11-02T00:00:00-07:00</published><updated>2021-11-02T00:00:00-07:00</updated><id>/posts/2021/11/Geomopt03</id><content type="html" xml:base="/posts/2021/11/Geomopt03/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+&lt;p&gt;to do:
+add an exapmle&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part III: Invariance of Natural-Gradients</title><link href="/posts/2021/11/Geomopt03/" rel="alternate" type="text/html" title="Part III: Invariance of Natural-Gradients" /><published>2021-11-02T00:00:00-07:00</published><updated>2021-11-02T00:00:00-07:00</updated><id>/posts/2021/11/Geomopt03</id><content type="html" xml:base="/posts/2021/11/Geomopt03/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand the invariance of natural-gradients.
 We will also discuss why the Euclidean steepest direction is NOT invariant.&lt;/p&gt;
 
