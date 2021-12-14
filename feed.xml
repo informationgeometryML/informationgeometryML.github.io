@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-13T20:17:14-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-13T23:59:15-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.&lt;/p&gt;
@@ -255,6 +255,35 @@ In other words, geometric properties should be persevered in any valid coordinat
 
 &lt;p&gt;Thanks to these properties, we will show that the optimal solution of the &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/a&gt; considered in Part II is equivalent under an intrinsic parameter transformation. This is in contrast with the Euclidean steepest direction which is not invaraint under an intrinsic parameter transformation.&lt;/p&gt;
 
+&lt;p&gt;The transformation rules are summarized in the following table&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: left&quot;&gt;Type of  directions&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;transformation rules&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Euclidean gradient&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{6}$&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Euclidean steepest descent direction (normalized Euclidean gradient)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;NA&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Riemannian gradient&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Riemannian steepest descent direction (normalized Riemannian gradient)&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
 &lt;p&gt;In &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, we consider a point $\mathbf{x}_0$ in a manifold $\mathcal{M}$, a (1-dimensional) curve $\gamma(t)$, and a smooth scalar function $h: \mathcal{M} \to \mathcal{R}$.
 Given an intrinsic parametrization $\tau$ containing the point, we consider the following parametric representations.&lt;/p&gt;
 
@@ -499,7 +528,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 \mathbf{v}^{(opt)}_{\tau} &amp;amp; = \mathbf{J}^{-1}  \mathbf{v}^{(opt)}_{\lambda} &amp;amp; \,\,\, \text{(parameter transformation for the Riemannian steepest direction)}  
 \end{aligned}.
 $$&lt;/code&gt; 
-In other words, the Riemannian steepest direction (which is indeed  a normalized Riemannian gradient) is also transformed according to the transformation rule for a Riemannian gradient.&lt;/p&gt;
+In other words, the Riemannian steepest direction (which is indeed  a normalized Riemannian gradient) is also transformed according to the transformation rule for a Riemannian gradient in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;As we will discuss in &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-is-linearly-invariant&quot;&gt;Part IV&lt;/a&gt;, this invariance property implies that natural-gradient descent is linearly invariant.&lt;/p&gt;
 
@@ -507,7 +536,7 @@ In other words, the Riemannian steepest direction (which is indeed  a normalized
 &lt;hr /&gt;
 &lt;p&gt;Recall that we have shown that a Euclidean gradient is the optimal solution of  &lt;a href=&quot;/posts/2021/10/Geomopt02/#euclidean-steepest-direction-and directional-derivative&quot;&gt;Euclidean steepest direction&lt;/a&gt; in Part II.&lt;/p&gt;
 
-&lt;p&gt;We can show that the (standard) length of a Euclidean gradient is not invariant under a parameter transformation due to the Jacobian matrix (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\| \mathbf{g}_\tau \| \neq \| \mathbf{g}_\lambda \|$&lt;/code&gt;). This is a reason why we use the &lt;a href=&quot;/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; to define the length of a gradient vector.&lt;/p&gt;
+&lt;p&gt;We can show that the (standard) length of a Euclidean gradient is NOT invariant under a parameter transformation due to the Jacobian matrix (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\| \mathbf{g}_\tau \| \neq \| \mathbf{g}_\lambda \|$&lt;/code&gt;). This is a reason why we use the &lt;a href=&quot;/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; to define the length of a gradient vector.&lt;/p&gt;
 
 &lt;p&gt;Note that we denote the Euclidean gradients as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\lambda:= \nabla  f_\lambda(\mathbf{\lambda}_0) $&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau:= \nabla  f_\tau(\mathbf{\tau}_0)  = \nabla  f_\lambda(\mathbf{\lambda}(\tau_0)) $&lt;/code&gt;&lt;/p&gt;
 
@@ -526,7 +555,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Moreover, the optimal value of the Euclidean steepest direction is not invariant under a parameter transformation as
+&lt;p&gt;Moreover, the optimal value of the Euclidean steepest direction is NOT invariant under a parameter transformation as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{g}_\lambda^T \mathbf{v}^{(opt)}_{\lambda}  = - \|\mathbf{g}_\lambda\| \neq - \|\mathbf{g}_\tau\| = \mathbf{g}_\tau^T \mathbf{v}^{(opt)}_{\tau} 

@@ -182,7 +182,7 @@
 
 
 
-  8 minute read
+  9 minute read
 </p>
           
         </header>
@@ -211,6 +211,35 @@ In other words, geometric properties should be persevered in any valid coordinat
 </ol>
 
 <p>Thanks to these properties, we will show that the optimal solution of the <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a> considered in Part II is equivalent under an intrinsic parameter transformation. This is in contrast with the Euclidean steepest direction which is not invaraint under an intrinsic parameter transformation.</p>
+
+<p>The transformation rules are summarized in the following table</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Type of  directions</th>
+      <th style="text-align: center">transformation rules</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Euclidean gradient</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\eqref{6}$</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Euclidean steepest descent direction (normalized Euclidean gradient)</td>
+      <td style="text-align: center">NA</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Riemannian gradient</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\eqref{7}$</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Riemannian steepest descent direction (normalized Riemannian gradient)</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\eqref{7}$</code></td>
+    </tr>
+  </tbody>
+</table>
 
 <p>In <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, we consider a point $\mathbf{x}_0$ in a manifold $\mathcal{M}$, a (1-dimensional) curve $\gamma(t)$, and a smooth scalar function $h: \mathcal{M} \to \mathcal{R}$.
 Given an intrinsic parametrization $\tau$ containing the point, we consider the following parametric representations.</p>
@@ -456,7 +485,7 @@ $$</code></p>
 \mathbf{v}^{(opt)}_{\tau} &amp; = \mathbf{J}^{-1}  \mathbf{v}^{(opt)}_{\lambda} &amp; \,\,\, \text{(parameter transformation for the Riemannian steepest direction)}  
 \end{aligned}.
 $$</code> 
-In other words, the Riemannian steepest direction (which is indeed  a normalized Riemannian gradient) is also transformed according to the transformation rule for a Riemannian gradient.</p>
+In other words, the Riemannian steepest direction (which is indeed  a normalized Riemannian gradient) is also transformed according to the transformation rule for a Riemannian gradient in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>.</p>
 
 <p>As we will discuss in <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-is-linearly-invariant">Part IV</a>, this invariance property implies that natural-gradient descent is linearly invariant.</p>
 
@@ -464,7 +493,7 @@ In other words, the Riemannian steepest direction (which is indeed  a normalized
 <hr />
 <p>Recall that we have shown that a Euclidean gradient is the optimal solution of  <a href="/posts/2021/10/Geomopt02/#euclidean-steepest-direction-and directional-derivative">Euclidean steepest direction</a> in Part II.</p>
 
-<p>We can show that the (standard) length of a Euclidean gradient is not invariant under a parameter transformation due to the Jacobian matrix (i.e., <code class="language-plaintext highlighter-rouge">$\| \mathbf{g}_\tau \| \neq \| \mathbf{g}_\lambda \|$</code>). This is a reason why we use the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> to define the length of a gradient vector.</p>
+<p>We can show that the (standard) length of a Euclidean gradient is NOT invariant under a parameter transformation due to the Jacobian matrix (i.e., <code class="language-plaintext highlighter-rouge">$\| \mathbf{g}_\tau \| \neq \| \mathbf{g}_\lambda \|$</code>). This is a reason why we use the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> to define the length of a gradient vector.</p>
 
 <p>Note that we denote the Euclidean gradients as <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda:= \nabla  f_\lambda(\mathbf{\lambda}_0) $</code> and  <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau:= \nabla  f_\tau(\mathbf{\tau}_0)  = \nabla  f_\lambda(\mathbf{\lambda}(\tau_0)) $</code></p>
 
@@ -483,7 +512,7 @@ $$</code></p>
 \end{aligned}
 $$</code></p>
 
-<p>Moreover, the optimal value of the Euclidean steepest direction is not invariant under a parameter transformation as
+<p>Moreover, the optimal value of the Euclidean steepest direction is NOT invariant under a parameter transformation as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{g}_\lambda^T \mathbf{v}^{(opt)}_{\lambda}  = - \|\mathbf{g}_\lambda\| \neq - \|\mathbf{g}_\tau\| = \mathbf{g}_\tau^T \mathbf{v}^{(opt)}_{\tau} 
