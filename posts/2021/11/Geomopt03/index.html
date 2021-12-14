@@ -399,13 +399,13 @@ where  <span style="color:red"><strong>column</strong></span> vector <code class
 
 <p>Note that these transformation rules are valid  when the Jacobian matrix is square and non-singular.
 As we discussed in Part I about <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">intrinsic parameterizations</a>, the transformation map between $\tau$ and $\lambda$ must be bi-jective, which implies the Jacoabian matrix is square. 
-Moreover, the map and its inverse map should be smooth, which implies that Jacobian matrix is well-defined and non-singular.</p>
+Moreover, the map and its inverse map should be smooth, which implies that the Jacobian matrix is well-defined and non-singular.</p>
 
 <p>Finally, we give a transformation rule for the Fisher information matrix as defined at <a href="/posts/2021/09/Geomopt01/#fisher-rao-metric">Part I</a>.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
- F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ]
+ F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log p(w|\tau) \Big) ]
 \end{aligned}
 $$</code>
 Since $ \log p(w|\tau )$ can be considered as a scalar function $h$ defined on the manifold for any valid $w$, we have 
@@ -418,15 +418,15 @@ $$</code></p>
 <p>Thus, the Fisher metric can be computed as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
- F_{ij}(\tau_0) &amp;= E_{p(w|\tau_0) }  [ \Big( \partial_{\tau_i} \log p(w|\tau_0 ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau_0) \Big) ] \\
-&amp;=  E_{p(w|\lambda_0) }  [ \Big( \partial_{\tau_i} \log p(w|\tau_0 ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau_0) \Big) ]\\
+ F_{ij}(\tau_0) &amp;= E_{p(w|\tau_0) }  [ \Big( \partial_{\tau_i} \log p(w|\tau_0 ) \Big)  \Big(\partial_{\tau_j} \log p(w|\tau_0) \Big) ] \\
+&amp;=  E_{p(w|\lambda_0) }  [ \Big( \partial_{\tau_i} \log p(w|\tau_0 ) \Big)  \Big(\partial_{\tau_j} \log p(w|\tau_0) \Big) ]\\
 \end{aligned}
 $$</code></p>
 
 <p>Recall that by the standard chain rule, we have 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\partial_{\tau_i} \log p(w|\tau_0 ) = \sum_k \frac{ \partial \lambda^k(\tau_0) }{ \partial \tau^i } \partial_{\lambda_k} \log p(w|\lambda_0 )
+\partial_{\tau_i} \log p(w|\tau_0 ) = \sum_k \frac{ \partial \lambda^k(\tau_0) }{ \partial \tau^i } \Big( \partial_{\lambda_k} \log p(w|\lambda_0 ) \Big)
 \end{aligned}
 $$</code></p>
 
@@ -434,7 +434,7 @@ $$</code></p>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
  F_{ij}(\tau_0) 
-&amp;=  E_{p(w|\lambda_0) }  [ \Big( \partial_{\tau_i} \log p(w|\tau_0 ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau_0) \Big) ]\\
+&amp;=  E_{p(w|\lambda_0) }  [ \Big( \partial_{\tau_i} \log p(w|\tau_0 ) \Big)  \Big(\partial_{\tau_j} \log p (w|\tau_0) \Big) ]\\
 &amp;=  E_{p(w|\lambda_0) }  [ \Big( \sum_k \frac{ \partial \lambda^k(\tau_0) }{ \partial \tau^i } \partial_{\lambda_k} \log p(w|\lambda_0 ) \Big)  \Big(  \sum_l \frac{ \partial \lambda^l(\tau_0) }{ \partial \tau^j } \partial_{\lambda_l} \log p(w|\lambda_0 ) \Big) ] \\
 &amp;= \sum_k \sum_l  \frac{ \partial \lambda^k(\tau_0) }{ \partial \tau^i }  \frac{ \partial \lambda^l(\tau_0) }{ \partial \tau^j }  E_{p(w|\lambda_0) }  [ \Big(  \partial_{\lambda_k} \log p(w|\lambda_0 ) \Big)  \Big(  \partial_{\lambda_l} \log p(w|\lambda_0 ) \Big) ] \\
 &amp;= \sum_k \sum_l  \frac{ \partial \lambda^k(\tau_0) }{ \partial \tau^i }  \frac{ \partial \lambda^l(\tau_0) }{ \partial \tau^j } F_{kl}(\lambda_0)

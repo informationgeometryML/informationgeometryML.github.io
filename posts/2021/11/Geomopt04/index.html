@@ -219,6 +219,10 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf
 <p>The update in Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is valid since the parameter space $\Omega_\tau$  has a local vector-space structure thanks to the use of an intrinsic parametrization.
 However, when $\Omega_\tau$ is a proper subset of $T\mathcal{M}_{\tau_k}$ (i.e., <code class="language-plaintext highlighter-rouge">$\Omega_\tau \neq T\mathcal{M}_{\tau_k} $</code>), the update in Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is valid only when the step-size $\alpha$ is small enough so that  <code class="language-plaintext highlighter-rouge">$\tau_{k+1} \in \Omega_\tau$</code>.</p>
 
+<p><span style="color:red"><strong>Warning</strong></span>:
+Using a small step-size could be an issue since it can greatly slow down the progression of natural-gradient
+descent in practice.</p>
+
 <blockquote>
   <p>Example:</p>
 
