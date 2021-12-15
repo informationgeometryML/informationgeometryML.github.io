@@ -532,7 +532,7 @@ matrix as</p>
 \begin{aligned}
 \mathbf{H}_{\tau} (\tau_k) &amp;= \nabla_\tau ( \mathbf{g}_{\tau_k} ) \\
 &amp;=\nabla_\tau ( \mathbf{J}^T \mathbf{g}_{\lambda_k} ) \\
-&amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) \,\,\,\,\text{(for a linear transformation, } \mathbf{J} \text{ is a
+&amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) \,\,\,\,\text{(for a linear transformation, } \mathbf{J} = \mathbf{U} \text{ is a
 constant matrix)}   \\
 &amp;=\mathbf{J}^T\nabla_\lambda (  \mathbf{g}_{\lambda_k} )\mathbf{J} \\ 
 &amp;=\mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} 
@@ -540,7 +540,7 @@ constant matrix)}   \\
 $$</code></p>
 
 <p><span style="color:red"><strong>Warning</strong></span>: The Hessian is not valid metric since it does not follow the transformation
-rule like the Fisher-Rao metric for  any non-linear (intrinstic) transformation.</p>
+rule of a metric in non-linear cases.</p>
 
 <p>Therefore, the direction in Newton’s method denoted by <code class="language-plaintext highlighter-rouge">$\tilde{\mathbf{g}}_{\tau_k} := \mathbf{H}^{-1}_\tau(\tau_k) \mathbf{g}_{\tau_k}$</code> is transformed like natural-gradients in <strong>linear</strong> cases as</p>
 
