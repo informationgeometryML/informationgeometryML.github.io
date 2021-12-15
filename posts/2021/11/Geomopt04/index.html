@@ -398,7 +398,7 @@ the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\
 We now discuss issues when it comes to  natural-gradient descent over non-intrinsic parametrizations including overparameterization.</p>
 
 <ol>
-  <li>We may not have a local vector space structure in a non-intrinstic parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM is not well-defined in such cases. We will illustrate this by an example.
+  <li>We may not have a local vector space structure in a non-intrinstic parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM could also be ill-defined in such cases. We will illustrate this by an example.
 Another example (Von Mises–Fisher family) will be given in <a href="/posts/2021/12/Geomopt05/">Part V</a>.
     <blockquote>
       <p>Example: (Invalid NGD)</p>
@@ -408,17 +408,8 @@ As we shown in <a href="/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-c
 Moreover, the NGD update will violate the eqaulity constraint.</p>
     </blockquote>
   </li>
-  <li>The FIM is singular in a non-intrinstic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example. Moreover, natural-gradient descent in non-intrinsic parameter spaces could easily violate parameter constraints.
-    <blockquote>
-      <p>Example:  (Parameter constraint violation)</p>
-
-      <p>Consider a univarate  Gaussian family with zero mean <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |0,  \sigma_1 \sigma_2) \Big|  \sigma_1&gt;0, \sigma_2 &gt; 0  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = (\sigma_1,\sigma_2) $</code>, where <code class="language-plaintext highlighter-rouge">$ \sigma_1 \sigma_2$</code> is the varaince of this Gaussian family.</p>
-
-      <p>Natural-gradient descent in this parameter space $\Omega_\tau$ could easily violate the parameter constraints when $\sigma_1$ is very closed to $0$ even when the variance $\sigma_1 \sigma_2 $ is big enough.</p>
-
-      <p>On the other hand, consider an intrinsic parameterization of this family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |0,  \sigma) \Big|  \sigma &gt; 0  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda = \sigma $</code>, where <code class="language-plaintext highlighter-rouge">$ \sigma$</code> is the varaince of this Gaussian family.
-Natural-gradient descent in this parameter space $\Omega_\lambda$ less likely violate the parameter constraints when the variance $\sigma$ is big enough.</p>
-    </blockquote>
+  <li>
+    <p>The FIM is singular in a non-intrinstic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example.</p>
 
     <blockquote>
       <p>Example:  (High iteation cost)</p>
