@@ -424,8 +424,7 @@ The iteration cost of natural-gradient descent in this parameter space $\Omega_\
       <p>As we will shown in <a href="/posts/2021/12/Geomopt05/">Part V</a>, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.</p>
     </blockquote>
   </li>
-  <li>It is tempting to approximate the FIM by an emprical FIM with a scalar damping term and use Woodbury matrix identity to reduce the iteration cost of computing natural-gradients. However,
-an emprical FIM can be a bad approximation to the exact FIM.
+  <li>It is tempting to approximate the singular FIM by an emprical FIM with a scalar damping term and use Woodbury matrix identity to reduce the iteration cost of computing natural-gradients. However, sample-based emprical approximations could be problematic.
 Moreover, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.</li>
 </ol>
 
