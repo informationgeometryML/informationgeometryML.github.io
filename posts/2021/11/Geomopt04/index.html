@@ -379,7 +379,7 @@ In the <a href="#riemannian-gradient-descent-and-its-non-linear-invariance">prev
 Given such a  “distance”, we can perform the unconstrained proximal-gradient descent as shown below.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\tau_{k+1} = \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \mathrm{D}(y,\tau_k) \}
+\tau_{k+1} = \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \frac{1}{\alpha} \mathrm{D}(y,\tau_k) \}
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\tau_k}$</code> is a Eulcidean gradient and the parameter space is unconstrained.</p>
 
