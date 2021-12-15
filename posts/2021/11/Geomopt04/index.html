@@ -492,18 +492,18 @@ Therefore,  Euclidean gradient descent is not invariant.</p>
 
 <h1 id="newtons-method-is-linearly-invariant">Newton’s Method is Linearly Invariant</h1>
 <hr />
-<p>For simplicity, consider an unconstrained optimization problem over a strongly convex funcion <code class="language-plaintext highlighter-rouge">$h_\tau$</code>.
+<p>For simplicity, consider an unconstrained convex optimization problem.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \min_{\tau \in \mathcal{R}^K } h_\tau(\tau)
 \end{aligned}
-$$</code></p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$h_\tau(\tau)$</code> is strongly convex and twice continuously differentiable w.r.t. <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
 
 <p>Newton’s method in parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \tau_{k} - \alpha \mathbf{H}^{-1}_\tau(\tau_k) {\mathbf{g}}_{\tau_k} 
-\end{aligned}\tag{7}\label{7}
+\end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_{\tau_k} := \nabla_\tau h_\tau(\tau_k)$</code> is a Euclidean gradient and <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\tau_k):=\nabla_\tau^2 h_\tau(\tau_k)$</code> is the Hessian.</p>
 
 <p>Consider a reparametrization  <code class="language-plaintext highlighter-rouge">$\lambda$</code> so that <code class="language-plaintext highlighter-rouge">$\lambda=\mathbf{U} \tau$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{U}$</code> is a constant (square) invertible matrix. 
@@ -511,13 +511,13 @@ $$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}
 \begin{aligned}
 \min_{\lambda \in \mathcal{R}^K } h_\lambda(\lambda):= h_\tau( \mathbf{U}^{-1} \lambda)
 \end{aligned}
-$$</code></p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$h_\lambda(\lambda)$</code> is also stronly convex w.r.t. <code class="language-plaintext highlighter-rouge">$\lambda$</code> due to  <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>.</p>
 
 <p>The Euclidean gradient descent (GD) in parametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code> is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \lambda_{k+1} \leftarrow \lambda_{k} - \alpha \mathbf{H}^{-1}_\lambda(\lambda_k) {\mathbf{g}}_{\lambda_k} 
-\end{aligned}\tag{8}\label{8}
+\end{aligned} 
 $$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_{\lambda_k} := \nabla_\lambda h_\lambda(\lambda_k)$</code> is a Euclidean gradient and
 <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\lambda_k):=\nabla_\lambda^2 h_\lambda(\lambda_k)$</code> is the Hessian.</p>
 
@@ -536,7 +536,7 @@ matrix as</p>
 constant matrix)}   \\
 &amp;=\mathbf{J}^T\nabla_\lambda (  \mathbf{g}_{\lambda_k} )\mathbf{J} \\ 
 &amp;=\mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} 
-\end{aligned}
+\end{aligned}\tag{7}\label{7}
 $$</code></p>
 
 <p><span style="color:red"><strong>Warning</strong></span>: The Hessian is not valid metric since it does not follow the transformation
