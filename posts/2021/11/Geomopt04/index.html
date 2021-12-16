@@ -390,7 +390,7 @@ In such cases,  unconstrained mirror descent also recovers natural-gradient desc
 
 <p><span style="color:red"><strong>Warning</strong></span>:
 The connection bewteen natural-gradient descent and proximal-gradient/mirror descent breaks down when
-the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is constrained and open. In constraint cases, these methods are distinct.</p>
+the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is constrained and open. In constrained cases, these methods are distinct from each other. We will cover more about this point in <a href="/posts/2021/12/Geomopt05/">Part V</a>.</p>
 
 <h1 id="natural-gradient-descent-in-non-intrinstic-parameter-spaces">Natural-gradient Descent in Non-intrinstic Parameter Spaces</h1>
 <hr />
@@ -547,7 +547,7 @@ $$</code> where by the definition we have <code class="language-plaintext highli
 <p><span style="color:red"><strong>Warning</strong></span>: The Hessian <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\tau_k)=\nabla_\tau^2 h_\tau(\tau_k)$</code>  is not a valid manifold metric since it does not follow the transformation
 rule of a metric in non-linear cases.</p>
 
-<p>On the other hand,  the Fisher information matrix is a valid manifold metric. Recall that the Fisher matrix can be computed as <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$</code>. The expectation plays a key role to ensure the metric follows the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> in non-linear cases as shown below.</p>
+<p>On the other hand,  the Fisher information matrix is a valid manifold metric. Recall that the Fisher matrix can be computed as <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$</code>. The expectation plays a key role to guarantee that the metric follows the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> in non-linear cases as shown below.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
