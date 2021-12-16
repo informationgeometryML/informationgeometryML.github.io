@@ -529,9 +529,6 @@ constant matrix)}   \\
 \end{aligned}\tag{7}\label{7}
 $$</code></p>
 
-<p><span style="color:red"><strong>Warning</strong></span>: The Hessian is not a valid manifold metric since it does not follow the transformation
-rule of a metric in non-linear cases.</p>
-
 <p>Therefore, the direction in Newton’s method denoted by <code class="language-plaintext highlighter-rouge">$\tilde{\mathbf{g}}_{\tau_k} := \mathbf{H}^{-1}_\tau(\tau_k) \mathbf{g}_{\tau_k}$</code> is transformed like natural-gradients in <strong>linear</strong> cases as</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
@@ -546,6 +543,23 @@ rule of a metric in non-linear cases.</p>
 $$</code> where by the definition we have <code class="language-plaintext highlighter-rouge">$\mathbf{Q}= \mathbf{J}^{-1}$</code>.</p>
 
 <p>The consequence is that Newton’s method like natural-gradient descent is linearly invariant.</p>
+
+<p><span style="color:red"><strong>Warning</strong></span>: The Hessian <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\tau_k)=\nabla_\tau^2 h_\tau(\tau_k)$</code>  is not a valid manifold metric since it does not follow the transformation
+rule of a metric in non-linear cases.</p>
+
+<p>On the other hand,  the Fisher information matrix is a valid manifold metric. Recall that the Fisher matrix can be computed as <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$</code>. The expectation plays a key role to ensure the metric follows the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> in non-linear cases as shown below.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{F}_\tau(\tau_k) &amp;= E_{p(w|\tau_k)}\big[ -\nabla_\tau^2 \log p(w|\tau_k) \big]  \\
+ &amp;= E_{p(w|\lambda_k)}\big[ -\nabla_\tau^2 \log p(w|\tau_k) \big]  \\
+ &amp;= E_{p(w|\lambda_k)}\big[ -\nabla_\tau [ \mathbf{J}^T \nabla_\lambda \log p(w|\lambda_k)]  \big]  \\
+  &amp;= -    \mathbf{J}^T   E_{p(w|\lambda_k)}\big[  \nabla_\tau  \nabla_\lambda \log p(w|\lambda_k) \big]   - [\nabla_\tau ( \mathbf{J}^T )] \underbrace{ E_{p(w|\lambda_k)}\big[  \nabla_\lambda \log p(w|\lambda_k) \big] }_{=0}  \\
+&amp;= -    \mathbf{J}^T   E_{p(w|\lambda_k)}\big[  [\nabla_\lambda^2 \log p(w|\lambda_k) ] \mathbf{J} \big] \\
+&amp;= -    \mathbf{J}^T   E_{p(w|\lambda_k)}\big[  \nabla_\lambda^2 \log p(w|\lambda_k) \big] \mathbf{J}\\
+&amp;=\mathbf{J}^T\mathbf{F}_\lambda(\lambda_k) \mathbf{J} 
+\end{aligned}
+$$</code></p>
 
 
         
