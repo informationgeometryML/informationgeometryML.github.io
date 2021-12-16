@@ -547,8 +547,8 @@ $$</code> where by the definition we have <code class="language-plaintext highli
 <p><span style="color:red"><strong>Warning</strong></span>: The Hessian <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\tau_k)=\nabla_\tau^2 h_\tau(\tau_k)$</code>  is not a valid manifold metric since it does not follow the transformation
 rule of a metric in non-linear cases.</p>
 
-<p>Contrastingly,  the Fisher information matrix is a valid manifold metric. Recall that we can compute the Fisher matrix  as <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$</code>. Given a non-linear intrinstic reparametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code>, the Jacobian matirx <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau_k)$</code> is no longer a constant matrix.
-the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> still holds thanks to the expectation of the score.</p>
+<p>Contrastingly,  the Fisher information matrix is a valid manifold metric. Recall that we can compute the Fisher matrix  as <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$</code>. Given a non-linear intrinstic reparametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code>, the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau_k)$</code> is no longer a constant matrix.
+In this case, the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> still holds thanks to the expectation of the score function.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
