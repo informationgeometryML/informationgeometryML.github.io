@@ -55,7 +55,7 @@ var store = [{
         "url": "/posts/2021/11/Geomopt04/",
         "teaser":null},{
         "title": "Part V: Efficient Natural Gradient Descent for Exponential Family",
-        "excerpt":"Warning: working in Progress (incomplete) ","categories": [],
+        "excerpt":"Warning: working in Progress (incomplete) Goal This blog post should show that natural-gradient descent can be implemented efficiently in some cases. We will give an informal introduction with a focus on high level of ideas. Exponential Family Minimal Exponential Family Efficient Natural-gradient Computation Natural-gradient Descent as Unconstrained Mirror Descent Handling...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold","Exponential Family"],
         "url": "/posts/2021/12/Geomopt05/",
         "teaser":null},{
