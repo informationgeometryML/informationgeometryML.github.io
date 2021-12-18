@@ -193,15 +193,18 @@
         <p>Warning: working in Progress (incomplete)</p>
 
 <h2 id="goal">Goal</h2>
-<p>This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.</p>
+<p>This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.
+We also discuss some invariance property of natural-gradient descent, Riemannian gradient descent, and Newton’s method.</p>
 
 <p>We will give an informal introduction with a focus on high level of ideas.</p>
 
 <h1 id="two-kinds-of-spaces">Two kinds of Spaces</h1>
 <hr />
+<p>We will discuss (Riemannian) gradient spaces and parameter spaces for gradient-based updates.</p>
+
 <p>As we disucssed in <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, the parameter space $\Omega_\tau$ and the tangent space denoted by <code class="language-plaintext highlighter-rouge">$T\mathcal{M}_{\tau_0}$</code> at point $\tau_0$ are different spaces. Recall that the tangent space is a vector space and <code class="language-plaintext highlighter-rouge">$T\mathcal{M}_{\tau_0}=\mathcal{R}^K$</code> while the parameter space $\Omega_\tau$ is like a local vector space in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where $K$ is the dimension of the manifold. Moreover, <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is often an open (proper) subset of <code class="language-plaintext highlighter-rouge">$T\mathcal{M}_{\tau_0}$</code> since  $\tau$ is an <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">intrinsic parametrization</a>.</p>
 
-<p>In a manifold case, we have to explicitly distinguish the difference between the representation of a point/parameter and a (Riemannian) vector/gradient.
+<p>In a manifold case, we have to explicitly distinguish the difference between the representation of a point (parameter) and a vector (Riemannian gradient).
 The following figure illustrates the difference between the <strong>domain</strong> of these two spaces. Moreover, the <strong>norm/distance</strong> in each of these two spaces is defined differently.</p>
 
 <p><img src="/img/sphere.png" width="500" /></p>
@@ -421,7 +424,7 @@ The iteration cost of natural-gradient descent in this parameter space $\Omega_\
 
       <p>Now, consider the equivalent Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda =( \mu_0,\Sigma_0 ) $</code>, where $\lambda$ is an intrinsic parameterization of the Gaussian family.</p>
 
-      <p>As we will shown in <a href="/posts/2021/12/Geomopt05/">Part V</a>, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.</p>
+      <p>As we will show in <a href="/posts/2021/12/Geomopt05/">Part V</a>, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.</p>
     </blockquote>
   </li>
   <li>It is tempting to approximate the singular FIM by an emprical FIM with a scalar damping term and use Woodbury matrix identity to reduce the iteration cost of computing natural-gradients. However, sample-based emprical approximations could be problematic.
