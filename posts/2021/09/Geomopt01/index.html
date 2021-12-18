@@ -460,18 +460,10 @@ It is possible to define FIM under a non-intrinstic parameterization. However, F
 The following computation is not correct. Do you make similar mistakes like this?</p>
 
   <p>Let <code class="language-plaintext highlighter-rouge">$  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$</code>, where <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. The derivative is
-<code class="language-plaintext highlighter-rouge">$$  
-\begin{aligned}
-\nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T 
-\end{aligned} \tag{8}\label{8}
-$$</code>
-Thus, by Eq. <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code>, FIM under this  parameterization is
-<code class="language-plaintext highlighter-rouge">$$ 
-\begin{aligned}
-F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\ 
-\mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;  0 \\ 0 &amp;  \frac{1}{\pi_1} \end{bmatrix}
-\end{aligned} \tag{9}\label{9}
-$$</code>
+<code class="language-plaintext highlighter-rouge">$$  \begin{aligned} \nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T  \end{aligned} \tag{8}\label{8}$$</code>
+Thus, by Eq. <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code>, FIM under this  parameterization is</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$$  \begin{aligned} F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\  \mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;  0 \\ 0 &amp;  \frac{1}{\pi_1} \end{bmatrix} \end{aligned} \tag{9}\label{9}$$</code>
 This computation is not correct. Do you know why it is not correct?</p>
 
   <p>The key reason is the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code> is <strong>incorrect</strong>.</p>
@@ -494,7 +486,7 @@ In other words, the above Fisher matrix computation is not correct since <code c
 
   <p>We can show that FIM under this  parameterization is singular.</p>
 
-  <p>A Bernoulli family with a non-singular FIM can be defined as <code class="language-plaintext highlighter-rouge">$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&lt;\pi_0&lt;1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi_0$</code>.</p>
+  <p>A Bernoulli family with a non-singular FIM can be defined as <code class="language-plaintext highlighter-rouge">$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&lt; \pi_0 &lt; 1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi_0$</code>.</p>
 </blockquote>
 
 <h1 id="manifold-dimension">Manifold Dimension</h1>
@@ -539,8 +531,8 @@ We now illustrate this by examples.</p>
       <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$</code>  <br /> under intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{\Sigma})$</code> is  a $\frac{d(d+1)}{2}$-dim array.  <br />  Map $\mathrm{MatH}()$ is the inverse map of <br /> the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization function</a> <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code>. <br />   <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{\Sigma})$</code> is a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array <br />  obtained by vectorizing only the lower triangular part of (symmetric) <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code>.</td>
     </tr>
     <tr>
-      <td style="text-align: center">1-dim stastical manifold</td>
-      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\frac{d(d+1)}{2}$</code>-dim stastical  manifold</td>
+      <td style="text-align: center">1-dim statistical manifold</td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\frac{d(d+1)}{2}$</code>-dim statistical  manifold</td>
     </tr>
   </tbody>
 </table>
