@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-17T19:59:51-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural Gradient Descent for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural Gradient Descent for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-19T13:19:44-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that natural-gradient descent can be implemented efficiently in some cases.&lt;/p&gt;
@@ -21,12 +21,16 @@
 
 &lt;h2 id=&quot;projected-natural-gradient-descent-and-constrained-mirror-descent&quot;&gt;Projected Natural-gradient Descent and (Constrained) Mirror Descent&lt;/h2&gt;
 
-&lt;h2 id=&quot;riemannain-gradient-descent&quot;&gt;Riemannain Gradient Descent&lt;/h2&gt;
+&lt;h2 id=&quot;riemannian-gradient-descent&quot;&gt;Riemannian Gradient Descent&lt;/h2&gt;
 
-&lt;h1 id=&quot;natural-gradient-descent-for-gaussian-families&quot;&gt;Natural-gradient Descent for Gaussian Families&lt;/h1&gt;
+&lt;h1 id=&quot;natural-gradient-methods-for-gaussian-families-as-newton-like-updates&quot;&gt;Natural-gradient Methods for Gaussian Families as Newton-like Updates&lt;/h1&gt;
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;newton-like-update&quot;&gt;Newton-like Update&lt;/h2&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+&lt;p&gt;to do: add a warning to address the difference between parameter Newton’s method and variable Newton’s method&lt;/p&gt;
+
+&lt;h2 id=&quot;natural-gradient-descent&quot;&gt;Natural-gradient Descent&lt;/h2&gt;
+
+&lt;h2 id=&quot;riemannian-gradient-descent-1&quot;&gt;Riemannian Gradient Descent&lt;/h2&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.
@@ -141,7 +145,8 @@ Therefore, updates in &lt;code class=&quot;language-plaintext highlighter-rouge&
 &lt;hr /&gt;
 &lt;p&gt;Now we discuss a gradient-based method that is invariant to any intrinsic parameter transformation.
 We will first introduce the concept of a (one-dimensional) geodesic $\gamma(t)$, which is the “shortest curve” on a manifold with a Riemannian metric (e.g., the Fisher-Rao metric).
-Recall that in  &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold, which is known as the Rao distance in statistics.&lt;/p&gt;
+Recall that in  &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold. 
+In statistics, the distance induced by a geodesic with the Fisher-Rao metric is known as the Rao distance .&lt;/p&gt;
 
 &lt;p&gt;Consider an intrinsic parametrization $\tau$, where $\gamma_\tau(t)$ is the parameter representation of the geodesic.
 To specify a geodesic, we need to provide a starting point $\tau_0$ on the manifold and a Riemannian gradient $\mathbf{v}_{\tau_0}$ evluated at point $\tau_0$.
@@ -219,7 +224,7 @@ In the &lt;a href=&quot;#riemannian-gradient-descent-and-its-non-linear-invarian
 Given such a  “distance”, we can perform the unconstrained proximal-gradient descent as shown below.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\tau_{k+1} = \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \frac{1}{\alpha} \mathrm{D}(y,\tau_k) \}
+\tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \frac{1}{\alpha} \mathrm{D}(y,\tau_k) \}
 \end{aligned}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient and the parameter space is unconstrained.&lt;/p&gt;
 
