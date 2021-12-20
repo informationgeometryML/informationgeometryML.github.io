@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-20T12:20:45-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-20T12:37:51-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -14,11 +14,13 @@
 p(\mathbf{w}|\mathbf{\eta}) = h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta (\mathbf{\eta}) )
 \end{aligned}
 $$&lt;/code&gt; where the support of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w}$&lt;/code&gt; does not depend on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$C_\eta(\eta) :=  \int h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}(\mathbf{w}) \rangle ) d \mathbf{w}
-$&lt;/code&gt; is the normalization constant.   &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta(\mathbf{\eta}):=\log C_\eta(\eta)$&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h_\eta(\mathbf{w})$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{T}_\eta(\mathbf{w})$&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;  are known as the log-partition function, the base measure, the sufficient statistics, and the natural parameter,  respectively.&lt;/p&gt;
+$&lt;/code&gt; is the normalization constant.   &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta(\mathbf{\eta}):=\log C_\eta(\eta)$&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h_\eta(\mathbf{w})$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{T}_\eta(\mathbf{w})$&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;  are known as the log-partition function, the base measure, the sufficient statistics, and the &lt;strong&gt;natural&lt;/strong&gt; parameter,  respectively.&lt;/p&gt;
 
-&lt;p&gt;The parameter space of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is determined so that the normalization constant is well-defined and (strictly) positive.
-We say natural parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is &lt;strong&gt;regular&lt;/strong&gt; if parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is  relatively &lt;strong&gt;open&lt;/strong&gt;.
- In this post, we only consider
+&lt;p&gt;The parameter space of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is determined so that the normalization constant is well-defined and (strictly) positive.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Regular&lt;/strong&gt; natural parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;: parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is relatively open.&lt;/p&gt;
+
+&lt;p&gt;In this post, we only consider
 regular natural parametrizations since commonly used expoential family distributions have a regular natural parametrization.&lt;/p&gt;
 
 &lt;p&gt;This natural parametrization is special since the inner product &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\langle \mathbf{\eta} , \mathbf{T}_\eta(\mathbf{w}) \rangle$&lt;/code&gt; is &lt;strong&gt;linear&lt;/strong&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;. As we will discuss later,  this linearity is essential.&lt;/p&gt;
@@ -91,8 +93,9 @@ $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&
 
 &lt;h2 id=&quot;minimal-parametrizations-of-exponential-family&quot;&gt;Minimal Parametrizations of Exponential Family&lt;/h2&gt;
 
-&lt;p&gt;Now, we discuss particular parametrizations of an expoential family.
-We say a natural parametrization is &lt;strong&gt;minimal&lt;/strong&gt; if the sufficient stattistics &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{T}(\mathbf{w})$&lt;/code&gt; is linearly independent.&lt;/p&gt;
+&lt;p&gt;Now, we discuss particular parametrizations of an expoential family.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Minimal&lt;/strong&gt; natural parametrization: the corresponding sufficient stattistics &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{T}(\mathbf{w})$&lt;/code&gt; is linearly independent.&lt;/p&gt;
 
 &lt;p&gt;A regular, minimal, and natural parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; has many nice properties.&lt;/p&gt;
 
@@ -102,7 +105,7 @@ We say a natural parametrization is &lt;strong&gt;minimal&lt;/strong&gt; if the 
  &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families&quot;&gt;Part I&lt;/a&gt;.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
-    &lt;p&gt;The parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is &lt;strong&gt;open&lt;/strong&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where
+    &lt;p&gt;The parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is open in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entires of this parameter array.&lt;/p&gt;
   &lt;/li&gt;
   &lt;li&gt;
@@ -144,7 +147,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 0 =\sum_{i=1}^{K} c_i \langle \mathbf{e}_i,  \mathbf{T} (\mathbf{w}) \rangle ,
 \end{aligned}
 $$&lt;/code&gt; which implies that
-the sufficient stattistics &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{T}(\mathbf{w})$&lt;/code&gt; is linearly dependent. This is a contradiction.&lt;/p&gt;
+the sufficient stattistics &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{T}(\mathbf{w})$&lt;/code&gt; is linearly dependent. This is a contradiction since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is a minimal natural parametrization.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;p&gt;Now, we give an example of a minimal natural parametrization.&lt;/p&gt;
@@ -191,16 +194,7 @@ and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&l
 
 &lt;h2 id=&quot;projected-natural-gradient-descent-and-constrained-mirror-descent&quot;&gt;Projected Natural-gradient Descent and (Constrained) Mirror Descent&lt;/h2&gt;
 
-&lt;h2 id=&quot;riemannian-gradient-descent&quot;&gt;Riemannian Gradient Descent&lt;/h2&gt;
-
-&lt;h1 id=&quot;natural-gradient-methods-for-gaussians-as-newton-like-updates&quot;&gt;Natural-gradient Methods for Gaussians as Newton-like Updates&lt;/h1&gt;
-&lt;hr /&gt;
-
-&lt;p&gt;to do: add a warning to address the difference between parameter Newton’s method and variable Newton’s method&lt;/p&gt;
-
-&lt;h2 id=&quot;natural-gradient-descent&quot;&gt;Natural-gradient Descent&lt;/h2&gt;
-
-&lt;h2 id=&quot;riemannian-gradient-descent-1&quot;&gt;Riemannian Gradient Descent&lt;/h2&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+&lt;h2 id=&quot;riemannian-gradient-descent&quot;&gt;Riemannian Gradient Descent&lt;/h2&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.

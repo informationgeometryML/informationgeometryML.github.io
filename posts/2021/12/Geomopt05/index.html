@@ -182,7 +182,7 @@
 
 
 
-  6 minute read
+  5 minute read
 </p>
           
         </header>
@@ -206,11 +206,13 @@
 p(\mathbf{w}|\mathbf{\eta}) = h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta (\mathbf{\eta}) )
 \end{aligned}
 $$</code> where the support of <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> does not depend on <code class="language-plaintext highlighter-rouge">$\eta$</code>,  <code class="language-plaintext highlighter-rouge">$C_\eta(\eta) :=  \int h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}(\mathbf{w}) \rangle ) d \mathbf{w}
-$</code> is the normalization constant.   <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}):=\log C_\eta(\eta)$</code>,  <code class="language-plaintext highlighter-rouge">$h_\eta(\mathbf{w})$</code>, <code class="language-plaintext highlighter-rouge">$\mathbf{T}_\eta(\mathbf{w})$</code>, and <code class="language-plaintext highlighter-rouge">$\eta$</code>  are known as the log-partition function, the base measure, the sufficient statistics, and the natural parameter,  respectively.</p>
+$</code> is the normalization constant.   <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}):=\log C_\eta(\eta)$</code>,  <code class="language-plaintext highlighter-rouge">$h_\eta(\mathbf{w})$</code>, <code class="language-plaintext highlighter-rouge">$\mathbf{T}_\eta(\mathbf{w})$</code>, and <code class="language-plaintext highlighter-rouge">$\eta$</code>  are known as the log-partition function, the base measure, the sufficient statistics, and the <strong>natural</strong> parameter,  respectively.</p>
 
-<p>The parameter space of <code class="language-plaintext highlighter-rouge">$\eta$</code> denoted by <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is determined so that the normalization constant is well-defined and (strictly) positive.
-We say natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is <strong>regular</strong> if parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is  relatively <strong>open</strong>.
- In this post, we only consider
+<p>The parameter space of <code class="language-plaintext highlighter-rouge">$\eta$</code> denoted by <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is determined so that the normalization constant is well-defined and (strictly) positive.</p>
+
+<p><strong>Regular</strong> natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code>: parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is relatively open.</p>
+
+<p>In this post, we only consider
 regular natural parametrizations since commonly used expoential family distributions have a regular natural parametrization.</p>
 
 <p>This natural parametrization is special since the inner product <code class="language-plaintext highlighter-rouge">$\langle \mathbf{\eta} , \mathbf{T}_\eta(\mathbf{w}) \rangle$</code> is <strong>linear</strong> in <code class="language-plaintext highlighter-rouge">$\eta$</code>. As we will discuss later,  this linearity is essential.</p>
@@ -283,8 +285,9 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$h_\lambda(\m
 
 <h2 id="minimal-parametrizations-of-exponential-family">Minimal Parametrizations of Exponential Family</h2>
 
-<p>Now, we discuss particular parametrizations of an expoential family.
-We say a natural parametrization is <strong>minimal</strong> if the sufficient stattistics <code class="language-plaintext highlighter-rouge">$\mathcal{T}(\mathbf{w})$</code> is linearly independent.</p>
+<p>Now, we discuss particular parametrizations of an expoential family.</p>
+
+<p><strong>Minimal</strong> natural parametrization: the corresponding sufficient stattistics <code class="language-plaintext highlighter-rouge">$\mathcal{T}(\mathbf{w})$</code> is linearly independent.</p>
 
 <p>A regular, minimal, and natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> has many nice properties.</p>
 
@@ -294,7 +297,7 @@ We say a natural parametrization is <strong>minimal</strong> if the sufficient s
  <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>.</p>
   </li>
   <li>
-    <p>The parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is <strong>open</strong> in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where
+    <p>The parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where
 <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entires of this parameter array.</p>
   </li>
   <li>
@@ -336,7 +339,7 @@ $$</code></p>
 0 =\sum_{i=1}^{K} c_i \langle \mathbf{e}_i,  \mathbf{T} (\mathbf{w}) \rangle ,
 \end{aligned}
 $$</code> which implies that
-the sufficient stattistics <code class="language-plaintext highlighter-rouge">$\mathcal{T}(\mathbf{w})$</code> is linearly dependent. This is a contradiction.</p>
+the sufficient stattistics <code class="language-plaintext highlighter-rouge">$\mathcal{T}(\mathbf{w})$</code> is linearly dependent. This is a contradiction since <code class="language-plaintext highlighter-rouge">$\eta$</code> is a minimal natural parametrization.</p>
 </blockquote>
 
 <p>Now, we give an example of a minimal natural parametrization.</p>
@@ -384,15 +387,6 @@ and  <code class="language-plaintext highlighter-rouge">$\eta$</code> is a $(d+\
 <h2 id="projected-natural-gradient-descent-and-constrained-mirror-descent">Projected Natural-gradient Descent and (Constrained) Mirror Descent</h2>
 
 <h2 id="riemannian-gradient-descent">Riemannian Gradient Descent</h2>
-
-<h1 id="natural-gradient-methods-for-gaussians-as-newton-like-updates">Natural-gradient Methods for Gaussians as Newton-like Updates</h1>
-<hr />
-
-<p>to do: add a warning to address the difference between parameter Newton’s method and variable Newton’s method</p>
-
-<h2 id="natural-gradient-descent">Natural-gradient Descent</h2>
-
-<h2 id="riemannian-gradient-descent-1">Riemannian Gradient Descent</h2>
 
 
         
