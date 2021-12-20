@@ -354,7 +354,7 @@ Since we use the Fisher-Rao metric, the Riemannian gradient is also known as the
   <p>Intrinsic parametrization and natural-gradients for multivate Gaussian</p>
 
   <p>Consider a $d$-dimensional Gaussian family with zero mean discussed in <a href="/posts/2021/09/Geomopt01/#manifold-dimension">Part I</a>. <br />
-We specify an intrinsic parameterization $\mathbf{\tau}$ of the  family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{\Sigma})$</code>, where <code class="language-plaintext highlighter-rouge">$\tau$</code> is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of the the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization function</a> $\mathrm{vech}()$.</p>
+We specify an intrinsic parameterization $\mathbf{\tau}$ of the  family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{\Sigma}) \Big| \mathrm{MatH}(\tau) = \mathbf{\Sigma}   \succ \mathbf{0} \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{\Sigma})$</code>, where <code class="language-plaintext highlighter-rouge">$\tau$</code> is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of  the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization function</a> $\mathrm{vech}()$.</p>
 
   <p>Technically speaking, <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code> is NOT an intrinsic parameter due to the symmetry constraint. In other words, FIM w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code> will be singular if  <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code> is considered as a matrix parameter with $d^2$ degrees of freedom.</p>
 
@@ -590,7 +590,7 @@ we can also define vector additions and real scalar products in a tangent vector
 
 
 
-  less than 1 minute read
+  6 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)

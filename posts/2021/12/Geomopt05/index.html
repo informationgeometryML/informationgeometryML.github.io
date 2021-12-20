@@ -182,7 +182,7 @@
 
 
 
-  less than 1 minute read
+  6 minute read
 </p>
           
         </header>
@@ -193,14 +193,184 @@
         <p>Warning: working in Progress (incomplete)</p>
 
 <h2 id="goal">Goal</h2>
-<p>This blog post should show that natural-gradient descent can be implemented efficiently in some cases.</p>
+<p>This blog post should show that we can efficiently implement natural-gradient methods in many cases.</p>
 
 <p>We will give an informal introduction with a focus on high level of ideas.</p>
 
 <h1 id="exponential-family">Exponential Family</h1>
 <hr />
 
-<h2 id="minimal-exponential-family">Minimal Exponential Family</h2>
+<p>An expoential family takes the following (canonical) form as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+p(\mathbf{w}|\mathbf{\eta}) = h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta (\mathbf{\eta}) )
+\end{aligned}
+$$</code> where the support of <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> does not depend on <code class="language-plaintext highlighter-rouge">$\eta$</code>,  <code class="language-plaintext highlighter-rouge">$C_\eta(\eta) :=  \int h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}(\mathbf{w}) \rangle ) d \mathbf{w}
+$</code> is the normalization constant.   <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}):=\log C_\eta(\eta)$</code>,  <code class="language-plaintext highlighter-rouge">$h_\eta(\mathbf{w})$</code>, <code class="language-plaintext highlighter-rouge">$\mathbf{T}_\eta(\mathbf{w})$</code>, and <code class="language-plaintext highlighter-rouge">$\eta$</code>  are known as the log-partition function, the base measure, the sufficient statistics, and the natural parameter,  respectively.</p>
+
+<p>The parameter space of <code class="language-plaintext highlighter-rouge">$\eta$</code> denoted by <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is determined so that the normalization constant is well-defined and (strictly) positive.
+We say natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is <strong>regular</strong> if parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is  relatively <strong>open</strong>.
+ In this post, we only consider
+regular natural parametrizations since commonly used expoential family distributions have a regular natural parametrization.</p>
+
+<p>This natural parametrization is special since the inner product <code class="language-plaintext highlighter-rouge">$\langle \mathbf{\eta} , \mathbf{T}_\eta(\mathbf{w}) \rangle$</code> is <strong>linear</strong> in <code class="language-plaintext highlighter-rouge">$\eta$</code>. As we will discuss later,  this linearity is essential.</p>
+
+<ul>
+  <li>The base measure and the log-partition function are only unique up to a constant as illustrated by the following example.
+    <blockquote>
+
+      <p>Example: Univariate Gaussian as an expoential family:</p>
+
+      <p>Recall that in <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>, we consider this family as
+<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code>, where <code class="language-plaintext highlighter-rouge">$\mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>.</p>
+
+      <p>We re-express it in an expoential form as</p>
+
+      <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+p({w}|\mathbf{\eta})  &amp;= \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] \\
+&amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2\sigma} \\ \frac{\mu}{\sigma}  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix} w^2 \\ w  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ]     )   \\
+\end{aligned}
+$$</code>
+Since <code class="language-plaintext highlighter-rouge">$\sigma= -\frac{1}{2\eta_1} $</code> and <code class="language-plaintext highlighter-rouge">$\mu = -\frac{\eta_2}{2\eta_1}$</code>,  <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) = \frac{1} {2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ] = \frac{1}{2} [ \log ( 2\pi ) + \log (-\frac{1}{2\eta_1})-\frac{\eta_2^2}{2\eta_1} ] $</code>.</p>
+
+      <p>It is also valid that $ h_\eta({w}) = \frac{1}{\sqrt{2\pi}} $ and 
+<code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) =  \frac{1}{2} [  \log (-\frac{1}{2\eta_1})-\frac{\eta_2^2}{2\eta_1} ] $</code>.</p>
+
+      <p>We easily to verify that parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ (\eta_1,\eta_2) | \eta_1&lt;0 , \eta_2 \in \mathcal{R} \}$</code> is open in $\mathcal{R}^2$.</p>
+    </blockquote>
+  </li>
+  <li>The log-partition function could be differentiable w.r.t. <code class="language-plaintext highlighter-rouge">$\eta$</code> even when <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> is discrete.
+    <blockquote>
+
+      <p>Example: Bernoulli family as an expoential family:</p>
+
+      <p>Recall that in <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>, we consider this family as
+ <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) \Big| 0&lt;\pi&lt;1 \}$</code></p>
+
+      <p>We re-express it in an expoential form as</p>
+
+      <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+p({w}|\mathbf{\eta})
+&amp;=  \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) \\
+&amp;=\underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{ \log \frac{\pi}{1-\pi}}_{\eta} , \underbrace{ \mathcal{I}(w=0)}_{T_\eta(w) } \rangle - \log \frac{1}{1-\pi} )
+\end{aligned}
+$$</code>
+Since <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta)}{1+ \exp(\eta) } $</code> , we have <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) =  \log \frac{1}{1-\pi} = \log(1+\exp(\eta))$</code>. <br />
+We easily to verify that parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ \eta | \eta \in \mathcal{R} \}$</code> is open in $\mathcal{R}$.</p>
+    </blockquote>
+  </li>
+  <li>A natural parametrization is only unique up to an invertiable linear transformation.
+  This is one of the reasons using natural-gradient descent since it is linearly invariant.
+    <blockquote>
+
+      <p>For simplicity, let’s assume set <code class="language-plaintext highlighter-rouge">$\Omega_\lambda := \{ \mathbf{U}^{-1} \eta | \eta \in \Omega_\eta \} = \Omega_\eta$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{U}$</code> is a constant invertiable matrix.</p>
+
+      <p>Consider a linear reparametrization such as <code class="language-plaintext highlighter-rouge">$\lambda=\mathbf{U}^{-1} \mathbf{\eta}$</code>, parametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code> is also a natural parametrization as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+p(\mathbf{w}|\mathbf{\lambda})
+&amp;= h_\eta(\mathbf{w}) \exp( \langle \mathbf{U}\mathbf{\lambda} , \mathbf{T}_\eta(\mathbf{w}) \rangle - A_\eta( \mathbf{U}\mathbf{\lambda}) ) \\
+&amp;=  h_\eta(\mathbf{w})\exp( \langle \mathbf{\lambda} , \mathbf{U}^T \mathbf{T}_\eta(\mathbf{w}) \rangle - A_\eta(\mathbf{U}\mathbf{\lambda}) ) \\
+&amp;= h_\lambda(\mathbf{w})  \exp( \langle \mathbf{\lambda} ,  \mathbf{T}_\lambda(\mathbf{w}) \rangle - A_\lambda(\mathbf{\lambda}) ) 
+\end{aligned}
+$$</code> where <code class="language-plaintext highlighter-rouge">$h_\lambda(\mathbf{w}):= h_\eta(\mathbf{w})$</code>,  <code class="language-plaintext highlighter-rouge">$\mathbf{T}_\lambda(\mathbf{w}):= \mathbf{U}^T\mathbf{T}_\eta(\mathbf{w})$</code>, and 
+<code class="language-plaintext highlighter-rouge">$A_\lambda(\mathbf{\lambda}):= A_\eta(\mathbf{U}\mathbf{\lambda})$</code>.</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="minimal-parametrizations-of-exponential-family">Minimal Parametrizations of Exponential Family</h2>
+
+<p>Now, we discuss particular parametrizations of an expoential family.
+We say a natural parametrization is <strong>minimal</strong> if the sufficient stattistics <code class="language-plaintext highlighter-rouge">$\mathcal{T}(\mathbf{w})$</code> is linearly independent.</p>
+
+<p>A regular, minimal, and natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> has many nice properties.</p>
+
+<ul>
+  <li>
+    <p>It is an intrinstic parametrization as we discussed in
+ <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>.</p>
+  </li>
+  <li>
+    <p>The parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is <strong>open</strong> in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where
+<code class="language-plaintext highlighter-rouge">$K$</code> is the number of entires of this parameter array.</p>
+  </li>
+  <li>
+    <p>The log-partition function <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)$</code> is  infinitely differentiable and strictly convex in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
+  </li>
+  <li>
+    <p>The FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta) = \nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite.</p>
+  </li>
+</ul>
+
+<p>We will only show the first property in this post. The remaining properties can be found in the literature.
+Note that the linearity in the inner product <code class="language-plaintext highlighter-rouge">$\langle \mathbf{\eta} , \mathbf{T}_\eta(\mathbf{w}) \rangle$</code>,  plays a key role in showing these properties.</p>
+
+<p>Recall that a parametrization is intrinstic if 
+ partial derivatives 
+<code class="language-plaintext highlighter-rouge">$ \{ \partial_{\eta_i} \log p(\mathbf{w}|\eta) \} $</code>  are linearly independent.
+Since the parameter space is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> and the log-partition function <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)$</code> differentiable, we know that these partial derivatives  as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\partial_{\eta_i} \log p(\mathbf{w}|\eta) = \langle \mathbf{e}_i,  \mathbf{T} (\mathbf{w}) \rangle - \partial_{\eta_i}A_\eta(\eta) 
+\end{aligned}
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{e}_i$</code> is an one-hot array which has zero in all entries except the $i$-th entry.</p>
+
+<blockquote>
+  <p>Proof by contradiction:</p>
+
+  <p>If these partial derivatives are linearly dependent, there exist a set of non-zero constant <code class="language-plaintext highlighter-rouge">$c_i$</code> such that
+<code class="language-plaintext highlighter-rouge">$\sum_i c_i \partial_{\eta_i} \log p(\mathbf{w}|\eta)= 0 $</code>, where the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+0 &amp;= \sum_{i=1}^{K} c_i \partial_{\eta_i} \log p(\mathbf{w}|\eta) \\
+&amp;= \sum_{i=1}^{K} c_i \langle \mathbf{e}_i,  \mathbf{T} (\mathbf{w}) \rangle -   c_i\partial_{\eta_i}A_\eta(\eta) \\
+\end{aligned}
+$$</code></p>
+
+  <p>Since  <code class="language-plaintext highlighter-rouge">$c_i$</code> is a non-zero constant and its value does not depent on  <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code>, we must have
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+0 =\sum_{i=1}^{K} c_i \langle \mathbf{e}_i,  \mathbf{T} (\mathbf{w}) \rangle ,
+\end{aligned}
+$$</code> which implies that
+the sufficient stattistics <code class="language-plaintext highlighter-rouge">$\mathcal{T}(\mathbf{w})$</code> is linearly dependent. This is a contradiction.</p>
+</blockquote>
+
+<p>Now, we give an example of a minimal natural parametrization.</p>
+
+<blockquote>
+  <p>Example: Minimal parametrization for multivate Gaussians</p>
+
+  <p>Consider a $d$-dimensional Gaussian family
+We specify an intrinsic parameterization $\mathbf{\tau}$ of the  family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{\mu},\mathbf{\Sigma}) \Big| \mathbf{\mu} \in \mathcal{R}^d, \mathbf{\Sigma}   \succ \mathbf{0} \}$</code></p>
+
+  <p>We re-express it in an expoential form as</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+p({w}|\mathbf{\lambda})  &amp;= \frac{1}{\sqrt{ \mathrm{det}( 2\pi \Sigma )} } \exp [- \frac{1}{2} (\mathbf{w}-\mathbf{\mu})^T \Sigma^{-1} (\mathbf{w}-\mathbf{\mu})  ] \\
+&amp;= \underbrace{ \exp(0) }_{  h_\lambda({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2} \mathrm{vec}( \Sigma^{-1} ) \\ \Sigma^{-1}\mu  \end{bmatrix}}_{\mathbf{\lambda} }  ,  \underbrace{\begin{bmatrix} \mathrm{vec}( \mathbf{w} \mathbf{w}^T) \\ \mathbf{w}  \end{bmatrix}}_{ \mathbf{T}_\lambda ({w}) } \rangle  -   \frac{1}{2} [ d\log ( 2\pi ) + \log \mathrm{det} (\Sigma) + \mu^T \Sigma^{-1} \mu ]     )   \\
+\end{aligned}
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathrm{vec}()$</code> is the vectorization function
+and  <code class="language-plaintext highlighter-rouge">$\lambda$</code> is a $(d+d^2)$-dim array.</p>
+
+  <p>Parametrization $\lambda$ is a natural and regular parametrization. However, it is NOT a minimal
+parametrization since <code class="language-plaintext highlighter-rouge">$\mathbf{w} \mathbf{w}^T$</code> is symmetric and therefore the sufficient statistics is linearly dependent.</p>
+
+  <p>A minimal natural parametrization $\eta$ should be
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+p({w}|\mathbf{\eta})
+&amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2} \mathrm{vech}( \Sigma^{-1} ) \\ \Sigma^{-1}\mu  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix} \mathrm{vech}( \mathbf{w} \mathbf{w}^T) \\ \mathbf{w}  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ d\log ( 2\pi ) + \log \mathrm{det} (\Sigma) + \mu^T \Sigma^{-1} \mu ]     )   \\
+\end{aligned}
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code> is the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization function</a> 
+and  <code class="language-plaintext highlighter-rouge">$\eta$</code> is a $(d+\frac{d(d+1)}{2})$-dim array.</p>
+
+  <p>As we discussed in <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Part II</a>,  <code class="language-plaintext highlighter-rouge">$\eta$</code> is an intrinstic parameterization while <code class="language-plaintext highlighter-rouge">$\lambda$</code> is not.</p>
+</blockquote>
 
 <h2 id="efficient-natural-gradient-computation">Efficient Natural-gradient Computation</h2>
 
@@ -215,7 +385,7 @@
 
 <h2 id="riemannian-gradient-descent">Riemannian Gradient Descent</h2>
 
-<h1 id="natural-gradient-methods-for-gaussian-families-as-newton-like-updates">Natural-gradient Methods for Gaussian Families as Newton-like Updates</h1>
+<h1 id="natural-gradient-methods-for-gaussians-as-newton-like-updates">Natural-gradient Methods for Gaussians as Newton-like Updates</h1>
 <hr />
 
 <p>to do: add a warning to address the difference between parameter Newton’s method and variable Newton’s method</p>
