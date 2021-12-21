@@ -182,7 +182,7 @@
 
 
 
-  15 minute read
+  16 minute read
 </p>
           
         </header>
@@ -578,11 +578,11 @@ _\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
 parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained.
 Since the Legendre transformation is defined in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> , which implies the dual (expectation) parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained in general.</p>
 
-<p>The following example illustrate this point</p>
+<p>The following example illustrates this point.</p>
 <blockquote>
   <p>Example: Univariate Gaussian</p>
 
-  <p>we consider this family as discussed in <a href="#exponential-family">the previous section</a>
+  <p>We consider this family as discussed in <a href="#exponential-family">the previous section</a>
 <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean $\mu$ and variance $\sigma$.</p>
 
   <p>It can be re-expressed in an exponential form as</p>
@@ -602,7 +602,10 @@ where  <code class="language-plaintext highlighter-rouge">$\sigma= -\frac{1}{2\e
   <p>The expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m= \{ (m_1,m_2) | m_1 - m_2^2 &gt;0 , m_2 \in \mathcal{R} \}$</code> is a constrained open set in $\mathcal{R}^2$.</p>
 </blockquote>
 
-<p>When <code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>, (constrained) mirror descent in <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> in general does not give us the same update in <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> as
+<p>Recall that when the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained,
+the expectation space <code class="language-plaintext highlighter-rouge">$\Omega_m $</code> in general is also constrained (<code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>).
+In this case,
+(constrained) mirror descent in <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> in general does not give us the same update in <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> as
 natural-gradient descent.</p>
 
 <blockquote>
@@ -620,6 +623,34 @@ natural-gradient descent.</p>
 large enough since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>  is just a proper open subset of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.</p>
 
   <p>This is a contradiction.</p>
+</blockquote>
+
+<p>The following example shows that it is also possible that
+the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained (<code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>) while
+the expectation space <code class="language-plaintext highlighter-rouge">$\Omega_m $</code> is still constrained (<code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>).</p>
+<blockquote>
+  <p>Example: Bernoulli family</p>
+
+  <p>We consider this family as discussed in <a href="#exponential-family">the previous section</a>
+ <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) \Big| 0&lt;\pi&lt;1 \}$</code></p>
+
+  <p>We re-express it in an exponential form as</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+p({w}|\mathbf{\eta})
+&amp;=\underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{ \log \frac{\pi}{1-\pi}}_{\eta} , \underbrace{ \mathcal{I}(w=0)}_{T_\eta(w) } \rangle - \log \frac{1}{1-\pi} )
+\end{aligned}
+$$</code>
+where  <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta)}{1+ \exp(\eta) } $</code> and<code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) =  \log \frac{1}{1-\pi} = \log(1+\exp(\eta))$</code>.</p>
+
+  <p>This natural parametrization is also known as the soft-max representaion in categorical cases.</p>
+
+  <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ \eta | \eta \in \mathcal{R} \}=\mathcal{R}^1$</code>.</p>
+
+  <p>The corresponding expectation parameter is <code class="language-plaintext highlighter-rouge">$m = E_{q(w|\eta)}[ T_\eta (w) ] = \pi$</code></p>
+
+  <p>The expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m= \{ m| 0&lt;m&lt;1 \}$</code> is a constrained open set in $\mathcal{R}^1$.</p>
 </blockquote>
 
 <h2 id="proximal-ngd--projected-ngd-and-constrained-mirror-descent">Proximal NGD,  Projected NGD, and (Constrained) Mirror Descent</h2>
