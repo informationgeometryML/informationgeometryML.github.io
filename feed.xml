@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-21T11:55:20-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-21T11:56:58-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -440,8 +440,8 @@ large enough since &lt;code class=&quot;language-plaintext highlighter-rouge&quo
 \eta_{k+1} \leftarrow \arg\min_{z \in \Omega_\eta} \|\eta_k - \alpha
 \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) -\mathbf{z} \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }
 \end{aligned}\tag{6}\label{6}
-$$&lt;/code&gt; where we have to use 
-the &lt;a href=&quot;/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; with the FIM highlighted in red.&lt;/p&gt;
+$$&lt;/code&gt; where we should use 
+the &lt;a href=&quot;/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; with the same FIM highlighted in red.&lt;/p&gt;
 
 &lt;p&gt;On the other hand, the constrained mirror descent remains the same as in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;. 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
