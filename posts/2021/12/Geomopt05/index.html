@@ -583,7 +583,7 @@ Since the Legendre transformation is defined in <code class="language-plaintext 
   <p>Example: Univariate Gaussian</p>
 
   <p>we consider this family as discussed in <a href="#exponential-family">the previous section</a>
-<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean $\mu$ and variance $\sigma$</p>
+<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean $\mu$ and variance $\sigma$.</p>
 
   <p>It can be re-expressed in an exponential form as</p>
 
@@ -595,7 +595,7 @@ p({w}|\mathbf{\eta})
 $$</code>
 where  <code class="language-plaintext highlighter-rouge">$\sigma= -\frac{1}{2\eta_1} $</code>,  <code class="language-plaintext highlighter-rouge">$\mu = -\frac{\eta_2}{2\eta_1}$</code>, and  <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) = \frac{1} {2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ] = \frac{1}{2} [ \log ( 2\pi ) + \log (-\frac{1}{2\eta_1})-\frac{\eta_2^2}{2\eta_1} ] $</code>.</p>
 
-  <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ (\eta_1,\eta_2) | \eta_1&lt;0 , \eta_2 \in \mathcal{R} \}$</code> is a constrained open set in $\mathcal{R}^2$.</p>
+  <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ (\eta_1,\eta_2) | \eta_1&lt;0 , \eta_2 \in \mathcal{R} \}$</code> is a constrained open set in $\mathcal{R}^2$, where $K=2$.</p>
 
   <p>The corresponding expectation parameter is <code class="language-plaintext highlighter-rouge">$\mathbf{m} = E_{q(w|\eta)}[ \mathbf{T}_\eta (w) ] = [ \mu^2+\sigma , \mu ] $</code>.</p>
 
