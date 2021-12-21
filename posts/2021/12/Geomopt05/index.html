@@ -653,8 +653,9 @@ $$</code></p>
 
 <p>Recall that in
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
-we show that natural-gradient descent can be viewed as unconstrained proximal-gradient method.
-We could also obtain the proximal natural-gradient descent as</p>
+we show that natural-gradient descent can be viewed as unconstrained proximal-gradient method, where we use the
+second-order Taylor expansion of <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code>.
+We could also obtain proximal natural-gradient descent without the Taylor expansion as</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
