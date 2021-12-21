@@ -551,10 +551,12 @@ $$</code> where by the definition we have <code class="language-plaintext highli
 
 <h2 id="the-hessian-is-not-a-valid-manifold-metric">The Hessian is not a valid manifold metric</h2>
 
-<p>The Hessian <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\tau_k)=\nabla_\tau^2 h_\tau(\tau_k)$</code>  is not a valid manifold metric since it does not follow the transformation
+<p>The Hessian <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\tau_k)=\nabla_\tau^2 h_\tau(\tau_k)$</code>  in general is not a valid manifold metric since it does not follow the transformation
 rule of a metric in non-linear cases.</p>
 
-<p>Contrastingly,  the Fisher information matrix is a valid manifold metric. Recall that we can compute the Fisher matrix  as <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$</code>. Given a non-linear intrinstic reparametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code>, the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau_k)$</code> is no longer a constant matrix but a square and non-singular matrix.
+<p>Contrastingly,  the Fisher information matrix is a valid manifold metric. Recall that we can compute the Fisher matrix  as <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$</code>.</p>
+
+<p>Given a non-linear intrinstic reparametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code>, the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau_k)$</code> is no longer a constant matrix but a square and non-singular matrix.
 In this case, the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> still holds thanks to the expectation of the score function.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
@@ -568,6 +570,12 @@ In this case, the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the
 &amp;=\mathbf{J }^T(\tau_k)  \mathbf{F}_\lambda(\lambda_k) \mathbf{J}(\tau_k)  
 \end{aligned}
 $$</code></p>
+
+<p>We will discuss in
+<a href="/posts/2021/12/Geomopt05/#minimal-parametrizations-of-exponential-family">Part V</a>, for a special parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> (known as a natural parametrization) of <a href="/posts/2021/12/Geomopt05/#exponential-family">exponential family</a>, the FIM under this parametrization can be computed  as
+<code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta) = \nabla_\eta^2 A_\eta(\eta)$</code>, where <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)$</code> is a strictly convex function.
+In the literature, the expoential family with this parametrization is known as a Hessian manifold.
+However, a non-linear reparametrization will lead to a non-natural parametrization.</p>
 
 
         
