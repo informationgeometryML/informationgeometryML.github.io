@@ -622,7 +622,7 @@ large enough since <code class="language-plaintext highlighter-rouge">$\Omega_\e
   <p>This is a contradiction.</p>
 </blockquote>
 
-<h2 id="proximal-ngd--projected-ngd-and-constrained-mirror-descent">Proximal NGD,  Projected NGD and (Constrained) Mirror Descent</h2>
+<h2 id="proximal-ngd--projected-ngd-and-constrained-mirror-descent">Proximal NGD,  Projected NGD, and (Constrained) Mirror Descent</h2>
 
 <p>As we discussed before, natural-gradient descent and mirror desecent in general are <strong>distinct</strong> methods when the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained.</p>
 
@@ -691,7 +691,7 @@ which greatly slows down the progression of the method.</p>
 <a href="/posts/2021/11/Geomopt04/#riemannian-gradient-descent-and-its-non-linear-invariance">Part IV</a>, which is a generalization of natural-gradient descent. 
 Note that this approach cannot be derived from mirror descent.</p>
 
-<p>To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) approximation, which
+<p>To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) geodesic, which
 induces a retraction map.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}

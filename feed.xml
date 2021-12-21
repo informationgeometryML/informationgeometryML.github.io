@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-21T12:52:30-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-21T13:02:44-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -430,7 +430,7 @@ large enough since &lt;code class=&quot;language-plaintext highlighter-rouge&quo
   &lt;p&gt;This is a contradiction.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;proximal-ngd--projected-ngd-and-constrained-mirror-descent&quot;&gt;Proximal NGD,  Projected NGD and (Constrained) Mirror Descent&lt;/h2&gt;
+&lt;h2 id=&quot;proximal-ngd--projected-ngd-and-constrained-mirror-descent&quot;&gt;Proximal NGD,  Projected NGD, and (Constrained) Mirror Descent&lt;/h2&gt;
 
 &lt;p&gt;As we discussed before, natural-gradient descent and mirror desecent in general are &lt;strong&gt;distinct&lt;/strong&gt; methods when the natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is constrained.&lt;/p&gt;
 
@@ -499,7 +499,7 @@ which greatly slows down the progression of the method.&lt;/p&gt;
 &lt;a href=&quot;/posts/2021/11/Geomopt04/#riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;Part IV&lt;/a&gt;, which is a generalization of natural-gradient descent. 
 Note that this approach cannot be derived from mirror descent.&lt;/p&gt;
 
-&lt;p&gt;To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) approximation, which
+&lt;p&gt;To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) geodesic, which
 induces a retraction map.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
