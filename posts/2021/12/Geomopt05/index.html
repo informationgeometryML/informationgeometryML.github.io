@@ -608,9 +608,10 @@ large enough since <code class="language-plaintext highlighter-rouge">$\Omega_\e
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \arg\min_{z \in \Omega_\eta} \|\eta_k - \alpha
-\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) -\mathbf{z} \|^2_{ \mathbf{F}_\eta(\eta_k)}
+\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) -\mathbf{z} \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }
 \end{aligned}\tag{6}\label{6}
-$$</code></p>
+$$</code> where we have to use 
+the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> with the FIM highlighted in red.</p>
 
 <p>On the other hand, the constrained mirror descent remains the same as in  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>. 
 <code class="language-plaintext highlighter-rouge">$$
