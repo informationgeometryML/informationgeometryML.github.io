@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-21T11:56:58-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-21T12:23:15-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -430,15 +430,15 @@ large enough since &lt;code class=&quot;language-plaintext highlighter-rouge&quo
   &lt;p&gt;This is a contradiction.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;projected-natural-gradient-descent-and-constrained-mirror-descent&quot;&gt;Projected Natural-gradient Descent and (Constrained) Mirror Descent&lt;/h2&gt;
+&lt;h2 id=&quot;proximal-ngd--projected-ngd-and-constrained-mirror-descent&quot;&gt;Proximal NGD,  Projected NGD and (Constrained) Mirror Descent&lt;/h2&gt;
 
 &lt;p&gt;As we discussed before, natural-gradient descent and mirror desecent in general are &lt;strong&gt;distinct&lt;/strong&gt; methods when the natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is constrained.&lt;/p&gt;
 
 &lt;p&gt;A straightforward approach from natural-gradient descent is the projected natural-gradient descent.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{z \in \Omega_\eta} \|\eta_k - \alpha
-\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) -\mathbf{z} \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }
+\eta_{k+1} \leftarrow \arg\min_{ \color{blue} {z} \in \Omega_\eta} \|\eta_k - \alpha
+\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) -\color{blue} {\mathbf{z}} \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }
 \end{aligned}\tag{6}\label{6}
 $$&lt;/code&gt; where we should use 
 the &lt;a href=&quot;/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; with the same FIM highlighted in red.&lt;/p&gt;
@@ -446,13 +446,31 @@ the &lt;a href=&quot;/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-ra
 &lt;p&gt;On the other hand, the constrained mirror descent remains the same as in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;. 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
 \end{aligned}
 $$&lt;/code&gt;
 where 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell(\mathbf{m}_k) =  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;These two methods could be very difficult to solve since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; can be an arbitrary open subset in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;We could also perform the constrained mirror descent in the natural parameter space as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{blue}{y} \in \Omega_\eta}\{ \langle \nabla_\eta f(\mathbf{\eta}_k), \color{blue}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{blue}{\mathbf{y}},\mathbf{\eta}_k) \}
+\end{aligned}\tag{7}\label{7}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Recall that in
+&lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent&quot;&gt;Part IV&lt;/a&gt;,
+we show that natural-gradient descent can be viewed as unconstrained proximal-gradient method.
+We could also obtain the proximal natural-gradient descent as&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \underbrace{ \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{blue}{\mathbf{y}})]}_{ = \mathrm{B}_{A_\eta}(\mathbf{\eta}_k,\color{blue}{\mathbf{y}})}  \} 
+\end{aligned}\tag{8}\label{8}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;These methods could be very difficult to solve since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; can be an arbitrary open subset in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;using-an-adaptive-step-size&quot;&gt;Using an Adaptive Step-size&lt;/h2&gt;
 
@@ -463,7 +481,7 @@ still hold.&lt;/p&gt;
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \eta_k - \alpha_k \nabla_m \ell(\mathbf{m}_k)
-\end{aligned}\tag{7}\label{7}
+\end{aligned}\tag{9}\label{9}
 $$&lt;/code&gt; where 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell(\mathbf{m}_k) =  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$&lt;/code&gt; and the step-size &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha_k$&lt;/code&gt; is selected  so that
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{k+1} \in \Omega_\eta$&lt;/code&gt;.&lt;/p&gt;
@@ -485,7 +503,7 @@ induces a retraction map.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \mathrm{Ret}_{\eta_k} (- \alpha  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) )  
-\end{aligned}\tag{8}\label{8}
+\end{aligned}\tag{10}\label{10}
 $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;As mentioned in 

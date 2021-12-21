@@ -182,7 +182,7 @@
 
 
 
-  14 minute read
+  15 minute read
 </p>
           
         </header>
@@ -622,15 +622,15 @@ large enough since <code class="language-plaintext highlighter-rouge">$\Omega_\e
   <p>This is a contradiction.</p>
 </blockquote>
 
-<h2 id="projected-natural-gradient-descent-and-constrained-mirror-descent">Projected Natural-gradient Descent and (Constrained) Mirror Descent</h2>
+<h2 id="proximal-ngd--projected-ngd-and-constrained-mirror-descent">Proximal NGD,  Projected NGD and (Constrained) Mirror Descent</h2>
 
 <p>As we discussed before, natural-gradient descent and mirror desecent in general are <strong>distinct</strong> methods when the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained.</p>
 
 <p>A straightforward approach from natural-gradient descent is the projected natural-gradient descent.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{z \in \Omega_\eta} \|\eta_k - \alpha
-\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) -\mathbf{z} \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }
+\eta_{k+1} \leftarrow \arg\min_{ \color{blue} {z} \in \Omega_\eta} \|\eta_k - \alpha
+\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) -\color{blue} {\mathbf{z}} \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }
 \end{aligned}\tag{6}\label{6}
 $$</code> where we should use 
 the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> with the same FIM highlighted in red.</p>
@@ -638,13 +638,31 @@ the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric
 <p>On the other hand, the constrained mirror descent remains the same as in  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>. 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
 \end{aligned}
 $$</code>
 where 
 <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) =  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
 
-<p>These two methods could be very difficult to solve since <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> can be an arbitrary open subset in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.</p>
+<p>We could also perform the constrained mirror descent in the natural parameter space as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{blue}{y} \in \Omega_\eta}\{ \langle \nabla_\eta f(\mathbf{\eta}_k), \color{blue}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{blue}{\mathbf{y}},\mathbf{\eta}_k) \}
+\end{aligned}\tag{7}\label{7}
+$$</code></p>
+
+<p>Recall that in
+<a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
+we show that natural-gradient descent can be viewed as unconstrained proximal-gradient method.
+We could also obtain the proximal natural-gradient descent as</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \underbrace{ \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{blue}{\mathbf{y}})]}_{ = \mathrm{B}_{A_\eta}(\mathbf{\eta}_k,\color{blue}{\mathbf{y}})}  \} 
+\end{aligned}\tag{8}\label{8}
+$$</code></p>
+
+<p>These methods could be very difficult to solve since <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> can be an arbitrary open subset in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.</p>
 
 <h2 id="using-an-adaptive-step-size">Using an Adaptive Step-size</h2>
 
@@ -655,7 +673,7 @@ still hold.</p>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \eta_k - \alpha_k \nabla_m \ell(\mathbf{m}_k)
-\end{aligned}\tag{7}\label{7}
+\end{aligned}\tag{9}\label{9}
 $$</code> where 
 <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) =  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code> and the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is selected  so that
 <code class="language-plaintext highlighter-rouge">$\eta_{k+1} \in \Omega_\eta$</code>.</p>
@@ -677,7 +695,7 @@ induces a retraction map.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \mathrm{Ret}_{\eta_k} (- \alpha  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) )  
-\end{aligned}\tag{8}\label{8}
+\end{aligned}\tag{10}\label{10}
 $$</code></p>
 
 <p>As mentioned in 
