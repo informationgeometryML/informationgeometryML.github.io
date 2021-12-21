@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-20T12:37:51-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-20T19:47:46-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -13,7 +13,7 @@
 \begin{aligned}
 p(\mathbf{w}|\mathbf{\eta}) = h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta (\mathbf{\eta}) )
 \end{aligned}
-$$&lt;/code&gt; where the support of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w}$&lt;/code&gt; does not depend on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$C_\eta(\eta) :=  \int h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}(\mathbf{w}) \rangle ) d \mathbf{w}
+$$&lt;/code&gt; where   &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$C_\eta(\eta) :=  \int h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}(\mathbf{w}) \rangle ) d \mathbf{w}
 $&lt;/code&gt; is the normalization constant.   &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta(\mathbf{\eta}):=\log C_\eta(\eta)$&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h_\eta(\mathbf{w})$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{T}_\eta(\mathbf{w})$&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;  are known as the log-partition function, the base measure, the sufficient statistics, and the &lt;strong&gt;natural&lt;/strong&gt; parameter,  respectively.&lt;/p&gt;
 
 &lt;p&gt;The parameter space of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is determined so that the normalization constant is well-defined and (strictly) positive.&lt;/p&gt;
@@ -26,6 +26,9 @@ regular natural parametrizations since commonly used expoential family distribut
 &lt;p&gt;This natural parametrization is special since the inner product &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\langle \mathbf{\eta} , \mathbf{T}_\eta(\mathbf{w}) \rangle$&lt;/code&gt; is &lt;strong&gt;linear&lt;/strong&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;. As we will discuss later,  this linearity is essential.&lt;/p&gt;
 
 &lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;The support of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w}$&lt;/code&gt; should not depend on parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;.&lt;/p&gt;
+  &lt;/li&gt;
   &lt;li&gt;The base measure and the log-partition function are only unique up to a constant as illustrated by the following example.
     &lt;blockquote&gt;
 
@@ -169,7 +172,8 @@ $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&
 and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt; is a $(d+d^2)$-dim array.&lt;/p&gt;
 
   &lt;p&gt;Parametrization $\lambda$ is a natural and regular parametrization. However, it is NOT a minimal
-parametrization since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w} \mathbf{w}^T$&lt;/code&gt; is symmetric and therefore the sufficient statistics is linearly dependent.&lt;/p&gt;
+parametrization since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w} \mathbf{w}^T$&lt;/code&gt; is symmetric and therefore the sufficient statistics is linearly dependent.
+It can be shown that $\Omega_\lambda$ is relatively open but not open in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K=d+d^2$&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;A minimal natural parametrization $\eta$ should be
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -178,21 +182,184 @@ p({w}|\mathbf{\eta})
 &amp;amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2} \mathrm{vech}( \Sigma^{-1} ) \\ \Sigma^{-1}\mu  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix} \mathrm{vech}( \mathbf{w} \mathbf{w}^T) \\ \mathbf{w}  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ d\log ( 2\pi ) + \log \mathrm{det} (\Sigma) + \mu^T \Sigma^{-1} \mu ]     )   \\
 \end{aligned}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt; is the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization function&lt;/a&gt; 
-and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is a $(d+\frac{d(d+1)}{2})$-dim array.&lt;/p&gt;
+and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is a $(d+\frac{d(d+1)}{2})$-dim array.
+It can be shown that $\Omega_\eta$ is open in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K=d+\frac{d(d+1)}{2}$&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;As we discussed in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is an intrinstic parameterization while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt; is not.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;efficient-natural-gradient-computation&quot;&gt;Efficient Natural-gradient Computation&lt;/h2&gt;
+&lt;h1 id=&quot;efficient-natural-gradient-computation&quot;&gt;Efficient Natural-gradient Computation&lt;/h1&gt;
 
-&lt;h2 id=&quot;natural-gradient-descent-as-unconstrained-mirror-descent&quot;&gt;Natural-gradient Descent as Unconstrained Mirror Descent&lt;/h2&gt;
+&lt;p&gt;In general, natural-gradient computation can be challenging due to the inverse of the Fisher matrix.
+In cases of an expoential family,  natural-gradient computation often can be quite efficient without computing the inverse of the Fisher matrix.&lt;/p&gt;
+
+&lt;p&gt;We will assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is a reguar, minimal, natural parametrization.
+Now, we introduce the dual parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_\eta := E_{p(w|\eta)}[ \mathbf{T}_\eta(\mathbf{w}) ] $&lt;/code&gt;, which is known as the expectation parametrization.&lt;/p&gt;
+
+&lt;p&gt;Recall that in
+&lt;a href=&quot;/posts/2021/11/Geomopt04/#newtons-method-is-linearly-invariant&quot;&gt;Part IV&lt;/a&gt;,  we use the identity of the score function. This identity also shows us a connection 
+between these two parametrizations.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{0} &amp;amp; = E_{p(w|\eta)} [ \nabla_\eta \log p(\mathbf{w}|\eta) ]\\
+&amp;amp;=E_{p(w|\eta)} [ \mathbf{T}_\eta(\mathbf{w}) - \nabla_\eta A_\eta(\eta) ] \\
+&amp;amp;= \mathbf{m}_\eta  - \nabla_\eta A_\eta(\eta)
+\end{aligned}
+$$&lt;/code&gt;  which is a valid  Legendre transformation since 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\eta^2 A_\eta(\eta)$&lt;/code&gt; is positive-definite in its domain.&lt;/p&gt;
+
+&lt;p&gt;Moreover, the FIM under parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{F}_\eta(\eta)=\nabla_\eta^2 A_\eta(\eta) = \nabla_\eta \mathbf{m}_\eta
+\end{aligned}\tag{1}\label{1}
+$$&lt;/code&gt; which means this FIM is a Jacobian matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}=\nabla_\eta \mathbf{m}_\eta$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;As we discussed in
+&lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;,
+a natural-gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\eta)$&lt;/code&gt; can be computed as below, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\eta=\nabla_\eta f(\eta)$&lt;/code&gt; is a Euclidean gradient w.r.t.  natural parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\hat{\mathbf{g}}_\eta &amp;amp; = \mathbf{F}^{-1}_\eta(\eta) \mathbf{g}_\eta \\
+&amp;amp;= (\nabla_\eta \mathbf{m}_\eta )^{-1} [ \nabla_\eta f(\eta) ] \\
+&amp;amp;= [\nabla_{m_\eta} \eta ] [ \nabla_\eta f(\eta) ] \\
+&amp;amp;=  \nabla_{m_\eta} f(\eta) 
+\end{aligned}
+$$&lt;/code&gt; where 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_{m_\eta} f( \eta )$&lt;/code&gt; is a Euclidean gradient w.r.t. expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_\eta$&lt;/code&gt; and
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta=\eta( \mathbf{m}_\eta )$&lt;/code&gt;
+can be viewed  as a function of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_\eta$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Therefore, natural-gradients w.r.t. natural parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; can be efficinetly computed if we  can  easily compute Euclidean gradients w.r.t. its expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_\eta$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h1 id=&quot;natural-gradient-descent-as-unconstrained-mirror-descent&quot;&gt;Natural-gradient Descent as Unconstrained Mirror Descent&lt;/h1&gt;
+&lt;p&gt;We will only consider a regular, minimal, and natural parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;bregman-divergence&quot;&gt;Bregman Divergence&lt;/h2&gt;
+&lt;p&gt;Given a strictly convex function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Phi(\cdot)$&lt;/code&gt; in its domain, a Bregman divergence is defined as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathrm{B}_\Phi(\mathbf{x},\mathbf{y}):= \Phi(\mathbf{x})- \Phi(\mathbf{y}) - \langle \nabla \Phi(\mathbf{y}), (\mathbf{x}-\mathbf{y}) \rangle
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In particular, the Kullback–Leibler (KL) divergence is a Bregman divergence when we use natural parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;:
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathrm{KL} [p(\mathbf{w}|\eta_1) || p(\mathbf{w}|\eta_2)]
+&amp;amp;= E_{p(w|\eta_1)} [ \log \frac{p(\mathbf{w}|\eta_1)} {p(\mathbf{w}|\eta_2)} ] \\
+&amp;amp;= E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] \,\,\,\, (\log p(\mathbf{w}|\eta) \text{ is an expoential family}) \\
+&amp;amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - E_{p(w|\eta_1)} [  \langle \eta_2-\eta_1,  \mathbf{T}_\eta (\mathbf{w}) \rangle ] \\
+&amp;amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - \langle \eta_2-\eta_1, \underbrace{ E_{p(w|\eta_1)} [ \mathbf{T}_\eta (\mathbf{w}) }_{ \nabla_\eta A_\eta(\eta_1) } \rangle   ] \\
+&amp;amp;=  \mathrm{B}_{A_\eta}(\mathbf{\eta}_2,\mathbf{\eta}_1)
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We denote the expectation parameter as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt;.
+The convex conjugate of the log-partition function $A_\eta$ is defined as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+A^*_\eta( \mathbf{m}) &amp;amp;:= \sup_{x} \{ \langle \mathbf{x},\mathbf{m} \rangle - A_\eta(\mathbf{x}) \} \\
+&amp;amp;= \langle \mathbf{\eta},\mathbf{m} \rangle - A_\eta(\mathbf{\eta})  \,\,\,\, (\text{the supremum attains at } \mathbf{x}=\eta )\\
+\end{aligned}
+$$&lt;/code&gt; where
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta=\eta( \mathbf{m} )$&lt;/code&gt;
+can be viewed  as a function of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Notice that
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\nabla_{\mathbf{m}} A^*_\eta( \mathbf{m})
+&amp;amp;= \mathbf{\eta} + \langle \nabla_{\mathbf{m}} \mathbf{\eta},\mathbf{m} \rangle - \nabla_{\mathbf{m}} A_\eta(\mathbf{\eta}) \\
+&amp;amp;= \mathbf{\eta} + \langle \nabla_{\mathbf{m}} \mathbf{\eta},\mathbf{m} \rangle - [\nabla_{\mathbf{m}} \eta] \underbrace{ [\nabla_\eta A_\eta(\mathbf{\eta})] }_{ = \mathbf{m}}\\
+&amp;amp;= \mathbf{\eta}
+\end{aligned}
+$$&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta(\eta)= \langle \mathbf{\eta},\mathbf{m} \rangle- A^*_\eta( \mathbf{m})$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The convex conjugate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A^*_\eta( \mathbf{m})$&lt;/code&gt; is strictly convex w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt;.  To see that, first note the Hessian &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m^2 $A^*_\eta( \mathbf{m})$&lt;/code&gt;
+is the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_m(\mathbf{m})$&lt;/code&gt; under expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt;. 
+Secondly, due to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt;,
+the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\eta(\eta)$&lt;/code&gt; under natural parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}$&lt;/code&gt;  is the Jacobian matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}$&lt;/code&gt;
+and 
+positive-definite.&lt;/p&gt;
+
+&lt;p&gt;By the &lt;a href=&quot;/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix&quot;&gt;transformation rule&lt;/a&gt; of the FIM,
+as shown below,
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_m(\mathbf{m})= \mathbf{F}^{-1}_\eta(\eta)$&lt;/code&gt; is also
+positive-definite and therefore strictly convex.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{F}_{\eta} (\eta) &amp;amp; = \mathbf{J}^T \mathbf{F}_{m}(\mathbf{m}) \mathbf{J} \\
+&amp;amp;= \mathbf{F}^T_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) 
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Therefore, we have
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathrm{B}_{A_\eta}(\mathbf{\eta}_2,\mathbf{\eta}_1)
+&amp;amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - \langle \eta_2-\eta_1, \overbrace{ \nabla_\eta A_\eta(\eta_1) }^{= \mathbf{m}_1} \rangle    \\
+&amp;amp;= [  \langle \mathbf{\eta}_2,\mathbf{m}_2 \rangle- A^*_\eta( \mathbf{m}_2) ]   
+-[  \langle \mathbf{\eta}_1,\mathbf{m}_1 \rangle- A^*_\eta( \mathbf{m}_1) ]
+-\langle \eta_2-\eta_1, \mathbf{m}_1 \rangle \\
+&amp;amp;=  A^*_\eta( \mathbf{m}_1) - A^*_\eta( \mathbf{m}_2) -    
+\langle \mathbf{m}_1-\mathbf{m}_2, \underbrace{ \eta_2}_{ = \nabla_{\mathbf{m}} A^*_\eta( \mathbf{m}_2)} \rangle\\
+&amp;amp;= \mathrm{B}_{A^*_\eta}(\mathbf{m}_1,\mathbf{m}_2)
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;To show natural-gradient descent as unconstrained mirror descent. We have to make the following assumption.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Additional&lt;/strong&gt; assumption:
+Natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; and its
+expectation parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_{m_\eta}$&lt;/code&gt; are both unconstrainted (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta=\Omega_{m_\eta} =\mathcal{R}^K$&lt;/code&gt;), where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now, consider the following mirror descent in the 
+expectation parameter space as&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m f(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Denote 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+u(\mathbf{x}) &amp;amp;:=\langle \nabla_m f(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha} [ \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k)] \\
+&amp;amp; = \langle \nabla_m f(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  [A^*_\eta( \mathbf{x}) - A^*_\eta( \mathbf{m}_k) -    
+\langle \mathbf{x}-\mathbf{m}_k, \underbrace{ \nabla_{\mathbf{m}} A^*_\eta( \mathbf{m}_k)}_{ = \eta_k} \rangle ]\\
+\end{aligned}
+$$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m=\mathcal{R}^k$&lt;/code&gt;, the optimal expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}=\bar{\mathbf{x}}$&lt;/code&gt; must satisfy the following expression.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{0} &amp;amp;= \nabla_x u(\bar{\mathbf{x}}) \\
+&amp;amp;= \nabla_m f(\mathbf{m}_k)+ \frac{1}{\alpha}  [\underbrace{ \nabla_x A^*_\eta( \bar{\mathbf{x}})}_{\eta_{\bar{x}}}  -  \eta_k ],
+\end{aligned}
+$$&lt;/code&gt; which implies that
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{\bar{x}} = \eta_k - \alpha \nabla_m f(\mathbf{m}_k)$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{\bar{x}}$&lt;/code&gt; is the corresponding natural parameter for the expectation
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}$&lt;/code&gt;.
+Therefore, unconstrained mirror descent in the expectation parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; gives 
+the following update
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\eta_{k+1} \leftarrow \eta_k - \alpha \nabla_m f(\mathbf{m}_k),
+\end{aligned}
+$$&lt;/code&gt; which is exactly  natural gradient
+descent in the natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h1 id=&quot;handling-parameter-constraints&quot;&gt;Handling Parameter Constraints&lt;/h1&gt;
 &lt;hr /&gt;
 
-&lt;h2 id=&quot;using-an-adaptive-step-size&quot;&gt;Using an Adaptive Step-size&lt;/h2&gt;
-
 &lt;h2 id=&quot;projected-natural-gradient-descent-and-constrained-mirror-descent&quot;&gt;Projected Natural-gradient Descent and (Constrained) Mirror Descent&lt;/h2&gt;
+
+&lt;h2 id=&quot;using-an-adaptive-step-size&quot;&gt;Using an Adaptive Step-size&lt;/h2&gt;
 
 &lt;h2 id=&quot;riemannian-gradient-descent&quot;&gt;Riemannian Gradient Descent&lt;/h2&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
@@ -392,7 +559,7 @@ Given such a  “distance”, we can perform the unconstrained proximal-gradient
 \end{aligned}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient and the parameter space is unconstrained.&lt;/p&gt;
 
-&lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; is a secord-order Taylor approximation of  the KL divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{KL} [q(w|\tau_k) || q(w|y)]$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y=\tau_k$&lt;/code&gt;, this  proximal-gradient method recovers natural-gradient descent.&lt;/p&gt;
+&lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; is a secord-order Taylor approximation of  the KL divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{KL} [p(w|\tau_k) || p(w|y)]$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y=\tau_k$&lt;/code&gt;, this  proximal-gradient method recovers natural-gradient descent.&lt;/p&gt;
 
 &lt;p&gt;In &lt;a href=&quot;/posts/2021/12/Geomopt05/&quot;&gt;Part V&lt;/a&gt;, we will show that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; can also be an exact KL divergence for  expoential family.
 In such cases,  unconstrained mirror descent also recovers natural-gradient descent.&lt;/p&gt;

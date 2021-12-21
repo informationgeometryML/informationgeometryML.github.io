@@ -182,7 +182,7 @@
 
 
 
-  5 minute read
+  10 minute read
 </p>
           
         </header>
@@ -205,7 +205,7 @@
 \begin{aligned}
 p(\mathbf{w}|\mathbf{\eta}) = h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta (\mathbf{\eta}) )
 \end{aligned}
-$$</code> where the support of <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> does not depend on <code class="language-plaintext highlighter-rouge">$\eta$</code>,  <code class="language-plaintext highlighter-rouge">$C_\eta(\eta) :=  \int h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}(\mathbf{w}) \rangle ) d \mathbf{w}
+$$</code> where   <code class="language-plaintext highlighter-rouge">$C_\eta(\eta) :=  \int h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}(\mathbf{w}) \rangle ) d \mathbf{w}
 $</code> is the normalization constant.   <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}):=\log C_\eta(\eta)$</code>,  <code class="language-plaintext highlighter-rouge">$h_\eta(\mathbf{w})$</code>, <code class="language-plaintext highlighter-rouge">$\mathbf{T}_\eta(\mathbf{w})$</code>, and <code class="language-plaintext highlighter-rouge">$\eta$</code>  are known as the log-partition function, the base measure, the sufficient statistics, and the <strong>natural</strong> parameter,  respectively.</p>
 
 <p>The parameter space of <code class="language-plaintext highlighter-rouge">$\eta$</code> denoted by <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is determined so that the normalization constant is well-defined and (strictly) positive.</p>
@@ -218,6 +218,9 @@ regular natural parametrizations since commonly used expoential family distribut
 <p>This natural parametrization is special since the inner product <code class="language-plaintext highlighter-rouge">$\langle \mathbf{\eta} , \mathbf{T}_\eta(\mathbf{w}) \rangle$</code> is <strong>linear</strong> in <code class="language-plaintext highlighter-rouge">$\eta$</code>. As we will discuss later,  this linearity is essential.</p>
 
 <ul>
+  <li>
+    <p>The support of <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> should not depend on parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code>.</p>
+  </li>
   <li>The base measure and the log-partition function are only unique up to a constant as illustrated by the following example.
     <blockquote>
 
@@ -361,7 +364,8 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathrm{vec}
 and  <code class="language-plaintext highlighter-rouge">$\lambda$</code> is a $(d+d^2)$-dim array.</p>
 
   <p>Parametrization $\lambda$ is a natural and regular parametrization. However, it is NOT a minimal
-parametrization since <code class="language-plaintext highlighter-rouge">$\mathbf{w} \mathbf{w}^T$</code> is symmetric and therefore the sufficient statistics is linearly dependent.</p>
+parametrization since <code class="language-plaintext highlighter-rouge">$\mathbf{w} \mathbf{w}^T$</code> is symmetric and therefore the sufficient statistics is linearly dependent.
+It can be shown that $\Omega_\lambda$ is relatively open but not open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K=d+d^2$</code>.</p>
 
   <p>A minimal natural parametrization $\eta$ should be
 <code class="language-plaintext highlighter-rouge">$$
@@ -370,21 +374,184 @@ p({w}|\mathbf{\eta})
 &amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2} \mathrm{vech}( \Sigma^{-1} ) \\ \Sigma^{-1}\mu  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix} \mathrm{vech}( \mathbf{w} \mathbf{w}^T) \\ \mathbf{w}  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ d\log ( 2\pi ) + \log \mathrm{det} (\Sigma) + \mu^T \Sigma^{-1} \mu ]     )   \\
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code> is the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization function</a> 
-and  <code class="language-plaintext highlighter-rouge">$\eta$</code> is a $(d+\frac{d(d+1)}{2})$-dim array.</p>
+and  <code class="language-plaintext highlighter-rouge">$\eta$</code> is a $(d+\frac{d(d+1)}{2})$-dim array.
+It can be shown that $\Omega_\eta$ is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K=d+\frac{d(d+1)}{2}$</code>.</p>
 
   <p>As we discussed in <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Part II</a>,  <code class="language-plaintext highlighter-rouge">$\eta$</code> is an intrinstic parameterization while <code class="language-plaintext highlighter-rouge">$\lambda$</code> is not.</p>
 </blockquote>
 
-<h2 id="efficient-natural-gradient-computation">Efficient Natural-gradient Computation</h2>
+<h1 id="efficient-natural-gradient-computation">Efficient Natural-gradient Computation</h1>
 
-<h2 id="natural-gradient-descent-as-unconstrained-mirror-descent">Natural-gradient Descent as Unconstrained Mirror Descent</h2>
+<p>In general, natural-gradient computation can be challenging due to the inverse of the Fisher matrix.
+In cases of an expoential family,  natural-gradient computation often can be quite efficient without computing the inverse of the Fisher matrix.</p>
+
+<p>We will assume <code class="language-plaintext highlighter-rouge">$\eta$</code> is a reguar, minimal, natural parametrization.
+Now, we introduce the dual parametrization <code class="language-plaintext highlighter-rouge">$\mathbf{m}_\eta := E_{p(w|\eta)}[ \mathbf{T}_\eta(\mathbf{w}) ] $</code>, which is known as the expectation parametrization.</p>
+
+<p>Recall that in
+<a href="/posts/2021/11/Geomopt04/#newtons-method-is-linearly-invariant">Part IV</a>,  we use the identity of the score function. This identity also shows us a connection 
+between these two parametrizations.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{0} &amp; = E_{p(w|\eta)} [ \nabla_\eta \log p(\mathbf{w}|\eta) ]\\
+&amp;=E_{p(w|\eta)} [ \mathbf{T}_\eta(\mathbf{w}) - \nabla_\eta A_\eta(\eta) ] \\
+&amp;= \mathbf{m}_\eta  - \nabla_\eta A_\eta(\eta)
+\end{aligned}
+$$</code>  which is a valid  Legendre transformation since 
+<code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in its domain.</p>
+
+<p>Moreover, the FIM under parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{F}_\eta(\eta)=\nabla_\eta^2 A_\eta(\eta) = \nabla_\eta \mathbf{m}_\eta
+\end{aligned}\tag{1}\label{1}
+$$</code> which means this FIM is a Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}=\nabla_\eta \mathbf{m}_\eta$</code>.</p>
+
+<p>As we discussed in
+<a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Part II</a>,
+a natural-gradient w.r.t. <code class="language-plaintext highlighter-rouge">$f(\eta)$</code> can be computed as below, where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\eta=\nabla_\eta f(\eta)$</code> is a Euclidean gradient w.r.t.  natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\hat{\mathbf{g}}_\eta &amp; = \mathbf{F}^{-1}_\eta(\eta) \mathbf{g}_\eta \\
+&amp;= (\nabla_\eta \mathbf{m}_\eta )^{-1} [ \nabla_\eta f(\eta) ] \\
+&amp;= [\nabla_{m_\eta} \eta ] [ \nabla_\eta f(\eta) ] \\
+&amp;=  \nabla_{m_\eta} f(\eta) 
+\end{aligned}
+$$</code> where 
+<code class="language-plaintext highlighter-rouge">$\nabla_{m_\eta} f( \eta )$</code> is a Euclidean gradient w.r.t. expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}_\eta$</code> and
+<code class="language-plaintext highlighter-rouge">$\eta=\eta( \mathbf{m}_\eta )$</code>
+can be viewed  as a function of <code class="language-plaintext highlighter-rouge">$\mathbf{m}_\eta$</code>.</p>
+
+<p>Therefore, natural-gradients w.r.t. natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> can be efficinetly computed if we  can  easily compute Euclidean gradients w.r.t. its expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}_\eta$</code>.</p>
+
+<h1 id="natural-gradient-descent-as-unconstrained-mirror-descent">Natural-gradient Descent as Unconstrained Mirror Descent</h1>
+<p>We will only consider a regular, minimal, and natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code>.</p>
+
+<h2 id="bregman-divergence">Bregman Divergence</h2>
+<p>Given a strictly convex function <code class="language-plaintext highlighter-rouge">$\Phi(\cdot)$</code> in its domain, a Bregman divergence is defined as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{B}_\Phi(\mathbf{x},\mathbf{y}):= \Phi(\mathbf{x})- \Phi(\mathbf{y}) - \langle \nabla \Phi(\mathbf{y}), (\mathbf{x}-\mathbf{y}) \rangle
+\end{aligned}
+$$</code></p>
+
+<p>In particular, the Kullback–Leibler (KL) divergence is a Bregman divergence when we use natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code>:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{KL} [p(\mathbf{w}|\eta_1) || p(\mathbf{w}|\eta_2)]
+&amp;= E_{p(w|\eta_1)} [ \log \frac{p(\mathbf{w}|\eta_1)} {p(\mathbf{w}|\eta_2)} ] \\
+&amp;= E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] \,\,\,\, (\log p(\mathbf{w}|\eta) \text{ is an expoential family}) \\
+&amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - E_{p(w|\eta_1)} [  \langle \eta_2-\eta_1,  \mathbf{T}_\eta (\mathbf{w}) \rangle ] \\
+&amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - \langle \eta_2-\eta_1, \underbrace{ E_{p(w|\eta_1)} [ \mathbf{T}_\eta (\mathbf{w}) }_{ \nabla_\eta A_\eta(\eta_1) } \rangle   ] \\
+&amp;=  \mathrm{B}_{A_\eta}(\mathbf{\eta}_2,\mathbf{\eta}_1)
+\end{aligned}
+$$</code></p>
+
+<p>We denote the expectation parameter as <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.
+The convex conjugate of the log-partition function $A_\eta$ is defined as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+A^*_\eta( \mathbf{m}) &amp;:= \sup_{x} \{ \langle \mathbf{x},\mathbf{m} \rangle - A_\eta(\mathbf{x}) \} \\
+&amp;= \langle \mathbf{\eta},\mathbf{m} \rangle - A_\eta(\mathbf{\eta})  \,\,\,\, (\text{the supremum attains at } \mathbf{x}=\eta )\\
+\end{aligned}
+$$</code> where
+<code class="language-plaintext highlighter-rouge">$\eta=\eta( \mathbf{m} )$</code>
+can be viewed  as a function of <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.</p>
+
+<p>Notice that
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\nabla_{\mathbf{m}} A^*_\eta( \mathbf{m})
+&amp;= \mathbf{\eta} + \langle \nabla_{\mathbf{m}} \mathbf{\eta},\mathbf{m} \rangle - \nabla_{\mathbf{m}} A_\eta(\mathbf{\eta}) \\
+&amp;= \mathbf{\eta} + \langle \nabla_{\mathbf{m}} \mathbf{\eta},\mathbf{m} \rangle - [\nabla_{\mathbf{m}} \eta] \underbrace{ [\nabla_\eta A_\eta(\mathbf{\eta})] }_{ = \mathbf{m}}\\
+&amp;= \mathbf{\eta}
+\end{aligned}
+$$</code> and  <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)= \langle \mathbf{\eta},\mathbf{m} \rangle- A^*_\eta( \mathbf{m})$</code></p>
+
+<p>The convex conjugate <code class="language-plaintext highlighter-rouge">$A^*_\eta( \mathbf{m})$</code> is strictly convex w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.  To see that, first note the Hessian <code class="language-plaintext highlighter-rouge">$\nabla_m^2 $A^*_\eta( \mathbf{m})$</code>
+is the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_m(\mathbf{m})$</code> under expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>. 
+Secondly, due to <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>,
+the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta)$</code> under natural parameter <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}$</code>  is the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}$</code>
+and 
+positive-definite.</p>
+
+<p>By the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> of the FIM,
+as shown below,
+<code class="language-plaintext highlighter-rouge">$\mathbf{F}_m(\mathbf{m})= \mathbf{F}^{-1}_\eta(\eta)$</code> is also
+positive-definite and therefore strictly convex.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{F}_{\eta} (\eta) &amp; = \mathbf{J}^T \mathbf{F}_{m}(\mathbf{m}) \mathbf{J} \\
+&amp;= \mathbf{F}^T_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) 
+\end{aligned}
+$$</code></p>
+
+<p>Therefore, we have
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{B}_{A_\eta}(\mathbf{\eta}_2,\mathbf{\eta}_1)
+&amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - \langle \eta_2-\eta_1, \overbrace{ \nabla_\eta A_\eta(\eta_1) }^{= \mathbf{m}_1} \rangle    \\
+&amp;= [  \langle \mathbf{\eta}_2,\mathbf{m}_2 \rangle- A^*_\eta( \mathbf{m}_2) ]   
+-[  \langle \mathbf{\eta}_1,\mathbf{m}_1 \rangle- A^*_\eta( \mathbf{m}_1) ]
+-\langle \eta_2-\eta_1, \mathbf{m}_1 \rangle \\
+&amp;=  A^*_\eta( \mathbf{m}_1) - A^*_\eta( \mathbf{m}_2) -    
+\langle \mathbf{m}_1-\mathbf{m}_2, \underbrace{ \eta_2}_{ = \nabla_{\mathbf{m}} A^*_\eta( \mathbf{m}_2)} \rangle\\
+&amp;= \mathrm{B}_{A^*_\eta}(\mathbf{m}_1,\mathbf{m}_2)
+\end{aligned}
+$$</code></p>
+
+<p>To show natural-gradient descent as unconstrained mirror descent. We have to make the following assumption.</p>
+
+<p><strong>Additional</strong> assumption:
+Natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> and its
+expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_{m_\eta}$</code> are both unconstrainted (<code class="language-plaintext highlighter-rouge">$\Omega_\eta=\Omega_{m_\eta} =\mathcal{R}^K$</code>), where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of parameter array <code class="language-plaintext highlighter-rouge">$\eta$</code>.</p>
+
+<p>Now, consider the following mirror descent in the 
+expectation parameter space as</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m f(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
+\end{aligned}
+$$</code></p>
+
+<p>Denote 
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+u(\mathbf{x}) &amp;:=\langle \nabla_m f(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha} [ \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k)] \\
+&amp; = \langle \nabla_m f(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  [A^*_\eta( \mathbf{x}) - A^*_\eta( \mathbf{m}_k) -    
+\langle \mathbf{x}-\mathbf{m}_k, \underbrace{ \nabla_{\mathbf{m}} A^*_\eta( \mathbf{m}_k)}_{ = \eta_k} \rangle ]\\
+\end{aligned}
+$$</code>.</p>
+
+<p>When <code class="language-plaintext highlighter-rouge">$\Omega_m=\mathcal{R}^k$</code>, the optimal expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}=\bar{\mathbf{x}}$</code> must satisfy the following expression.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{0} &amp;= \nabla_x u(\bar{\mathbf{x}}) \\
+&amp;= \nabla_m f(\mathbf{m}_k)+ \frac{1}{\alpha}  [\underbrace{ \nabla_x A^*_\eta( \bar{\mathbf{x}})}_{\eta_{\bar{x}}}  -  \eta_k ],
+\end{aligned}
+$$</code> which implies that
+<code class="language-plaintext highlighter-rouge">$\eta_{\bar{x}} = \eta_k - \alpha \nabla_m f(\mathbf{m}_k)$</code>.</p>
+
+<p>Note that <code class="language-plaintext highlighter-rouge">$\eta_{\bar{x}}$</code> is the corresponding natural parameter for the expectation
+<code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}$</code>.
+Therefore, unconstrained mirror descent in the expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> gives 
+the following update
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\eta_{k+1} \leftarrow \eta_k - \alpha \nabla_m f(\mathbf{m}_k),
+\end{aligned}
+$$</code> which is exactly  natural gradient
+descent in the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
 
 <h1 id="handling-parameter-constraints">Handling Parameter Constraints</h1>
 <hr />
 
-<h2 id="using-an-adaptive-step-size">Using an Adaptive Step-size</h2>
-
 <h2 id="projected-natural-gradient-descent-and-constrained-mirror-descent">Projected Natural-gradient Descent and (Constrained) Mirror Descent</h2>
+
+<h2 id="using-an-adaptive-step-size">Using an Adaptive Step-size</h2>
 
 <h2 id="riemannian-gradient-descent">Riemannian Gradient Descent</h2>
 
