@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-21T14:17:39-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-21T14:39:21-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -34,7 +34,7 @@ regular natural parametrizations since commonly used exponential family distribu
   &lt;li&gt;The base measure and the log-partition function are only unique up to a constant as illustrated by the following example.
     &lt;blockquote&gt;
 
-      &lt;p&gt;Example: Univariate Gaussian as an exponential family:&lt;/p&gt;
+      &lt;p&gt;Example: Univariate Gaussian family as an exponential family:&lt;/p&gt;
 
       &lt;p&gt;Recall that in &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families&quot;&gt;Part I&lt;/a&gt;, we consider this family as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $&lt;/code&gt;.&lt;/p&gt;
@@ -188,6 +188,32 @@ and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&l
 It can be shown that $\Omega_\eta$ is open in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K=d+\frac{d(d+1)}{2}$&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;As we discussed in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\Sigma^{-1})$&lt;/code&gt; is an intrinstic parameterization while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vec}(\Sigma^{-1})$&lt;/code&gt; is not.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The following example illustrates
+a non-minimal natural parametrization&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Example: Non-minimal parametrization for Bernoulli family&lt;/p&gt;
+
+  &lt;p&gt;We consider this family in &lt;a href=&quot;#exponential-family&quot;&gt;the previous section&lt;/a&gt; with another
+parametrization dicussed in
+&lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families&quot;&gt;Part I&lt;/a&gt;.
+ &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_1}{\pi_1+\pi_2} + \mathcal{I}(w=1) \frac{\pi_2}{\pi_1+\pi_2} \Big| \pi_1&amp;gt;0, \pi_2&amp;gt;0 \}$&lt;/code&gt;&lt;/p&gt;
+
+  &lt;p&gt;We re-express it in another exponential form as&lt;/p&gt;
+
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+p({w}|\mathbf{\eta})
+&amp;amp;=  \mathcal{I}(w=0) \frac{\pi_1}{\pi_1+\pi_2} + \mathcal{I}(w=1) \frac{\pi_2}{\pi_1+\pi_2} \\
+&amp;amp;=\underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{ \begin{bmatrix} \log \frac{\pi_1}{\pi_1+\pi_2} \\  \log \frac{\pi_2}{\pi_1+\pi_2} \end{bmatrix} }_{\eta} , \underbrace{ \begin{bmatrix} \mathcal{I}(w=0) \\   \mathcal{I}(w=1)\end{bmatrix} }_{\mathbf{T}_\eta(w) } \rangle -\underbrace{ 0}_{A_\eta(\eta)} )
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+  &lt;p&gt;The natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta= \{ (\eta_1,\eta_2) | \exp(\eta_1)+\exp(\eta_2) = 1 \}$&lt;/code&gt; is not open in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^2$&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;This is not a minimal natural parametrization since the sufficient statistics $\mathbf{T}_\eta(w)$ is linearly dependent as 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{I}(w=0)+\mathcal{I}(w=1)=1$&lt;/code&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;h1 id=&quot;efficient-natural-gradient-computation&quot;&gt;Efficient Natural-gradient Computation&lt;/h1&gt;
@@ -387,8 +413,9 @@ parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&
 Since the Legendre transformation is defined in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; , which implies the dual (expectation) parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is constrained in general.&lt;/p&gt;
 
 &lt;p&gt;The following example illustrates this point.&lt;/p&gt;
+
 &lt;blockquote&gt;
-  &lt;p&gt;Example: Univariate Gaussian Family&lt;/p&gt;
+  &lt;p&gt;Example: Univariate Gaussian family&lt;/p&gt;
 
   &lt;p&gt;We consider this family as discussed in &lt;a href=&quot;#exponential-family&quot;&gt;the previous section&lt;/a&gt;
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with mean $\mu$ and variance $\sigma$.&lt;/p&gt;
@@ -436,6 +463,7 @@ large enough since &lt;code class=&quot;language-plaintext highlighter-rouge&quo
 &lt;p&gt;The following example shows that it is also possible that
 the natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is unconstrained (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta = \mathcal{R}^K$&lt;/code&gt;) while
 the expectation space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m $&lt;/code&gt; is still constrained (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m \neq \mathcal{R}^K$&lt;/code&gt;).&lt;/p&gt;
+
 &lt;blockquote&gt;
   &lt;p&gt;Example: Bernoulli family&lt;/p&gt;
 

@@ -226,7 +226,7 @@ regular natural parametrizations since commonly used exponential family distribu
   <li>The base measure and the log-partition function are only unique up to a constant as illustrated by the following example.
     <blockquote>
 
-      <p>Example: Univariate Gaussian as an exponential family:</p>
+      <p>Example: Univariate Gaussian family as an exponential family:</p>
 
       <p>Recall that in <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>, we consider this family as
 <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code>, where <code class="language-plaintext highlighter-rouge">$\mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>.</p>
@@ -380,6 +380,32 @@ and  <code class="language-plaintext highlighter-rouge">$\eta$</code> is a $(d+\
 It can be shown that $\Omega_\eta$ is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K=d+\frac{d(d+1)}{2}$</code>.</p>
 
   <p>As we discussed in <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Part II</a>,  <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\Sigma^{-1})$</code> is an intrinstic parameterization while <code class="language-plaintext highlighter-rouge">$\mathrm{vec}(\Sigma^{-1})$</code> is not.</p>
+</blockquote>
+
+<p>The following example illustrates
+a non-minimal natural parametrization</p>
+<blockquote>
+  <p>Example: Non-minimal parametrization for Bernoulli family</p>
+
+  <p>We consider this family in <a href="#exponential-family">the previous section</a> with another
+parametrization dicussed in
+<a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>.
+ <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_1}{\pi_1+\pi_2} + \mathcal{I}(w=1) \frac{\pi_2}{\pi_1+\pi_2} \Big| \pi_1&gt;0, \pi_2&gt;0 \}$</code></p>
+
+  <p>We re-express it in another exponential form as</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+p({w}|\mathbf{\eta})
+&amp;=  \mathcal{I}(w=0) \frac{\pi_1}{\pi_1+\pi_2} + \mathcal{I}(w=1) \frac{\pi_2}{\pi_1+\pi_2} \\
+&amp;=\underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{ \begin{bmatrix} \log \frac{\pi_1}{\pi_1+\pi_2} \\  \log \frac{\pi_2}{\pi_1+\pi_2} \end{bmatrix} }_{\eta} , \underbrace{ \begin{bmatrix} \mathcal{I}(w=0) \\   \mathcal{I}(w=1)\end{bmatrix} }_{\mathbf{T}_\eta(w) } \rangle -\underbrace{ 0}_{A_\eta(\eta)} )
+\end{aligned}
+$$</code></p>
+
+  <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ (\eta_1,\eta_2) | \exp(\eta_1)+\exp(\eta_2) = 1 \}$</code> is not open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code>.</p>
+
+  <p>This is not a minimal natural parametrization since the sufficient statistics $\mathbf{T}_\eta(w)$ is linearly dependent as 
+<code class="language-plaintext highlighter-rouge">$\mathcal{I}(w=0)+\mathcal{I}(w=1)=1$</code>.</p>
 </blockquote>
 
 <h1 id="efficient-natural-gradient-computation">Efficient Natural-gradient Computation</h1>
@@ -579,8 +605,9 @@ parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$
 Since the Legendre transformation is defined in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> , which implies the dual (expectation) parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained in general.</p>
 
 <p>The following example illustrates this point.</p>
+
 <blockquote>
-  <p>Example: Univariate Gaussian Family</p>
+  <p>Example: Univariate Gaussian family</p>
 
   <p>We consider this family as discussed in <a href="#exponential-family">the previous section</a>
 <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean $\mu$ and variance $\sigma$.</p>
@@ -628,6 +655,7 @@ large enough since <code class="language-plaintext highlighter-rouge">$\Omega_\e
 <p>The following example shows that it is also possible that
 the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained (<code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>) while
 the expectation space <code class="language-plaintext highlighter-rouge">$\Omega_m $</code> is still constrained (<code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>).</p>
+
 <blockquote>
   <p>Example: Bernoulli family</p>
 
