@@ -442,7 +442,7 @@ $$</code></p>
 \begin{aligned}
 \mathrm{KL} [p(\mathbf{w}|\eta_1) || p(\mathbf{w}|\eta_2)]
 &amp;= E_{p(w|\eta_1)} [ \log \frac{p(\mathbf{w}|\eta_1)} {p(\mathbf{w}|\eta_2)} ] \\
-&amp;= E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] \,\,\,\, (\log p(\mathbf{w}|\eta) \text{ is an expoential family}) \\
+&amp;= E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] \,\,\,\, ( p(\mathbf{w}|\eta) \text{ is an expoential family}) \\
 &amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - E_{p(w|\eta_1)} [  \langle \eta_2-\eta_1,  \mathbf{T}_\eta (\mathbf{w}) \rangle ] \\
 &amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - \langle \eta_2-\eta_1, \underbrace{ E_{p(w|\eta_1)} [ \mathbf{T}_\eta (\mathbf{w}) }_{ \nabla_\eta A_\eta(\eta_1) } \rangle   ] \\
 &amp;=  \mathrm{B}_{A_\eta}(\mathbf{\eta}_2,\mathbf{\eta}_1)
@@ -450,7 +450,7 @@ $$</code></p>
 $$</code></p>
 
 <p>We denote the expectation parameter as <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.
-The convex conjugate of the log-partition function $A_\eta$ is defined as
+The convex conjugate of the log-partition function <code class="language-plaintext highlighter-rouge">$A_\eta$</code> is defined as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 A^*_\eta( \mathbf{m}) &amp;:= \sup_{x} \{ \langle \mathbf{x},\mathbf{m} \rangle - A_\eta(\mathbf{x}) \} \\
@@ -470,26 +470,38 @@ can be viewed  as a function of <code class="language-plaintext highlighter-roug
 \end{aligned}
 $$</code> and  <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)= \langle \mathbf{\eta},\mathbf{m} \rangle- A^*_\eta( \mathbf{m})$</code></p>
 
-<p>The convex conjugate <code class="language-plaintext highlighter-rouge">$A^*_\eta( \mathbf{m})$</code> is strictly convex w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.  To see that, first note the Hessian <code class="language-plaintext highlighter-rouge">$\nabla_m^2 $A^*_\eta( \mathbf{m})$</code>
-is the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_m(\mathbf{m})$</code> under expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>. 
-Secondly, due to <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>,
-the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta)$</code> under natural parameter <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}$</code>  is the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}$</code>
-and 
-positive-definite.</p>
-
-<p>By the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> of the FIM,
-as shown below,
-<code class="language-plaintext highlighter-rouge">$\mathbf{F}_m(\mathbf{m})= \mathbf{F}^{-1}_\eta(\eta)$</code> is also
-positive-definite and therefore strictly convex.</p>
+<p>The convex conjugate <code class="language-plaintext highlighter-rouge">$A^*_\eta( \mathbf{m})$</code> is strictly convex w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code> since  the Hessian <code class="language-plaintext highlighter-rouge">$\nabla_m^2 A^*_\eta( \mathbf{m})$</code>
+is positive-definite.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{F}_{\eta} (\eta) &amp; = \mathbf{J}^T \mathbf{F}_{m}(\mathbf{m}) \mathbf{J} \\
-&amp;= \mathbf{F}^T_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) 
+\nabla_{\mathbf{m}}^2 A^*_\eta( \mathbf{m})
+&amp;= \nabla_{\mathbf{m}} \mathbf{\eta}
 \end{aligned}
 $$</code></p>
 
-<p>Therefore, we have
+<p>Note that due to <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>,
+the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta)$</code> under natural parameter <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}$</code>  is the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}= \nabla_{\eta} \mathbf{m}$</code>
+and 
+positive-definite.</p>
+
+<p>Therefore, it is easy to see that
+<code class="language-plaintext highlighter-rouge">$
+\nabla_{\mathbf{m}}^2 A^*_\eta( \mathbf{m}) = 
+\mathbf{F}^{-1}_\eta(\eta),
+$</code> which is 
+positive-definite and therefore strictly convex.</p>
+
+<p>By the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> of the FIM,  we have the following relationship.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{F}_{\eta} (\eta) &amp; = \mathbf{J}^T \mathbf{F}_{m}(\mathbf{m}) \mathbf{J} \\
+&amp;= \mathbf{F}^T_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) \\
+&amp;= \mathbf{F}_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) \\
+\end{aligned}
+$$</code>  which implies that <code class="language-plaintext highlighter-rouge">$\mathbf{F}_m(\mathbf{m})=\mathbf{F}^{-1}_\eta(\eta) = \nabla_{\mathbf{m}}^2 A^*_\eta( \mathbf{m})$</code>.</p>
+
+<p>Moreover, we have the following identity.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathrm{B}_{A_\eta}(\mathbf{\eta}_2,\mathbf{\eta}_1)
@@ -503,7 +515,7 @@ $$</code></p>
 \end{aligned}
 $$</code></p>
 
-<p>To show natural-gradient descent as unconstrained mirror descent. We have to make the following assumption.</p>
+<p>To show natural-gradient descent as unconstrained mirror descent, we have to make the following assumption.</p>
 
 <p><strong>Additional</strong> assumption:
 Natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> and its
@@ -515,7 +527,7 @@ expectation parameter space as</p>
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
-\end{aligned}
+\end{aligned}\tag{3}\label{3}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k):= \nabla_m f(\eta(\mathbf{m}_k))$</code>.</p>
 
 <p>Denote 

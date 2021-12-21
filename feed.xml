@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-20T20:27:41-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-20T21:27:40-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -250,7 +250,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 \begin{aligned}
 \mathrm{KL} [p(\mathbf{w}|\eta_1) || p(\mathbf{w}|\eta_2)]
 &amp;amp;= E_{p(w|\eta_1)} [ \log \frac{p(\mathbf{w}|\eta_1)} {p(\mathbf{w}|\eta_2)} ] \\
-&amp;amp;= E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] \,\,\,\, (\log p(\mathbf{w}|\eta) \text{ is an expoential family}) \\
+&amp;amp;= E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] \,\,\,\, ( p(\mathbf{w}|\eta) \text{ is an expoential family}) \\
 &amp;amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - E_{p(w|\eta_1)} [  \langle \eta_2-\eta_1,  \mathbf{T}_\eta (\mathbf{w}) \rangle ] \\
 &amp;amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - \langle \eta_2-\eta_1, \underbrace{ E_{p(w|\eta_1)} [ \mathbf{T}_\eta (\mathbf{w}) }_{ \nabla_\eta A_\eta(\eta_1) } \rangle   ] \\
 &amp;amp;=  \mathrm{B}_{A_\eta}(\mathbf{\eta}_2,\mathbf{\eta}_1)
@@ -258,7 +258,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;We denote the expectation parameter as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt;.
-The convex conjugate of the log-partition function $A_\eta$ is defined as
+The convex conjugate of the log-partition function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta$&lt;/code&gt; is defined as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 A^*_\eta( \mathbf{m}) &amp;amp;:= \sup_{x} \{ \langle \mathbf{x},\mathbf{m} \rangle - A_\eta(\mathbf{x}) \} \\
@@ -278,26 +278,38 @@ can be viewed  as a function of &lt;code class=&quot;language-plaintext highligh
 \end{aligned}
 $$&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta(\eta)= \langle \mathbf{\eta},\mathbf{m} \rangle- A^*_\eta( \mathbf{m})$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;The convex conjugate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A^*_\eta( \mathbf{m})$&lt;/code&gt; is strictly convex w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt;.  To see that, first note the Hessian &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m^2 $A^*_\eta( \mathbf{m})$&lt;/code&gt;
-is the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_m(\mathbf{m})$&lt;/code&gt; under expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt;. 
-Secondly, due to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt;,
-the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\eta(\eta)$&lt;/code&gt; under natural parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}$&lt;/code&gt;  is the Jacobian matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}$&lt;/code&gt;
-and 
-positive-definite.&lt;/p&gt;
-
-&lt;p&gt;By the &lt;a href=&quot;/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix&quot;&gt;transformation rule&lt;/a&gt; of the FIM,
-as shown below,
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_m(\mathbf{m})= \mathbf{F}^{-1}_\eta(\eta)$&lt;/code&gt; is also
-positive-definite and therefore strictly convex.&lt;/p&gt;
+&lt;p&gt;The convex conjugate &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A^*_\eta( \mathbf{m})$&lt;/code&gt; is strictly convex w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt; since  the Hessian &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m^2 A^*_\eta( \mathbf{m})$&lt;/code&gt;
+is positive-definite.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mathbf{F}_{\eta} (\eta) &amp;amp; = \mathbf{J}^T \mathbf{F}_{m}(\mathbf{m}) \mathbf{J} \\
-&amp;amp;= \mathbf{F}^T_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) 
+\nabla_{\mathbf{m}}^2 A^*_\eta( \mathbf{m})
+&amp;amp;= \nabla_{\mathbf{m}} \mathbf{\eta}
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Therefore, we have
+&lt;p&gt;Note that due to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt;,
+the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\eta(\eta)$&lt;/code&gt; under natural parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}$&lt;/code&gt;  is the Jacobian matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}= \nabla_{\eta} \mathbf{m}$&lt;/code&gt;
+and 
+positive-definite.&lt;/p&gt;
+
+&lt;p&gt;Therefore, it is easy to see that
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$
+\nabla_{\mathbf{m}}^2 A^*_\eta( \mathbf{m}) = 
+\mathbf{F}^{-1}_\eta(\eta),
+$&lt;/code&gt; which is 
+positive-definite and therefore strictly convex.&lt;/p&gt;
+
+&lt;p&gt;By the &lt;a href=&quot;/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix&quot;&gt;transformation rule&lt;/a&gt; of the FIM,  we have the following relationship.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{F}_{\eta} (\eta) &amp;amp; = \mathbf{J}^T \mathbf{F}_{m}(\mathbf{m}) \mathbf{J} \\
+&amp;amp;= \mathbf{F}^T_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) \\
+&amp;amp;= \mathbf{F}_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) \\
+\end{aligned}
+$$&lt;/code&gt;  which implies that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_m(\mathbf{m})=\mathbf{F}^{-1}_\eta(\eta) = \nabla_{\mathbf{m}}^2 A^*_\eta( \mathbf{m})$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Moreover, we have the following identity.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathrm{B}_{A_\eta}(\mathbf{\eta}_2,\mathbf{\eta}_1)
@@ -311,7 +323,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;To show natural-gradient descent as unconstrained mirror descent. We have to make the following assumption.&lt;/p&gt;
+&lt;p&gt;To show natural-gradient descent as unconstrained mirror descent, we have to make the following assumption.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Additional&lt;/strong&gt; assumption:
 Natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; and its
@@ -323,7 +335,7 @@ expectation parameter space as&lt;/p&gt;
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
-\end{aligned}
+\end{aligned}\tag{3}\label{3}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell(\mathbf{m}_k):= \nabla_m f(\eta(\mathbf{m}_k))$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Denote 
