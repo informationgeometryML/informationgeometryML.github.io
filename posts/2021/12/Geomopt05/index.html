@@ -182,7 +182,7 @@
 
 
 
-  13 minute read
+  14 minute read
 </p>
           
         </header>
@@ -200,7 +200,7 @@
 <h1 id="exponential-family">Exponential Family</h1>
 <hr />
 
-<p>An expoential family takes the following (canonical) form as
+<p>An exponential family takes the following (canonical) form as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 p(\mathbf{w}|\mathbf{\eta}) = h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta (\mathbf{\eta}) )
@@ -213,11 +213,11 @@ $</code> is the normalization constant.   <code class="language-plaintext highli
 <p><strong>Regular</strong> natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code>: parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is relatively open.</p>
 
 <p>In this post, we only consider
-regular natural parametrizations since commonly used expoential family distributions have a regular natural parametrization.</p>
+regular natural parametrizations since commonly used exponential family distributions have a regular natural parametrization.</p>
 
 <p>This natural parametrization is special since the inner product <code class="language-plaintext highlighter-rouge">$\langle \mathbf{\eta} , \mathbf{T}_\eta(\mathbf{w}) \rangle$</code> is <strong>linear</strong> in <code class="language-plaintext highlighter-rouge">$\eta$</code>. As we will discuss later,  this linearity is essential.</p>
 
-<p>Readers should be aware of the following points when using an expoential family.</p>
+<p>Readers should be aware of the following points when using an exponential family.</p>
 
 <ul>
   <li>
@@ -226,12 +226,12 @@ regular natural parametrizations since commonly used expoential family distribut
   <li>The base measure and the log-partition function are only unique up to a constant as illustrated by the following example.
     <blockquote>
 
-      <p>Example: Univariate Gaussian as an expoential family:</p>
+      <p>Example: Univariate Gaussian as an exponential family:</p>
 
       <p>Recall that in <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>, we consider this family as
 <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code>, where <code class="language-plaintext highlighter-rouge">$\mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>.</p>
 
-      <p>We re-express it in an expoential form as</p>
+      <p>We re-express it in an exponential form as</p>
 
       <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -250,12 +250,12 @@ Since <code class="language-plaintext highlighter-rouge">$\sigma= -\frac{1}{2\et
   <li>The log-partition function could be differentiable w.r.t. <code class="language-plaintext highlighter-rouge">$\eta$</code> even when <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> is discrete.
     <blockquote>
 
-      <p>Example: Bernoulli family as an expoential family:</p>
+      <p>Example: Bernoulli family as an exponential family:</p>
 
       <p>Recall that in <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>, we consider this family as
  <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) \Big| 0&lt;\pi&lt;1 \}$</code></p>
 
-      <p>We re-express it in an expoential form as</p>
+      <p>We re-express it in an exponential form as</p>
 
       <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -289,7 +289,7 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$h_\lambda(\m
 
 <h2 id="minimal-parametrizations-of-exponential-family">Minimal Parametrizations of Exponential Family</h2>
 
-<p>Now, we discuss particular parametrizations of an expoential family. We could efficiently compute natural-gradients when
+<p>Now, we discuss particular parametrizations of an exponential family. We could efficiently compute natural-gradients when
 using this class of parametrizations.</p>
 
 <p><strong>Minimal</strong> natural parametrization: the corresponding sufficient stattistics <code class="language-plaintext highlighter-rouge">$\mathcal{T}(\mathbf{w})$</code> is linearly independent.</p>
@@ -355,7 +355,7 @@ the sufficient stattistics <code class="language-plaintext highlighter-rouge">$\
   <p>Consider a $d$-dimensional Gaussian family
 We specify a parameterization $\mathbf{\tau}$ of the  family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{\mu},\mathbf{\Sigma}) \Big| \mathbf{\mu} \in \mathcal{R}^d, \mathbf{\Sigma}   \succ \mathbf{0} \}$</code></p>
 
-  <p>We re-express it in an expoential form as</p>
+  <p>We re-express it in an exponential form as</p>
 
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -385,7 +385,7 @@ It can be shown that $\Omega_\eta$ is open in <code class="language-plaintext hi
 <h1 id="efficient-natural-gradient-computation">Efficient Natural-gradient Computation</h1>
 
 <p>In general, natural-gradient computation can be challenging due to the inverse of the Fisher matrix.
-In cases of an expoential family,  natural-gradient computation often can be quite efficient without computing the inverse of the Fisher matrix.</p>
+In cases of an exponential family,  natural-gradient computation often can be quite efficient without computing the inverse of the Fisher matrix.</p>
 
 <p>We will assume <code class="language-plaintext highlighter-rouge">$\eta$</code> is a reguar, minimal, natural parametrization.
 Now, we introduce a dual parametrization <code class="language-plaintext highlighter-rouge">$\mathbf{m} := E_{p(w|\eta)}[ \mathbf{T}_\eta(\mathbf{w}) ] $</code>, which is known as the expectation parametrization.</p>
@@ -402,7 +402,7 @@ between these two parametrizations.
 $$</code>  which is a valid Legendre (dual) transformation since 
 <code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in its domain.</p>
 
-<p>Moreover, the FIM of the expoential family under parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is
+<p>Moreover, the FIM of the exponential family under parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{F}_\eta(\eta)=\nabla_\eta^2 A_\eta(\eta) = \nabla_\eta \mathbf{m}
@@ -447,7 +447,7 @@ $$</code></p>
 \begin{aligned}
 \mathrm{KL} [p(\mathbf{w}|\eta_1) || p(\mathbf{w}|\eta_2)]
 &amp;= E_{p(w|\eta_1)} [ \log \frac{p(\mathbf{w}|\eta_1)} {p(\mathbf{w}|\eta_2)} ] \\
-&amp;= E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] &amp;\,\,\,\,\, ( p(\mathbf{w}|\eta) \text{ is an expoential family}) \\
+&amp;= E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] &amp;\,\,\,\,\, ( p(\mathbf{w}|\eta) \text{ is an exponential family}) \\
 &amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - E_{p(w|\eta_1)} [  \langle \eta_2-\eta_1,  \mathbf{T}_\eta (\mathbf{w}) \rangle ] \\
 &amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - \langle \eta_2-\eta_1, \underbrace{ E_{p(w|\eta_1)} [ \mathbf{T}_\eta (\mathbf{w}) ] }_{ \nabla_\eta A_\eta(\eta_1) }  \rangle    \\
 &amp;=  \mathrm{B}_{A_\eta}(\mathbf{\eta}_2,\mathbf{\eta}_1) &amp;\,\,\,\,\, ( A_\eta(\eta) \text{ is strictly convex})
@@ -576,9 +576,31 @@ _\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
 <hr />
 <p>Unfortunately, the connection between natural-gradient descent and mirror desecent breaks down when the natural
 parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained.
-Since the Legendre transformation is defined in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> , which implies the dual (expectation) parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained.</p>
+Since the Legendre transformation is defined in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> , which implies the dual (expectation) parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained in general.</p>
 
-<p>to do: add a Gaussian example</p>
+<p>The following example illustrate this point</p>
+<blockquote>
+  <p>Example: Univariate Gaussian</p>
+
+  <p>we consider this family as discussed in <a href="#exponential-family">the previous section</a>
+<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean $\mu$ and variance $\sigma$</p>
+
+  <p>It can be re-expressed in an exponential form as</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+p({w}|\mathbf{\eta})
+&amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2\sigma} \\ \frac{\mu}{\sigma}  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix} w^2 \\ w  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ]     )   \\
+\end{aligned}
+$$</code>
+where  <code class="language-plaintext highlighter-rouge">$\sigma= -\frac{1}{2\eta_1} $</code>,  <code class="language-plaintext highlighter-rouge">$\mu = -\frac{\eta_2}{2\eta_1}$</code>, and  <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) = \frac{1} {2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ] = \frac{1}{2} [ \log ( 2\pi ) + \log (-\frac{1}{2\eta_1})-\frac{\eta_2^2}{2\eta_1} ] $</code>.</p>
+
+  <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ (\eta_1,\eta_2) | \eta_1&lt;0 , \eta_2 \in \mathcal{R} \}$</code> is a constrained open set in $\mathcal{R}^2$.</p>
+
+  <p>The corresponding expectation parameter is <code class="language-plaintext highlighter-rouge">$\mathbf{m} = E_{q(w|\eta)}[ \mathbf{T}_\eta (w) ] = [ \mu^2+\sigma , \mu ] $</code>.</p>
+
+  <p>The expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m= \{ (m_1,m_2) | m_1 - m_2^2 &gt;0 , m_2 \in \mathcal{R} \}$</code> is a constrained open set in $\mathcal{R}^2$.</p>
+</blockquote>
 
 <p>When <code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>, (constrained) mirror descent in <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> in general does not give us the same update in <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> as
 natural-gradient descent.</p>
@@ -588,9 +610,9 @@ natural-gradient descent.</p>
 
   <p>Suppose when <code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>,  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> gives the same update in <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> in general.</p>
 
-  <p>By the definition of (constrained) mirror descent in <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, the expectation parameter must satisify <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1} \in \Omega_m$</code>.</p>
+  <p>By the definition of (constrained) mirror descent in <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, the expectation parameter must satisfy <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1} \in \Omega_m$</code>.</p>
 
-  <p>Therefore, the corresponding natural parameter must satisify <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>.</p>
+  <p>Therefore, the corresponding natural parameter must satisfy <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>.</p>
 
   <p>By our hypothesis, <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}$</code> is updated according to <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> and it must satisfy the natural parameter constraint.</p>
 
@@ -629,7 +651,7 @@ where
 <p>When the step-size <code class="language-plaintext highlighter-rouge">$\alpha$</code> is small enough, the connection between natural-gradient descent and mirror desecent could
 still hold.</p>
 
-<p>Therefore, one idea is to use an adaptive step-size to satisify the parameter constraint at each iteration.
+<p>Therefore, one idea is to use an adaptive step-size to satisfy the parameter constraint at each iteration.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \eta_k - \alpha_k \nabla_m \ell(\mathbf{m}_k)
@@ -650,7 +672,7 @@ which greatly slows down the progression of the method.</p>
 <a href="/posts/2021/11/Geomopt04/#riemannian-gradient-descent-and-its-non-linear-invariance">Part IV</a>, which is a generalization of natural-gradient descent. 
 Note that this approach cannot be derived from mirror descent.</p>
 
-<p>To avoid solving the geodeisc ODE to get the manifold expoential map, we could use an (inexact) approximation, which
+<p>To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) approximation, which
 induces a retraction map.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -662,7 +684,7 @@ $$</code></p>
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-inexact-riemannian-gradient-descent">Part IV</a>,
 we have to carefully select a retraction map to handle the parameter constraint.</p>
 
-<p>However, for a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, it can be difficult to come out an efficient retraction map to satisify
+<p>However, for a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, it can be difficult to come out an efficient retraction map to satisfy
 the constraint.</p>
 
         

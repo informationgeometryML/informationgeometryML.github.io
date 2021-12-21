@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-21T11:38:30-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-21T11:52:47-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -8,7 +8,7 @@
 &lt;h1 id=&quot;exponential-family&quot;&gt;Exponential Family&lt;/h1&gt;
 &lt;hr /&gt;
 
-&lt;p&gt;An expoential family takes the following (canonical) form as
+&lt;p&gt;An exponential family takes the following (canonical) form as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 p(\mathbf{w}|\mathbf{\eta}) = h_\eta(\mathbf{w}) \exp( \langle \mathbf{\eta} , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta (\mathbf{\eta}) )
@@ -21,11 +21,11 @@ $&lt;/code&gt; is the normalization constant.   &lt;code class=&quot;language-pl
 &lt;p&gt;&lt;strong&gt;Regular&lt;/strong&gt; natural parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;: parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is relatively open.&lt;/p&gt;
 
 &lt;p&gt;In this post, we only consider
-regular natural parametrizations since commonly used expoential family distributions have a regular natural parametrization.&lt;/p&gt;
+regular natural parametrizations since commonly used exponential family distributions have a regular natural parametrization.&lt;/p&gt;
 
 &lt;p&gt;This natural parametrization is special since the inner product &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\langle \mathbf{\eta} , \mathbf{T}_\eta(\mathbf{w}) \rangle$&lt;/code&gt; is &lt;strong&gt;linear&lt;/strong&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;. As we will discuss later,  this linearity is essential.&lt;/p&gt;
 
-&lt;p&gt;Readers should be aware of the following points when using an expoential family.&lt;/p&gt;
+&lt;p&gt;Readers should be aware of the following points when using an exponential family.&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;
@@ -34,12 +34,12 @@ regular natural parametrizations since commonly used expoential family distribut
   &lt;li&gt;The base measure and the log-partition function are only unique up to a constant as illustrated by the following example.
     &lt;blockquote&gt;
 
-      &lt;p&gt;Example: Univariate Gaussian as an expoential family:&lt;/p&gt;
+      &lt;p&gt;Example: Univariate Gaussian as an exponential family:&lt;/p&gt;
 
       &lt;p&gt;Recall that in &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families&quot;&gt;Part I&lt;/a&gt;, we consider this family as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $&lt;/code&gt;.&lt;/p&gt;
 
-      &lt;p&gt;We re-express it in an expoential form as&lt;/p&gt;
+      &lt;p&gt;We re-express it in an exponential form as&lt;/p&gt;
 
       &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -58,12 +58,12 @@ Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sigma
   &lt;li&gt;The log-partition function could be differentiable w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; even when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w}$&lt;/code&gt; is discrete.
     &lt;blockquote&gt;
 
-      &lt;p&gt;Example: Bernoulli family as an expoential family:&lt;/p&gt;
+      &lt;p&gt;Example: Bernoulli family as an exponential family:&lt;/p&gt;
 
       &lt;p&gt;Recall that in &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families&quot;&gt;Part I&lt;/a&gt;, we consider this family as
  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) \Big| 0&amp;lt;\pi&amp;lt;1 \}$&lt;/code&gt;&lt;/p&gt;
 
-      &lt;p&gt;We re-express it in an expoential form as&lt;/p&gt;
+      &lt;p&gt;We re-express it in an exponential form as&lt;/p&gt;
 
       &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -97,7 +97,7 @@ $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&
 
 &lt;h2 id=&quot;minimal-parametrizations-of-exponential-family&quot;&gt;Minimal Parametrizations of Exponential Family&lt;/h2&gt;
 
-&lt;p&gt;Now, we discuss particular parametrizations of an expoential family. We could efficiently compute natural-gradients when
+&lt;p&gt;Now, we discuss particular parametrizations of an exponential family. We could efficiently compute natural-gradients when
 using this class of parametrizations.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Minimal&lt;/strong&gt; natural parametrization: the corresponding sufficient stattistics &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{T}(\mathbf{w})$&lt;/code&gt; is linearly independent.&lt;/p&gt;
@@ -163,7 +163,7 @@ the sufficient stattistics &lt;code class=&quot;language-plaintext highlighter-r
   &lt;p&gt;Consider a $d$-dimensional Gaussian family
 We specify a parameterization $\mathbf{\tau}$ of the  family as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{\mu},\mathbf{\Sigma}) \Big| \mathbf{\mu} \in \mathcal{R}^d, \mathbf{\Sigma}   \succ \mathbf{0} \}$&lt;/code&gt;&lt;/p&gt;
 
-  &lt;p&gt;We re-express it in an expoential form as&lt;/p&gt;
+  &lt;p&gt;We re-express it in an exponential form as&lt;/p&gt;
 
   &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -193,7 +193,7 @@ It can be shown that $\Omega_\eta$ is open in &lt;code class=&quot;language-plai
 &lt;h1 id=&quot;efficient-natural-gradient-computation&quot;&gt;Efficient Natural-gradient Computation&lt;/h1&gt;
 
 &lt;p&gt;In general, natural-gradient computation can be challenging due to the inverse of the Fisher matrix.
-In cases of an expoential family,  natural-gradient computation often can be quite efficient without computing the inverse of the Fisher matrix.&lt;/p&gt;
+In cases of an exponential family,  natural-gradient computation often can be quite efficient without computing the inverse of the Fisher matrix.&lt;/p&gt;
 
 &lt;p&gt;We will assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is a reguar, minimal, natural parametrization.
 Now, we introduce a dual parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m} := E_{p(w|\eta)}[ \mathbf{T}_\eta(\mathbf{w}) ] $&lt;/code&gt;, which is known as the expectation parametrization.&lt;/p&gt;
@@ -210,7 +210,7 @@ between these two parametrizations.
 $$&lt;/code&gt;  which is a valid Legendre (dual) transformation since 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\eta^2 A_\eta(\eta)$&lt;/code&gt; is positive-definite in its domain.&lt;/p&gt;
 
-&lt;p&gt;Moreover, the FIM of the expoential family under parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is
+&lt;p&gt;Moreover, the FIM of the exponential family under parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{F}_\eta(\eta)=\nabla_\eta^2 A_\eta(\eta) = \nabla_\eta \mathbf{m}
@@ -255,7 +255,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 \begin{aligned}
 \mathrm{KL} [p(\mathbf{w}|\eta_1) || p(\mathbf{w}|\eta_2)]
 &amp;amp;= E_{p(w|\eta_1)} [ \log \frac{p(\mathbf{w}|\eta_1)} {p(\mathbf{w}|\eta_2)} ] \\
-&amp;amp;= E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] &amp;amp;\,\,\,\,\, ( p(\mathbf{w}|\eta) \text{ is an expoential family}) \\
+&amp;amp;= E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] &amp;amp;\,\,\,\,\, ( p(\mathbf{w}|\eta) \text{ is an exponential family}) \\
 &amp;amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - E_{p(w|\eta_1)} [  \langle \eta_2-\eta_1,  \mathbf{T}_\eta (\mathbf{w}) \rangle ] \\
 &amp;amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - \langle \eta_2-\eta_1, \underbrace{ E_{p(w|\eta_1)} [ \mathbf{T}_\eta (\mathbf{w}) ] }_{ \nabla_\eta A_\eta(\eta_1) }  \rangle    \\
 &amp;amp;=  \mathrm{B}_{A_\eta}(\mathbf{\eta}_2,\mathbf{\eta}_1) &amp;amp;\,\,\,\,\, ( A_\eta(\eta) \text{ is strictly convex})
@@ -384,9 +384,31 @@ _\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$&lt;/code&gt;.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;Unfortunately, the connection between natural-gradient descent and mirror desecent breaks down when the natural
 parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is constrained.
-Since the Legendre transformation is defined in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; , which implies the dual (expectation) parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is constrained.&lt;/p&gt;
+Since the Legendre transformation is defined in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; , which implies the dual (expectation) parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is constrained in general.&lt;/p&gt;
 
-&lt;p&gt;to do: add a Gaussian example&lt;/p&gt;
+&lt;p&gt;The following example illustrate this point&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Example: Univariate Gaussian&lt;/p&gt;
+
+  &lt;p&gt;we consider this family as discussed in &lt;a href=&quot;#exponential-family&quot;&gt;the previous section&lt;/a&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with mean $\mu$ and variance $\sigma$&lt;/p&gt;
+
+  &lt;p&gt;It can be re-expressed in an exponential form as&lt;/p&gt;
+
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+p({w}|\mathbf{\eta})
+&amp;amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2\sigma} \\ \frac{\mu}{\sigma}  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix} w^2 \\ w  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ]     )   \\
+\end{aligned}
+$$&lt;/code&gt;
+where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sigma= -\frac{1}{2\eta_1} $&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu = -\frac{\eta_2}{2\eta_1}$&lt;/code&gt;, and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta(\mathbf{\eta}) = \frac{1} {2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ] = \frac{1}{2} [ \log ( 2\pi ) + \log (-\frac{1}{2\eta_1})-\frac{\eta_2^2}{2\eta_1} ] $&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;The natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta= \{ (\eta_1,\eta_2) | \eta_1&amp;lt;0 , \eta_2 \in \mathcal{R} \}$&lt;/code&gt; is a constrained open set in $\mathcal{R}^2$.&lt;/p&gt;
+
+  &lt;p&gt;The corresponding expectation parameter is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m} = E_{q(w|\eta)}[ \mathbf{T}_\eta (w) ] = [ \mu^2+\sigma , \mu ] $&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;The expectation parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m= \{ (m_1,m_2) | m_1 - m_2^2 &amp;gt;0 , m_2 \in \mathcal{R} \}$&lt;/code&gt; is a constrained open set in $\mathcal{R}^2$.&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m \neq \mathcal{R}^K$&lt;/code&gt;, (constrained) mirror descent in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; in general does not give us the same update in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; as
 natural-gradient descent.&lt;/p&gt;
@@ -396,9 +418,9 @@ natural-gradient descent.&lt;/p&gt;
 
   &lt;p&gt;Suppose when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m \neq \mathcal{R}^K$&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; gives the same update in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; in general.&lt;/p&gt;
 
-  &lt;p&gt;By the definition of (constrained) mirror descent in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;, the expectation parameter must satisify &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1} \in \Omega_m$&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;By the definition of (constrained) mirror descent in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;, the expectation parameter must satisfy &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1} \in \Omega_m$&lt;/code&gt;.&lt;/p&gt;
 
-  &lt;p&gt;Therefore, the corresponding natural parameter must satisify &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1} \in \Omega_\eta$&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;Therefore, the corresponding natural parameter must satisfy &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1} \in \Omega_\eta$&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;By our hypothesis, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1}$&lt;/code&gt; is updated according to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; and it must satisfy the natural parameter constraint.&lt;/p&gt;
 
@@ -437,7 +459,7 @@ where
 &lt;p&gt;When the step-size &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha$&lt;/code&gt; is small enough, the connection between natural-gradient descent and mirror desecent could
 still hold.&lt;/p&gt;
 
-&lt;p&gt;Therefore, one idea is to use an adaptive step-size to satisify the parameter constraint at each iteration.
+&lt;p&gt;Therefore, one idea is to use an adaptive step-size to satisfy the parameter constraint at each iteration.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \eta_k - \alpha_k \nabla_m \ell(\mathbf{m}_k)
@@ -458,7 +480,7 @@ which greatly slows down the progression of the method.&lt;/p&gt;
 &lt;a href=&quot;/posts/2021/11/Geomopt04/#riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;Part IV&lt;/a&gt;, which is a generalization of natural-gradient descent. 
 Note that this approach cannot be derived from mirror descent.&lt;/p&gt;
 
-&lt;p&gt;To avoid solving the geodeisc ODE to get the manifold expoential map, we could use an (inexact) approximation, which
+&lt;p&gt;To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) approximation, which
 induces a retraction map.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -470,7 +492,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-as-inexact-riemannian-gradient-descent&quot;&gt;Part IV&lt;/a&gt;,
 we have to carefully select a retraction map to handle the parameter constraint.&lt;/p&gt;
 
-&lt;p&gt;However, for a general parameter constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;, it can be difficult to come out an efficient retraction map to satisify
+&lt;p&gt;However, for a general parameter constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;, it can be difficult to come out an efficient retraction map to satisfy
 the constraint.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
