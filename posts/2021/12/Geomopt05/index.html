@@ -182,7 +182,7 @@
 
 
 
-  16 minute read
+  17 minute read
 </p>
           
         </header>
@@ -309,7 +309,7 @@ using this class of parametrizations.</p>
     <p>The log-partition function <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)$</code> is infinitely differentiable and strictly convex in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
   </li>
   <li>
-    <p>The FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta) = \nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite.</p>
+    <p>The FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta) = \nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in its domain.</p>
   </li>
 </ul>
 
@@ -725,7 +725,9 @@ We could also obtain proximal natural-gradient descent without the Taylor expans
 \end{aligned}\tag{8}\label{8}
 $$</code></p>
 
-<p>These methods could be very difficult to solve since <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> can be an arbitrary open subset in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.</p>
+<p>These methods could be very difficult to solve since <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> can be an arbitrary open subset in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.
+Moreover, in classical settings, a Bregman divergence is often defined in a closed strictly convex set instead of a
+open constrained subset.</p>
 
 <h2 id="using-an-adaptive-step-size">Using an Adaptive Step-size</h2>
 
