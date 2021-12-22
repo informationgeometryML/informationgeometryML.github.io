@@ -302,7 +302,7 @@ using this class of parametrizations.</p>
  <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>.</p>
   </li>
   <li>
-    <p>The parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is a open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where
+    <p>The parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where
 <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entires of this parameter array.</p>
   </li>
   <li>
@@ -712,7 +712,7 @@ $$</code></p>
 
 <p>Recall that in
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
-we show that natural-gradient descent can be viewed as unconstrained proximal-gradient method, where we use the
+we show that natural-gradient descent can be viewed as an unconstrained proximal-gradient method, where we use the
 second-order Taylor expansion of <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code>.
 We could also obtain proximal natural-gradient descent without the Taylor expansion as</p>
 
@@ -738,7 +738,7 @@ $$</code> where
 <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) =  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code> and the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is selected  so that
 <code class="language-plaintext highlighter-rouge">$\eta_{k+1} \in \Omega_\eta$</code>.</p>
 
-<p>Since <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is a open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, this update is valid when the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is small enough.</p>
+<p>Since <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, this update is valid when the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is small enough.</p>
 
 <p>However, for a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, this approach can be inefficient due to the selection precedure and will often select an extremally small step-size
 <code class="language-plaintext highlighter-rouge">$\alpha_k$</code>,
