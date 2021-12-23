@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-23T02:08:16-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-23T15:05:14-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -62,31 +62,6 @@ large enough since &lt;code class=&quot;language-plaintext highlighter-rouge&quo
 &lt;p&gt;The following example shows that it is also possible that
 the natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is unconstrained (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta = \mathcal{R}^K$&lt;/code&gt;) while
 the expectation space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m $&lt;/code&gt; is still constrained (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m \neq \mathcal{R}^K$&lt;/code&gt;).&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Example: Bernoulli family&lt;/p&gt;
-
-  &lt;p&gt;We consider this family as discussed in &lt;a href=&quot;#exponential-family&quot;&gt;the previous section&lt;/a&gt;
- &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) \Big| 0&amp;lt;\pi&amp;lt;1 \}$&lt;/code&gt;&lt;/p&gt;
-
-  &lt;p&gt;We re-express it in an exponential form as&lt;/p&gt;
-
-  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-p({w}|\mathbf{\eta})
-&amp;amp;=\underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{ \log \frac{\pi}{1-\pi}}_{\eta} , \underbrace{ \mathcal{I}(w=0)}_{T_\eta(w) } \rangle - \log \frac{1}{1-\pi} )
-\end{aligned}
-$$&lt;/code&gt;
-where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi = \frac{\exp(\eta)}{1+ \exp(\eta) } $&lt;/code&gt; and&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta(\mathbf{\eta}) =  \log \frac{1}{1-\pi} = \log(1+\exp(\eta))$&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;p&gt;This natural parametrization is also known as the soft-max representation in categorical cases.&lt;/p&gt;
-
-  &lt;p&gt;The natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta= \{ \eta | \eta \in \mathcal{R} \}=\mathcal{R}^1$&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;p&gt;The corresponding expectation parameter is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$m = E_{q(w|\eta)}[ T_\eta (w) ] = \pi$&lt;/code&gt;&lt;/p&gt;
-
-  &lt;p&gt;The expectation parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m= \{ m| 0&amp;lt;m&amp;lt;1 \}$&lt;/code&gt; is a constrained open set in $\mathcal{R}^1$.&lt;/p&gt;
-&lt;/blockquote&gt;
 
 &lt;p&gt;Recall that  in Part IV, we discuss 
 &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-faces-of-natural-gradient-descent&quot;&gt;many faces of NGD&lt;/a&gt; in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.&lt;/p&gt;
@@ -633,20 +608,20 @@ $$&lt;/code&gt;&lt;/p&gt;
 \end{aligned}
 $$&lt;/code&gt; which implies that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;We first show that the stationary point is attainable.
+&lt;p&gt;We frist show that the stationary point is attainable even with the parameter constraint
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;.
 Let’s denote &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1}:=\nabla_x A^*_\eta( \hat{\mathbf{x}})= \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$&lt;/code&gt;. Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is unconstrained, it
 is obvious that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1} \in \Omega_\eta$&lt;/code&gt;.
 We can show that
-the stationary point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{x}} = \nabla_\eta A_\eta( \mathbf{\eta}_{k+1})$&lt;/code&gt;.
+the stationary point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{x}} = \nabla_\eta A_\eta( \mathbf{\eta}_{k+1})$&lt;/code&gt; by convex bi-conjugacy.
 Since  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1} \in \Omega_\eta$&lt;/code&gt;, we have
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{x}} \in \Omega_m$&lt;/code&gt; due to  the definition of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Now, we show that the stationary point is the optimal solution of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt;.
-Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_x^2 u(\mathbf{x}) =\nabla_x^2 A^*_\eta(
-{\mathbf{x}})$&lt;/code&gt; is positive-definite in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;, we know that the optimal solution 
-of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; must be the stationary point as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1} = \hat{\mathbf{x}} $&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Moreover,
+the stationary point is the unique  solution of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_x^2 u(\mathbf{x}) =\nabla_x^2 A^*_\eta(
+{\mathbf{x}})$&lt;/code&gt; is positive-definite in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; and therefore strictly convex.&lt;/p&gt;
 
-&lt;p&gt;In summary, when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta = \mathcal{R}^K$&lt;/code&gt;, the optimal solution of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; even under constraint
+&lt;p&gt;In summary, when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta = \mathcal{R}^K$&lt;/code&gt;, the unique solution of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; even in a constrained space
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}

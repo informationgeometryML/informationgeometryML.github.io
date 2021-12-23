@@ -648,20 +648,20 @@ $$</code></p>
 \end{aligned}
 $$</code> which implies that <code class="language-plaintext highlighter-rouge">$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code></p>
 
-<p>We first show that the stationary point is attainable.
+<p>We frist show that the stationary point is attainable even with the parameter constraint
+<code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.
 Let’s denote <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}:=\nabla_x A^*_\eta( \hat{\mathbf{x}})= \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>. Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained, it
 is obvious that <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>.
 We can show that
-the stationary point <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}} = \nabla_\eta A_\eta( \mathbf{\eta}_{k+1})$</code>.
+the stationary point <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}} = \nabla_\eta A_\eta( \mathbf{\eta}_{k+1})$</code> by convex bi-conjugacy.
 Since  <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>, we have
 <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}} \in \Omega_m$</code> due to  the definition of <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.</p>
 
-<p>Now, we show that the stationary point is the optimal solution of <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>.
-Since <code class="language-plaintext highlighter-rouge">$\nabla_x^2 u(\mathbf{x}) =\nabla_x^2 A^*_\eta(
-{\mathbf{x}})$</code> is positive-definite in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, we know that the optimal solution 
-of <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> must be the stationary point as <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1} = \hat{\mathbf{x}} $</code>.</p>
+<p>Moreover,
+the stationary point is the unique  solution of <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> since <code class="language-plaintext highlighter-rouge">$\nabla_x^2 u(\mathbf{x}) =\nabla_x^2 A^*_\eta(
+{\mathbf{x}})$</code> is positive-definite in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> and therefore strictly convex.</p>
 
-<p>In summary, when <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the optimal solution of <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> even under constraint
+<p>In summary, when <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the unique solution of <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> even in a constrained space
 <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}

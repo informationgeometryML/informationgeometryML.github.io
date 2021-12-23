@@ -182,7 +182,7 @@
 
 
 
-  5 minute read
+  4 minute read
 </p>
           
         </header>
@@ -254,31 +254,6 @@ large enough since <code class="language-plaintext highlighter-rouge">$\Omega_\e
 <p>The following example shows that it is also possible that
 the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained (<code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>) while
 the expectation space <code class="language-plaintext highlighter-rouge">$\Omega_m $</code> is still constrained (<code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>).</p>
-
-<blockquote>
-  <p>Example: Bernoulli family</p>
-
-  <p>We consider this family as discussed in <a href="#exponential-family">the previous section</a>
- <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) \Big| 0&lt;\pi&lt;1 \}$</code></p>
-
-  <p>We re-express it in an exponential form as</p>
-
-  <p><code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-p({w}|\mathbf{\eta})
-&amp;=\underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{ \log \frac{\pi}{1-\pi}}_{\eta} , \underbrace{ \mathcal{I}(w=0)}_{T_\eta(w) } \rangle - \log \frac{1}{1-\pi} )
-\end{aligned}
-$$</code>
-where  <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta)}{1+ \exp(\eta) } $</code> and<code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) =  \log \frac{1}{1-\pi} = \log(1+\exp(\eta))$</code>.</p>
-
-  <p>This natural parametrization is also known as the soft-max representation in categorical cases.</p>
-
-  <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ \eta | \eta \in \mathcal{R} \}=\mathcal{R}^1$</code>.</p>
-
-  <p>The corresponding expectation parameter is <code class="language-plaintext highlighter-rouge">$m = E_{q(w|\eta)}[ T_\eta (w) ] = \pi$</code></p>
-
-  <p>The expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m= \{ m| 0&lt;m&lt;1 \}$</code> is a constrained open set in $\mathcal{R}^1$.</p>
-</blockquote>
 
 <p>Recall that  in Part IV, we discuss 
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-faces-of-natural-gradient-descent">many faces of NGD</a> in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.</p>
