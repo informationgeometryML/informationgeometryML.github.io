@@ -426,7 +426,7 @@ between these two parametrizations.
 \mathbf{0} &amp; = E_{p(w|\eta)} [ \nabla_\eta \log p(\mathbf{w}|\eta) ]\\
 &amp;=E_{p(w|\eta)} [ \mathbf{T}_\eta(\mathbf{w}) - \nabla_\eta A_\eta(\eta) ] \\
 &amp;= \mathbf{m}  - \nabla_\eta A_\eta(\eta)
-\end{aligned}
+\end{aligned}\tag{1}\label{1}
 $$</code>  which is a valid Legendre (dual) transformation since 
 <code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in its domain <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
 
@@ -447,7 +447,7 @@ the expectation parameter space <code class="language-plaintext highlighter-roug
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{F}_\eta(\eta)=\nabla_\eta^2 A_\eta(\eta) = \nabla_\eta \mathbf{m}
-\end{aligned}\tag{1}\label{1}
+\end{aligned}\tag{2}\label{2}
 $$</code> which means this FIM is a Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}=\nabla_\eta \mathbf{m}$</code>.</p>
 
 <p>As we discussed in
@@ -459,7 +459,7 @@ a natural-gradient w.r.t. <code class="language-plaintext highlighter-rouge">$f(
 &amp;= (\nabla_\eta \mathbf{m} )^{-1} [ \nabla_\eta f(\eta) ] \\
 &amp;= [\nabla_{m} \eta ] [ \nabla_\eta f(\eta) ] \\
 &amp;=  \nabla_{m} f(\eta)  
-\end{aligned}\tag{2}\label{2}
+\end{aligned}\tag{3}\label{3}
 $$</code> where 
 <code class="language-plaintext highlighter-rouge">$\nabla_{m} f( \eta )$</code> is a Euclidean gradient w.r.t. expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code> and
 <code class="language-plaintext highlighter-rouge">$\eta=\eta( \mathbf{m} )$</code>
@@ -503,7 +503,7 @@ The convex conjugate (Legendre transformation) of the log-partition function <co
 \begin{aligned}
 A^*_\eta( \mathbf{m}) &amp;:= \sup_{x} \{ \langle \mathbf{x},\mathbf{m} \rangle - A_\eta(\mathbf{x}) \} \\
 &amp;= \langle \mathbf{\eta},\mathbf{m} \rangle - A_\eta(\mathbf{\eta})  \,\,\,\, (\text{the supremum attains at } \mathbf{x}=\eta )\\
-\end{aligned}\tag{3}\label{3}
+\end{aligned}\tag{4}\label{4}
 $$</code> where
 <code class="language-plaintext highlighter-rouge">$\eta=\eta( \mathbf{m} )$</code>
 can be viewed  as a function of <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.</p>
@@ -528,7 +528,7 @@ is positive-definite as shown below.</p>
 \end{aligned}
 $$</code></p>
 
-<p>Note that due to <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>,
+<p>Note that due to <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>,
 the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta)$</code> under natural parameter <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}$</code>  is the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}= \nabla_{\eta} \mathbf{m}$</code>
 and 
 positive-definite.</p>
@@ -551,7 +551,7 @@ $$</code>  which implies that
 the FIM under expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code> is
 <code class="language-plaintext highlighter-rouge">$\mathbf{F}_m(\mathbf{m})=\mathbf{F}^{-1}_\eta(\eta) = \nabla_{\mathbf{m}}^2 A^*_\eta( \mathbf{m})= \nabla_{\mathbf{m}} \mathbf{\eta}$</code>.</p>
 
-<p>Moreover, we have the following identity since by <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>, <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)=\langle \mathbf{\eta},\mathbf{m} \rangle- A^*_\eta( \mathbf{m}) $</code>.
+<p>Moreover, we have the following identity since by <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)=\langle \mathbf{\eta},\mathbf{m} \rangle- A^*_\eta( \mathbf{m}) $</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathrm{B}_{A_\eta}(\mathbf{\eta}_2, \color{red}{\mathbf{\eta}_1 })
@@ -626,7 +626,7 @@ where  <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
-\end{aligned}\tag{4}\label{4}
+\end{aligned}\tag{5}\label{5}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k):= \nabla_m f(\eta(\mathbf{m}_k))$</code> and the Bregman divergence <code class="language-plaintext highlighter-rouge">$\mathrm{B}_{A^*_\eta}(\cdot,\cdot)$</code> is well-defined
 since  <code class="language-plaintext highlighter-rouge">$A^*_\eta$</code> is strcitly convex in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.</p>
 
@@ -639,45 +639,47 @@ u(\mathbf{x}) &amp;:=\langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_
 \end{aligned}
 $$</code></p>
 
-<p>The stationary point <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}}$</code> of <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> must satisfy the following
+<p>The stationary point of <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>,  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}}$</code>,  must satisfy the following
  condition.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{0} &amp;= \nabla_x u(\hat{\mathbf{x}}) &amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
-&amp;= \nabla_m \ell(\hat{\mathbf{x}})+ \frac{1}{\alpha}  [ \nabla_x A^*_\eta( \hat{\mathbf{x}})  -  \eta_k ]
-\end{aligned},
+&amp;= \nabla_m \ell(\hat{\mathbf{x}})+ \frac{1}{\alpha}  [ \nabla_x A^*_\eta( \hat{\mathbf{x}})  -  \eta_k ],
+\end{aligned}
 $$</code> which implies that <code class="language-plaintext highlighter-rouge">$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code></p>
 
-<p>Let’s denote <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}:=\nabla_x A^*_\eta( \hat{\mathbf{x}})= \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>. Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained, it
-is obvious that <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>. Therefore, the 
-stationary point <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}} \in \Omega_m$</code> is attainable.
-Since <code class="language-plaintext highlighter-rouge">$\nabla_x^2 u(\mathbf{x}) =\nabla_x^2 A^*_\eta(
-{\mathbf{x}})$</code> is positive-definite  in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, we know that the optimal solution 
-of <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> must be <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1} = \hat{\mathbf{x}}$</code>.
-In other words, <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}=\nabla_x A^*_\eta( \mathbf{m}_{k+1})$</code>.
-Using the duality, we also have 
-<code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}=\nabla_x A_\eta( \mathbf{\eta}_{k+1})$</code>, where 
-<code class="language-plaintext highlighter-rouge">$\eta_{k+1}  = \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>.</p>
+<p>We first show that the stationary point is attainable.
+Let’s denote <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}:=\nabla_x A^*_\eta( \hat{\mathbf{x}})= \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>. Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained, it
+is obvious that <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>.
+We can show that
+the stationary point <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}} = \nabla_\eta A_\eta( \mathbf{\eta}_{k+1})$</code>.
+Since  <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>, we have
+<code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}} \in \Omega_m$</code> due to  the definition of <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.</p>
 
-<p>In summary, when <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the optimal solution of <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> even under constraint
+<p>Now, we show that the stationary point is the optimal solution of <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>.
+Since <code class="language-plaintext highlighter-rouge">$\nabla_x^2 u(\mathbf{x}) =\nabla_x^2 A^*_\eta(
+{\mathbf{x}})$</code> is positive-definite in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, we know that the optimal solution 
+of <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> must be the stationary point as <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1} = \hat{\mathbf{x}} $</code>.</p>
+
+<p>In summary, when <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the optimal solution of <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> even under constraint
 <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \eta_{k+1} &amp; = \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k) \\
 \mathbf{m}_{k+1} &amp;= \nabla_\eta A_\eta( {\mathbf{\eta}_{k+1}})
-\end{aligned}\tag{5}\label{5}
+\end{aligned}\tag{6}\label{6}
 $$</code></p>
 
 <p>In other words,
-mirror descent of <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> in <strong>expectation</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is equivalent to
+mirror descent of <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> in <strong>expectation</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is equivalent to
 the following update
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)
 = \eta_k - \alpha\nabla_m f( \underbrace{ \eta(\mathbf{m}_k) }_{= \eta_k}),
-\end{aligned}\tag{6}\label{6}
+\end{aligned}\tag{7}\label{7}
 $$</code> which is exactly natural gradient
-descent in <strong>natural</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta=\mathcal{R}^K$</code> since by <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, we have <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \eta_k)= \mathbf{F}
+descent in <strong>natural</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta=\mathcal{R}^K$</code> since by <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>, we have <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \eta_k)= \mathbf{F}
 _\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
 
 
