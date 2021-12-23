@@ -597,14 +597,14 @@ is unconstrainted (<code class="language-plaintext highlighter-rouge">$\Omega_\e
 
 <p>to do: add an example</p>
 
-<p>Recall that the convex conjugate of the log-partition function <code class="language-plaintext highlighter-rouge">$A^*_\eta$</code> is strcitly convex in the expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.
-Now, consider the following mirror descent in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> as</p>
+<p>Now, consider the following mirror descent in the expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> as</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
 \end{aligned}\tag{4}\label{4}
-$$</code> where <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k):= \nabla_m f(\eta(\mathbf{m}_k))$</code>.</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k):= \nabla_m f(\eta(\mathbf{m}_k))$</code> and the Bregman divergence <code class="language-plaintext highlighter-rouge">$\mathrm{B}_{A^*_\eta}(\cdot,\cdot)$</code> is well-defined
+since  <code class="language-plaintext highlighter-rouge">$A^*_\eta$</code> is strcitly convex in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.</p>
 
 <p>Denote 
 <code class="language-plaintext highlighter-rouge">$$
