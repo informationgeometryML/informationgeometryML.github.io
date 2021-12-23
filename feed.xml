@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-22T22:03:45-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-23T00:37:28-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -550,11 +550,11 @@ the FIM under expectation parameter &lt;code class=&quot;language-plaintext high
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;mirror-descent&quot;&gt;Mirror Descent&lt;/h2&gt;
+&lt;h2 id=&quot;mirror-descent-md&quot;&gt;Mirror Descent (MD)&lt;/h2&gt;
 
 &lt;p&gt;Now, we give the definition of mirror descent.&lt;/p&gt;
 
-&lt;p&gt;Consider the following optimization problem over a &lt;strong&gt;closed&lt;/strong&gt; convex domain denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\theta$&lt;/code&gt;.
+&lt;p&gt;Consider the following optimization problem over a convex domain denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\theta$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \min_{\theta \in \Omega_\theta} \ell(\mathbf{\theta})
@@ -568,19 +568,22 @@ descent with step-size &lt;code class=&quot;language-plaintext highlighter-rouge
 \begin{aligned}
 \mathbf{\theta}_{k+1} \leftarrow \arg \min_{x \in \Omega_\theta}\{ \langle \nabla_\theta \ell(\mathbf{\theta}_k), \mathbf{x}-\mathbf{\theta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{\Phi}(\mathbf{x},\mathbf{\theta}_k) \}
 \end{aligned}
-$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{B}_\Phi(\cdot,\cdot)$&lt;/code&gt; is a Bregman divergence  equipped  with the strictlyy convex function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Phi(\cdot)$&lt;/code&gt;.&lt;/p&gt;
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{B}_\Phi(\cdot,\cdot)$&lt;/code&gt; is a Bregman divergence  equipped  with the strictly convex function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Phi(\cdot)$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;h2 id=&quot;ngd-as-unconstrained-mirror-descent-in-the-expectation-space&quot;&gt;NGD as Unconstrained Mirror Descent in the Expectation Space&lt;/h2&gt;
-&lt;p&gt;To show natural-gradient descent as unconstrained mirror descent, we have to make the following assumption.&lt;/p&gt;
+&lt;h2 id=&quot;ngd-in-the-unconstrained-natural-space-as-md-in-the-expectation-space&quot;&gt;NGD in the Unconstrained Natural Space as MD in the Expectation Space&lt;/h2&gt;
+
+&lt;p&gt;To show natural-gradient descent as mirror descent, we have to make the following assumption.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;Additional&lt;/strong&gt; assumption:
-Natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; and its
-expectation parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_{m_\eta}$&lt;/code&gt; are both unconstrainted (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta=\Omega_{m_\eta} =\mathcal{R}^K$&lt;/code&gt;), where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;.&lt;/p&gt;
+&lt;strong&gt;Natural&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;
+is unconstrainted (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta=\mathcal{R}^K$&lt;/code&gt;), where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Note that we have shown that the convex conjugate of the log-partition function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A^*_\eta$&lt;/code&gt; is strcitly convex in the expectation parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;. By our
-assumption,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_{m_\eta}=\mathcal{R}^k$&lt;/code&gt; is both open and closed in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^k$&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Note that  the expectation space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; may be constrained.&lt;/p&gt;
 
-&lt;p&gt;Therefore, we can consider the following mirror descent in the 
+&lt;p&gt;to do: add an example&lt;/p&gt;
+
+&lt;p&gt;Recall that the convex conjugate of the log-partition function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A^*_\eta$&lt;/code&gt; is strcitly convex in the expectation parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;.
+Now, consider the following mirror descent in the 
 &lt;strong&gt;expectation&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; as&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -598,34 +601,37 @@ u(\mathbf{x}) &amp;amp;:=\langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Since
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m=\mathcal{R}^k$&lt;/code&gt; is unconstrained, the optimal expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}$&lt;/code&gt;
-must satisfy the stationary condition as&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+&lt;p&gt;The stationary point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{x}}$&lt;/code&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; must satisfy the following
+ condition.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mathbf{0} &amp;amp;= \nabla_x u({\mathbf{x}})\Big|_{x=m_{k+1}} &amp;amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
-&amp;amp;= \nabla_m \ell(\mathbf{m}_k)+ \frac{1}{\alpha}  [\underbrace{ \nabla_x A^*_\eta( {\mathbf{m}_{k+1}})}_{\eta_{k+1}}  -  \eta_k ]
-\end{aligned}
-$$&lt;/code&gt;
-Note that as long as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{k+1} \in \Omega_\eta$&lt;/code&gt;, it is the corresponding natural parameter for the expectation
-parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}$&lt;/code&gt; since there exists an one-to-one relationship between them.&lt;/p&gt;
+\mathbf{0} &amp;amp;= \nabla_x u(\hat{\mathbf{x}}) &amp;amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
+&amp;amp;= \nabla_m \ell(\hat{\mathbf{x}})+ \frac{1}{\alpha}  [ \nabla_x A^*_\eta( \hat{\mathbf{x}})  -  \eta_k ]
+\end{aligned},
+$$&lt;/code&gt; which implies that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;The above expression implies that the solution of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; is
+&lt;p&gt;Let’s denote &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1}:=\nabla_x A^*_\eta( \hat{\mathbf{x}})= \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$&lt;/code&gt;. Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is unconstrained, it
+is obvious that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1} \in \Omega_\eta$&lt;/code&gt;. Therefore, the 
+stationary point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{x}} \in \Omega_m$&lt;/code&gt; is attainable.
+Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_x^2 u(\mathbf{x}) =\nabla_x^2 A^*_\eta(
+{\mathbf{x}})$&lt;/code&gt; is positive-definite  in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;, we know that the optimal solution 
+of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; must be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1} = \hat{\mathbf{x}}$&lt;/code&gt;.
+In other words, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1}=\nabla_x A^*_\eta( \mathbf{m}_{k+1})$&lt;/code&gt;.
+Using the duality, we also have 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}=\nabla_x A_\eta( \mathbf{\eta}_{k+1})$&lt;/code&gt;, where 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{k+1}  = \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In summary, when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta = \mathcal{R}^K$&lt;/code&gt;, the optimal solution of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; even under constraint
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \eta_{k+1} &amp;amp; = \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k) \\
 \mathbf{m}_{k+1} &amp;amp;= \nabla_\eta A_\eta( {\mathbf{\eta}_{k+1}})
 \end{aligned}\tag{5}\label{5}
-$$&lt;/code&gt;
-Note that as long as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{k+1} \in \Omega_\eta$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}$&lt;/code&gt; will always stays its domain 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; even when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is constrained. This implies that even when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is constrained,
-(constrained) mirror
-descent in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; still recovers natural-gradient descent as long as 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is unconstrained.&lt;/p&gt;
+$$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;In other words,
-mirror descent of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; in &lt;strong&gt;expectation&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m=\mathcal{R}^K$&lt;/code&gt; is equivalent to
+mirror descent of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; in &lt;strong&gt;expectation&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is equivalent to
 the following update
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
