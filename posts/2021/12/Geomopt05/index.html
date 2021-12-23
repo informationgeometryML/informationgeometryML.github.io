@@ -416,7 +416,7 @@ In cases of an exponential family,  natural-gradient computation often can be qu
 <p>We will assume <code class="language-plaintext highlighter-rouge">$\eta$</code> is a reguar, minimal, natural parametrization.</p>
 
 <h2 id="expectation-parametrization">Expectation Parametrization</h2>
-<p>Now, we introduce a dual parametrization <code class="language-plaintext highlighter-rouge">$\mathbf{m} := E_{p(w|\eta)}[ \mathbf{T}_\eta(\mathbf{w}) ] $</code>, which is known as the expectation parametrization.</p>
+<p>We introduce a dual parametrization <code class="language-plaintext highlighter-rouge">$\mathbf{m} := E_{p(w|\eta)}[ \mathbf{T}_\eta(\mathbf{w}) ] $</code>, which is known as the expectation parametrization. This new parametrization plays a key role for the efficient natural-gradient computation.</p>
 
 <p>Recall that in
 <a href="/posts/2021/11/Geomopt04/#the-hessian-is-not-a-valid-manifold-metric">Part IV</a>,  we use the identity of the score function. This identity also shows us a connection 
