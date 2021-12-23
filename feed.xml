@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-22T19:22:01-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-22T21:46:04-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -416,15 +416,16 @@ $$&lt;/code&gt;  which is a valid Legendre (dual) transformation since
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\eta^2 A_\eta(\eta)$&lt;/code&gt; is positive-definite in its domain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;expectation-parameter-space&quot;&gt;Expectation Parameter Space&lt;/h2&gt;
-&lt;p&gt;Consider continous map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}(\eta):=\nabla_\eta A_\eta(\eta)$&lt;/code&gt;, where its domain is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The expectation parameter can be viewed as an ouput of
+a continous map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}(\eta):=\nabla_\eta A_\eta(\eta)$&lt;/code&gt;, where the input domain is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\eta^2 A_\eta(\eta)$&lt;/code&gt; is positive-definite in open set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;, we can show that there exists an one-to-one map between the
+&lt;p&gt;We define the expectation parameter space as the output domain of the map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m :=\{\mathbf{m}(\eta) | \eta \in \Omega_\eta \}$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\eta^2 A_\eta(\eta)$&lt;/code&gt; is positive-definite in open set &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;, we can show that there exists an one-to-one relationship between the
 natural parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; and the expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt;, which implies that map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}(\cdot)$&lt;/code&gt; is injective.&lt;/p&gt;
 
-&lt;p&gt;We define the domain of the expectation parameter space as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m :=\{\mathbf{m}(\eta) | \eta \in \Omega_\eta \}$&lt;/code&gt;.&lt;/p&gt;
-
 &lt;p&gt;Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is open in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, we can show that
-the expectation parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is also open in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt; due to the invariance of domain.&lt;/p&gt;
+the expectation parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is also open in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt; due to the &lt;a href=&quot;https://en.wikipedia.org/wiki/Invariance_of_domain&quot;&gt;invariance of domain&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;natural-gradient-computation&quot;&gt;Natural-gradient Computation&lt;/h2&gt;
 &lt;p&gt;Note that the FIM of the exponential family under parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is
@@ -529,7 +530,7 @@ positive-definite and therefore strictly convex.&lt;/p&gt;
 \begin{aligned}
 \mathbf{F}_{\eta} (\eta) &amp;amp; = \mathbf{J}^T \mathbf{F}_{m}(\mathbf{m}) \mathbf{J} \\
 &amp;amp;= \mathbf{F}^T_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) \\
-&amp;amp;= \mathbf{F}_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) \\
+&amp;amp;= \mathbf{F}_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) &amp;amp; (\text{the FIM is symmetric})
 \end{aligned}
 $$&lt;/code&gt;  which implies that
 the FIM under expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt; is
@@ -549,7 +550,7 @@ the FIM under expectation parameter &lt;code class=&quot;language-plaintext high
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;classical-mirror-descent&quot;&gt;Classical Mirror Descent&lt;/h2&gt;
+&lt;h2 id=&quot;mirror-descent&quot;&gt;Mirror Descent&lt;/h2&gt;
 
 &lt;p&gt;Now, we give the definition of mirror descent.&lt;/p&gt;
 
@@ -567,7 +568,7 @@ descent with step-size &lt;code class=&quot;language-plaintext highlighter-rouge
 \begin{aligned}
 \mathbf{\theta}_{k+1} \leftarrow \arg \min_{x \in \Omega_\theta}\{ \langle \nabla_\theta \ell(\mathbf{\theta}_k), \mathbf{x}-\mathbf{\theta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{\Phi}(\mathbf{x},\mathbf{\theta}_k) \}
 \end{aligned}
-$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{B}_\Phi(\cdot,\cdot)$&lt;/code&gt; is a Bregman divergence  equipped pairred with the convex function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Phi(\cdot)$&lt;/code&gt;.&lt;/p&gt;
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{B}_\Phi(\cdot,\cdot)$&lt;/code&gt; is a Bregman divergence  equipped  with the strictlyy convex function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Phi(\cdot)$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;ngd-as-unconstrained-mirror-descent-in-the-expectation-space&quot;&gt;NGD as Unconstrained Mirror Descent in the Expectation Space&lt;/h2&gt;
 &lt;p&gt;To show natural-gradient descent as unconstrained mirror descent, we have to make the following assumption.&lt;/p&gt;
@@ -598,28 +599,39 @@ u(\mathbf{x}) &amp;amp;:=\langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf
 $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;Since
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m=\mathcal{R}^k$&lt;/code&gt; is unconstrained, the optimal expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}=\bar{\mathbf{x}}$&lt;/code&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m=\mathcal{R}^k$&lt;/code&gt; is unconstrained, the optimal expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}$&lt;/code&gt;
 must satisfy the stationary condition as&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mathbf{0} &amp;amp;= \nabla_x u(\bar{\mathbf{x}}) &amp;amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
-&amp;amp;= \nabla_m \ell(\mathbf{m}_k)+ \frac{1}{\alpha}  [\underbrace{ \nabla_x A^*_\eta( \bar{\mathbf{x}})}_{\eta_{\bar{x}}}  -  \eta_k ],
+\mathbf{0} &amp;amp;= \nabla_x u({\mathbf{x}})\Big|_{x=m_{k+1}} &amp;amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
+&amp;amp;= \nabla_m \ell(\mathbf{m}_k)+ \frac{1}{\alpha}  [\underbrace{ \nabla_x A^*_\eta( {\mathbf{m}_{k+1}})}_{\eta_{k+1}}  -  \eta_k ]
 \end{aligned}
-$$&lt;/code&gt; which implies that
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{\bar{x}} = \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$&lt;/code&gt;.&lt;/p&gt;
+$$&lt;/code&gt;
+Note that as long as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{k+1} \in \Omega_\eta$&lt;/code&gt;, it is the corresponding natural parameter for the expectation
+parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}$&lt;/code&gt; since there exists an one-to-one relationship between them.&lt;/p&gt;
 
-&lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{\bar{x}}$&lt;/code&gt; is the corresponding natural parameter for the expectation
-parameter
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}$&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The above expression implies that the solution of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\eta_{k+1} &amp;amp; = \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k) \\
+\mathbf{m}_{k+1} &amp;amp;= \nabla_\eta A_\eta( {\mathbf{\eta}_{k+1}})
+\end{aligned}\tag{5}\label{5}
+$$&lt;/code&gt;
+Note that as long as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{k+1} \in \Omega_\eta$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1}$&lt;/code&gt; will always stays in the constraint set
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; even when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is constrained. This implies that even when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is constrained,
+(constrained) mirror
+descent in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; still recovers natural-gradient descent as long as 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is unconstrained.&lt;/p&gt;
 
-&lt;p&gt;Therefore,  mirror descent of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; in &lt;strong&gt;expectation&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m=\mathcal{R}^K$&lt;/code&gt; gives 
+&lt;p&gt;In other words,
+mirror descent of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; in &lt;strong&gt;expectation&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m=\mathcal{R}^K$&lt;/code&gt; is equivalent to
 the following update
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)
 = \eta_k - \alpha\nabla_m f( \underbrace{ \eta(\mathbf{m}_k) }_{= \eta_k}),
-\end{aligned}\tag{5}\label{5}
+\end{aligned}\tag{6}\label{6}
 $$&lt;/code&gt; which is exactly natural gradient
 descent in &lt;strong&gt;natural&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta=\mathcal{R}^K$&lt;/code&gt; since by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt;, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \eta_k)= \mathbf{F}
 _\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$&lt;/code&gt;.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;

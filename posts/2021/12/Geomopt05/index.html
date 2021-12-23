@@ -182,7 +182,7 @@
 
 
 
-  12 minute read
+  13 minute read
 </p>
           
         </header>
@@ -431,15 +431,16 @@ $$</code>  which is a valid Legendre (dual) transformation since
 <code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in its domain <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
 
 <h2 id="expectation-parameter-space">Expectation Parameter Space</h2>
-<p>Consider continous map <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\eta):=\nabla_\eta A_\eta(\eta)$</code>, where its domain is <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
+<p>The expectation parameter can be viewed as an ouput of
+a continous map <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\eta):=\nabla_\eta A_\eta(\eta)$</code>, where the input domain is <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
 
-<p>Since <code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in open set <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, we can show that there exists an one-to-one map between the
+<p>We define the expectation parameter space as the output domain of the map <code class="language-plaintext highlighter-rouge">$\Omega_m :=\{\mathbf{m}(\eta) | \eta \in \Omega_\eta \}$</code>.</p>
+
+<p>Since <code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in open set <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, we can show that there exists an one-to-one relationship between the
 natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> and the expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>, which implies that map <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\cdot)$</code> is injective.</p>
 
-<p>We define the domain of the expectation parameter space as <code class="language-plaintext highlighter-rouge">$\Omega_m :=\{\mathbf{m}(\eta) | \eta \in \Omega_\eta \}$</code>.</p>
-
 <p>Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, we can show that
-the expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is also open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the invariance of domain.</p>
+the expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is also open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the <a href="https://en.wikipedia.org/wiki/Invariance_of_domain">invariance of domain</a>.</p>
 
 <h2 id="natural-gradient-computation">Natural-gradient Computation</h2>
 <p>Note that the FIM of the exponential family under parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is
@@ -544,7 +545,7 @@ positive-definite and therefore strictly convex.</p>
 \begin{aligned}
 \mathbf{F}_{\eta} (\eta) &amp; = \mathbf{J}^T \mathbf{F}_{m}(\mathbf{m}) \mathbf{J} \\
 &amp;= \mathbf{F}^T_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) \\
-&amp;= \mathbf{F}_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) \\
+&amp;= \mathbf{F}_{\eta} (\eta)  \mathbf{F}_{m}(\mathbf{m})\mathbf{F}_{\eta} (\eta) &amp; (\text{the FIM is symmetric})
 \end{aligned}
 $$</code>  which implies that
 the FIM under expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code> is
@@ -564,7 +565,7 @@ the FIM under expectation parameter <code class="language-plaintext highlighter-
 \end{aligned}
 $$</code></p>
 
-<h2 id="classical-mirror-descent">Classical Mirror Descent</h2>
+<h2 id="mirror-descent">Mirror Descent</h2>
 
 <p>Now, we give the definition of mirror descent.</p>
 
@@ -582,7 +583,7 @@ descent with step-size <code class="language-plaintext highlighter-rouge">$\alph
 \begin{aligned}
 \mathbf{\theta}_{k+1} \leftarrow \arg \min_{x \in \Omega_\theta}\{ \langle \nabla_\theta \ell(\mathbf{\theta}_k), \mathbf{x}-\mathbf{\theta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{\Phi}(\mathbf{x},\mathbf{\theta}_k) \}
 \end{aligned}
-$$</code> where <code class="language-plaintext highlighter-rouge">$\mathrm{B}_\Phi(\cdot,\cdot)$</code> is a Bregman divergence  equipped pairred with the convex function <code class="language-plaintext highlighter-rouge">$\Phi(\cdot)$</code>.</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathrm{B}_\Phi(\cdot,\cdot)$</code> is a Bregman divergence  equipped  with the strictlyy convex function <code class="language-plaintext highlighter-rouge">$\Phi(\cdot)$</code>.</p>
 
 <h2 id="ngd-as-unconstrained-mirror-descent-in-the-expectation-space">NGD as Unconstrained Mirror Descent in the Expectation Space</h2>
 <p>To show natural-gradient descent as unconstrained mirror descent, we have to make the following assumption.</p>
@@ -613,28 +614,39 @@ u(\mathbf{x}) &amp;:=\langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_
 $$</code></p>
 
 <p>Since
-<code class="language-plaintext highlighter-rouge">$\Omega_m=\mathcal{R}^k$</code> is unconstrained, the optimal expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}=\bar{\mathbf{x}}$</code>
+<code class="language-plaintext highlighter-rouge">$\Omega_m=\mathcal{R}^k$</code> is unconstrained, the optimal expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}$</code>
 must satisfy the stationary condition as</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{0} &amp;= \nabla_x u(\bar{\mathbf{x}}) &amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
-&amp;= \nabla_m \ell(\mathbf{m}_k)+ \frac{1}{\alpha}  [\underbrace{ \nabla_x A^*_\eta( \bar{\mathbf{x}})}_{\eta_{\bar{x}}}  -  \eta_k ],
+\mathbf{0} &amp;= \nabla_x u({\mathbf{x}})\Big|_{x=m_{k+1}} &amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
+&amp;= \nabla_m \ell(\mathbf{m}_k)+ \frac{1}{\alpha}  [\underbrace{ \nabla_x A^*_\eta( {\mathbf{m}_{k+1}})}_{\eta_{k+1}}  -  \eta_k ]
 \end{aligned}
-$$</code> which implies that
-<code class="language-plaintext highlighter-rouge">$\eta_{\bar{x}} = \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>.</p>
+$$</code>
+Note that as long as <code class="language-plaintext highlighter-rouge">$\eta_{k+1} \in \Omega_\eta$</code>, it is the corresponding natural parameter for the expectation
+parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}$</code> since there exists an one-to-one relationship between them.</p>
 
-<p>Note that <code class="language-plaintext highlighter-rouge">$\eta_{\bar{x}}$</code> is the corresponding natural parameter for the expectation
-parameter
-<code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}$</code>.</p>
+<p>The above expression implies that the solution of <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\eta_{k+1} &amp; = \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k) \\
+\mathbf{m}_{k+1} &amp;= \nabla_\eta A_\eta( {\mathbf{\eta}_{k+1}})
+\end{aligned}\tag{5}\label{5}
+$$</code>
+Note that as long as <code class="language-plaintext highlighter-rouge">$\eta_{k+1} \in \Omega_\eta$</code>, <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}$</code> will always stays in the constraint set
+<code class="language-plaintext highlighter-rouge">$\Omega_m$</code> even when <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained. This implies that even when <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained,
+(constrained) mirror
+descent in <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> still recovers natural-gradient descent as long as 
+<code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained.</p>
 
-<p>Therefore,  mirror descent of <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> in <strong>expectation</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m=\mathcal{R}^K$</code> gives 
+<p>In other words,
+mirror descent of <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> in <strong>expectation</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m=\mathcal{R}^K$</code> is equivalent to
 the following update
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)
 = \eta_k - \alpha\nabla_m f( \underbrace{ \eta(\mathbf{m}_k) }_{= \eta_k}),
-\end{aligned}\tag{5}\label{5}
+\end{aligned}\tag{6}\label{6}
 $$</code> which is exactly natural gradient
 descent in <strong>natural</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta=\mathcal{R}^K$</code> since by <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, we have <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \eta_k)= \mathbf{F}
 _\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
