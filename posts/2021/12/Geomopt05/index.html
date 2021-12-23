@@ -182,7 +182,7 @@
 
 
 
-  13 minute read
+  14 minute read
 </p>
           
         </header>
@@ -585,7 +585,7 @@ descent with step-size <code class="language-plaintext highlighter-rouge">$\alph
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathrm{B}_\Phi(\cdot,\cdot)$</code> is a Bregman divergence  equipped  with the strictly convex function <code class="language-plaintext highlighter-rouge">$\Phi(\cdot)$</code>.</p>
 
-<h2 id="ngd-in-the-unconstrained-natural-space-as-md-in-the-expectation-space">NGD in the Unconstrained Natural Space as MD in the Expectation Space</h2>
+<h2 id="natural-gradient-descent-as-mirror-descent">Natural-gradient Descent as Mirror Descent</h2>
 
 <p>To show natural-gradient descent as mirror descent, we have to make the following assumption.</p>
 
@@ -593,9 +593,33 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathrm{B}_\
 <strong>Natural</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>
 is unconstrainted (<code class="language-plaintext highlighter-rouge">$\Omega_\eta=\mathcal{R}^K$</code>), where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of parameter array <code class="language-plaintext highlighter-rouge">$\eta$</code>.</p>
 
-<p>Note that  the expectation space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> may be constrained.</p>
+<p>The following example illustrates that the expectation space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained even when
+<code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained.</p>
 
-<p>to do: add an example</p>
+<blockquote>
+  <p>Example: Bernoulli family</p>
+
+  <p>We consider this family as discussed in <a href="#exponential-family">the previous section</a>
+ <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) \Big| 0&lt;\pi&lt;1 \}$</code></p>
+
+  <p>We re-express it in an exponential form as</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+p({w}|\mathbf{\eta})
+&amp;=\underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{ \log \frac{\pi}{1-\pi}}_{\eta} , \underbrace{ \mathcal{I}(w=0)}_{T_\eta(w) } \rangle - \log \frac{1}{1-\pi} )
+\end{aligned}
+$$</code>
+where  <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta)}{1+ \exp(\eta) } $</code> and<code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) =  \log \frac{1}{1-\pi} = \log(1+\exp(\eta))$</code>.</p>
+
+  <p>This natural parametrization is also known as the soft-max representation in categorical cases.</p>
+
+  <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ \eta | \eta \in \mathcal{R} \}=\mathcal{R}^1$</code>.</p>
+
+  <p>The corresponding expectation parameter is <code class="language-plaintext highlighter-rouge">$m = E_{q(w|\eta)}[ T_\eta (w) ] = \pi$</code></p>
+
+  <p>The expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m= \{ m| 0&lt;m&lt;1 \}$</code> is a constrained open set in $\mathcal{R}^1$.</p>
+</blockquote>
 
 <p>Now, consider the following mirror descent in the expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> as</p>
 
