@@ -182,7 +182,7 @@
 
 
 
-  17 minute read
+  12 minute read
 </p>
           
         </header>
@@ -413,8 +413,10 @@ $$</code></p>
 <p>In general, natural-gradient computation can be challenging due to the inverse of the Fisher matrix.
 In cases of an exponential family,  natural-gradient computation often can be quite efficient without directly computing the inverse of the Fisher matrix.</p>
 
-<p>We will assume <code class="language-plaintext highlighter-rouge">$\eta$</code> is a reguar, minimal, natural parametrization.
-Now, we introduce a dual parametrization <code class="language-plaintext highlighter-rouge">$\mathbf{m} := E_{p(w|\eta)}[ \mathbf{T}_\eta(\mathbf{w}) ] $</code>, which is known as the expectation parametrization.</p>
+<p>We will assume <code class="language-plaintext highlighter-rouge">$\eta$</code> is a reguar, minimal, natural parametrization.</p>
+
+<h2 id="expectation-parameter">Expectation Parameter</h2>
+<p>Now, we introduce a dual parametrization <code class="language-plaintext highlighter-rouge">$\mathbf{m} := E_{p(w|\eta)}[ \mathbf{T}_\eta(\mathbf{w}) ] $</code>, which is known as the expectation parametrization.</p>
 
 <p>Recall that in
 <a href="/posts/2021/11/Geomopt04/#the-hessian-is-not-a-valid-manifold-metric">Part IV</a>,  we use the identity of the score function. This identity also shows us a connection 
@@ -426,9 +428,21 @@ between these two parametrizations.
 &amp;= \mathbf{m}  - \nabla_\eta A_\eta(\eta)
 \end{aligned}
 $$</code>  which is a valid Legendre (dual) transformation since 
-<code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in its domain.</p>
+<code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in its domain <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
 
-<p>Moreover, the FIM of the exponential family under parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is
+<h2 id="expectation-parameter-space">Expectation Parameter Space</h2>
+<p>Consider continous map <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\eta):=\nabla_\eta A_\eta(\eta)$</code>, where its domain is <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
+
+<p>Since <code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in open set <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, we can show that there exists an one-to-one map between the
+natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> and the expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>, which implies that map <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\cdot)$</code> is injective.</p>
+
+<p>We define the domain of the expectation parameter space as <code class="language-plaintext highlighter-rouge">$\Omega_m :=\{\mathbf{m}(\eta) | \eta \in \Omega_\eta \}$</code>.</p>
+
+<p>Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, we can show that
+the expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is also open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the invariance of domain.</p>
+
+<h2 id="natural-gradient-computation">Natural-gradient Computation</h2>
+<p>Note that the FIM of the exponential family under parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{F}_\eta(\eta)=\nabla_\eta^2 A_\eta(\eta) = \nabla_\eta \mathbf{m}
@@ -456,12 +470,14 @@ can be viewed  as a function of <code class="language-plaintext highlighter-roug
 
 <h1 id="natural-gradient-descent-as-unconstrained-mirror-descent">Natural-gradient Descent as Unconstrained Mirror Descent</h1>
 
-<p>In the  following sections, we will assume a natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is also regular and minimal.</p>
+<p>Now, we show that natural-gradient descent is related to mirror descent in unconstrained cases.</p>
+
+<p>we will assume  natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is both regular and minimal.</p>
 
 <p>Since mirror descent is defined by using a Bregman divergence, we first introduce the Bregman divergence.</p>
 
 <h2 id="bregman-divergence">Bregman Divergence</h2>
-<p>Given a strictly convex function <code class="language-plaintext highlighter-rouge">$\Phi(\cdot)$</code> in its domain, a Bregman divergence is defined as
+<p>Given a strictly convex function <code class="language-plaintext highlighter-rouge">$\Phi(\cdot)$</code> in its domain, a Bregman divergence equipped with <code class="language-plaintext highlighter-rouge">$\Phi(\cdot)$</code> is defined as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathrm{B}_\Phi(\mathbf{x},\mathbf{y}):= \Phi(\mathbf{x})- \Phi(\mathbf{y}) - \langle \nabla \Phi(\mathbf{y}), (\mathbf{x}-\mathbf{y}) \rangle
@@ -548,14 +564,37 @@ the FIM under expectation parameter <code class="language-plaintext highlighter-
 \end{aligned}
 $$</code></p>
 
-<h2 id="mirror-descent-in-the-expectation-space">Mirror Descent in the Expectation Space</h2>
+<h2 id="classical-mirror-descent">Classical Mirror Descent</h2>
+
+<p>Now, we give the definition of mirror descent.</p>
+
+<p>Consider the following optimization problem over a <strong>closed</strong> convex domain denoted by <code class="language-plaintext highlighter-rouge">$\Omega_\theta$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\theta \in \Omega_\theta} \ell(\mathbf{\theta})
+\end{aligned}
+$$</code></p>
+
+<p>Given a strictly convex function <code class="language-plaintext highlighter-rouge">$\Phi(\mathbf{\theta})$</code> in the domain , mirror
+descent with step-size <code class="language-plaintext highlighter-rouge">$\alpha$</code> is defined as</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{\theta}_{k+1} \leftarrow \arg \min_{x \in \Omega_\theta}\{ \langle \nabla_\theta \ell(\mathbf{\theta}_k), \mathbf{x}-\mathbf{\theta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{\Phi}(\mathbf{x},\mathbf{\theta}_k) \}
+\end{aligned}
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathrm{B}_\Phi(\cdot,\cdot)$</code> is a Bregman divergence  equipped pairred with the convex function <code class="language-plaintext highlighter-rouge">$\Phi(\cdot)$</code>.</p>
+
+<h2 id="ngd-as-unconstrained-mirror-descent-in-the-expectation-space">NGD as Unconstrained Mirror Descent in the Expectation Space</h2>
 <p>To show natural-gradient descent as unconstrained mirror descent, we have to make the following assumption.</p>
 
 <p><strong>Additional</strong> assumption:
 Natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> and its
 expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_{m_\eta}$</code> are both unconstrainted (<code class="language-plaintext highlighter-rouge">$\Omega_\eta=\Omega_{m_\eta} =\mathcal{R}^K$</code>), where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of parameter array <code class="language-plaintext highlighter-rouge">$\eta$</code>.</p>
 
-<p>Now, consider the following mirror descent in the 
+<p>Note that we have shown that the convex conjugate of the log-partition function <code class="language-plaintext highlighter-rouge">$A^*_\eta$</code> is strcitly convex in the expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>. By our
+assumption,  <code class="language-plaintext highlighter-rouge">$\Omega_{m_\eta}=\mathcal{R}^k$</code> is both open and closed in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^k$</code>.</p>
+
+<p>Therefore, we can consider the following mirror descent in the 
 <strong>expectation</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> as</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
@@ -571,13 +610,15 @@ u(\mathbf{x}) &amp;:=\langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_
 &amp; = \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  [A^*_\eta( \mathbf{x}) - A^*_\eta( \mathbf{m}_k) -    
 \langle \mathbf{x}-\mathbf{m}_k, \underbrace{ \nabla_{\mathbf{m}} A^*_\eta( \mathbf{m}_k)}_{ = \eta_k} \rangle ],
 \end{aligned}
-$$</code> where $\mathbf{m}_k$ is considered to be fixed.</p>
+$$</code></p>
 
-<p>When <code class="language-plaintext highlighter-rouge">$\Omega_m=\mathcal{R}^k$</code>, the optimal expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}=\bar{\mathbf{x}}$</code> must satisfy the following expression.</p>
+<p>Since
+<code class="language-plaintext highlighter-rouge">$\Omega_m=\mathcal{R}^k$</code> is unconstrained, the optimal expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}=\bar{\mathbf{x}}$</code>
+must satisfy the stationary condition as</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{0} &amp;= \nabla_x u(\bar{\mathbf{x}}) \\
+\mathbf{0} &amp;= \nabla_x u(\bar{\mathbf{x}}) &amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
 &amp;= \nabla_m \ell(\mathbf{m}_k)+ \frac{1}{\alpha}  [\underbrace{ \nabla_x A^*_\eta( \bar{\mathbf{x}})}_{\eta_{\bar{x}}}  -  \eta_k ],
 \end{aligned}
 $$</code> which implies that
@@ -587,7 +628,7 @@ $$</code> which implies that
 parameter
 <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1}$</code>.</p>
 
-<p>Therefore, unconstrained mirror descent in <strong>expectation</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> gives 
+<p>Therefore,  mirror descent of <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> in <strong>expectation</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m=\mathcal{R}^K$</code> gives 
 the following update
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -595,180 +636,9 @@ the following update
 = \eta_k - \alpha\nabla_m f( \underbrace{ \eta(\mathbf{m}_k) }_{= \eta_k}),
 \end{aligned}\tag{5}\label{5}
 $$</code> which is exactly natural gradient
-descent in <strong>natural</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> since by <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, we have <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \eta_k)= \mathbf{F}
+descent in <strong>natural</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta=\mathcal{R}^K$</code> since by <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, we have <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \eta_k)= \mathbf{F}
 _\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
 
-<h1 id="handling-parameter-constraints">Handling Parameter Constraints</h1>
-<hr />
-<p>Unfortunately, the connection between natural-gradient descent and mirror desecent breaks down when the natural
-parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained.
-Since the Legendre transformation is defined in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> , which implies the dual (expectation) parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained in general.</p>
-
-<p>The following example illustrates this point.</p>
-
-<blockquote>
-  <p>Example: Univariate Gaussian family</p>
-
-  <p>We consider this family as discussed in <a href="#exponential-family">the previous section</a>
-<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean $\mu$ and variance $\sigma$.</p>
-
-  <p>It can be re-expressed in an exponential form as</p>
-
-  <p><code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-p({w}|\mathbf{\eta})
-&amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2\sigma} \\ \frac{\mu}{\sigma}  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix} w^2 \\ w  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ]     )   \\
-\end{aligned}
-$$</code>
-where  <code class="language-plaintext highlighter-rouge">$\sigma= -\frac{1}{2\eta_1} $</code>,  <code class="language-plaintext highlighter-rouge">$\mu = -\frac{\eta_2}{2\eta_1}$</code>, and  <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) = \frac{1} {2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ] = \frac{1}{2} [ \log ( 2\pi ) + \log (-\frac{1}{2\eta_1})-\frac{\eta_2^2}{2\eta_1} ] $</code>.</p>
-
-  <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ (\eta_1,\eta_2) | \eta_1&lt;0 , \eta_2 \in \mathcal{R} \}$</code> is a constrained open set in $\mathcal{R}^2$, where $K=2$.</p>
-
-  <p>The corresponding expectation parameter is <code class="language-plaintext highlighter-rouge">$\mathbf{m} = E_{q(w|\eta)}[ \mathbf{T}_\eta (w) ] = [ \mu^2+\sigma , \mu ] $</code>.</p>
-
-  <p>The expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m= \{ (m_1,m_2) | m_1 - m_2^2 &gt;0 , m_2 \in \mathcal{R} \}$</code> is a constrained open set in $\mathcal{R}^2$.</p>
-</blockquote>
-
-<p>Recall that when the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained,
-the expectation space <code class="language-plaintext highlighter-rouge">$\Omega_m $</code> in general is also constrained (<code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>).
-In this case,
-(constrained) mirror descent in <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> in general does not give us the same update in <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> as
-natural-gradient descent.</p>
-
-<blockquote>
-  <p>Proof by contradiction:</p>
-
-  <p>Suppose when <code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>,  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> gives the same update in <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> in general.</p>
-
-  <p>By the definition of (constrained) mirror descent in <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, the expectation parameter must satisfy <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1} \in \Omega_m$</code>.</p>
-
-  <p>Therefore, the corresponding natural parameter must satisfy <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>.</p>
-
-  <p>By our hypothesis, <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}$</code> is updated according to <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> and it must satisfy the natural parameter constraint.</p>
-
-  <p>However, it is obvious that <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> in general does not satisfy the natural parameter constraint when the step-size $\alpha$ is
-large enough since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>  is just a proper open subset of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.</p>
-
-  <p>This is a contradiction.</p>
-</blockquote>
-
-<p>The following example shows that it is also possible that
-the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained (<code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>) while
-the expectation space <code class="language-plaintext highlighter-rouge">$\Omega_m $</code> is still constrained (<code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>).</p>
-
-<blockquote>
-  <p>Example: Bernoulli family</p>
-
-  <p>We consider this family as discussed in <a href="#exponential-family">the previous section</a>
- <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) \Big| 0&lt;\pi&lt;1 \}$</code></p>
-
-  <p>We re-express it in an exponential form as</p>
-
-  <p><code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-p({w}|\mathbf{\eta})
-&amp;=\underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{ \log \frac{\pi}{1-\pi}}_{\eta} , \underbrace{ \mathcal{I}(w=0)}_{T_\eta(w) } \rangle - \log \frac{1}{1-\pi} )
-\end{aligned}
-$$</code>
-where  <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta)}{1+ \exp(\eta) } $</code> and<code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) =  \log \frac{1}{1-\pi} = \log(1+\exp(\eta))$</code>.</p>
-
-  <p>This natural parametrization is also known as the soft-max representation in categorical cases.</p>
-
-  <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ \eta | \eta \in \mathcal{R} \}=\mathcal{R}^1$</code>.</p>
-
-  <p>The corresponding expectation parameter is <code class="language-plaintext highlighter-rouge">$m = E_{q(w|\eta)}[ T_\eta (w) ] = \pi$</code></p>
-
-  <p>The expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m= \{ m| 0&lt;m&lt;1 \}$</code> is a constrained open set in $\mathcal{R}^1$.</p>
-</blockquote>
-
-<p>Recall that  in Part IV, we discuss 
-<a href="/posts/2021/11/Geomopt04/#natural-gradient-faces-of-natural-gradient-descent">many faces of NGD</a> in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.</p>
-
-<h2 id="proximal-ngd--projected-ngd-and-constrained-mirror-descent">Proximal NGD,  Projected NGD, and (Constrained) Mirror Descent</h2>
-
-<p>As we discussed before, natural-gradient descent and mirror desecent in general are <strong>distinct</strong> methods when the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained.</p>
-
-<p>A straightforward approach from natural-gradient descent is the projected natural-gradient descent.
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{ \color{blue} {z} \in \Omega_\eta} \|\eta_k - \alpha
-\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) -\color{blue} {\mathbf{z}} \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }
-\end{aligned}\tag{6}\label{6}
-$$</code> where we should use 
-the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> with the same FIM highlighted in red.</p>
-
-<p>On the other hand, the constrained mirror descent in the expectation space remains the same as in  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>. 
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
-\end{aligned}
-$$</code>
-where 
-<code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \underbrace{ \eta(\mathbf{m}_k)}_{=\eta_k} )=  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
-
-<p>We could also perform the constrained mirror descent in the natural parameter space as
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{blue}{y} \in \Omega_\eta}\{ \langle \nabla_\eta f(\mathbf{\eta}_k), \color{blue}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{blue}{\mathbf{y}},\mathbf{\eta}_k) \}
-\end{aligned}\tag{7}\label{7}
-$$</code></p>
-
-<p>Recall that in
-<a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
-we show that natural-gradient descent can be viewed as an unconstrained proximal-gradient method, where we use the
-second-order Taylor expansion of <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code>.
-We could also obtain proximal natural-gradient descent without the Taylor expansion as</p>
-
-<p><code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \underbrace{ \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{blue}{\mathbf{y}})]}_{ = \mathrm{B}_{A_\eta}(\mathbf{\eta}_k,\color{blue}{\mathbf{y}})}  \} 
-\end{aligned}\tag{8}\label{8}
-$$</code></p>
-
-<p>These methods could be very difficult to solve since <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> can be an arbitrary open subset in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.
-Moreover, in classical settings, a Bregman divergence is often defined in a closed set instead of an
-open constrained subset.</p>
-
-<h2 id="using-an-adaptive-step-size">Using an Adaptive Step-size</h2>
-
-<p>When the step-size <code class="language-plaintext highlighter-rouge">$\alpha$</code> is small enough, the connection between natural-gradient descent and mirror desecent could
-still hold.</p>
-
-<p>Therefore, one idea is to use an adaptive step-size to satisfy the parameter constraint at each iteration.
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\eta_{k+1} \leftarrow \eta_k - \alpha_k \nabla_m \ell(\mathbf{m}_k)
-\end{aligned}\tag{9}\label{9}
-$$</code> where 
-<code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) =  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code> and the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is selected  so that
-<code class="language-plaintext highlighter-rouge">$\eta_{k+1} \in \Omega_\eta$</code>.</p>
-
-<p>Since <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, this update is valid when the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is small enough.</p>
-
-<p>However, for a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, this approach can be inefficient due to the selection precedure and will often select an extremally small step-size
-<code class="language-plaintext highlighter-rouge">$\alpha_k$</code>,
-which greatly slows down the progression of the method.</p>
-
-<h2 id="riemannian-gradient-descent">Riemannian Gradient Descent</h2>
-
-<p>An alternative approach is to use Riemannian gradient descent as we discussed in 
-<a href="/posts/2021/11/Geomopt04/#riemannian-gradient-descent-and-its-non-linear-invariance">Part IV</a>, which is a generalization of natural-gradient descent. 
-Note that this approach cannot be derived from mirror descent.</p>
-
-<p>To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) geodesic, which
-induces a retraction map.
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\eta_{k+1} \leftarrow \mathrm{Ret}_{\eta_k} (- \alpha  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) )  
-\end{aligned}\tag{10}\label{10}
-$$</code></p>
-
-<p>As mentioned in 
-<a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-inexact-riemannian-gradient-descent">Part IV</a>,
-we have to carefully select a retraction map to handle the parameter constraint.</p>
-
-<p>For a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, it can be difficult to come out an efficient retraction map to satisfy
-the constraint.</p>
 
         
       </section>
@@ -852,7 +722,8 @@ the constraint.</p>
 ">Previous</a>
     
     
-      <a href="#" class="pagination--pager disabled">Next</a>
+      <a href="/posts/2021/12/Geomopt06/" class="pagination--pager" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods
+">Next</a>
     
   </nav>
 
@@ -866,6 +737,34 @@ the constraint.</p>
     <div class="page__related">
       <h4 class="page__related-title">You may also enjoy</h4>
       <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/12/Geomopt06/" rel="permalink">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
         
           
 
@@ -948,35 +847,6 @@ We will also discuss why the Euclidean steepest direction is NOT i...</p>
     <p class="archive__item-excerpt" itemprop="description">Goal
 This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.
 The main propose...</p>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/posts/2021/09/Geomopt01/" rel="permalink">Part I: Manifolds with the Fisher-Rao Metric
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  12 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Goal
-This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,
-
-  The FIM plays an ess...</p>
   </article>
 </div>
         
