@@ -618,8 +618,6 @@ p({w}|\mathbf{\eta})
 $$</code>
 where  <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta)}{1+ \exp(\eta) } $</code> and<code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) =  \log \frac{1}{1-\pi} = \log(1+\exp(\eta))$</code>.</p>
 
-  <p>This natural parametrization is also known as the soft-max representation in categorical cases.</p>
-
   <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ \eta | \eta \in \mathcal{R} \}=\mathcal{R}^1$</code>.</p>
 
   <p>The corresponding expectation parameter is <code class="language-plaintext highlighter-rouge">$m = E_{q(w|\eta)}[ T_\eta (w) ] = \pi$</code></p>
@@ -650,7 +648,7 @@ $$</code></p>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{0} &amp;= \nabla_x u(\hat{\mathbf{x}}) &amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
-&amp;= \nabla_m \ell(\hat{\mathbf{x}})+ \frac{1}{\alpha}  [ \nabla_x A^*_\eta( \hat{\mathbf{x}})  -  \eta_k ],
+&amp;= \nabla_m \ell(\mathbf{m}_k)+ \frac{1}{\alpha}  [ \nabla_x A^*_\eta( \hat{\mathbf{x}})  -  \eta_k ],
 \end{aligned}
 $$</code> which implies that <code class="language-plaintext highlighter-rouge">$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code></p>
 
