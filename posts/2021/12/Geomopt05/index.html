@@ -337,7 +337,7 @@ Since the parameter space is open in <code class="language-plaintext highlighter
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{e}_i$</code> is an one-hot array which has zero in all entries except the $i$-th entry.</p>
 <details>
-<summary>Regular, minimal, and natural parametrization is intrinstic</summary>
+<summary>Claim: Regular, minimal, and natural parametrization is intrinstic</summary>
 <fieldset class="field-set">
     <blockquote>
       <p>Proof by contradiction:</p>
@@ -661,7 +661,13 @@ where  <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta
 $$</code> where <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k):= \nabla_m f(\eta(\mathbf{m}_k))$</code> and the Bregman divergence <code class="language-plaintext highlighter-rouge">$\mathrm{B}_{A^*_\eta}(\cdot,\cdot)$</code> is well-defined
 since  <code class="language-plaintext highlighter-rouge">$A^*_\eta$</code> is strcitly convex in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.</p>
 
-<p>Denote 
+<details>
+<summary>Claim: when $\Omega_\eta = \mathcal{R}^K$, the solution of $\eqref{7}$ is equivalent to $\eta_{k+1}  \leftarrow  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$ </summary>
+<fieldset class="field-set">
+    <blockquote>
+      <p>Proof :</p>
+
+      <p>Denote 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 u(\mathbf{x}) &amp;:=\langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha} [ \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k)] \\
@@ -670,8 +676,8 @@ u(\mathbf{x}) &amp;:=\langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_
 \end{aligned}
 $$</code></p>
 
-<p>A stationary point of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>,  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}}$</code>,  must satisfy the following
- condition.
+      <p>A stationary point of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>,  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}}$</code>,  must satisfy the following
+condition.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{0} &amp;= \nabla_x u(\hat{\mathbf{x}}) &amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
@@ -679,27 +685,30 @@ $$</code></p>
 \end{aligned}
 $$</code> which implies that <code class="language-plaintext highlighter-rouge">$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code></p>
 
-<p>We first show that there exists a stationary point in the domain (<code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}} \in \Omega_m$</code>).
+      <p>We first show that there exists a stationary point in the domain (<code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}} \in \Omega_m$</code>).
 Let’s denote <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}:= \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>. Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained, it
 is obvious that <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>.
 By <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\mathbf{\eta}_{k+1}) =\nabla_\eta A_\eta( \mathbf{\eta}_{k+1}) \in
 \Omega_m$</code>. Notice that,  by <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code>, we have  <code class="language-plaintext highlighter-rouge">$\nabla_m A^*_\eta ( \mathbf{m}(\mathbf{\eta}_{k+1}) ) = \mathbf{\eta}_{k+1}$</code>, which implies that <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\mathbf{\eta}_{k+1})$</code> is a stationary point and 
- <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\mathbf{\eta}_{k+1}) \in \Omega_m$</code>.</p>
+<code class="language-plaintext highlighter-rouge">$\mathbf{m}(\mathbf{\eta}_{k+1}) \in \Omega_m$</code>.</p>
 
-<p>Moreover,
+      <p>Moreover,
 <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\mathbf{\eta}_{k+1})$</code> is 
 the unique  solution of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> since <code class="language-plaintext highlighter-rouge">$\nabla_x^2 u(\mathbf{x}) =\nabla_x^2 A^*_\eta(
 {\mathbf{x}})$</code> is positive-definite for any  <code class="language-plaintext highlighter-rouge">$\mathbf{x} \in \Omega_m$</code> and therefore strictly convex.
 In other words, 
 <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1} = \mathbf{m}( {\mathbf{\eta}_{k+1}}) $</code>.</p>
 
-<p>In summary, when <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the unique solution of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is 
+      <p>In summary, when <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the unique solution of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \eta_{k+1} &amp; \leftarrow  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k) \\
 \mathbf{m}_{k+1} &amp; \leftarrow  \nabla_\eta A_\eta( {\mathbf{\eta}_{k+1}})
-\end{aligned}\tag{8}\label{8}
+\end{aligned}
 $$</code></p>
+    </blockquote>
+  </fieldset>
+</details>
 
 <p>Therefore,
 mirror descent of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> in <strong>expectation</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is equivalent to
@@ -708,7 +717,7 @@ the following update
 \begin{aligned}
 \eta_{k+1} \leftarrow \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)
 = \eta_k - \alpha\nabla_m f( \underbrace{ \eta(\mathbf{m}_k) }_{= \eta_k}),
-\end{aligned}\tag{9}\label{9}
+\end{aligned}\tag{8}\label{8}
 $$</code> which is exactly natural gradient
 descent in <strong>natural</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta=\mathcal{R}^K$</code> since by <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, we have <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \eta_k)= \mathbf{F}
 _\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
