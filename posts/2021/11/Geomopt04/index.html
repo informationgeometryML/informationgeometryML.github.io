@@ -227,16 +227,20 @@ However, when $\Omega_\tau$ is a proper subset of $T\mathcal{M}_{\tau_k}$ (i.e.,
 Using a small step-size could be an issue since it can greatly slow down the progression of natural-gradient
 descent in practice.</p>
 
-<blockquote>
-  <p>Example: (NGD in a constrained space)</p>
+<details>
+<summary>Example: (NGD in a constrained space)</summary>
+<fieldset class="field-set">
+    <blockquote>
 
-  <p>Consider a 1-dimensional  Gaussian family.
+      <p>Consider a 1-dimensional  Gaussian family.
 We specify an intrinsic parameterization $\mathbf{\tau}$  as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = (\mu,\sigma) $</code>. <br /></p>
 
-  <p>We have to properly select the step-size $\alpha$ for natural-gradient descent in  <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> due to the positivity constraint in $\sigma$.</p>
+      <p>We have to properly select the step-size $\alpha$ for natural-gradient descent in  <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> due to the positivity constraint in $\sigma$.</p>
 
-  <p>In multivariate Gaussian cases, we have to handle a positive-definite constraint.</p>
-</blockquote>
+      <p>In multivariate Gaussian cases, we have to handle a positive-definite constraint.</p>
+    </blockquote>
+  </fieldset>
+</details>
 
 <h1 id="natural-gradient-descent-is-linearly-invariant">Natural-gradient Descent is Linearly Invariant</h1>
 <hr />
@@ -405,29 +409,37 @@ We now discuss issues when it comes to  natural-gradient descent over non-intrin
 <ol>
   <li>We may not have a local vector space structure in a non-intrinstic parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM could also be ill-defined in such cases. We will illustrate this by an example.
 Another example (Von Mises–Fisher family) will be given in <a href="/posts/2021/12/Geomopt05/">Part V</a>.
-    <blockquote>
-      <p>Example: (Invalid NGD)</p>
+    <details>
+ <summary>Example: Invalid NGD</summary>
+ <fieldset class="field-set">
+        <blockquote>
 
-      <p>Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
-As we shown in <a href="/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation">Part I</a>, the FIM is ill-defined due to this eqaulity constraint.
-Moreover, the NGD update will violate the eqaulity constraint.</p>
-    </blockquote>
+          <p>Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.</p>
+
+          <p>As we shown in <a href="/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation">Part I</a>, the FIM is ill-defined due to this eqaulity constraint.</p>
+
+          <p>Moreover, the NGD update will violate the eqaulity constraint.</p>
+        </blockquote>
+      </fieldset>
+ </details>
   </li>
-  <li>
-    <p>The FIM is singular in a non-intrinstic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example.</p>
+  <li>The FIM is singular in a non-intrinstic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example.
+    <details>
+ <summary>Example: High iteation cost</summary>
+ <fieldset class="field-set">
+        <blockquote>
 
-    <blockquote>
-      <p>Example:  (High iteation cost)</p>
+          <p>Consider a $d$-dimensional Gaussian mixture family <code class="language-plaintext highlighter-rouge">$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $</code>. This is a non-intrinstic parameterization.</p>
 
-      <p>Consider a $d$-dimensional Gaussian mixture family <code class="language-plaintext highlighter-rouge">$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $</code>. This is a non-intrinstic parameterization.</p>
-
-      <p>If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
+          <p>If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
 The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.</p>
 
-      <p>Now, consider the equivalent Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda =( \mu_0,\Sigma_0 ) $</code>, where $\lambda$ is an intrinsic parameterization of the Gaussian family.</p>
+          <p>Now, consider the equivalent Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda =( \mu_0,\Sigma_0 ) $</code>, where $\lambda$ is an intrinsic parameterization of the Gaussian family.</p>
 
-      <p>As we will show in <a href="/posts/2021/12/Geomopt05/">Part V</a>, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.</p>
-    </blockquote>
+          <p>As we will show in <a href="/posts/2021/12/Geomopt05/">Part V</a>, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.</p>
+        </blockquote>
+      </fieldset>
+ </details>
   </li>
   <li>It is tempting to approximate the singular FIM by an emprical FIM with a scalar damping term and use Woodbury matrix identity to reduce the iteration cost of computing natural-gradients. However, sample-based emprical approximations could be problematic.
 Moreover, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.</li>
@@ -554,27 +566,37 @@ $$</code> where by the definition we have <code class="language-plaintext highli
 <p>The Hessian <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\tau_k)=\nabla_\tau^2 h_\tau(\tau_k)$</code>  in general is not a valid manifold metric since it does not follow the transformation
 rule of a metric in non-linear cases.</p>
 
-<p>Contrastingly,  the Fisher information matrix is a valid manifold metric. Recall that we can compute the Fisher matrix  as <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$</code>.</p>
+<p>Contrastingly, the Fisher information matrix (FIM) is a valid manifold metric.</p>
+<details>
+<summary>Claim: the FIM $\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$ is a valid manifold metric.
+</summary>
+<fieldset class="field-set">
+    <blockquote>
+      <p>Proof</p>
 
-<p>Given a non-linear intrinstic reparametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code>, the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau_k)$</code> is no longer a constant matrix but a square and non-singular matrix.
+      <p>Given a non-linear intrinstic reparametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code>, the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau_k)$</code> is no longer a constant matrix but a square and non-singular matrix.
 In this case, the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> still holds thanks to the expectation of the score function.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$
+      <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{F}_\tau(\tau_k) &amp;= E_{p(w|\tau_k)}\big[ -\nabla_\tau^2 \log p(w|\tau_k) \big]  \\
- &amp;= E_{p(w|\lambda_k)}\big[ -\nabla_\tau^2 \log p(w|\tau_k) \big]  \\
- &amp;= E_{p(w|\lambda_k)}\big[ -\nabla_\tau [ \mathbf{J}^T(\tau_k) \nabla_\lambda \log p(w|\lambda_k)]  \big]  \\
-  &amp;= -    \mathbf{J}^T(\tau_k)   E_{p(w|\lambda_k)}\big[  \nabla_\tau  \nabla_\lambda \log p(w|\lambda_k) \big]   - [\nabla_\tau \mathbf{J}^T(\tau_k)  ] \underbrace{ E_{p(w|\lambda_k)}\big[  \nabla_\lambda \log p(w|\lambda_k) \big] }_{ =0 \text{ (the expectation of the score is zero)}  }  \\
+&amp;= E_{p(w|\lambda_k)}\big[ -\nabla_\tau^2 \log p(w|\tau_k) \big]  \\
+&amp;= E_{p(w|\lambda_k)}\big[ -\nabla_\tau [ \mathbf{J}^T(\tau_k) \nabla_\lambda \log p(w|\lambda_k)]  \big]  \\
+ &amp;= -    \mathbf{J}^T(\tau_k)   E_{p(w|\lambda_k)}\big[  \nabla_\tau  \nabla_\lambda \log p(w|\lambda_k) \big]   - [\nabla_\tau \mathbf{J}^T(\tau_k)  ] \underbrace{ E_{p(w|\lambda_k)}\big[  \nabla_\lambda \log p(w|\lambda_k) \big] }_{ =0 \text{ (the expectation of the score is zero)}  }  \\
 &amp;= -    \mathbf{J}^T(\tau_k)   E_{p(w|\lambda_k)}\big[  [\nabla_\lambda^2 \log p(w|\lambda_k) ] \mathbf{J }(\tau_k) \big] \\
 &amp;= -    \mathbf{J}^T(\tau_k)    E_{p(w|\lambda_k)}\big[  \nabla_\lambda^2 \log p(w|\lambda_k) \big] \mathbf{J}(\tau_k) \\
 &amp;=\mathbf{J }^T(\tau_k)  \mathbf{F}_\lambda(\lambda_k) \mathbf{J}(\tau_k)  
 \end{aligned}
 $$</code></p>
+    </blockquote>
+  </fieldset>
+</details>
 
 <p>We will discuss in
-<a href="/posts/2021/12/Geomopt05/#minimal-parametrizations-of-exponential-family">Part V</a>, for a special parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> (known as a natural parametrization) of <a href="/posts/2021/12/Geomopt05/#exponential-family">exponential family</a>, the FIM under this parametrization can be computed  as
-<code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta) = \nabla_\eta^2 A_\eta(\eta)$</code>, where <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)$</code> is a strictly convex function.
-In the literature, the expoential family with this parametrization is known as a Hessian manifold.
+<a href="/posts/2021/12/Geomopt05/#minimal-parametrizations-of-exponential-family">Part V</a>, for a special parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> (known as a natural parametrization) of <a href="/posts/2021/12/Geomopt05/#exponential-family">exponential family</a>, the FIM under this parametrization can be computed  as
+<code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = \nabla_\tau^2 A_\tau(\tau)$</code>, where <code class="language-plaintext highlighter-rouge">$A_\tau(\tau)$</code> is a strictly convex function.</p>
+
+<p>In the literature, the expoential family with this parametrization is known as a Hessian manifold.
 However, a non-linear reparametrization will lead to a non-natural parametrization.</p>
 
 
@@ -719,7 +741,7 @@ However, a non-linear reparametrization will lead to a non-natural parametrizati
 
 
 
-  14 minute read
+  15 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)

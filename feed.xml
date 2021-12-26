@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-25T22:43:50-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-25T23:31:05-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -670,7 +670,7 @@ $$&lt;/code&gt;&lt;/p&gt;
   &lt;/fieldset&gt;
 &lt;/details&gt;
 
-&lt;p&gt;Therefore,
+&lt;p&gt;By the claim,
 mirror descent of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; in &lt;strong&gt;expectation&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is equivalent to
 the following update
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -717,16 +717,20 @@ However, when $\Omega_\tau$ is a proper subset of $T\mathcal{M}_{\tau_k}$ (i.e.,
 Using a small step-size could be an issue since it can greatly slow down the progression of natural-gradient
 descent in practice.&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Example: (NGD in a constrained space)&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;Example: (NGD in a constrained space)&lt;/summary&gt;
+&lt;fieldset class=&quot;field-set&quot;&gt;
+    &lt;blockquote&gt;
 
-  &lt;p&gt;Consider a 1-dimensional  Gaussian family.
+      &lt;p&gt;Consider a 1-dimensional  Gaussian family.
 We specify an intrinsic parameterization $\mathbf{\tau}$  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;. &lt;br /&gt;&lt;/p&gt;
 
-  &lt;p&gt;We have to properly select the step-size $\alpha$ for natural-gradient descent in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; due to the positivity constraint in $\sigma$.&lt;/p&gt;
+      &lt;p&gt;We have to properly select the step-size $\alpha$ for natural-gradient descent in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; due to the positivity constraint in $\sigma$.&lt;/p&gt;
 
-  &lt;p&gt;In multivariate Gaussian cases, we have to handle a positive-definite constraint.&lt;/p&gt;
-&lt;/blockquote&gt;
+      &lt;p&gt;In multivariate Gaussian cases, we have to handle a positive-definite constraint.&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/fieldset&gt;
+&lt;/details&gt;
 
 &lt;h1 id=&quot;natural-gradient-descent-is-linearly-invariant&quot;&gt;Natural-gradient Descent is Linearly Invariant&lt;/h1&gt;
 &lt;hr /&gt;
@@ -895,29 +899,37 @@ We now discuss issues when it comes to  natural-gradient descent over non-intrin
 &lt;ol&gt;
   &lt;li&gt;We may not have a local vector space structure in a non-intrinstic parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM could also be ill-defined in such cases. We will illustrate this by an example.
 Another example (Von Mises–Fisher family) will be given in &lt;a href=&quot;/posts/2021/12/Geomopt05/&quot;&gt;Part V&lt;/a&gt;.
-    &lt;blockquote&gt;
-      &lt;p&gt;Example: (Invalid NGD)&lt;/p&gt;
+    &lt;details&gt;
+ &lt;summary&gt;Example: Invalid NGD&lt;/summary&gt;
+ &lt;fieldset class=&quot;field-set&quot;&gt;
+        &lt;blockquote&gt;
 
-      &lt;p&gt;Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.
-As we shown in &lt;a href=&quot;/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation&quot;&gt;Part I&lt;/a&gt;, the FIM is ill-defined due to this eqaulity constraint.
-Moreover, the NGD update will violate the eqaulity constraint.&lt;/p&gt;
-    &lt;/blockquote&gt;
+          &lt;p&gt;Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.&lt;/p&gt;
+
+          &lt;p&gt;As we shown in &lt;a href=&quot;/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation&quot;&gt;Part I&lt;/a&gt;, the FIM is ill-defined due to this eqaulity constraint.&lt;/p&gt;
+
+          &lt;p&gt;Moreover, the NGD update will violate the eqaulity constraint.&lt;/p&gt;
+        &lt;/blockquote&gt;
+      &lt;/fieldset&gt;
+ &lt;/details&gt;
   &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The FIM is singular in a non-intrinstic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example.&lt;/p&gt;
+  &lt;li&gt;The FIM is singular in a non-intrinstic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the singular value decomposition (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example.
+    &lt;details&gt;
+ &lt;summary&gt;Example: High iteation cost&lt;/summary&gt;
+ &lt;fieldset class=&quot;field-set&quot;&gt;
+        &lt;blockquote&gt;
 
-    &lt;blockquote&gt;
-      &lt;p&gt;Example:  (High iteation cost)&lt;/p&gt;
+          &lt;p&gt;Consider a $d$-dimensional Gaussian mixture family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $&lt;/code&gt;. This is a non-intrinstic parameterization.&lt;/p&gt;
 
-      &lt;p&gt;Consider a $d$-dimensional Gaussian mixture family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $&lt;/code&gt;. This is a non-intrinstic parameterization.&lt;/p&gt;
-
-      &lt;p&gt;If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
+          &lt;p&gt;If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same variance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
 The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.&lt;/p&gt;
 
-      &lt;p&gt;Now, consider the equivalent Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda =( \mu_0,\Sigma_0 ) $&lt;/code&gt;, where $\lambda$ is an intrinsic parameterization of the Gaussian family.&lt;/p&gt;
+          &lt;p&gt;Now, consider the equivalent Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda =( \mu_0,\Sigma_0 ) $&lt;/code&gt;, where $\lambda$ is an intrinsic parameterization of the Gaussian family.&lt;/p&gt;
 
-      &lt;p&gt;As we will show in &lt;a href=&quot;/posts/2021/12/Geomopt05/&quot;&gt;Part V&lt;/a&gt;, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.&lt;/p&gt;
-    &lt;/blockquote&gt;
+          &lt;p&gt;As we will show in &lt;a href=&quot;/posts/2021/12/Geomopt05/&quot;&gt;Part V&lt;/a&gt;, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.&lt;/p&gt;
+        &lt;/blockquote&gt;
+      &lt;/fieldset&gt;
+ &lt;/details&gt;
   &lt;/li&gt;
   &lt;li&gt;It is tempting to approximate the singular FIM by an emprical FIM with a scalar damping term and use Woodbury matrix identity to reduce the iteration cost of computing natural-gradients. However, sample-based emprical approximations could be problematic.
 Moreover, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.&lt;/li&gt;
@@ -1044,27 +1056,37 @@ $$&lt;/code&gt; where by the definition we have &lt;code class=&quot;language-pl
 &lt;p&gt;The Hessian &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{H}_\tau(\tau_k)=\nabla_\tau^2 h_\tau(\tau_k)$&lt;/code&gt;  in general is not a valid manifold metric since it does not follow the transformation
 rule of a metric in non-linear cases.&lt;/p&gt;
 
-&lt;p&gt;Contrastingly,  the Fisher information matrix is a valid manifold metric. Recall that we can compute the Fisher matrix  as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Contrastingly, the Fisher information matrix (FIM) is a valid manifold metric.&lt;/p&gt;
+&lt;details&gt;
+&lt;summary&gt;Claim: the FIM $\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$ is a valid manifold metric.
+&lt;/summary&gt;
+&lt;fieldset class=&quot;field-set&quot;&gt;
+    &lt;blockquote&gt;
+      &lt;p&gt;Proof&lt;/p&gt;
 
-&lt;p&gt;Given a non-linear intrinstic reparametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt;, the Jacobian matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}(\tau_k)$&lt;/code&gt; is no longer a constant matrix but a square and non-singular matrix.
+      &lt;p&gt;Given a non-linear intrinstic reparametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt;, the Jacobian matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}(\tau_k)$&lt;/code&gt; is no longer a constant matrix but a square and non-singular matrix.
 In this case, the &lt;a href=&quot;/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix&quot;&gt;transformation rule&lt;/a&gt; still holds thanks to the expectation of the score function.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+      &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{F}_\tau(\tau_k) &amp;amp;= E_{p(w|\tau_k)}\big[ -\nabla_\tau^2 \log p(w|\tau_k) \big]  \\
- &amp;amp;= E_{p(w|\lambda_k)}\big[ -\nabla_\tau^2 \log p(w|\tau_k) \big]  \\
- &amp;amp;= E_{p(w|\lambda_k)}\big[ -\nabla_\tau [ \mathbf{J}^T(\tau_k) \nabla_\lambda \log p(w|\lambda_k)]  \big]  \\
-  &amp;amp;= -    \mathbf{J}^T(\tau_k)   E_{p(w|\lambda_k)}\big[  \nabla_\tau  \nabla_\lambda \log p(w|\lambda_k) \big]   - [\nabla_\tau \mathbf{J}^T(\tau_k)  ] \underbrace{ E_{p(w|\lambda_k)}\big[  \nabla_\lambda \log p(w|\lambda_k) \big] }_{ =0 \text{ (the expectation of the score is zero)}  }  \\
+&amp;amp;= E_{p(w|\lambda_k)}\big[ -\nabla_\tau^2 \log p(w|\tau_k) \big]  \\
+&amp;amp;= E_{p(w|\lambda_k)}\big[ -\nabla_\tau [ \mathbf{J}^T(\tau_k) \nabla_\lambda \log p(w|\lambda_k)]  \big]  \\
+ &amp;amp;= -    \mathbf{J}^T(\tau_k)   E_{p(w|\lambda_k)}\big[  \nabla_\tau  \nabla_\lambda \log p(w|\lambda_k) \big]   - [\nabla_\tau \mathbf{J}^T(\tau_k)  ] \underbrace{ E_{p(w|\lambda_k)}\big[  \nabla_\lambda \log p(w|\lambda_k) \big] }_{ =0 \text{ (the expectation of the score is zero)}  }  \\
 &amp;amp;= -    \mathbf{J}^T(\tau_k)   E_{p(w|\lambda_k)}\big[  [\nabla_\lambda^2 \log p(w|\lambda_k) ] \mathbf{J }(\tau_k) \big] \\
 &amp;amp;= -    \mathbf{J}^T(\tau_k)    E_{p(w|\lambda_k)}\big[  \nabla_\lambda^2 \log p(w|\lambda_k) \big] \mathbf{J}(\tau_k) \\
 &amp;amp;=\mathbf{J }^T(\tau_k)  \mathbf{F}_\lambda(\lambda_k) \mathbf{J}(\tau_k)  
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
+    &lt;/blockquote&gt;
+  &lt;/fieldset&gt;
+&lt;/details&gt;
 
 &lt;p&gt;We will discuss in
-&lt;a href=&quot;/posts/2021/12/Geomopt05/#minimal-parametrizations-of-exponential-family&quot;&gt;Part V&lt;/a&gt;, for a special parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; (known as a natural parametrization) of &lt;a href=&quot;/posts/2021/12/Geomopt05/#exponential-family&quot;&gt;exponential family&lt;/a&gt;, the FIM under this parametrization can be computed  as
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\eta(\eta) = \nabla_\eta^2 A_\eta(\eta)$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta(\eta)$&lt;/code&gt; is a strictly convex function.
-In the literature, the expoential family with this parametrization is known as a Hessian manifold.
+&lt;a href=&quot;/posts/2021/12/Geomopt05/#minimal-parametrizations-of-exponential-family&quot;&gt;Part V&lt;/a&gt;, for a special parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; (known as a natural parametrization) of &lt;a href=&quot;/posts/2021/12/Geomopt05/#exponential-family&quot;&gt;exponential family&lt;/a&gt;, the FIM under this parametrization can be computed  as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\tau(\tau) = \nabla_\tau^2 A_\tau(\tau)$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\tau(\tau)$&lt;/code&gt; is a strictly convex function.&lt;/p&gt;
+
+&lt;p&gt;In the literature, the expoential family with this parametrization is known as a Hessian manifold.
 However, a non-linear reparametrization will lead to a non-natural parametrization.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part III: Invariance of Natural-Gradients</title><link href="/posts/2021/11/Geomopt03/" rel="alternate" type="text/html" title="Part III: Invariance of Natural-Gradients" /><published>2021-11-02T00:00:00-07:00</published><updated>2021-11-02T00:00:00-07:00</updated><id>/posts/2021/11/Geomopt03</id><content type="html" xml:base="/posts/2021/11/Geomopt03/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand the invariance of natural-gradients.
 We will also discuss why the Euclidean steepest direction is NOT invariant.&lt;/p&gt;
