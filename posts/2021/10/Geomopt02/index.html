@@ -261,31 +261,39 @@ Note that we only require <code class="language-plaintext highlighter-rouge">$\m
 
 <p>The following example illustrates directional derivatives in manifold cases.</p>
 
-<blockquote>
-  <p>Example 1 (Valid directional derivative):</p>
+<details>
+<summary>Valid case:</summary>
+<fieldset class="field-set">
+    <blockquote>
 
-  <p><code class="language-plaintext highlighter-rouge">$\tau$</code> is a <strong>local intrinsic</strong> parameterization for the unit sphere.</p>
+      <p><code class="language-plaintext highlighter-rouge">$\tau$</code> is a <strong>local intrinsic</strong> parameterization for the unit sphere.</p>
 
-  <p>The line segment from <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> to <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} $</code>  is shown in blue, which is the parameter representation of the yellow curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> in the manifold.
+      <p>The line segment from <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> to <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} $</code>  is shown in blue, which is the parameter representation of the yellow curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> in the manifold.
 We will show later that Riemannian gradient vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> under this parametrization at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> is the <strong>parameter representation</strong> of the tangent vector of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> at point <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code>.</p>
 
-  <p><img src="/img/sphere_simple.png" width="500" /></p>
+      <p><img src="/img/sphere_simple.png" width="500" /></p>
 
-  <p><strong>Warning</strong>: Curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> is NOT the shortest curve in the manifold between <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{x}_1$</code>.</p>
-</blockquote>
+      <p><strong>Warning</strong>: Curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> is NOT the shortest curve in the manifold between <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{x}_1$</code>.</p>
+    </blockquote>
+  </fieldset>
+</details>
 
-<blockquote>
-  <p>Example 2 (Invalid directional derivative):</p>
+<details>
+<summary>Invalid case:</summary>
+<fieldset class="field-set">
+    <blockquote>
 
-  <p>A directional derivative can be ill-defined under a <strong>non-intrinsic</strong> parameterization.</p>
+      <p>A directional derivative can be ill-defined under a <strong>non-intrinsic</strong> parameterization.</p>
 
-  <p>We use <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">parameterization 3</a> for unit circle <code class="language-plaintext highlighter-rouge">$\mathcal{S}^1$</code>, where the red line segment passes through <code class="language-plaintext highlighter-rouge">$\tau_0=(0,1) \in \mathcal{S}^1 $</code>.</p>
+      <p>We use <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">parameterization 3</a> for unit circle <code class="language-plaintext highlighter-rouge">$\mathcal{S}^1$</code>, where the red line segment passes through <code class="language-plaintext highlighter-rouge">$\tau_0=(0,1) \in \mathcal{S}^1 $</code>.</p>
 
-  <p><img src="/img/tangent_non.png" alt="Figure 1" /></p>
+      <p><img src="/img/tangent_non.png" alt="Figure 1" /></p>
 
-  <p>Any other point <code class="language-plaintext highlighter-rouge">$\tau_0 + t\mathbf{v}$</code> in the line segment leaves the manifold for <code class="language-plaintext highlighter-rouge">$t\neq 0$</code> and thus, <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau}_0+t\mathbf{v})$</code> is not well-defined.
+      <p>Any other point <code class="language-plaintext highlighter-rouge">$\tau_0 + t\mathbf{v}$</code> in the line segment leaves the manifold for <code class="language-plaintext highlighter-rouge">$t\neq 0$</code> and thus, <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau}_0+t\mathbf{v})$</code> is not well-defined.
 The main reason is that <code class="language-plaintext highlighter-rouge">$\tau$</code> is not an intrinsic parameterization.</p>
-</blockquote>
+    </blockquote>
+  </fieldset>
+</details>
 
 <h1 id="riemannian-steepest-direction">Riemannian steepest direction</h1>
 <hr />
@@ -320,46 +328,56 @@ When $\lambda \neq 0$, vector 	<code class="language-plaintext highlighter-rouge
 <p>The <strong>Euclidean</strong> steepest direction <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{euclid}}= -\frac{ \nabla_\tau f(\mathbf{\tau}_0) }{\| \nabla_\tau f(\mathbf{\tau}_0) \|_F}$</code> is <strong>not</strong> the optimal solution of  Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> when <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\tau_0) \neq \mathbf{I}$</code>.
 We will illustrate this by using an example.</p>
 
-<blockquote>
-  <p>Euclidean steepest direction is not the optimal solution of  Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code></p>
+<details>
+<summary>Euclidean steepest direction is not the optimal solution of  Eq. $\eqref{2}$</summary>
+<fieldset class="field-set">
+    <blockquote>
 
-  <p>Consider <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\tau_0)=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; \frac{1}{2} \end{bmatrix}$</code> and <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)=\begin{bmatrix} 1\\1 \end{bmatrix}$</code>.
+      <p>Consider <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\tau_0)=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; \frac{1}{2} \end{bmatrix}$</code> and <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)=\begin{bmatrix} 1\\1 \end{bmatrix}$</code>.
 We have the following results
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \| F^{-1} \nabla_\tau f(\mathbf{\tau}_0) \|_F^2  =  \nabla_\tau^T f(\mathbf{\tau}_0) \mathbf{F}^{-1}(\tau_0) \nabla_\tau f(\mathbf{\tau}_0) = 3; \,\,\,
 \| \nabla_\tau f(\mathbf{\tau}_0) \|_F^2  =  \nabla_\tau^T f(\mathbf{\tau}_0) \mathbf{F}(\tau_0) \nabla_\tau f(\mathbf{\tau}_0) = \frac{3}{2}
 \end{aligned}
-$$</code>
-<code class="language-plaintext highlighter-rouge">$$
+$$</code></p>
+
+      <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{v}_{\text{opt}} = -\begin{bmatrix} \frac{1}{\sqrt{3}} \\ \frac{2}{\sqrt{3}} \end{bmatrix}; \,\,\,
 \mathbf{v}_{\text{euclid}}=
 -\begin{bmatrix} \sqrt{\frac{2}{3}} \\ \sqrt{\frac{2}{3}} \end{bmatrix}\end{aligned}
-$$</code>
-<code class="language-plaintext highlighter-rouge">$$
+$$</code></p>
+
+      <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
- \mathbf{v}_{\text{opt}}^T \nabla_\tau f(\mathbf{\tau}_0)= -\sqrt{3}  &lt;  -\frac{2\sqrt{2}}{\sqrt{3}} = \mathbf{v}_{\text{euclid}}^T \nabla_\tau f(\mathbf{\tau}_0) 
+\mathbf{v}_{\text{opt}}^T \nabla_\tau f(\mathbf{\tau}_0)= -\sqrt{3}  &lt;  -\frac{2\sqrt{2}}{\sqrt{3}} = \mathbf{v}_{\text{euclid}}^T \nabla_\tau f(\mathbf{\tau}_0) 
 \end{aligned}
 $$</code></p>
 
-  <p>Therefore, the Euclidean steepest direction <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{euclid}}$</code> is not the optimal solution of  Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>.</p>
-</blockquote>
+      <p>Therefore, the Euclidean steepest direction <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{euclid}}$</code> is not the optimal solution of  Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>.</p>
+    </blockquote>
+  </fieldset>
+</details>
 
 <p>Given a scalar function $f(\mathbf{\tau})$, if its <strong>Euclidean</strong> (steepest) gradient is $\nabla_\tau f(\mathbf{\tau})$, its <strong>Riemannian</strong> (steepest) gradient is defined as $ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$ in literature.
 We use a learning-rate to control the length of a gradient instead of normalizing its length. 
 Since we use the Fisher-Rao metric, the Riemannian gradient is also known as the <strong>natural</strong> gradient.</p>
 
-<blockquote>
-  <p>Intrinsic parametrization and natural-gradients for multivate Gaussian</p>
+<details>
+<summary>Example: multivariate Gaussian</summary>
+<fieldset class="field-set">
+    <blockquote>
 
-  <p>Consider a $d$-dimensional Gaussian family with zero mean and precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> discussed in <a href="/posts/2021/09/Geomopt01/#manifold-dimension">Part I</a>. <br />
+      <p>Consider a $d$-dimensional Gaussian family with zero mean and precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> discussed in <a href="/posts/2021/09/Geomopt01/#manifold-dimension">Part I</a>. <br />
 We specify an intrinsic parameterization $\mathbf{\tau}$ of the family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathrm{MatH}(\tau) = \mathbf{S}   \succ \mathbf{0} \}$</code> with parametrization <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{S})$</code>, where <code class="language-plaintext highlighter-rouge">$\tau$</code> is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of  the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization function</a> $\mathrm{vech}()$.</p>
 
-  <p>Technically speaking, <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is NOT an intrinsic parameter due to the symmetry constraint. In other words, FIM w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> will be singular if  <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is considered as a matrix parameter with $d^2$ degrees of freedom.</p>
+      <p>Technically speaking, <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is NOT an intrinsic parameter due to the symmetry constraint. In other words, FIM w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> will be singular if  <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is considered as a matrix parameter with $d^2$ degrees of freedom.</p>
 
-  <p>In the literature, a natural gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is defined as <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is a natural-gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>.</p>
-</blockquote>
+      <p>In the literature, a natural gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is defined as <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is a natural-gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>.</p>
+    </blockquote>
+  </fieldset>
+</details>
 
 <h1 id="riemannian-gradients-as-tangent-vectors-optional">Riemannian gradients as tangent vectors (optional)</h1>
 <hr />
