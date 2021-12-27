@@ -230,7 +230,7 @@ regular natural parametrizations since commonly used exponential family distribu
         <blockquote>
 
           <p>Recall that in <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>, we consider this family as
-<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code>, where <code class="language-plaintext highlighter-rouge">$\mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>.</p>
+<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code> and variance <code class="language-plaintext highlighter-rouge">$\sigma$</code>, where <code class="language-plaintext highlighter-rouge">$\mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>.</p>
 
           <p>We re-express it in an exponential form as</p>
 
@@ -327,7 +327,13 @@ using this class of parametrizations.</p>
 <p>We will only show the first property in this post. The remaining properties can be found in the literature.
 Note that the linearity in the inner product <code class="language-plaintext highlighter-rouge">$\langle \mathbf{\eta} , \mathbf{T}_\eta(\mathbf{w}) \rangle$</code>,  plays a key role in showing these properties.</p>
 
-<p>Recall that a parametrization is intrinstic if 
+<details>
+<summary>Claim: Regular, minimal, and natural parametrization is intrinstic</summary>
+<fieldset class="field-set">
+    <blockquote>
+      <p>Proof by contradiction:</p>
+
+      <p>Recall that a parametrization is intrinstic if 
 <code class="language-plaintext highlighter-rouge">$K$</code> partial derivatives 
 <code class="language-plaintext highlighter-rouge">$ \{ \partial_{\eta_i} \log p(\mathbf{w}|\eta) \} $</code>  are linearly independent.
 Since the parameter space is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> and the log-partition function <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)$</code> is differentiable,  these partial derivatives are well-defined and can be computed as
@@ -335,12 +341,7 @@ Since the parameter space is open in <code class="language-plaintext highlighter
 \begin{aligned}
 \partial_{\eta_i} \log p(\mathbf{w}|\eta) = \langle \mathbf{e}_i,  \mathbf{T} (\mathbf{w}) \rangle - \partial_{\eta_i}A_\eta(\eta) 
 \end{aligned}
-$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{e}_i$</code> is an one-hot array which has zero in all entries except the $i$-th entry.</p>
-<details>
-<summary>Claim: Regular, minimal, and natural parametrization is intrinstic</summary>
-<fieldset class="field-set">
-    <blockquote>
-      <p>Proof by contradiction:</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{e}_i$</code> is an one-hot/unit array which has zero in all entries except the $i$-th entry.</p>
 
       <p>If these partial derivatives are linearly dependent, there exist a set of non-zero constant <code class="language-plaintext highlighter-rouge">$c_i$</code> such that
 <code class="language-plaintext highlighter-rouge">$\sum_i c_i \partial_{\eta_i} \log p(\mathbf{w}|\eta)= 0 $</code>, where the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code>.
@@ -369,7 +370,7 @@ the sufficient stattistics <code class="language-plaintext highlighter-rouge">$\
     <blockquote>
 
       <p>Consider a $d$-dimensional Gaussian family
-We specify a parameterization $\mathbf{\tau}$ of the  family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{\mu},\mathbf{\Sigma}) \Big| \mathbf{\mu} \in \mathcal{R}^d, \mathbf{\Sigma}   \succ \mathbf{0} \}$</code></p>
+We specify a parameterization $\mathbf{\tau}$ of the  family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{\mu},\mathbf{\Sigma}) \Big| \mathbf{\mu} \in \mathcal{R}^d, \mathbf{\Sigma}   \succ \mathbf{0} \}$</code> with mean <code class="language-plaintext highlighter-rouge">$\mathbf{\mu}$</code> and covariance <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}$</code>.</p>
 
       <p>We re-express it in an exponential form as</p>
 
@@ -868,7 +869,7 @@ _\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
 
 
 
-  13 minute read
+  14 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
