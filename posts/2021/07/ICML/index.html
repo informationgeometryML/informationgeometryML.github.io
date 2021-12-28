@@ -395,8 +395,8 @@ $$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong>
 <table>
   <thead>
     <tr>
-      <th style="text-align: center">Block lower-triangular</th>
-      <th style="text-align: center">Block upper-triangular</th>
+      <th style="text-align: center">Lower-triangular</th>
+      <th style="text-align: center">Upper-triangular</th>
       <th style="text-align: center">Hierarchical</th>
       <th style="text-align: center">Kronecker product</th>
       <th style="text-align: center">Triangular-Toeplitz</th>
@@ -405,12 +405,22 @@ $$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center"><img src="/img/icml2021-group-low.png" width="250" /></td>
-      <td style="text-align: center"><img src="/img/icml2021-group-up.png" width="250" /></td>
-      <td style="text-align: center"><img src="/img/icml2021-group-hie.png" width="250" /></td>
-      <td style="text-align: center"><img src="/img/icml2021-group-kro.png" width="250" /></td>
-      <td style="text-align: center"><img src="/img/icml2021-group-tri-Toep.png" width="250" /></td>
-      <td style="text-align: center"><img src="/img/icml2021-group-sparse.png" width="250" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-low.png" width="220" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-up.png" width="220" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-hie.png" width="220" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-kro.png" width="220" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-tri-Toep.png" width="220" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-group-sparse.png" width="220" /></td>
+    </tr>
+  </tbody>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\begin{bmatrix} \mathbf{B}_A &amp;  \mathbf{0}  \\ \mathbf{B}_C &amp;  \mathbf{B}_D  \end{bmatrix}$</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\begin{bmatrix} \mathbf{B}_A &amp;  \mathbf{B}_B  \\ \mathbf{0} &amp;  \mathbf{B}_D  \end{bmatrix}$</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\begin{bmatrix} \mathbf{B}_A &amp;  \mathbf{0}  \\ \mathbf{B}_C &amp;  \begin{bmatrix} \mathbf{B}_{D} &amp; \mathbf{0} \\ \mathbf{B}_{3} &amp; \mathbf{B}_{4} \end{bmatrix} \end{bmatrix}$</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\begin{bmatrix} a &amp;  0  \\ c &amp;  d  \end{bmatrix} \otimes \begin{bmatrix} \alpha &amp;  0 &amp; 0 \\ \beta_1 &amp; \gamma_1 &amp; 0 \\ \beta_2 &amp; 0 &amp; \gamma_2     \end{bmatrix} $</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\begin{bmatrix} a &amp; 0 &amp; 0 &amp;0 \\ b &amp;  a &amp; 0 &amp; 0  \\ c &amp; b &amp; a &amp; 0 \\ d &amp; c &amp; b &amp; a \end{bmatrix}$</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\begin{bmatrix} \mathbf{B}_{D_1} &amp; \mathbf{0} &amp; \mathbf{0} \\ \mathbf{B}_{A} &amp; \mathbf{B}_{B} &amp; \mathbf{0} \\ \mathbf{B}_{D_2} &amp; \mathbf{0} &amp; \mathbf{B}_{D_3} \end{bmatrix}$</code></td>
     </tr>
   </tbody>
 </table>
