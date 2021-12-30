@@ -264,7 +264,7 @@ By doing so, we can exploit the geometric structure of a parametric family denot
   <tbody>
     <tr>
       <td style="text-align: left">Least Square</td>
-      <td style="text-align: center">observation $(x,y)$</td>
+      <td style="text-align: center">observation <code class="language-plaintext highlighter-rouge">$(x,y)$</code></td>
       <td style="text-align: right"><code class="language-plaintext highlighter-rouge">$p(x,y|\tau)$</code></td>
     </tr>
     <tr>
@@ -371,13 +371,13 @@ The partial derivatives are
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
  \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
-\end{aligned} \tag{4}\label{4}
+\end{aligned}
 $$</code></p>
 
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
  \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
-\end{aligned} \tag{5}\label{5}
+\end{aligned}
 $$</code>
 If <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code> holds for any $w$, we have <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies  linear independence.</p>
 
@@ -394,12 +394,12 @@ The partial derivatives are</p>
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
  \partial_{\pi_0} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{\pi_1}{(\pi_0+\pi_1)^2}   
-\end{aligned} \tag{6}\label{6}
+\end{aligned}
 $$</code>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \partial_{\pi_1} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} 
-\end{aligned} \tag{7}\label{7}
+\end{aligned}
 $$</code>
 Note that when <code class="language-plaintext highlighter-rouge">$c_0 = \pi_0 \neq 0 $</code> and <code class="language-plaintext highlighter-rouge">$c_1= \pi_1 \neq 0$</code>, we have <code class="language-plaintext highlighter-rouge">$c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$</code>.</p>
 
@@ -427,7 +427,7 @@ The main reason is that the parameter space is not open in $\mathcal{R}^2$.</p>
 Note that the metric could be ill-defined since the expectation may not exist.</p>
 
 <p>Given a parameterization,  we can express the metric in a matrix form as
-<code class="language-plaintext highlighter-rouge">$ \mathbf{F}(\tau) := E_{p(wh|\tau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ]$</code>,
+<code class="language-plaintext highlighter-rouge">$ \mathbf{F}(\tau) := E_{p(wtau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ]$</code>,
 where $K$ is the number of entries of parameter array $\tau$ and 
 <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $</code> is a column vector.</p>
 
@@ -460,13 +460,13 @@ It is possible to define FIM under a non-intrinstic parameterization. However, F
 The following computation is not correct. Do you make similar mistakes like this?</p>
 
   <p>Let <code class="language-plaintext highlighter-rouge">$  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$</code>, where <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. The derivative is
-<code class="language-plaintext highlighter-rouge">$$  \begin{aligned} \nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T  \end{aligned} \tag{8}\label{8}$$</code>
-Thus, by Eq. <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code>, FIM under this  parameterization is</p>
+<code class="language-plaintext highlighter-rouge">$$  \begin{aligned} \nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T  \end{aligned} \tag{4}\label{4}$$</code>
+Thus, by Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, FIM under this  parameterization is</p>
 
-  <p><code class="language-plaintext highlighter-rouge">$$  \begin{aligned} F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\  \mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;  0 \\ 0 &amp;  \frac{1}{\pi_1} \end{bmatrix} \end{aligned} \tag{9}\label{9}$$</code>
+  <p><code class="language-plaintext highlighter-rouge">$$  \begin{aligned} F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\  \mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;  0 \\ 0 &amp;  \frac{1}{\pi_1} \end{bmatrix} \end{aligned}$$</code>
 This computation is not correct. Do you know why it is not correct?</p>
 
-  <p>The key reason is the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code> is <strong>incorrect</strong>.</p>
+  <p>The key reason is the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> is <strong>incorrect</strong>.</p>
 
   <p>By definition, a Bernoulli distribution is valid only when the constraint holds. 
 Thus, the constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code> must be satisifed when we compute the Fisher matrix since the computation involves the expectation of this distribution.</p>
