@@ -452,12 +452,12 @@ Under parametrization $\mathbf{\tau}$, we have the following parametric represen
 
 <p>Under <strong>intrinsic</strong> parametrization $\tau$, we have <code class="language-plaintext highlighter-rouge">$\Omega_\tau \subset \mathcal{R}^2$</code>. Thus, we can perform this operation in $\Omega_\tau$ space: <code class="language-plaintext highlighter-rouge">$\tau_0 +t\mathbf{v}(\tau_0) \in \Omega_\tau$</code> when scalar <code class="language-plaintext highlighter-rouge">$|t|$</code> is small enough. Note that we only define the <a href="#distance-induced-by-the-fisher-rao-metric">distance</a> between two vectors in the <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> space. The distance between two points in the <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> space is undefined in this post.</p>
 
-<p>(Parameterization-free repesentation of  vector $\mathbf{v}$ ):</p>
+<h2 id="parameterization-free-repesentation-of--vector-mathbfv">Parameterization-free repesentation of  vector $\mathbf{v}$</h2>
 
 <p>The tangent vector $\mathbf{v}$ at point $\mathbf{x_0}$  can be viewed as the <strong>tangent direction</strong> of a (1-dimensional) smooth curve $\gamma(t) \in \mathcal{M}$, where $\gamma(0)=\mathbf{x_0}$,  <code class="language-plaintext highlighter-rouge">$\frac{d {\gamma}(t) }{d t} \Big|_{t=0}=\mathbf{v}$</code> and the support of $\gamma(t)$ denoted by $\mathbf{I}$ is an open interval in  <code class="language-plaintext highlighter-rouge">$\mathcal{R}^1$</code> containing 0. 
 Since a curve $\gamma(t)$ is a geometric object, this is a parameterization-free repesentation of a vector.</p>
 
-<p>(Parameterization-dependent repesentation of vector $\mathbf{v}$ ):</p>
+<h2 id="parameterization-dependent-repesentation-of-vector-mathbfv">Parameterization-dependent repesentation of vector $\mathbf{v}$</h2>
 
 <p>Given intrinsic parametrization $\tau$, we can define the parametric representation of the curve denoted by ${\gamma}_\tau(t)$, where the domain is <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau \subset \mathcal{R}^1$</code>.
 The parametric representation of vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is defined as <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_{\tau}(t) }{d t} \Big|_{t=0}$</code>, where <code class="language-plaintext highlighter-rouge">${\gamma}_{\tau}(0)=\tau_0$</code>.</p>
@@ -489,11 +489,11 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
  of curve $\gamma(t)$ at $\mathbf{x}_0$ since  <code class="language-plaintext highlighter-rouge">${\gamma}_\tau(t)$</code> is the parametric representation of $\gamma(t)$.</p>
 </blockquote>
 
-<p>Last but not least,
-we can also define vector additions and real scalar products in a tangent vector space  by using tangent directions of curves in the manifold with/without a parameterization.</p>
+<h2 id="riemannian-gradient-space-has-a-vector-space-structure">(Riemannian) gradient space has a vector-space structure</h2>
 
-<p>A vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> which is a parametric representation of a set of <strong>points</strong> in a manifold.</p>
+<p>We can also define vector additions and real scalar products in a tangent vector space  by using tangent directions of curves in the manifold with/without a parameterization.</p>
 
+<p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> which is a parametric representation of a set of <strong>points</strong> in a manifold.</p>
 
         
       </section>

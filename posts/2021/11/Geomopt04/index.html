@@ -205,8 +205,9 @@ We also discuss some invariance property of natural-gradient descent, Riemannian
 <p>As we disucssed in <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, the parameter space $\Omega_\tau$ and the tangent space denoted by <code class="language-plaintext highlighter-rouge">$T\mathcal{M}_{\tau_0}$</code> at point $\tau_0$ are different spaces. 
 Given  <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">intrinsic parametrization</a>  <code class="language-plaintext highlighter-rouge">$\tau$</code>,  the tangent space is a vector space and <code class="language-plaintext highlighter-rouge">$T\mathcal{M}_{\tau_0}=\mathcal{R}^K$</code> while the parameter space $\Omega_\tau$ is like a local vector space in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where $K$ is the dimension of the manifold. Moreover, <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is often an open (proper) subset of <code class="language-plaintext highlighter-rouge">$T\mathcal{M}_{\tau_0}$</code>.</p>
 
-<p>In a manifold case, we have to explicitly distinguish the difference between the representation of a point (parameter) and a vector (Riemannian gradient).
-The following figure illustrates the difference between the <strong>domain</strong> of these two spaces. Moreover, the <strong>norm/distance</strong> in each of these two spaces is defined differently.</p>
+<p>In manifold cases, we have to explicitly distinguish the difference between the representation of a point (parameter) and a vector (Riemannian gradient).
+The following figure illustrates the difference between the <strong>domain</strong> of these two spaces. Moreover, the <strong>norm/distance</strong> in each of these two spaces is defined differently. 
+Mathematically speaking, the (Riemannian) gradient space is much simpler and nicer than the parameter space.</p>
 
 <p><img src="/img/sphere.png" width="500" /></p>
 
@@ -220,7 +221,11 @@ The following figure illustrates the difference between the <strong>domain</stro
 \end{aligned}\tag{1}\label{1}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\tau_k}$</code> is a natural/Riemannian gradient evaluated at point <code class="language-plaintext highlighter-rouge">$\tau_{k}$</code> and $\alpha&gt;0$ is a step-size.</p>
 
-<p>The update in Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is valid since the parameter space $\Omega_\tau$  has a local vector-space structure thanks to the use of an intrinsic parametrization.
+<p>This update in Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is inspired by the standard vector update in the <strong>gradient space</strong>.
+By choosing an intrinstic parametrization, this update is also valid in the <strong>parameter space</strong> when the step-size is small
+enough.</p>
+
+<p>The update in the parameter space is valid since the parameter space $\Omega_\tau$ has a local vector-space structure thanks to the use of an intrinsic parametrization.
 However, when $\Omega_\tau$ is a proper subset of $T\mathcal{M}_{\tau_k}$ (i.e., <code class="language-plaintext highlighter-rouge">$\Omega_\tau \neq T\mathcal{M}_{\tau_k} $</code>), the update in Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is valid only when the step-size $\alpha$ is small enough so that  <code class="language-plaintext highlighter-rouge">$\tau_{k+1} \in \Omega_\tau$</code>.</p>
 
 <p><span style="color:red"><strong>Warning</strong></span>:
@@ -341,7 +346,7 @@ Equiavalently, <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\t
 $$</code></p>
 
 <p>The invariance of this update is due to the uniqueness of ODE and transformation rules for natural-gradients, Fisher information matrix, and Christoffel symbols. We will not discuss this further in this post to avoid complicated derivations. 
-Although Riemannian gradient descent is nice, the expoential map or the geodesic often does not have a closed form expression.</p>
+Although Riemannian gradient descent is nice, the exponential map or the geodesic often does not have a closed form expression.</p>
 
 <h1 id="many-faces-of-natural-gradient-descent">Many faces of Natural-gradient Descent</h1>
 <hr />
