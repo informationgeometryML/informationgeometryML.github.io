@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-30T00:08:53-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-31T18:24:50-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -2103,14 +2103,14 @@ We now illustrate this by examples.&lt;/p&gt;
 &lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
 
 &lt;p&gt;Natural-gradient descent (NGD) on structured parameter spaces  is computationally challenging.
-We propose a flexible and efficient NGD method to incorporate structures via matrix groups.&lt;/p&gt;
+We propose a flexible and efficient NGD method to incorporate structures via matrix Lie groups.&lt;/p&gt;
 
 &lt;p&gt;Our NGD method&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;generalizes the exponential natural evolutionary strategy &lt;a class=&quot;citation&quot; href=&quot;#glasmachers2010exponential&quot;&gt;[2]&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;recovers existing  Newton-like algorithms&lt;/li&gt;
   &lt;li&gt;yields new structured 2nd-order methods and adaptive-gradient methods with group-structural invariance &lt;a class=&quot;citation&quot; href=&quot;#lin2021structured&quot;&gt;[3]&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;gives new NGD to learn structured covariances of Gaussian, Wishart and their mixtures&lt;/li&gt;
+  &lt;li&gt;gives new NGD updates to learn structured covariances of Gaussian, Wishart and their mixtures&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Applications of our method:&lt;/p&gt;
@@ -2118,7 +2118,7 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
   &lt;li&gt;deep learning (structured adaptive-gradient),&lt;/li&gt;
   &lt;li&gt;non-convex optimization (structured 2nd-order),&lt;/li&gt;
   &lt;li&gt;evolution strategies (gradient-free),&lt;/li&gt;
-  &lt;li&gt;variational inference (multimodal density with Monte Carlo gradient).&lt;/li&gt;
+  &lt;li&gt;variational inference (multimodal density with Monte Carlo reparameterization gradients).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;hr /&gt;
@@ -2133,7 +2133,7 @@ as optimization over a parametric family &lt;code class=&quot;language-plaintext
 $$&lt;/code&gt;
 where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w}$&lt;/code&gt; is the decision variable,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\ell(\mathbf{w})$&lt;/code&gt; is a loss function, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is the parameter space of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q$&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma\ge 0$&lt;/code&gt; is a constant.&lt;/p&gt;
 
-&lt;p&gt;Gradient descent and natural-gradient descent  to solve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt;:
+&lt;p&gt;Using gradient descent and natural-gradient descent to solve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt;:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \textrm{GD: } &amp;amp;\tau_{t+1} \leftarrow \tau_t - \alpha \nabla_{\tau_t} \mathcal{L}(\tau) \\
