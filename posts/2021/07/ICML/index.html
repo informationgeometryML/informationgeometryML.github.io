@@ -182,7 +182,7 @@
 
 
 
-  9 minute read
+  10 minute read
 </p>
           
         </header>
@@ -596,20 +596,23 @@ $$</code> where $\Sigma=\mathbf{S}^{-1}$ is the covariance.</li>
 <p>Our method gives adaptive-gradient updates with group-structural invariance by
  approximating <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code>  in <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code> using the Gauss-Newton.</p>
 
-<p>The Kronecker product of two structured groups further reduces the time complexity.</p>
+<p>The Kronecker product (<code class="language-plaintext highlighter-rouge">$\mathbf{B}=\mathbf{B}_1 \otimes \mathbf{B}_2$</code>) of two sparse structured groups (<code class="language-plaintext highlighter-rouge">$\mathbf{B}
+_1$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{B}_2$</code>) further reduces the time complexity, where precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}=\mathbf{B}\mathbf{B}^T= (\mathbf{B}_1 \mathbf{B}_1^T) \otimes (\mathbf{B}_2 \mathbf{B}_2^T)$</code></p>
 
 <details>
 	<summary>Time complexity:</summary>
 <fieldset class="field-set">
     <ul>
-      <li><code class="language-plaintext highlighter-rouge">$O(k p)$</code> for triangular structure,</li>
-      <li><code class="language-plaintext highlighter-rouge">$O( (k_1+k_2) p)$</code> for hierarchical structure.</li>
+      <li><code class="language-plaintext highlighter-rouge">$O(k p)$</code> for our Kronecker product with triangular groups, where <code class="language-plaintext highlighter-rouge">$0&lt;k&lt;p^{1/2}$</code></li>
+      <li><code class="language-plaintext highlighter-rouge">$O( (k_1+k_2) p)$</code> for our  Kronecker product with hierarchical groups, where <code class="language-plaintext highlighter-rouge">$0&lt;k_1+k_2&lt;p^{1/2}$</code></li>
+      <li><code class="language-plaintext highlighter-rouge">$O(p)$</code> for Adam and our diagonal groups</li>
+      <li><code class="language-plaintext highlighter-rouge">$O(p^{3/2})$</code> for KFAC and our Kronecker product with dense groups</li>
     </ul>
 
     <p>Implementation:</p>
     <ul>
-      <li>Automatically parallelized by Auto-Differentiation,</li>
-      <li>No sequential conjugate-gradient (CG) steps.</li>
+      <li>Automatically parallelized by Auto-Differentiation</li>
+      <li>No sequential conjugate-gradient (CG) steps</li>
     </ul>
   </fieldset>
 </details>
@@ -884,7 +887,7 @@ We will also discuss why the Euclidean steepest direction is NOT i...</p>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2021 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>

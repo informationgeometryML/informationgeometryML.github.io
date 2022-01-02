@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2021-12-31T18:28:25-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-01T16:14:11-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -2503,20 +2503,23 @@ $$&lt;/code&gt; where $\Sigma=\mathbf{S}^{-1}$ is the covariance.&lt;/li&gt;
 &lt;p&gt;Our method gives adaptive-gradient updates with group-structural invariance by
  approximating &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_{\mu_t}^2 \ell( \mu)$&lt;/code&gt;  in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{8}$&lt;/code&gt; using the Gauss-Newton.&lt;/p&gt;
 
-&lt;p&gt;The Kronecker product of two structured groups further reduces the time complexity.&lt;/p&gt;
+&lt;p&gt;The Kronecker product (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}=\mathbf{B}_1 \otimes \mathbf{B}_2$&lt;/code&gt;) of two sparse structured groups (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}
+_1$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}_2$&lt;/code&gt;) further reduces the time complexity, where precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}=\mathbf{B}\mathbf{B}^T= (\mathbf{B}_1 \mathbf{B}_1^T) \otimes (\mathbf{B}_2 \mathbf{B}_2^T)$&lt;/code&gt;&lt;/p&gt;
 
 &lt;details&gt;
 	&lt;summary&gt;Time complexity:&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
     &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(k p)$&lt;/code&gt; for triangular structure,&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O( (k_1+k_2) p)$&lt;/code&gt; for hierarchical structure.&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(k p)$&lt;/code&gt; for our Kronecker product with triangular groups, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$0&amp;lt;k&amp;lt;p^{1/2}$&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O( (k_1+k_2) p)$&lt;/code&gt; for our  Kronecker product with hierarchical groups, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$0&amp;lt;k_1+k_2&amp;lt;p^{1/2}$&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(p)$&lt;/code&gt; for Adam and our diagonal groups&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(p^{3/2})$&lt;/code&gt; for KFAC and our Kronecker product with dense groups&lt;/li&gt;
     &lt;/ul&gt;
 
     &lt;p&gt;Implementation:&lt;/p&gt;
     &lt;ul&gt;
-      &lt;li&gt;Automatically parallelized by Auto-Differentiation,&lt;/li&gt;
-      &lt;li&gt;No sequential conjugate-gradient (CG) steps.&lt;/li&gt;
+      &lt;li&gt;Automatically parallelized by Auto-Differentiation&lt;/li&gt;
+      &lt;li&gt;No sequential conjugate-gradient (CG) steps&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/fieldset&gt;
 &lt;/details&gt;
