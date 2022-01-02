@@ -182,7 +182,7 @@
 
 
 
-  12 minute read
+  13 minute read
 </p>
           
         </header>
@@ -221,7 +221,7 @@ Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathc
   <p>Algorithms such as  <strong>Fisher scoring</strong> and <strong>(emprical) natural-gradient descent</strong> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>.</p>
 </blockquote>
 
-<!--- \stackrel{\eqref{1}} (Eq. `$\eqref{1}$`) --->
+<!--Here is a simple footnote[^1]. With some additional text after it.-->
 
 <blockquote>
   <p>Variational Inference:</p>
@@ -489,17 +489,24 @@ In other words, the above Fisher matrix computation is not correct since <code c
   <p>A Bernoulli family with a non-singular FIM can be defined as <code class="language-plaintext highlighter-rouge">$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&lt; \pi_0 &lt; 1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi_0$</code>.</p>
 </blockquote>
 
-<h1 id="manifold-dimension">Manifold Dimension</h1>
+<h1 id="dimensionality-of-a-manifold">Dimensionality of a manifold</h1>
 <hr />
-<p>We can define the dimension of a manifold by using the dimension of an intrinsic parametrization. Mathematically, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom.
+<p>We can define the dimension of a manifold by using the dimension of an intrinsic parametrization.
+Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom.
+This also gives us a tool to help identify non-manifold examples.
 We now illustrate this by examples.</p>
+
+<p>A unit circle is a 1-dimensional manifold.  An open unit ball is a 2-dimensional manifold.
+However, a closed
+unit ball is NOT a manifold since its interior is a unit circle and its boundary is an open unit ball.
+The  circle and the  unit ball do not have the same dimensionality.</p>
 
 <table>
   <thead>
     <tr>
       <th style="text-align: center">unit circle</th>
       <th style="text-align: center">open unit ball</th>
-      <th style="text-align: center">closed ball</th>
+      <th style="text-align: center">closed unit ball</th>
     </tr>
   </thead>
   <tbody>
@@ -536,6 +543,9 @@ We now illustrate this by examples.</p>
     </tr>
   </tbody>
 </table>
+
+<!--# Footnotes:-->
+<!--[^1]: My reference.-->
 
 
         
