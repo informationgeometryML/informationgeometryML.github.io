@@ -591,7 +591,7 @@ $$</code> where $\Sigma=\mathbf{S}^{-1}$ is the covariance.</li>
 <h2 id="structured-adaptive-gradient-methods-for-deep-learning">Structured Adaptive-gradient Methods for Deep Learning</h2>
 <p>At each NN layer,
 consider a  Gaussian family
-       <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\tau)= q(\mathbf{w}|\mu,\mathbf{S})$</code> with a Kronecker product structure.</p>
+       <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\mu,\mathbf{S})$</code> with a Kronecker product structure, where <code class="language-plaintext highlighter-rouge">$\tau=(\mu,\mathbf{S})$</code>.</p>
 
 <p>Our method gives adaptive-gradient updates with group-structural invariance by
  approximating <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code>  in <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code> using the Gauss-Newton.</p>
