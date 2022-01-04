@@ -25,7 +25,7 @@ jobs:
       run: pip install jekyllnb
     - name: Convert embedded notebooks
       run: |
-        jupyter jekyllnb --site-dir ./ --page-dir _includes --image-dir img embedded/nb_*.ipynb
+        jupyter jekyllnb --site-dir ./ --page-dir _includes --image-dir _site/img embedded/nb_*.ipynb
         sed -i '1,5d' _includes/nb_*.md
     - name: Build Jekyll site
       run: |
