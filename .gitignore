@@ -1,5 +1,6 @@
 _site/
 .bundle/
+_includes/nb_*.md
 *.swp
 .sass-cache
 .vagrant
