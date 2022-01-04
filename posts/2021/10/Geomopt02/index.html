@@ -528,7 +528,7 @@ We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img src="/_site/img/nb_sgd_demo/nb_sgd_demo_5_0.png" alt="png" class="center-image" /></p>
+<p><img src="/img/nb_sgd_demo/nb_sgd_demo_5_0.png" alt="png" class="center-image" /></p>
 
 <p>We can see from plot above that our local minimum is gonna be near around 1.4 or 1.5 (on the x-axis), but let’s pretend that we don’t know that, so we set our starting point (arbitrarily, in this case) at $x_0 = 2$</p>
 
@@ -577,7 +577,7 @@ Number of steps: 17
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img src="/_site/img/nb_sgd_demo/nb_sgd_demo_9_0.png" alt="png" class="center-image" /></p>
+<p><img src="/img/nb_sgd_demo/nb_sgd_demo_9_0.png" alt="png" class="center-image" /></p>
 
 <p>You’ll notice that the step size (also called learning rate) in the implementation above is constant, unlike the algorithm in the pseudocode. Doing this makes it easier to implement the algorithm. However, it also presents some issues: If the step size is too small, then convergence will be very slow, but if we make it too large, then the method may fail to converge at all.</p>
 
@@ -643,7 +643,7 @@ Number of steps: 4
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img src="/_site/img/nb_sgd_demo/nb_sgd_demo_13_0.png" alt="png" class="center-image" /></p>
+<p><img src="/img/nb_sgd_demo/nb_sgd_demo_13_0.png" alt="png" class="center-image" /></p>
 
 <p>Another approach to update the step size is choosing a decrease constant $d$ that shrinks the step size over time:
 $\eta(t+1) = \eta(t) / (1+t \times d)$.</p>
@@ -692,7 +692,7 @@ Number of steps: 6
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img src="/_site/img/nb_sgd_demo/nb_sgd_demo_17_0.png" alt="png" class="center-image" /></p>
+<p><img src="/img/nb_sgd_demo/nb_sgd_demo_17_0.png" alt="png" class="center-image" /></p>
 
 <p>Our goal is to find the equation of the straight line $h_\theta(x) = \theta_0 + \theta_1 x$ that best fits our data points. The function that we are trying to minimize in this case is:</p>
 
@@ -784,7 +784,7 @@ theta_1 = 3.2910945679475647
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img src="/_site/img/nb_sgd_demo/nb_sgd_demo_27_0.png" alt="png" class="center-image" /></p>
+<p><img src="/img/nb_sgd_demo/nb_sgd_demo_27_0.png" alt="png" class="center-image" /></p>
 
 <p>Notice that in the method above we need to calculate the gradient in every step of our algorithm. In the example with the crickets, this is not a big deal since there are only 15 data points. But imagine that we had 10 million data points. If this were the case, it would certainly make the method above far less efficient.</p>
 
@@ -905,7 +905,7 @@ theta_1 = 1.999169728242732
 <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre></div></div>
 
-<p><img src="/_site/img/nb_sgd_demo/nb_sgd_demo_39_0.png" alt="png" class="center-image" /></p>
+<p><img src="/img/nb_sgd_demo/nb_sgd_demo_39_0.png" alt="png" class="center-image" /></p>
 
 
         
