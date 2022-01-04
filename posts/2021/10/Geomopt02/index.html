@@ -182,7 +182,7 @@
 
 
 
-  21 minute read
+  11 minute read
 </p>
           
         </header>
@@ -496,417 +496,433 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 <p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that a parameter space is a parametric representation of a set of <strong>points</strong> in a manifold.
 We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-of-spaces">Part IV</a></p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="n">sp</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">import</span> <span class="nn">random</span>
-<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
-<span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">fmin</span>
-</code></pre></div></div>
+<!--
+```python
+%matplotlib inline
+import numpy as np
+import scipy as sp
+import matplotlib.pyplot as plt
+import random
+from scipy import stats
+from scipy.optimize import fmin
+```
 
-<h3 id="gradient-descent">Gradient Descent</h3>
+### Gradient Descent
 
-<p><b>Gradient descent</b>, also known as <b>steepest descent</b>, is an optimization algorithm for finding the local minimum of a function. To find a local minimum, the function “steps” in the  direction of the negative of the gradient. <b>Gradient ascent</b> is the same as gradient descent, except that it steps in the direction of the positive of the gradient and therefore finds local maximums instead of minimums. The algorithm of gradient descent can be outlined as follows:</p>
+<b>Gradient descent</b>, also known as <b>steepest descent</b>, is an optimization algorithm for finding the local minimum of a function. To find a local minimum, the function "steps" in the  direction of the negative of the gradient. <b>Gradient ascent</b> is the same as gradient descent, except that it steps in the direction of the positive of the gradient and therefore finds local maximums instead of minimums. The algorithm of gradient descent can be outlined as follows:
 
-<p>    1:   Choose initial guess $x_0$ <br />
-       2:   <b>for</b> k = 0, 1, 2, … <b>do</b> <br />
-       3:         $s_k$ = -$\nabla f(x_k)$ <br />
-       4:         choose $\alpha_k$ to minimize $f(x_k+\alpha_k s_k)$ <br />
-       5:         $x_{k+1} = x_k + \alpha_k s_k$ <br />
-       6:    <b>end for</b></p>
+&nbsp;&nbsp;&nbsp; 1: &nbsp; Choose initial guess $x_0$ <br>
+&nbsp;&nbsp;&nbsp;    2: &nbsp; <b>for</b> k = 0, 1, 2, ... <b>do</b> <br>
+&nbsp;&nbsp;&nbsp;    3:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $s_k$ = -$\nabla f(x_k)$ <br>
+&nbsp;&nbsp;&nbsp;    4:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; choose $\alpha_k$ to minimize $f(x_k+\alpha_k s_k)$ <br>
+&nbsp;&nbsp;&nbsp;    5:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $x_{k+1} = x_k + \alpha_k s_k$ <br>
+&nbsp;&nbsp;&nbsp;    6: &nbsp;  <b>end for</b>
 
-<p>As a simple example, let’s find a local minimum for the function $f(x) = x^3-2x^2+2$</p>
+As a simple example, let's find a local minimum for the function $f(x) = x^3-2x^2+2$
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="mi">2</span>
-</code></pre></div></div>
+```python
+f = lambda x: x**3-2*x**2+2
+```
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.5</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.5</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div></div>
+```python
+x = np.linspace(-1,2.5,1000)
+plt.plot(x,f(x))
+plt.xlim([-1,2.5])
+plt.ylim([0,3])
+plt.show()
+```
 
-<p><img src="/img/nb_sgd_demo/nb_sgd_demo_5_0.png" alt="png" class="center-image" /></p>
+![png](/img/nb_sgd_demo/nb_sgd_demo_5_0.png){: .center-image }
 
-<p>We can see from plot above that our local minimum is gonna be near around 1.4 or 1.5 (on the x-axis), but let’s pretend that we don’t know that, so we set our starting point (arbitrarily, in this case) at $x_0 = 2$</p>
+We can see from plot above that our local minimum is gonna be near around 1.4 or 1.5 (on the x-axis), but let's pretend that we don't know that, so we set our starting point (arbitrarily, in this case) at $x_0 = 2$
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_old</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">x_new</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># The algorithm starts at x=2
-</span><span class="n">n_k</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="c1"># step size
-</span><span class="n">precision</span> <span class="o">=</span> <span class="mf">0.0001</span>
+```python
+x_old = 0
+x_new = 2 # The algorithm starts at x=2
+n_k = 0.1 # step size
+precision = 0.0001
 
-<span class="n">x_list</span><span class="p">,</span> <span class="n">y_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x_new</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x_new</span><span class="p">)]</span>
+x_list, y_list = [x_new], [f(x_new)]
 
-<span class="c1"># returns the value of the derivative of our function
-</span><span class="k">def</span> <span class="nf">f_prime</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">x</span>
+# returns the value of the derivative of our function
+def f_prime(x):
+    return 3*x**2-4*x
  
-<span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x_new</span> <span class="o">-</span> <span class="n">x_old</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">precision</span><span class="p">:</span>
-    <span class="n">x_old</span> <span class="o">=</span> <span class="n">x_new</span>
-    <span class="n">s_k</span> <span class="o">=</span> <span class="o">-</span><span class="n">f_prime</span><span class="p">(</span><span class="n">x_old</span><span class="p">)</span>
-    <span class="n">x_new</span> <span class="o">=</span> <span class="n">x_old</span> <span class="o">+</span> <span class="n">n_k</span> <span class="o">*</span> <span class="n">s_k</span>
-    <span class="n">x_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_new</span><span class="p">)</span>
-    <span class="n">y_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x_new</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"Local minimum occurs at:"</span><span class="p">,</span> <span class="n">x_new</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"Number of steps:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_list</span><span class="p">))</span>
-</code></pre></div></div>
+while abs(x_new - x_old) > precision:
+    x_old = x_new
+    s_k = -f_prime(x_old)
+    x_new = x_old + n_k * s_k
+    x_list.append(x_new)
+    y_list.append(f(x_new))
+print("Local minimum occurs at:", x_new)
+print("Number of steps:", len(x_list))
+```
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Local minimum occurs at: 1.3334253508453249
-Number of steps: 17
-</code></pre></div></div>
+    Local minimum occurs at: 1.3334253508453249
+    Number of steps: 17
 
-<p>The figures below show the route that was taken to find the local minimum.</p>
+The figures below show the route that was taken to find the local minimum.
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span><span class="n">y_list</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span><span class="n">y_list</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.5</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Gradient descent"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span><span class="n">y_list</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span><span class="n">y_list</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">1.2</span><span class="p">,</span><span class="mf">2.1</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Gradient descent (zoomed in)"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div></div>
+```python
+plt.figure(figsize=[10,3])
+plt.subplot(1,2,1)
+plt.scatter(x_list,y_list,c="r")
+plt.plot(x_list,y_list,c="r")
+plt.plot(x,f(x), c="b")
+plt.xlim([-1,2.5])
+plt.ylim([0,3])
+plt.title("Gradient descent")
+plt.subplot(1,2,2)
+plt.scatter(x_list,y_list,c="r")
+plt.plot(x_list,y_list,c="r")
+plt.plot(x,f(x), c="b")
+plt.xlim([1.2,2.1])
+plt.ylim([0,3])
+plt.title("Gradient descent (zoomed in)")
+plt.show()
+```
 
-<p><img src="/img/nb_sgd_demo/nb_sgd_demo_9_0.png" alt="png" class="center-image" /></p>
+![png](/img/nb_sgd_demo/nb_sgd_demo_9_0.png){: .center-image }
 
-<p>You’ll notice that the step size (also called learning rate) in the implementation above is constant, unlike the algorithm in the pseudocode. Doing this makes it easier to implement the algorithm. However, it also presents some issues: If the step size is too small, then convergence will be very slow, but if we make it too large, then the method may fail to converge at all.</p>
+You'll notice that the step size (also called learning rate) in the implementation above is constant, unlike the algorithm in the pseudocode. Doing this makes it easier to implement the algorithm. However, it also presents some issues: If the step size is too small, then convergence will be very slow, but if we make it too large, then the method may fail to converge at all. 
 
-<p>A solution to this is to use adaptive step sizes as the algorithm below does (using scipy’s fmin function to find optimal step sizes):</p>
+A solution to this is to use adaptive step sizes as the algorithm below does (using scipy's fmin function to find optimal step sizes):
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># we setup this function to pass into the fmin algorithm
-</span><span class="k">def</span> <span class="nf">f2</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
-    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">n</span><span class="o">*</span><span class="n">s</span>
-    <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+```python
+# we setup this function to pass into the fmin algorithm
+def f2(n,x,s):
+    x = x + n*s
+    return f(x)
 
-<span class="n">x_old</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">x_new</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># The algorithm starts at x=2
-</span><span class="n">precision</span> <span class="o">=</span> <span class="mf">0.0001</span>
+x_old = 0
+x_new = 2 # The algorithm starts at x=2
+precision = 0.0001
 
-<span class="n">x_list</span><span class="p">,</span> <span class="n">y_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x_new</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x_new</span><span class="p">)]</span>
+x_list, y_list = [x_new], [f(x_new)]
 
-<span class="c1"># returns the value of the derivative of our function
-</span><span class="k">def</span> <span class="nf">f_prime</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">x</span>
+# returns the value of the derivative of our function
+def f_prime(x):
+    return 3*x**2-4*x
 
-<span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x_new</span> <span class="o">-</span> <span class="n">x_old</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">precision</span><span class="p">:</span>
-    <span class="n">x_old</span> <span class="o">=</span> <span class="n">x_new</span>
-    <span class="n">s_k</span> <span class="o">=</span> <span class="o">-</span><span class="n">f_prime</span><span class="p">(</span><span class="n">x_old</span><span class="p">)</span>
+while abs(x_new - x_old) > precision:
+    x_old = x_new
+    s_k = -f_prime(x_old)
     
-    <span class="c1"># use scipy fmin function to find ideal step size.
-</span>    <span class="n">n_k</span> <span class="o">=</span> <span class="n">fmin</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span><span class="mf">0.1</span><span class="p">,(</span><span class="n">x_old</span><span class="p">,</span><span class="n">s_k</span><span class="p">),</span> <span class="n">full_output</span> <span class="o">=</span> <span class="bp">False</span><span class="p">,</span> <span class="n">disp</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span>
+    # use scipy fmin function to find ideal step size.
+    n_k = fmin(f2,0.1,(x_old,s_k), full_output = False, disp = False)
 
-    <span class="n">x_new</span> <span class="o">=</span> <span class="n">x_old</span> <span class="o">+</span> <span class="n">n_k</span> <span class="o">*</span> <span class="n">s_k</span>
-    <span class="n">x_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_new</span><span class="p">)</span>
-    <span class="n">y_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x_new</span><span class="p">))</span>
+    x_new = x_old + n_k * s_k
+    x_list.append(x_new)
+    y_list.append(f(x_new))
     
-<span class="k">print</span><span class="p">(</span><span class="s">"Local minimum occurs at "</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">x_new</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"Number of steps:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_list</span><span class="p">))</span>
-</code></pre></div></div>
+print("Local minimum occurs at ", float(x_new))
+print("Number of steps:", len(x_list))
+```
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Local minimum occurs at  1.3333333284505209
-Number of steps: 4
-</code></pre></div></div>
+    Local minimum occurs at  1.3333333284505209
+    Number of steps: 4
 
-<p>With adaptive step sizes, the algorithm converges in just 4 iterations rather than 17. Of course, it takes time to compute the appropriate step size at each iteration. Here are some plots of the path taken below. You can see that it converges very quickly to a point near the local minimum, so it’s hard to even discern the dots after the first two steps until we zoom in very close in the third frame below:</p>
+With adaptive step sizes, the algorithm converges in just 4 iterations rather than 17. Of course, it takes time to compute the appropriate step size at each iteration. Here are some plots of the path taken below. You can see that it converges very quickly to a point near the local minimum, so it's hard to even discern the dots after the first two steps until we zoom in very close in the third frame below:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">15</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span><span class="n">y_list</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span><span class="n">y_list</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.5</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Gradient descent"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span><span class="n">y_list</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span><span class="n">y_list</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">1.2</span><span class="p">,</span><span class="mf">2.1</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"zoomed in"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span><span class="n">y_list</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span><span class="n">y_list</span><span class="p">,</span><span class="n">c</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">c</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">1.3333</span><span class="p">,</span><span class="mf">1.3335</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"zoomed in more"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div></div>
+```python
+plt.figure(figsize=[15,3])
+plt.subplot(1,3,1)
+plt.scatter(x_list,y_list,c="r")
+plt.plot(x_list,y_list,c="r")
+plt.plot(x,f(x), c="b")
+plt.xlim([-1,2.5])
+plt.title("Gradient descent")
+plt.subplot(1,3,2)
+plt.scatter(x_list,y_list,c="r")
+plt.plot(x_list,y_list,c="r")
+plt.plot(x,f(x), c="b")
+plt.xlim([1.2,2.1])
+plt.ylim([0,3])
+plt.title("zoomed in")
+plt.subplot(1,3,3)
+plt.scatter(x_list,y_list,c="r")
+plt.plot(x_list,y_list,c="r")
+plt.plot(x,f(x), c="b")
+plt.xlim([1.3333,1.3335])
+plt.ylim([0,3])
+plt.title("zoomed in more")
+plt.show()
+```
 
-<p><img src="/img/nb_sgd_demo/nb_sgd_demo_13_0.png" alt="png" class="center-image" /></p>
+![png](/img/nb_sgd_demo/nb_sgd_demo_13_0.png){: .center-image }
 
-<p>Another approach to update the step size is choosing a decrease constant $d$ that shrinks the step size over time:
-$\eta(t+1) = \eta(t) / (1+t \times d)$.</p>
+Another approach to update the step size is choosing a decrease constant $d$ that shrinks the step size over time:
+$\eta(t+1) = \eta(t) / (1+t \times d)$.
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x_old</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">x_new</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># The algorithm starts at x=2
-</span><span class="n">n_k</span> <span class="o">=</span> <span class="mf">0.17</span> <span class="c1"># step size
-</span><span class="n">precision</span> <span class="o">=</span> <span class="mf">0.0001</span>
-<span class="n">t</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+```python
+x_old = 0
+x_new = 2 # The algorithm starts at x=2
+n_k = 0.17 # step size
+precision = 0.0001
+t, d = 0, 1
 
-<span class="n">x_list</span><span class="p">,</span> <span class="n">y_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">x_new</span><span class="p">],</span> <span class="p">[</span><span class="n">f</span><span class="p">(</span><span class="n">x_new</span><span class="p">)]</span>
+x_list, y_list = [x_new], [f(x_new)]
 
-<span class="c1"># returns the value of the derivative of our function
-</span><span class="k">def</span> <span class="nf">f_prime</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
-    <span class="k">return</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="o">*</span><span class="n">x</span>
+# returns the value of the derivative of our function
+def f_prime(x):
+    return 3*x**2-4*x
  
-<span class="k">while</span> <span class="nb">abs</span><span class="p">(</span><span class="n">x_new</span> <span class="o">-</span> <span class="n">x_old</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">precision</span><span class="p">:</span>
-    <span class="n">x_old</span> <span class="o">=</span> <span class="n">x_new</span>
-    <span class="n">s_k</span> <span class="o">=</span> <span class="o">-</span><span class="n">f_prime</span><span class="p">(</span><span class="n">x_old</span><span class="p">)</span>
-    <span class="n">x_new</span> <span class="o">=</span> <span class="n">x_old</span> <span class="o">+</span> <span class="n">n_k</span> <span class="o">*</span> <span class="n">s_k</span>
-    <span class="n">x_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_new</span><span class="p">)</span>
-    <span class="n">y_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">x_new</span><span class="p">))</span>
-    <span class="n">n_k</span> <span class="o">=</span> <span class="n">n_k</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">t</span> <span class="o">*</span> <span class="n">d</span><span class="p">)</span>
-    <span class="n">t</span> <span class="o">+=</span> <span class="mi">1</span>
+while abs(x_new - x_old) > precision:
+    x_old = x_new
+    s_k = -f_prime(x_old)
+    x_new = x_old + n_k * s_k
+    x_list.append(x_new)
+    y_list.append(f(x_new))
+    n_k = n_k / (1 + t * d)
+    t += 1
 
-<span class="k">print</span><span class="p">(</span><span class="s">"Local minimum occurs at:"</span><span class="p">,</span> <span class="n">x_new</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"Number of steps:"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x_list</span><span class="p">))</span>
-</code></pre></div></div>
+print("Local minimum occurs at:", x_new)
+print("Number of steps:", len(x_list))
+```
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Local minimum occurs at: 1.3308506740900838
-Number of steps: 6
-</code></pre></div></div>
+    Local minimum occurs at: 1.3308506740900838
+    Number of steps: 6
 
-<p>Let’s now consider an example which is a little bit more complicated. Consider a simple linear regression where we want to see how the temperature affects the noises made by crickets. We have a data set of cricket chirp rates at various temperatures. First we’ll load that data set in and plot it:</p>
+Let's now consider an example which is a little bit more complicated. Consider a simple linear regression where we want to see how the temperature affects the noises made by crickets. We have a data set of cricket chirp rates at various temperatures. First we'll load that data set in and plot it:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Load the dataset
-</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s">'SGD_data.txt'</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">','</span><span class="p">)</span>
+```python
+#Load the dataset
+data = np.loadtxt('SGD_data.txt', delimiter=',')
  
-<span class="c1">#Plot the data
-</span><span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s">'o'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">'b'</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'cricket chirps vs temperature'</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'chirps/sec for striped ground crickets'</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'temperature in degrees Fahrenheit'</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">13</span><span class="p">,</span><span class="mi">21</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">65</span><span class="p">,</span><span class="mi">95</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div></div>
+#Plot the data
+plt.scatter(data[:, 0], data[:, 1], marker='o', c='b')
+plt.title('cricket chirps vs temperature')
+plt.xlabel('chirps/sec for striped ground crickets')
+plt.ylabel('temperature in degrees Fahrenheit')
+plt.xlim([13,21])
+plt.ylim([65,95])
+plt.show()
+```
 
-<p><img src="/img/nb_sgd_demo/nb_sgd_demo_17_0.png" alt="png" class="center-image" /></p>
+![png](/img/nb_sgd_demo/nb_sgd_demo_17_0.png){: .center-image }
 
-<p>Our goal is to find the equation of the straight line $h_\theta(x) = \theta_0 + \theta_1 x$ that best fits our data points. The function that we are trying to minimize in this case is:</p>
+Our goal is to find the equation of the straight line $h_\theta(x) = \theta_0 + \theta_1 x$ that best fits our data points. The function that we are trying to minimize in this case is:
 
-<p>$J(\theta_0,\theta_1) = {1 \over 2m} \sum\limits_{i=1}^m (h_\theta(x_i)-y_i)^2$</p>
+$J(\theta_0,\theta_1) = {1 \over 2m} \sum\limits_{i=1}^m (h_\theta(x_i)-y_i)^2$
 
-<p>In this case, our gradient will be defined in two dimensions:</p>
+In this case, our gradient will be defined in two dimensions:
 
-<p>$\frac{\partial}{\partial \theta_0} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m (h_\theta(x_i)-y_i)$</p>
+$\frac{\partial}{\partial \theta_0} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m (h_\theta(x_i)-y_i)$
 
-<p>$\frac{\partial}{\partial \theta_1} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m ((h_\theta(x_i)-y_i) \cdot x_i)$</p>
+$\frac{\partial}{\partial \theta_1} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m ((h_\theta(x_i)-y_i) \cdot x_i)$
 
-<p>Below, we set up our function for h, J and the gradient:</p>
+Below, we set up our function for h, J and the gradient:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">h</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">theta_0</span><span class="p">,</span><span class="n">theta_1</span><span class="p">,</span><span class="n">x</span><span class="p">:</span> <span class="n">theta_0</span> <span class="o">+</span> <span class="n">theta_1</span><span class="o">*</span><span class="n">x</span>
+```python
+h = lambda theta_0,theta_1,x: theta_0 + theta_1*x
 
-<span class="k">def</span> <span class="nf">J</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">theta_0</span><span class="p">,</span><span class="n">theta_1</span><span class="p">):</span>
-    <span class="n">returnValue</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-        <span class="n">returnValue</span> <span class="o">+=</span> <span class="p">(</span><span class="n">h</span><span class="p">(</span><span class="n">theta_0</span><span class="p">,</span><span class="n">theta_1</span><span class="p">,</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
-    <span class="n">returnValue</span> <span class="o">=</span> <span class="n">returnValue</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">returnValue</span>
+def J(x,y,m,theta_0,theta_1):
+    returnValue = 0
+    for i in range(m):
+        returnValue += (h(theta_0,theta_1,x[i])-y[i])**2
+    returnValue = returnValue/(2*m)
+    return returnValue
 
-<span class="k">def</span> <span class="nf">grad_J</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">theta_0</span><span class="p">,</span><span class="n">theta_1</span><span class="p">):</span>
-    <span class="n">returnValue</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">])</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-        <span class="n">returnValue</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">h</span><span class="p">(</span><span class="n">theta_0</span><span class="p">,</span><span class="n">theta_1</span><span class="p">,</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="n">returnValue</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="p">(</span><span class="n">h</span><span class="p">(</span><span class="n">theta_0</span><span class="p">,</span><span class="n">theta_1</span><span class="p">,</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-    <span class="n">returnValue</span> <span class="o">=</span> <span class="n">returnValue</span><span class="o">/</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">returnValue</span>
-</code></pre></div></div>
+def grad_J(x,y,m,theta_0,theta_1):
+    returnValue = np.array([0.,0.])
+    for i in range(m):
+        returnValue[0] += (h(theta_0,theta_1,x[i])-y[i])
+        returnValue[1] += (h(theta_0,theta_1,x[i])-y[i])*x[i]
+    returnValue = returnValue/(m)
+    return returnValue
+```
 
-<p>Now, we’ll load our data into the x and y variables;</p>
+Now, we'll load our data into the x and y variables;
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</code></pre></div></div>
+```python
+x = data[:, 0]
+y = data[:, 1]
+m = len(x)
+```
 
-<p>And we run our gradient descent algorithm (without adaptive step sizes in this example):</p>
+And we run our gradient descent algorithm (without adaptive step sizes in this example):
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">theta_old</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">])</span>
-<span class="n">theta_new</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span><span class="mf">1.</span><span class="p">])</span> <span class="c1"># The algorithm starts at [1,1]
-</span><span class="n">n_k</span> <span class="o">=</span> <span class="mf">0.001</span> <span class="c1"># step size
-</span><span class="n">precision</span> <span class="o">=</span> <span class="mf">0.001</span>
-<span class="n">num_steps</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">s_k</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">"inf"</span><span class="p">)</span>
+```python
+theta_old = np.array([0.,0.])
+theta_new = np.array([1.,1.]) # The algorithm starts at [1,1]
+n_k = 0.001 # step size
+precision = 0.001
+num_steps = 0
+s_k = float("inf")
 
-<span class="k">while</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">s_k</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">precision</span><span class="p">:</span>
-    <span class="n">num_steps</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="n">theta_old</span> <span class="o">=</span> <span class="n">theta_new</span>
-    <span class="n">s_k</span> <span class="o">=</span> <span class="o">-</span><span class="n">grad_J</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">theta_old</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">theta_old</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">theta_new</span> <span class="o">=</span> <span class="n">theta_old</span> <span class="o">+</span> <span class="n">n_k</span> <span class="o">*</span> <span class="n">s_k</span>
+while np.linalg.norm(s_k) > precision:
+    num_steps += 1
+    theta_old = theta_new
+    s_k = -grad_J(x,y,m,theta_old[0],theta_old[1])
+    theta_new = theta_old + n_k * s_k
 
-<span class="k">print</span><span class="p">(</span><span class="s">"Local minimum occurs where:"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"theta_0 ="</span><span class="p">,</span> <span class="n">theta_new</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"theta_1 ="</span><span class="p">,</span> <span class="n">theta_new</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"This took"</span><span class="p">,</span><span class="n">num_steps</span><span class="p">,</span><span class="s">"steps to converge"</span><span class="p">)</span>
-</code></pre></div></div>
+print("Local minimum occurs where:")
+print("theta_0 =", theta_new[0])
+print("theta_1 =", theta_new[1])
+print("This took",num_steps,"steps to converge")
+```
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Local minimum occurs where:
-theta_0 = 25.128552558595363
-theta_1 = 3.297264756251897
-This took 565859 steps to converge
-</code></pre></div></div>
+    Local minimum occurs where:
+    theta_0 = 25.128552558595363
+    theta_1 = 3.297264756251897
+    This took 565859 steps to converge
 
-<p>For comparison, let’s get the actual values for $\theta_0$ and $\theta_1$:</p>
+For comparison, let's get the actual values for $\theta_0$ and $\theta_1$:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">actualvalues</span> <span class="o">=</span> <span class="n">sp</span><span class="p">.</span><span class="n">stats</span><span class="p">.</span><span class="n">linregress</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"Actual values for theta are:"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"theta_0 ="</span><span class="p">,</span> <span class="n">actualvalues</span><span class="p">.</span><span class="n">intercept</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"theta_1 ="</span><span class="p">,</span> <span class="n">actualvalues</span><span class="p">.</span><span class="n">slope</span><span class="p">)</span>
-</code></pre></div></div>
+```python
+actualvalues = sp.stats.linregress(x,y)
+print("Actual values for theta are:")
+print("theta_0 =", actualvalues.intercept)
+print("theta_1 =", actualvalues.slope)
+```
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Actual values for theta are:
-theta_0 = 25.232304983426026
-theta_1 = 3.2910945679475647
-</code></pre></div></div>
+    Actual values for theta are:
+    theta_0 = 25.232304983426026
+    theta_1 = 3.2910945679475647
 
-<p>So we see that our values are relatively close to the actual values (even though our method was pretty slow). If you look at the source code of <a href="https://github.com/scipy/scipy/blob/master/scipy/stats/_stats_mstats_common.py">linregress</a>, it uses the convariance matrix of x and y to compute fastly. Below, you can see a plot of the line drawn with our theta values against the data:</p>
+So we see that our values are relatively close to the actual values (even though our method was pretty slow). If you look at the source code of [linregress](https://github.com/scipy/scipy/blob/master/scipy/stats/_stats_mstats_common.py), it uses the convariance matrix of x and y to compute fastly. Below, you can see a plot of the line drawn with our theta values against the data:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">21</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s">'o'</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s">'b'</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span><span class="n">h</span><span class="p">(</span><span class="n">theta_new</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">theta_new</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">xx</span><span class="p">))</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">([</span><span class="mi">13</span><span class="p">,</span><span class="mi">21</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">65</span><span class="p">,</span><span class="mi">95</span><span class="p">])</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'cricket chirps vs temperature'</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'chirps/sec for striped ground crickets'</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'temperature in degrees Fahrenheit'</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div></div>
+```python
+xx = np.linspace(0,21,1000)
+plt.scatter(data[:, 0], data[:, 1], marker='o', c='b')
+plt.plot(xx,h(theta_new[0],theta_new[1],xx))
+plt.xlim([13,21])
+plt.ylim([65,95])
+plt.title('cricket chirps vs temperature')
+plt.xlabel('chirps/sec for striped ground crickets')
+plt.ylabel('temperature in degrees Fahrenheit')
+plt.show()
+```
 
-<p><img src="/img/nb_sgd_demo/nb_sgd_demo_27_0.png" alt="png" class="center-image" /></p>
+![png](/img/nb_sgd_demo/nb_sgd_demo_27_0.png){: .center-image }
 
-<p>Notice that in the method above we need to calculate the gradient in every step of our algorithm. In the example with the crickets, this is not a big deal since there are only 15 data points. But imagine that we had 10 million data points. If this were the case, it would certainly make the method above far less efficient.</p>
+Notice that in the method above we need to calculate the gradient in every step of our algorithm. In the example with the crickets, this is not a big deal since there are only 15 data points. But imagine that we had 10 million data points. If this were the case, it would certainly make the method above far less efficient.
 
-<p>In machine learning, the algorithm above is often called <b>batch gradient descent</b> to contrast it with <b>mini-batch gradient descent</b> (which we will not go into here) and <b>stochastic gradient descent</b>.</p>
+In machine learning, the algorithm above is often called <b>batch gradient descent</b> to contrast it with <b>mini-batch gradient descent</b> (which we will not go into here) and <b>stochastic gradient descent</b>.
 
-<h3 id="stochastic-gradient-descent">Stochastic gradient descent</h3>
+### Stochastic gradient descent
 
-<p>As we said above, in batch gradient descent, we must look at every example in the entire training set on every step (in cases where a training set is used for gradient descent). This can be quite slow if the training set is sufficiently large. In <b>stochastic gradient descent</b>, we update our values after looking at <i>each</i> item in the training set, so that we can start making progress right away. Recall the linear regression example above. In that example, we calculated the gradient for each of the two theta values as follows:</p>
+As we said above, in batch gradient descent, we must look at every example in the entire training set on every step (in cases where a training set is used for gradient descent). This can be quite slow if the training set is sufficiently large. In <b>stochastic gradient descent</b>, we update our values after looking at <i>each</i> item in the training set, so that we can start making progress right away. Recall the linear regression example above. In that example, we calculated the gradient for each of the two theta values as follows:
 
-<p>$\frac{\partial}{\partial \theta_0} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m (h_\theta(x_i)-y_i)$</p>
+$\frac{\partial}{\partial \theta_0} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m (h_\theta(x_i)-y_i)$
 
-<p>$\frac{\partial}{\partial \theta_1} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m ((h_\theta(x_i)-y_i) \cdot x_i)$</p>
+$\frac{\partial}{\partial \theta_1} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m ((h_\theta(x_i)-y_i) \cdot x_i)$
 
-<p>Where $h_\theta(x) = \theta_0 + \theta_1 x$</p>
+Where $h_\theta(x) = \theta_0 + \theta_1 x$
 
-<p>Then we followed this algorithm (where $\alpha$ was a non-adapting stepsize):</p>
+Then we followed this algorithm (where $\alpha$ was a non-adapting stepsize):
 
-<p>    1:   Choose initial guess $x_0$ <br />
-       2:   <b>for</b> k = 0, 1, 2, … <b>do</b> <br />
-       3:         $s_k$ = -$\nabla f(x_k)$ <br />
-       4:         $x_{k+1} = x_k + \alpha s_k$ <br />
-       5:    <b>end for</b></p>
+&nbsp;&nbsp;&nbsp; 1: &nbsp; Choose initial guess $x_0$ <br>
+&nbsp;&nbsp;&nbsp;    2: &nbsp; <b>for</b> k = 0, 1, 2, ... <b>do</b> <br>
+&nbsp;&nbsp;&nbsp;    3:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $s_k$ = -$\nabla f(x_k)$ <br>
+&nbsp;&nbsp;&nbsp;    4:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $x_{k+1} = x_k + \alpha s_k$ <br>
+&nbsp;&nbsp;&nbsp;    5: &nbsp;  <b>end for</b>
 
-<p>When the sample data had 15 data points as in the example above, calculating the gradient was not very costly. But for very large data sets, this would not be the case. So instead, we consider a stochastic gradient descent algorithm for simple linear regression such as the following, where m is the size of the data set:</p>
+When the sample data had 15 data points as in the example above, calculating the gradient was not very costly. But for very large data sets, this would not be the case. So instead, we consider a stochastic gradient descent algorithm for simple linear regression such as the following, where m is the size of the data set:
 
-<p>    1:   Randomly shuffle the data set <br />
-       2:   <b>for</b> k = 0, 1, 2, … <b>do</b> <br />
-       3:       <b>for</b> i = 1 to m <b>do</b> <br />
-       4:              $\begin{bmatrix}
- \theta_{1} \ 
- \theta_2 \ 
+&nbsp;&nbsp;&nbsp; 1: &nbsp; Randomly shuffle the data set <br>
+&nbsp;&nbsp;&nbsp;    2: &nbsp; <b>for</b> k = 0, 1, 2, ... <b>do</b> <br>
+&nbsp;&nbsp;&nbsp;    3: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>for</b> i = 1 to m <b>do</b> <br>
+&nbsp;&nbsp;&nbsp;    4:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $\begin{bmatrix}
+ \theta_{1} \\ 
+ \theta_2 \\ 
  \end{bmatrix}=\begin{bmatrix}
- \theta_1 \ 
- \theta_2 \ 
+ \theta_1 \\ 
+ \theta_2 \\ 
  \end{bmatrix}-\alpha\begin{bmatrix}
- 2(h_\theta(x_i)-y_i) \ 
- 2x_i(h_\theta(x_i)-y_i) \ 
- \end{bmatrix}$ <br />
-       5:       <b>end for</b> <br /> 
-       6:    <b>end for</b></p>
+ 2(h_\theta(x_i)-y_i) \\ 
+ 2x_i(h_\theta(x_i)-y_i) \\ 
+ \end{bmatrix}$ <br>
+&nbsp;&nbsp;&nbsp;    5: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>end for</b> <br> 
+&nbsp;&nbsp;&nbsp;    6: &nbsp;  <b>end for</b>
 
-<p>Typically, with stochastic gradient descent, you will run through the entire data set 1 to 10 times (see value for k in line 2 of the pseudocode above), depending on how fast the data is converging and how large the data set is.</p>
+Typically, with stochastic gradient descent, you will run through the entire data set 1 to 10 times (see value for k in line 2 of the pseudocode above), depending on how fast the data is converging and how large the data set is.
 
-<p>With batch gradient descent, we must go through the entire data set before we make any progress. With this algorithm though, we can make progress right away and continue to make progress as we go through the data set. Therefore, stochastic gradient descent is often preferred when dealing with large data sets.</p>
+With batch gradient descent, we must go through the entire data set before we make any progress. With this algorithm though, we can make progress right away and continue to make progress as we go through the data set. Therefore, stochastic gradient descent is often preferred when dealing with large data sets.
 
-<p>Unlike gradient descent, stochastic gradient descent will tend to oscillate <i>near</i> a minimum value rather than continuously getting closer. It may never actually converge to the minimum though. One way around this is to slowly decrease the step size $\alpha$ as the algorithm runs. However, this is less common than using a fixed $\alpha$.</p>
+Unlike gradient descent, stochastic gradient descent will tend to oscillate <i>near</i> a minimum value rather than continuously getting closer. It may never actually converge to the minimum though. One way around this is to slowly decrease the step size $\alpha$ as the algorithm runs. However, this is less common than using a fixed $\alpha$.
 
-<p>Let’s look at another example where we illustrate the use of stochastic gradient descent for linear regression. In the example below, we’ll create a set of 500,000 points around the line $y = 2x+17+\epsilon$, for values of x between 0 and 100:</p>
+Let's look at another example where we illustrate the use of stochastic gradient descent for linear regression. In the example below, we'll create a set of 500,000 points around the line $y = 2x+17+\epsilon$, for values of x between 0 and 100:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span><span class="o">+</span><span class="mi">17</span><span class="o">+</span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="o">*</span><span class="mi">10</span>
+```python
+f = lambda x: x*2+17+np.random.randn(len(x))*10
 
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">random</span><span class="p">(</span><span class="mi">500000</span><span class="p">)</span><span class="o">*</span><span class="mi">100</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> 
-<span class="n">m</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
-</code></pre></div></div>
+x = np.random.random(500000)*100
+y = f(x) 
+m = len(y)
+```
 
-<p>First, let’s randomly shuffle around our dataset. Note that in this example, this step isn’t strictly necessary since the data is already in a random order. However, that obviously may not always be the case:</p>
+First, let's randomly shuffle around our dataset. Note that in this example, this step isn't strictly necessary since the data is already in a random order. However, that obviously may not always be the case:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">shuffle</span>
+```python
+from random import shuffle
 
-<span class="n">x_shuf</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">y_shuf</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">index_shuf</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>
-<span class="n">shuffle</span><span class="p">(</span><span class="n">index_shuf</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">index_shuf</span><span class="p">:</span>
-    <span class="n">x_shuf</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    <span class="n">y_shuf</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-</code></pre></div></div>
+x_shuf = []
+y_shuf = []
+index_shuf = list(range(len(x)))
+shuffle(index_shuf)
+for i in index_shuf:
+    x_shuf.append(x[i])
+    y_shuf.append(y[i])
+```
 
-<p>Now we’ll setup our h function and our cost function, which we will use to check how the value is improving.</p>
+Now we'll setup our h function and our cost function, which we will use to check how the value is improving.
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">h</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">theta_0</span><span class="p">,</span><span class="n">theta_1</span><span class="p">,</span><span class="n">x</span><span class="p">:</span> <span class="n">theta_0</span> <span class="o">+</span> <span class="n">theta_1</span><span class="o">*</span><span class="n">x</span>
-<span class="n">cost</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">theta_0</span><span class="p">,</span><span class="n">theta_1</span><span class="p">,</span> <span class="n">x_i</span><span class="p">,</span> <span class="n">y_i</span><span class="p">:</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">h</span><span class="p">(</span><span class="n">theta_0</span><span class="p">,</span><span class="n">theta_1</span><span class="p">,</span><span class="n">x_i</span><span class="p">)</span><span class="o">-</span><span class="n">y_i</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
-</code></pre></div></div>
+```python
+h = lambda theta_0,theta_1,x: theta_0 + theta_1*x
+cost = lambda theta_0,theta_1, x_i, y_i: 0.5*(h(theta_0,theta_1,x_i)-y_i)**2
+```
 
-<p>Now we’ll run our stochastic gradient descent algorithm. To see it’s progress, we’ll take a cost measurement at every step. Every 10,000 steps, we’ll get an average cost from the last 10,000 steps and then append that to our cost_list variable. We will run through the entire list 10 times here:</p>
+Now we'll run our stochastic gradient descent algorithm. To see it's progress, we'll take a cost measurement at every step. Every 10,000 steps, we'll get an average cost from the last 10,000 steps and then append that to our cost_list variable. We will run through the entire list 10 times here:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">theta_old</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">])</span>
-<span class="n">theta_new</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span><span class="mf">1.</span><span class="p">])</span> <span class="c1"># The algorithm starts at [1,1]
-</span><span class="n">n_k</span> <span class="o">=</span> <span class="mf">0.000005</span> <span class="c1"># step size
-</span>
-<span class="n">iter_num</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">s_k</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="s">"inf"</span><span class="p">),</span><span class="nb">float</span><span class="p">(</span><span class="s">"inf"</span><span class="p">)])</span>
-<span class="n">sum_cost</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">cost_list</span> <span class="o">=</span> <span class="p">[]</span>
+```python
+theta_old = np.array([0.,0.])
+theta_new = np.array([1.,1.]) # The algorithm starts at [1,1]
+n_k = 0.000005 # step size
 
-<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
-        <span class="n">iter_num</span> <span class="o">+=</span> <span class="mi">1</span>
-        <span class="n">theta_old</span> <span class="o">=</span> <span class="n">theta_new</span>
-        <span class="n">s_k</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span><span class="p">(</span><span class="n">theta_old</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">theta_old</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="n">s_k</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">h</span><span class="p">(</span><span class="n">theta_old</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">theta_old</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">-</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">*</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="n">s_k</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">s_k</span>
-        <span class="n">theta_new</span> <span class="o">=</span> <span class="n">theta_old</span> <span class="o">+</span> <span class="n">n_k</span> <span class="o">*</span> <span class="n">s_k</span>
-        <span class="n">sum_cost</span> <span class="o">+=</span> <span class="n">cost</span><span class="p">(</span><span class="n">theta_old</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">theta_old</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">10000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">cost_list</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">sum_cost</span><span class="o">/</span><span class="mf">10000.0</span><span class="p">)</span>
-            <span class="n">sum_cost</span> <span class="o">=</span> <span class="mi">0</span>   
+iter_num = 0
+s_k = np.array([float("inf"),float("inf")])
+sum_cost = 0
+cost_list = []
+
+for j in range(10):
+    for i in range(m):
+        iter_num += 1
+        theta_old = theta_new
+        s_k[0] = (h(theta_old[0],theta_old[1],x[i])-y[i])
+        s_k[1] = (h(theta_old[0],theta_old[1],x[i])-y[i])*x[i]
+        s_k = (-1)*s_k
+        theta_new = theta_old + n_k * s_k
+        sum_cost += cost(theta_old[0],theta_old[1],x[i],y[i])
+        if (i+1) % 10000 == 0:
+            cost_list.append(sum_cost/10000.0)
+            sum_cost = 0   
             
-<span class="k">print</span><span class="p">(</span><span class="s">"Local minimum occurs where:"</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"theta_0 ="</span><span class="p">,</span> <span class="n">theta_new</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="k">print</span><span class="p">(</span><span class="s">"theta_1 ="</span><span class="p">,</span> <span class="n">theta_new</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</code></pre></div></div>
+print("Local minimum occurs where:")
+print("theta_0 =", theta_new[0])
+print("theta_1 =", theta_new[1])
+```
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Local minimum occurs where:
-theta_0 = 16.955415496837382
-theta_1 = 1.999169728242732
-</code></pre></div></div>
+    Local minimum occurs where:
+    theta_0 = 16.955415496837382
+    theta_1 = 1.999169728242732
 
-<p>As you can see, our values for $\theta_0$ and $\theta_1$ are close to their true values of 17 and 2.</p>
+As you can see, our values for $\theta_0$ and $\theta_1$ are close to their true values of 17 and 2.
 
-<p>Now, we plot our cost versus the number of iterations. As you can see, the cost goes down quickly at first, but starts to level off as we go through more iterations:</p>
+Now, we plot our cost versus the number of iterations. As you can see, the cost goes down quickly at first, but starts to level off as we go through more iterations:
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">iterations</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cost_list</span><span class="p">))</span><span class="o">*</span><span class="mi">10000</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">iterations</span><span class="p">,</span><span class="n">cost_list</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">"iterations"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"avg cost"</span><span class="p">)</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div></div>
+```python
+iterations = np.arange(len(cost_list))*10000
+plt.plot(iterations,cost_list)
+plt.xlabel("iterations")
+plt.ylabel("avg cost")
+plt.show()
+```
 
-<p><img src="/img/nb_sgd_demo/nb_sgd_demo_39_0.png" alt="png" class="center-image" /></p>
+![png](/img/nb_sgd_demo/nb_sgd_demo_39_0.png){: .center-image }
 
+ 
+-->
 
         
       </section>
