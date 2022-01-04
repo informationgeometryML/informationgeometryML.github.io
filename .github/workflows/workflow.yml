@@ -41,6 +41,7 @@ jobs:
         set -xo pipefail
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        rm -rf _site/img/nb_*
         mv img/nb_* _site/img/
         git checkout master
         ls -Q | grep -v _site | xargs rm -rf
