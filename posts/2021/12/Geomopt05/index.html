@@ -463,7 +463,7 @@ a continous map
 \mathbf{m}(\eta):=\nabla_\eta A_\eta(\eta),
 \end{aligned}\tag{2}\label{2}
 $$</code>
- where the input space is <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
+ where the input space of this map is <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
 
 <p>We define the expectation parameter space as the output space of the map <code class="language-plaintext highlighter-rouge">$\Omega_m :=\{\mathbf{m}(\eta) | \eta \in \Omega_\eta \}$</code>.</p>
 
@@ -529,25 +529,27 @@ $$</code></p>
 $$</code></p>
 
 <p>We denote the expectation parameter as <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.
+Note that we define <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{x}):=+\infty$</code> when <code class="language-plaintext highlighter-rouge">$\mathbf{x} \not \in \Omega_\eta$</code>.
 The convex conjugate (Legendre transformation) of the log-partition function <code class="language-plaintext highlighter-rouge">$A_\eta$</code> is defined as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 A^*_\eta( \mathbf{m}) &amp;:= \sup_{x} \{ \langle \mathbf{x},\mathbf{m} \rangle - A_\eta(\mathbf{x}) \} \\
-&amp;= \langle \mathbf{\eta},\mathbf{m} \rangle - A_\eta(\mathbf{\eta})  \,\,\,\, (\text{the supremum attains at } \mathbf{x}=\eta )\\
+&amp;= \langle \mathbf{\eta},\mathbf{m} \rangle - A_\eta(\mathbf{\eta})  \,\,\,\, (\text{the supremum attains at } \mathbf{x}=\eta \in \Omega_\eta )\\
 \end{aligned}\tag{5}\label{5}
-$$</code> where
+$$</code> where 
+the domain of  <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{m})$</code>  is <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, and 
 <code class="language-plaintext highlighter-rouge">$\eta=\eta( \mathbf{m} )$</code>
-should be viewed  as a function of <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.</p>
+should be viewed as a function of <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code></p>
 
-<p>Notice that
+<p>When <code class="language-plaintext highlighter-rouge">$\mathbf{m} \in \Omega_m$</code>, we have the following identity.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \nabla_{\mathbf{m}} A^*_\eta( \mathbf{m})
 &amp;= \mathbf{\eta} + \langle \nabla_{\mathbf{m}} \mathbf{\eta},\mathbf{m} \rangle - \nabla_{\mathbf{m}} A_\eta(\mathbf{\eta}) \\
 &amp;= \mathbf{\eta} + \langle \nabla_{\mathbf{m}} \mathbf{\eta},\mathbf{m} \rangle - [\nabla_{\mathbf{m}} \eta] \underbrace{ [\nabla_\eta A_\eta(\mathbf{\eta})] }_{ = \mathbf{m}}\\
-&amp;= \mathbf{\eta}
+&amp;= \mathbf{\eta} ,
 \end{aligned}\tag{6}\label{6}
-$$</code>.</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$\eta \in \Omega_\eta$</code> due to <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>.</p>
 
 <p>The convex conjugate <code class="language-plaintext highlighter-rouge">$A^*_\eta( \mathbf{m})$</code> is strictly convex w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code> since the Hessian <code class="language-plaintext highlighter-rouge">$\nabla_m^2 A^*_\eta( \mathbf{m})$</code>
 is positive-definite as shown below.</p>
@@ -687,7 +689,7 @@ condition.
 \end{aligned}
 $$</code> which implies that <code class="language-plaintext highlighter-rouge">$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code></p>
 
-      <p>We first show that there exists a stationary point in the domain (<code class="language-plaintext highlighter-rouge">$\hat{\mathbf{x}} \in \Omega_m$</code>).
+      <p>We first show that there exists a stationary point in the domain <code class="language-plaintext highlighter-rouge">$(\hat{\mathbf{x}} \in \Omega_m)$</code>.
 Let’s denote <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}:= \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>. Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained, it
 is obvious that <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>.
 By <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\mathbf{\eta}_{k+1}) =\nabla_\eta A_\eta( \mathbf{\eta}_{k+1}) \in
