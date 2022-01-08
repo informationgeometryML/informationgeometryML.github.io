@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-08T08:18:29-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-08T08:36:40-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -2304,8 +2304,13 @@ This structure is also known as a manifold structure. A (smooth) manifold should
 &lt;p&gt;The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined (finite).
 These properties will play a key role in &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space&quot;&gt;Part IV&lt;/a&gt; for natural-gradient descent.&lt;/p&gt;
 
-&lt;p&gt;We require that a manifold should be locally like a vector space denoted by $ E $ under a parameterization.
-A local vector-space structure means that we can do &lt;strong&gt;local vector additions&lt;/strong&gt; and &lt;strong&gt;local real scalar products&lt;/strong&gt; (see &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; for the details.)&lt;/p&gt;
+&lt;p&gt;We require that a manifold should be locally like a vector space denoted by $ E $ under a parameterization.&lt;/p&gt;
+
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;local &lt;strong&gt;vector-space structure&lt;/strong&gt;:&lt;/p&gt;
+
+  &lt;p&gt;It supports local &lt;strong&gt;vector additions&lt;/strong&gt; and local &lt;strong&gt;real scalar products&lt;/strong&gt; (see &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; for the details.)&lt;/p&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Intuitively, this vector-space structure means that a local (small) perturbation $ E $ at each point should not take out of the parameter space.
 Technically, the parameter space denoted by $\Omega_\tau$ should be an &lt;strong&gt;open&lt;/strong&gt; set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of a parameter array.
@@ -2363,8 +2368,12 @@ Clearly, a point $ (0,1) $ highlighted in green is in the circle, where we consi
 &lt;p&gt;Given a parametric distribution family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; indexed by its parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; should be smooth w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \tau $&lt;/code&gt; by considering &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ w $&lt;/code&gt; to be fixed.
 We say a parametrization is &lt;strong&gt;intrinsic&lt;/strong&gt; if the following condition for parameter (array) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau $&lt;/code&gt; holds:&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Regularity Condition&lt;/strong&gt;:  The set of partial derivatives 
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Regularity Condition&lt;/strong&gt;:&lt;/p&gt;
+
+  &lt;p&gt;The set of partial derivatives 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \partial_{\tau_i} \log p(w|\tau) \} $&lt;/code&gt;  should be linearly independent. In other words, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sum_i c_i \partial_{\tau_i} \log p(w|\tau)= 0 $&lt;/code&gt;, where constant &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_i$&lt;/code&gt; must be zero and the value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_i$&lt;/code&gt; does not depent on  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$w$&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Note that this regularity condition implicitly assumes that the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt; due to the definition of the partial derivatives, where K is the number of entries in parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.
 We will discuss more about this at &lt;a href=&quot;#caveats-of-the-fisher-matrix-computation&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
@@ -2431,11 +2440,20 @@ The main reason is that the parameter space is not open in $\mathcal{R}^2$.&lt;/
 &lt;h1 id=&quot;fisher-rao-metric&quot;&gt;Fisher-Rao Metric&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;Given an intrinstic parameterization, we can define the Fisher-Rao metric under this parameterization as:
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ]$&lt;/code&gt;.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ].
+\end{aligned}
+$$&lt;/code&gt;
 Note that the metric could be ill-defined since the expectation may not exist.&lt;/p&gt;
 
-&lt;p&gt;Given a parameterization,  we can express the metric in a matrix form as
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}(\tau) := E_{p(wtau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ]$&lt;/code&gt;,
+&lt;p&gt;Given a parameterization,  we can express the metric in a matrix form as&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{F}(\tau) := E_{ p(w|\tau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ],
+\end{aligned}
+$$&lt;/code&gt;
 where $K$ is the number of entries of parameter array $\tau$ and 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $&lt;/code&gt; is a column vector.&lt;/p&gt;
 
@@ -2450,9 +2468,8 @@ In such cases, the Fisher-Rao metric is a valid Riemannian metric since the corr
 The Fisher-Rao metric is &lt;strong&gt;special&lt;/strong&gt; since it is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.&lt;/p&gt;
 
 &lt;div class=&quot;notice--danger&quot;&gt;
-
-  &lt;p&gt;&lt;strong&gt;An arbitrary Riemannian metric often is NOT useful for applications in machine learning&lt;/strong&gt;&lt;/p&gt;
-
+  &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:
+An arbitrary Riemannian metric often is NOT useful for applications in machine learning&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
@@ -2475,20 +2492,29 @@ The following computation is not correct. Do you make similar mistakes like this
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$  \begin{aligned} \nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T  \end{aligned} \tag{4}\label{4}$$&lt;/code&gt;
 Thus, by Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;, FIM under this  parameterization is&lt;/p&gt;
 
-  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$  \begin{aligned} F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\  \mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;amp;  0 \\ 0 &amp;amp;  \frac{1}{\pi_1} \end{bmatrix} \end{aligned}$$&lt;/code&gt;
-This computation is not correct. Do you know why it is not correct?&lt;/p&gt;
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$  \begin{aligned} F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\  \mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;amp;  0 \\ 0 &amp;amp;  \frac{1}{\pi_1} \end{bmatrix} \end{aligned}$$&lt;/code&gt;&lt;/p&gt;
+  &lt;div class=&quot;notice--danger&quot;&gt;
+    &lt;p&gt;This computation is not correct. Do you know why?&lt;/p&gt;
+  &lt;/div&gt;
 
-  &lt;p&gt;The key reason is the equality constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt;. Thus, Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; is &lt;strong&gt;incorrect&lt;/strong&gt;.&lt;/p&gt;
+  &lt;div class=&quot;notice--info&quot;&gt;
+    &lt;details&gt;
+&lt;summary&gt;Reason: (Click to expand)&lt;/summary&gt;
+&lt;fieldset class=&quot;field-set&quot;&gt;
+        &lt;p&gt;The key reason is the equality constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt;. Thus, Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; is &lt;strong&gt;incorrect&lt;/strong&gt;.&lt;/p&gt;
 
-  &lt;p&gt;By definition, a Bernoulli distribution is valid only when the constraint holds. 
-Thus, the constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt; must be satisifed when we compute the Fisher matrix since the computation involves the expectation of this distribution.&lt;/p&gt;
+        &lt;p&gt;By definition, a Bernoulli distribution is valid only when the constraint holds. 
+Thus, the constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt; must be satisifed when we compute the Fisher matrix since the computation involves computing the expectation w.r.t. this distribution.&lt;/p&gt;
 
-  &lt;p&gt;Note that the gradient is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $&lt;/code&gt;.&lt;/p&gt;
+        &lt;p&gt;Note that the gradient is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $&lt;/code&gt;.&lt;/p&gt;
 
-  &lt;p&gt;Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \partial_{\pi_0} \log p(w|\tau )$&lt;/code&gt;, we fix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; and allow &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_0$&lt;/code&gt; to change.
+        &lt;p&gt;Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \partial_{\pi_0} \log p(w|\tau )$&lt;/code&gt;, we fix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; and allow &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_0$&lt;/code&gt; to change.
 However, given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; is fixed and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0 $&lt;/code&gt; is fully determined by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi_1$&lt;/code&gt; due to the equality constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt;. 
 Therefore, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$  \partial_{\pi_0} \log p(w|\tau ) $&lt;/code&gt; is not well-defined.
 In other words, the above Fisher matrix computation is not correct since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w|\tau ) $&lt;/code&gt; does not exist.&lt;/p&gt;
+      &lt;/fieldset&gt;
+&lt;/details&gt;
+  &lt;/div&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;

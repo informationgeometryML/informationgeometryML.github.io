@@ -296,8 +296,13 @@ This structure is also known as a manifold structure. A (smooth) manifold should
 <p>The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined (finite).
 These properties will play a key role in <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space">Part IV</a> for natural-gradient descent.</p>
 
-<p>We require that a manifold should be locally like a vector space denoted by $ E $ under a parameterization.
-A local vector-space structure means that we can do <strong>local vector additions</strong> and <strong>local real scalar products</strong> (see <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a> for the details.)</p>
+<p>We require that a manifold should be locally like a vector space denoted by $ E $ under a parameterization.</p>
+
+<div class="notice--info">
+  <p>local <strong>vector-space structure</strong>:</p>
+
+  <p>It supports local <strong>vector additions</strong> and local <strong>real scalar products</strong> (see <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a> for the details.)</p>
+</div>
 
 <p>Intuitively, this vector-space structure means that a local (small) perturbation $ E $ at each point should not take out of the parameter space.
 Technically, the parameter space denoted by $\Omega_\tau$ should be an <strong>open</strong> set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array.
@@ -355,8 +360,12 @@ Clearly, a point $ (0,1) $ highlighted in green is in the circle, where we consi
 <p>Given a parametric distribution family <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> indexed by its parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> should be smooth w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> by considering <code class="language-plaintext highlighter-rouge">$ w $</code> to be fixed.
 We say a parametrization is <strong>intrinsic</strong> if the following condition for parameter (array) <code class="language-plaintext highlighter-rouge">$\tau $</code> holds:</p>
 
-<p><strong>Regularity Condition</strong>:  The set of partial derivatives 
+<div class="notice--info">
+  <p><strong>Regularity Condition</strong>:</p>
+
+  <p>The set of partial derivatives 
 <code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w|\tau) \} $</code>  should be linearly independent. In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i \partial_{\tau_i} \log p(w|\tau)= 0 $</code>, where constant <code class="language-plaintext highlighter-rouge">$c_i$</code> must be zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
+</div>
 
 <p>Note that this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the definition of the partial derivatives, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
 We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-computation">here</a>.</p>
@@ -423,11 +432,20 @@ The main reason is that the parameter space is not open in $\mathcal{R}^2$.</p>
 <h1 id="fisher-rao-metric">Fisher-Rao Metric</h1>
 <hr />
 <p>Given an intrinstic parameterization, we can define the Fisher-Rao metric under this parameterization as:
-<code class="language-plaintext highlighter-rouge">$ F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ]$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ].
+\end{aligned}
+$$</code>
 Note that the metric could be ill-defined since the expectation may not exist.</p>
 
-<p>Given a parameterization,  we can express the metric in a matrix form as
-<code class="language-plaintext highlighter-rouge">$ \mathbf{F}(\tau) := E_{p(wtau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ]$</code>,
+<p>Given a parameterization,  we can express the metric in a matrix form as</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{F}(\tau) := E_{ p(w|\tau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ],
+\end{aligned}
+$$</code>
 where $K$ is the number of entries of parameter array $\tau$ and 
 <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $</code> is a column vector.</p>
 
@@ -442,9 +460,8 @@ In such cases, the Fisher-Rao metric is a valid Riemannian metric since the corr
 The Fisher-Rao metric is <strong>special</strong> since it is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.</p>
 
 <div class="notice--danger">
-
-  <p><strong>An arbitrary Riemannian metric often is NOT useful for applications in machine learning</strong></p>
-
+  <p><strong>Warning</strong>:
+An arbitrary Riemannian metric often is NOT useful for applications in machine learning</p>
 </div>
 
 <p>Recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
@@ -467,20 +484,29 @@ The following computation is not correct. Do you make similar mistakes like this
 <code class="language-plaintext highlighter-rouge">$$  \begin{aligned} \nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T  \end{aligned} \tag{4}\label{4}$$</code>
 Thus, by Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, FIM under this  parameterization is</p>
 
-  <p><code class="language-plaintext highlighter-rouge">$$  \begin{aligned} F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\  \mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;  0 \\ 0 &amp;  \frac{1}{\pi_1} \end{bmatrix} \end{aligned}$$</code>
-This computation is not correct. Do you know why it is not correct?</p>
+  <p><code class="language-plaintext highlighter-rouge">$$  \begin{aligned} F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\  \mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;  0 \\ 0 &amp;  \frac{1}{\pi_1} \end{bmatrix} \end{aligned}$$</code></p>
+  <div class="notice--danger">
+    <p>This computation is not correct. Do you know why?</p>
+  </div>
 
-  <p>The key reason is the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> is <strong>incorrect</strong>.</p>
+  <div class="notice--info">
+    <details>
+<summary>Reason: (Click to expand)</summary>
+<fieldset class="field-set">
+        <p>The key reason is the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> is <strong>incorrect</strong>.</p>
 
-  <p>By definition, a Bernoulli distribution is valid only when the constraint holds. 
-Thus, the constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code> must be satisifed when we compute the Fisher matrix since the computation involves the expectation of this distribution.</p>
+        <p>By definition, a Bernoulli distribution is valid only when the constraint holds. 
+Thus, the constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code> must be satisifed when we compute the Fisher matrix since the computation involves computing the expectation w.r.t. this distribution.</p>
 
-  <p>Note that the gradient is defined as <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $</code>.</p>
+        <p>Note that the gradient is defined as <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $</code>.</p>
 
-  <p>Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative <code class="language-plaintext highlighter-rouge">$ \partial_{\pi_0} \log p(w|\tau )$</code>, we fix <code class="language-plaintext highlighter-rouge">$\pi_1$</code> and allow <code class="language-plaintext highlighter-rouge">$\pi_0$</code> to change.
+        <p>Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative <code class="language-plaintext highlighter-rouge">$ \partial_{\pi_0} \log p(w|\tau )$</code>, we fix <code class="language-plaintext highlighter-rouge">$\pi_1$</code> and allow <code class="language-plaintext highlighter-rouge">$\pi_0$</code> to change.
 However, given that <code class="language-plaintext highlighter-rouge">$\pi_1$</code> is fixed and <code class="language-plaintext highlighter-rouge">$ \pi_0 $</code> is fully determined by <code class="language-plaintext highlighter-rouge">$\pi_1$</code> due to the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. 
 Therefore, <code class="language-plaintext highlighter-rouge">$  \partial_{\pi_0} \log p(w|\tau ) $</code> is not well-defined.
 In other words, the above Fisher matrix computation is not correct since <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) $</code> does not exist.</p>
+      </fieldset>
+</details>
+  </div>
 </blockquote>
 
 <blockquote>
