@@ -272,15 +272,17 @@ $$</code></li>
 <span style="color:red"> tight </span> at <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$, and  we assume <code class="language-plaintext highlighter-rouge">$\eta_0 =\mathbf{0}$</code> to be a relative origin.</li>
 </ul>
 
-<fieldset class="field-set">
-  <legend class="leg-title"><span style="color:red">Our NGD:</span></legend>
-  <p><code class="language-plaintext highlighter-rouge">$$ 
+<div class="notice--info">
+  <fieldset class="field-set">
+    <legend class="leg-title"><span style="color:red">Our NGD:</span></legend>
+    <p><code class="language-plaintext highlighter-rouge">$$ 
 \begin{aligned} 
 \lambda_{t+1} &amp; \leftarrow  \phi_{\lambda_t} \big( \overbrace{\eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} }^{ \text{NGD in local space} } \big) \,\,\,\, \textrm{(structure-preserving update in auxiliary space)}\\
 \tau_{t+1} &amp; \leftarrow \psi\big( \lambda_{t+1} \big) \,\,\,\, \textrm{(constraint-satisfaction update in global space)}
 \end{aligned} 
 $$</code></p>
-</fieldset>
+  </fieldset>
+</div>
 <p>where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code> is
  the natural-gradient <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code> at <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>, which is computed by the chain rule,
 <code class="language-plaintext highlighter-rouge">$$
@@ -469,9 +471,10 @@ $$</code></p>
 
   <p>Maps <code class="language-plaintext highlighter-rouge">$\psi$</code> and <code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> are defined in  <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>.
 Our NGD update in the auxiliary space is shown below, where we assume $\eta_0=\mathbf{0}$.</p>
-  <fieldset class="field-set">
-    <legend class="leg-title"><span style="color:red">Structure-preserving update in $\lambda$ space</span></legend>
-    <p><code class="language-plaintext highlighter-rouge">$$
+  <div class="notice--info">
+    <fieldset class="field-set">
+      <legend class="leg-title"><span style="color:red">Structure-preserving update in $\lambda$ space</span></legend>
+      <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
   \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} = \lambda_{t+1} = 
   \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big)
@@ -479,7 +482,8 @@ Our NGD update in the auxiliary space is shown below, where we assume $\eta_0=\m
 \mathbf{B}_t  \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)  \end{array} \Big\}   
  \end{aligned}
 $$</code></p>
-  </fieldset>
+    </fieldset>
+  </div>
   <p>where <code class="language-plaintext highlighter-rouge">$\odot$</code> is the elementwise product ,
 <code class="language-plaintext highlighter-rouge">$\kappa_{\text{up}}(\mathbf{X}) \in {\cal{M}_{\text{up}}}(k)$</code> extracts non-zero entries of <code class="language-plaintext highlighter-rouge">${\cal{M}_{\text{up}}}(k)$</code> from <code class="language-plaintext highlighter-rouge">$\mathbf{X}$</code>, and
 <code class="language-plaintext highlighter-rouge">$ \mathbf{C}_{\text{up}} = 
@@ -492,11 +496,13 @@ $$</code></p>
 <code class="language-plaintext highlighter-rouge">$\mathbf{h}\big(\mathbf{M}\big) \in {\cal{B}_{\text{up}}}(k) $</code> for any <code class="language-plaintext highlighter-rouge">$\mathbf{M} \in \cal{M}_{\text{up}}(k)$</code>.</p>
 </blockquote>
 
-<p>In summary, our NGD method:</p>
-<ul>
-  <li>is a systemic approach to incorporate structures</li>
-  <li>induces exact and non-singular FIMs</li>
-</ul>
+<div class="notice--info">
+  <p>In summary, our NGD method:</p>
+  <ul>
+    <li>is a systemic approach to incorporate structures</li>
+    <li>induces exact and non-singular FIMs</li>
+  </ul>
+</div>
 
 <table>
   <thead>
@@ -556,37 +562,43 @@ $$</code> by using <code class="language-plaintext highlighter-rouge">$\eqref{4}
 $$</code> where $\Sigma=\mathbf{S}^{-1}$ is the covariance.</li>
 </ul>
 
-<details>
+<div class="notice--info">
+  <details>
 	<summary>Group-structural invariance: (Click to expand)</summary>
 <fieldset class="field-set">
-    <p>Since <code class="language-plaintext highlighter-rouge">$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$</code>,  the update in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is invariant under any (group) transform <code class="language-plaintext highlighter-rouge">$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$</code> of  <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>  such as <code class="language-plaintext highlighter-rouge">$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$</code>.</p>
-  </fieldset>
+      <p>Since <code class="language-plaintext highlighter-rouge">$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$</code>,  the update in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is invariant under any (group) transform <code class="language-plaintext highlighter-rouge">$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$</code> of  <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>  such as <code class="language-plaintext highlighter-rouge">$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$</code>.</p>
+    </fieldset>
 </details>
+</div>
 
-<details>
+<div class="notice--info">
+  <details>
 	<summary>Time complexity: (Click to expand)</summary>
 <fieldset class="field-set">
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">$O(k^2 p)$</code> for triangular structure,</li>
-      <li><code class="language-plaintext highlighter-rouge">$O( (k_1^2+k_2^2) p)$</code> for hierarchical structure.</li>
-    </ul>
+      <ul>
+        <li><code class="language-plaintext highlighter-rouge">$O(k^2 p)$</code> for triangular structure,</li>
+        <li><code class="language-plaintext highlighter-rouge">$O( (k_1^2+k_2^2) p)$</code> for hierarchical structure.</li>
+      </ul>
 
-    <p>Implementation using Hessian-vector products (HVPs);</p>
-    <ul>
-      <li>Off-diagonal: <code class="language-plaintext highlighter-rouge">$k$</code> HVPs (triangular), <code class="language-plaintext highlighter-rouge">$(k_1+k_2)$</code> HVPs (hierarchical),</li>
-      <li>Diagonal: compute/approximate diagonal entries of <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code>.</li>
-    </ul>
-  </fieldset>
+      <p>Implementation using Hessian-vector products (HVPs);</p>
+      <ul>
+        <li>Off-diagonal: <code class="language-plaintext highlighter-rouge">$k$</code> HVPs (triangular), <code class="language-plaintext highlighter-rouge">$(k_1+k_2)$</code> HVPs (hierarchical),</li>
+        <li>Diagonal: compute/approximate diagonal entries of <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code>.</li>
+      </ul>
+    </fieldset>
 </details>
+</div>
 
-<details>
+<div class="notice--info">
+  <details>
 	<summary>Classical non-convex optimization: (Click to expand)</summary>
 <fieldset class="field-set">
-    <p>200-dim non-separable non-convex functions:</p>
+      <p>200-dim non-separable non-convex functions:</p>
 
-    <p><img src="/img/icml2021-rbfun.png" width="500" /> |  <img src="/img/icml2021-dpfun.png" width="500" /></p>
-  </fieldset>
+      <p><img src="/img/icml2021-rbfun.png" width="500" /> |  <img src="/img/icml2021-dpfun.png" width="500" /></p>
+    </fieldset>
 </details>
+</div>
 
 <h2 id="structured-adaptive-gradient-methods-for-deep-learning">Structured Adaptive-gradient Methods for Deep Learning</h2>
 <p>At each NN layer,
@@ -599,32 +611,36 @@ consider a  Gaussian family
 <p>The Kronecker product (<code class="language-plaintext highlighter-rouge">$\mathbf{B}=\mathbf{B}_1 \otimes \mathbf{B}_2$</code>) of two sparse structured groups (<code class="language-plaintext highlighter-rouge">$\mathbf{B}
 _1$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{B}_2$</code>) further reduces the time complexity, where precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}=\mathbf{B}\mathbf{B}^T= (\mathbf{B}_1 \mathbf{B}_1^T) \otimes (\mathbf{B}_2 \mathbf{B}_2^T)$</code></p>
 
-<details>
+<div class="notice--info">
+  <details>
 	<summary>Time complexity: (Click to expand)</summary>
 <fieldset class="field-set">
-    <ul>
-      <li><code class="language-plaintext highlighter-rouge">$O(k p)$</code> for our Kronecker product with triangular groups, where <code class="language-plaintext highlighter-rouge">$0&lt;k&lt;p^{1/2}$</code></li>
-      <li><code class="language-plaintext highlighter-rouge">$O( (k_1+k_2) p)$</code> for our  Kronecker product with hierarchical groups, where <code class="language-plaintext highlighter-rouge">$0&lt;k_1+k_2&lt;p^{1/2}$</code></li>
-      <li><code class="language-plaintext highlighter-rouge">$O(p)$</code> for Adam and our diagonal groups</li>
-      <li><code class="language-plaintext highlighter-rouge">$O(p^{3/2})$</code> for KFAC and our Kronecker product with dense groups</li>
-    </ul>
+      <ul>
+        <li><code class="language-plaintext highlighter-rouge">$O(k p)$</code> for our Kronecker product with triangular groups, where <code class="language-plaintext highlighter-rouge">$0&lt;k&lt;p^{1/2}$</code></li>
+        <li><code class="language-plaintext highlighter-rouge">$O( (k_1+k_2) p)$</code> for our  Kronecker product with hierarchical groups, where <code class="language-plaintext highlighter-rouge">$0&lt;k_1+k_2&lt;p^{1/2}$</code></li>
+        <li><code class="language-plaintext highlighter-rouge">$O(p)$</code> for Adam and our diagonal groups</li>
+        <li><code class="language-plaintext highlighter-rouge">$O(p^{3/2})$</code> for KFAC and our Kronecker product with dense groups</li>
+      </ul>
 
-    <p>Implementation:</p>
-    <ul>
-      <li>Automatically parallelized by Auto-Differentiation</li>
-      <li>No sequential conjugate-gradient (CG) steps</li>
-    </ul>
-  </fieldset>
+      <p>Implementation:</p>
+      <ul>
+        <li>Automatically parallelized by Auto-Differentiation</li>
+        <li>No sequential conjugate-gradient (CG) steps</li>
+      </ul>
+    </fieldset>
 </details>
+</div>
 
-<details>
+<div class="notice--info">
+  <details>
 	<summary>Image classification problems: (Click to expand)</summary>
 <fieldset class="field-set">
-    <p>Kronecker product of lower-triangular groups for a CNN</p>
+      <p>Kronecker product of lower-triangular groups for a CNN</p>
 
-    <p><img src="/img/icml2021-stl10.png" width="500" /> |  <img src="/img/icml2021-cifar10.png" width="500" /></p>
-  </fieldset>
+      <p><img src="/img/icml2021-stl10.png" width="500" /> |  <img src="/img/icml2021-cifar10.png" width="500" /></p>
+    </fieldset>
 </details>
+</div>
 
 <h2 id="variational-inference-with-gaussian-mixtures">Variational Inference with Gaussian Mixtures</h2>
 
@@ -634,14 +650,16 @@ _1$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{B}_2$
   <li>gives efficient stochastic natural-gradient variational methods beyond mean-field/diagonal covariance</li>
 </ul>
 
-<details>
+<div class="notice--info">
+  <details>
 	<summary>Approximating 80-dim multimodal distributions: (Click to expand)</summary>
 <fieldset class="field-set">
-    <p>First 8 marginal distributions of our approximation (mixture with a block upper-triangular group, where <code class="language-plaintext highlighter-rouge">$k=5$</code>)</p>
+      <p>First 8 marginal distributions of our approximation (mixture with a block upper-triangular group, where <code class="language-plaintext highlighter-rouge">$k=5$</code>)</p>
 
-    <p><img src="/img/icml2021-tmm80d-01.png" width="500" /> |  <img src="/img/icml2021-tmm80d-02.png" width="500" /></p>
-  </fieldset>
+      <p><img src="/img/icml2021-tmm80d-01.png" width="500" /> |  <img src="/img/icml2021-tmm80d-02.png" width="500" /></p>
+    </fieldset>
 </details>
+</div>
 
 <hr />
 <h1 id="references">References</h1>

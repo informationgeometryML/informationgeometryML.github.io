@@ -448,7 +448,7 @@ We now discuss issues when it comes to  natural-gradient descent over non-intrin
 
           <p>Consider a $d$-dimensional Gaussian mixture family <code class="language-plaintext highlighter-rouge">$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $</code>. This is a non-intrinstic parameterization.</p>
 
-          <p>If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same covariance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
+          <p>If we  use the following initialization such that all $C$ components have the same mean $\mu_0$ and the same covariance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
 The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.</p>
 
           <p>Now, consider the equivalent Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda =( \mu_0,\Sigma_0 ) $</code>, where $\lambda$ is an intrinsic parameterization of the Gaussian family.</p>
@@ -587,18 +587,20 @@ rule of a metric in non-linear cases.</p>
 as
 <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$</code>.</p>
 
-<details>
-<summary>Claim: the FIM follows the transformation
+<div class="notice--info">
+  <details>
+<summary>
+Claim: the FIM follows the transformation
 rule even in non-linear cases.
 </summary>
 <fieldset class="field-set">
-    <blockquote>
-      <p>Proof</p>
+      <blockquote>
+        <p>Proof</p>
 
-      <p>Given a non-linear intrinstic reparametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code>, recall that the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau_k)$</code> in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is no longer a constant matrix but a square and non-singular matrix.
+        <p>Given a non-linear intrinstic reparametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code>, recall that the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau_k)$</code> in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is no longer a constant matrix but a square and non-singular matrix.
 In this case, the FIM still follows the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> thanks to <a href="https://en.wikipedia.org/wiki/Score_(statistics)#Mean">the expectation of the score function</a>.</p>
 
-      <p><code class="language-plaintext highlighter-rouge">$$
+        <p><code class="language-plaintext highlighter-rouge">$$
 \require{cancel}
 \begin{aligned}
 &amp; \mathbf{F}_\tau(\tau_k)\\
@@ -611,9 +613,10 @@ In this case, the FIM still follows the <a href="/posts/2021/11/Geomopt03/#trans
 =&amp;\mathbf{J }^T(\tau_k)  \mathbf{F}_\lambda(\lambda_k) \mathbf{J}(\tau_k)  
 \end{aligned}
 $$</code></p>
-    </blockquote>
-  </fieldset>
+      </blockquote>
+    </fieldset>
 </details>
+</div>
 
 <p>We will discuss in
 <a href="/posts/2021/12/Geomopt05/#minimal-parametrizations-of-exponential-family">Part V</a>, for a special parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> (known as a natural parametrization) of <a href="/posts/2021/12/Geomopt05/#exponential-family">exponential family</a>, the FIM under this parametrization can be computed  as

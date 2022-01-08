@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-06T12:49:13-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-08T08:17:13-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -942,7 +942,7 @@ We now discuss issues when it comes to  natural-gradient descent over non-intrin
 
           &lt;p&gt;Consider a $d$-dimensional Gaussian mixture family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $&lt;/code&gt;. This is a non-intrinstic parameterization.&lt;/p&gt;
 
-          &lt;p&gt;If we  use the following initialization such that all $K$ components have the same mean $\mu_0$ and the same covariance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
+          &lt;p&gt;If we  use the following initialization such that all $C$ components have the same mean $\mu_0$ and the same covariance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
 The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.&lt;/p&gt;
 
           &lt;p&gt;Now, consider the equivalent Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda =( \mu_0,\Sigma_0 ) $&lt;/code&gt;, where $\lambda$ is an intrinsic parameterization of the Gaussian family.&lt;/p&gt;
@@ -1081,18 +1081,20 @@ rule of a metric in non-linear cases.&lt;/p&gt;
 as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;details&gt;
-&lt;summary&gt;Claim: the FIM follows the transformation
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
+&lt;summary&gt;
+Claim: the FIM follows the transformation
 rule even in non-linear cases.
 &lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;blockquote&gt;
-      &lt;p&gt;Proof&lt;/p&gt;
+      &lt;blockquote&gt;
+        &lt;p&gt;Proof&lt;/p&gt;
 
-      &lt;p&gt;Given a non-linear intrinstic reparametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt;, recall that the Jacobian matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}(\tau_k)$&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; is no longer a constant matrix but a square and non-singular matrix.
+        &lt;p&gt;Given a non-linear intrinstic reparametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt;, recall that the Jacobian matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}(\tau_k)$&lt;/code&gt; in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; is no longer a constant matrix but a square and non-singular matrix.
 In this case, the FIM still follows the &lt;a href=&quot;/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix&quot;&gt;transformation rule&lt;/a&gt; thanks to &lt;a href=&quot;https://en.wikipedia.org/wiki/Score_(statistics)#Mean&quot;&gt;the expectation of the score function&lt;/a&gt;.&lt;/p&gt;
 
-      &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \require{cancel}
 \begin{aligned}
 &amp;amp; \mathbf{F}_\tau(\tau_k)\\
@@ -1105,9 +1107,10 @@ In this case, the FIM still follows the &lt;a href=&quot;/posts/2021/11/Geomopt0
 =&amp;amp;\mathbf{J }^T(\tau_k)  \mathbf{F}_\lambda(\lambda_k) \mathbf{J}(\tau_k)  
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/fieldset&gt;
+      &lt;/blockquote&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
 &lt;p&gt;We will discuss in
 &lt;a href=&quot;/posts/2021/12/Geomopt05/#minimal-parametrizations-of-exponential-family&quot;&gt;Part V&lt;/a&gt;, for a special parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; (known as a natural parametrization) of &lt;a href=&quot;/posts/2021/12/Geomopt05/#exponential-family&quot;&gt;exponential family&lt;/a&gt;, the FIM under this parametrization can be computed  as
@@ -2446,7 +2449,11 @@ The condition is also related to the model identification in maximum likelihood 
 In such cases, the Fisher-Rao metric is a valid Riemannian metric since the corresponding FIM is positive definite everywhere in an &lt;strong&gt;intrinsic&lt;/strong&gt; parameter space.
 The Fisher-Rao metric is &lt;strong&gt;special&lt;/strong&gt; since it is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.&lt;/p&gt;
 
-&lt;p&gt;&lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;Warning&lt;/strong&gt;&lt;/span&gt;: An arbitrary Riemannian metric often is NOT useful for applications in machine learning.&lt;/p&gt;
+&lt;div class=&quot;notice--danger&quot;&gt;
+
+  &lt;p&gt;&lt;strong&gt;An arbitrary Riemannian metric often is NOT useful for applications in machine learning&lt;/strong&gt;&lt;/p&gt;
+
+&lt;/div&gt;
 
 &lt;p&gt;Recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
 If this smoothness requirement is satisfied, we can obtain a new intrinsic parameterization via the transformation.
@@ -2632,15 +2639,17 @@ $$&lt;/code&gt;&lt;/li&gt;
 &lt;span style=&quot;color:red&quot;&gt; tight &lt;/span&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$, and  we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0 =\mathbf{0}$&lt;/code&gt; to be a relative origin.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;fieldset class=&quot;field-set&quot;&gt;
-  &lt;legend class=&quot;leg-title&quot;&gt;&lt;span style=&quot;color:red&quot;&gt;Our NGD:&lt;/span&gt;&lt;/legend&gt;
-  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$ 
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;fieldset class=&quot;field-set&quot;&gt;
+    &lt;legend class=&quot;leg-title&quot;&gt;&lt;span style=&quot;color:red&quot;&gt;Our NGD:&lt;/span&gt;&lt;/legend&gt;
+    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$ 
 \begin{aligned} 
 \lambda_{t+1} &amp;amp; \leftarrow  \phi_{\lambda_t} \big( \overbrace{\eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} }^{ \text{NGD in local space} } \big) \,\,\,\, \textrm{(structure-preserving update in auxiliary space)}\\
 \tau_{t+1} &amp;amp; \leftarrow \psi\big( \lambda_{t+1} \big) \,\,\,\, \textrm{(constraint-satisfaction update in global space)}
 \end{aligned} 
 $$&lt;/code&gt;&lt;/p&gt;
-&lt;/fieldset&gt;
+  &lt;/fieldset&gt;
+&lt;/div&gt;
 &lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\eta_0}^{(t)}$&lt;/code&gt; is
  the natural-gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\eta_0}^{(t)}$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt; tied to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;, which is computed by the chain rule,
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -2829,9 +2838,10 @@ $$&lt;/code&gt;&lt;/p&gt;
 
   &lt;p&gt;Maps &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; are defined in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt;.
 Our NGD update in the auxiliary space is shown below, where we assume $\eta_0=\mathbf{0}$.&lt;/p&gt;
-  &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;legend class=&quot;leg-title&quot;&gt;&lt;span style=&quot;color:red&quot;&gt;Structure-preserving update in $\lambda$ space&lt;/span&gt;&lt;/legend&gt;
-    &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+  &lt;div class=&quot;notice--info&quot;&gt;
+    &lt;fieldset class=&quot;field-set&quot;&gt;
+      &lt;legend class=&quot;leg-title&quot;&gt;&lt;span style=&quot;color:red&quot;&gt;Structure-preserving update in $\lambda$ space&lt;/span&gt;&lt;/legend&gt;
+      &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
   \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} = \lambda_{t+1} = 
   \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big)
@@ -2839,7 +2849,8 @@ Our NGD update in the auxiliary space is shown below, where we assume $\eta_0=\m
 \mathbf{B}_t  \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)  \end{array} \Big\}   
  \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
-  &lt;/fieldset&gt;
+    &lt;/fieldset&gt;
+  &lt;/div&gt;
   &lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\odot$&lt;/code&gt; is the elementwise product ,
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\kappa_{\text{up}}(\mathbf{X}) \in {\cal{M}_{\text{up}}}(k)$&lt;/code&gt; extracts non-zero entries of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{M}_{\text{up}}}(k)$&lt;/code&gt; from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{X}$&lt;/code&gt;, and
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{C}_{\text{up}} = 
@@ -2852,11 +2863,13 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{h}\big(\mathbf{M}\big) \in {\cal{B}_{\text{up}}}(k) $&lt;/code&gt; for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{M} \in \cal{M}_{\text{up}}(k)$&lt;/code&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;In summary, our NGD method:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;is a systemic approach to incorporate structures&lt;/li&gt;
-  &lt;li&gt;induces exact and non-singular FIMs&lt;/li&gt;
-&lt;/ul&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;p&gt;In summary, our NGD method:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;is a systemic approach to incorporate structures&lt;/li&gt;
+    &lt;li&gt;induces exact and non-singular FIMs&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -2916,37 +2929,43 @@ $$&lt;/code&gt; by using &lt;code class=&quot;language-plaintext highlighter-rou
 $$&lt;/code&gt; where $\Sigma=\mathbf{S}^{-1}$ is the covariance.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;details&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
 	&lt;summary&gt;Group-structural invariance: (Click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;p&gt;Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$&lt;/code&gt;,  the update in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; is invariant under any (group) transform &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$&lt;/code&gt; of  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt;  such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$&lt;/code&gt;.&lt;/p&gt;
-  &lt;/fieldset&gt;
+      &lt;p&gt;Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$&lt;/code&gt;,  the update in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; is invariant under any (group) transform &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$&lt;/code&gt; of  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt;  such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$&lt;/code&gt;.&lt;/p&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
-&lt;details&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
 	&lt;summary&gt;Time complexity: (Click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(k^2 p)$&lt;/code&gt; for triangular structure,&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O( (k_1^2+k_2^2) p)$&lt;/code&gt; for hierarchical structure.&lt;/li&gt;
-    &lt;/ul&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(k^2 p)$&lt;/code&gt; for triangular structure,&lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O( (k_1^2+k_2^2) p)$&lt;/code&gt; for hierarchical structure.&lt;/li&gt;
+      &lt;/ul&gt;
 
-    &lt;p&gt;Implementation using Hessian-vector products (HVPs);&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li&gt;Off-diagonal: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k$&lt;/code&gt; HVPs (triangular), &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(k_1+k_2)$&lt;/code&gt; HVPs (hierarchical),&lt;/li&gt;
-      &lt;li&gt;Diagonal: compute/approximate diagonal entries of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_{\mu_t}^2 \ell( \mu)$&lt;/code&gt;.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/fieldset&gt;
+      &lt;p&gt;Implementation using Hessian-vector products (HVPs);&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Off-diagonal: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k$&lt;/code&gt; HVPs (triangular), &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(k_1+k_2)$&lt;/code&gt; HVPs (hierarchical),&lt;/li&gt;
+        &lt;li&gt;Diagonal: compute/approximate diagonal entries of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_{\mu_t}^2 \ell( \mu)$&lt;/code&gt;.&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
-&lt;details&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
 	&lt;summary&gt;Classical non-convex optimization: (Click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;p&gt;200-dim non-separable non-convex functions:&lt;/p&gt;
+      &lt;p&gt;200-dim non-separable non-convex functions:&lt;/p&gt;
 
-    &lt;p&gt;&lt;img src=&quot;/img/icml2021-rbfun.png&quot; width=&quot;500&quot; /&gt; |  &lt;img src=&quot;/img/icml2021-dpfun.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
-  &lt;/fieldset&gt;
+      &lt;p&gt;&lt;img src=&quot;/img/icml2021-rbfun.png&quot; width=&quot;500&quot; /&gt; |  &lt;img src=&quot;/img/icml2021-dpfun.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
 &lt;h2 id=&quot;structured-adaptive-gradient-methods-for-deep-learning&quot;&gt;Structured Adaptive-gradient Methods for Deep Learning&lt;/h2&gt;
 &lt;p&gt;At each NN layer,
@@ -2959,32 +2978,36 @@ consider a  Gaussian family
 &lt;p&gt;The Kronecker product (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}=\mathbf{B}_1 \otimes \mathbf{B}_2$&lt;/code&gt;) of two sparse structured groups (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}
 _1$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}_2$&lt;/code&gt;) further reduces the time complexity, where precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}=\mathbf{B}\mathbf{B}^T= (\mathbf{B}_1 \mathbf{B}_1^T) \otimes (\mathbf{B}_2 \mathbf{B}_2^T)$&lt;/code&gt;&lt;/p&gt;
 
-&lt;details&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
 	&lt;summary&gt;Time complexity: (Click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(k p)$&lt;/code&gt; for our Kronecker product with triangular groups, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$0&amp;lt;k&amp;lt;p^{1/2}$&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O( (k_1+k_2) p)$&lt;/code&gt; for our  Kronecker product with hierarchical groups, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$0&amp;lt;k_1+k_2&amp;lt;p^{1/2}$&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(p)$&lt;/code&gt; for Adam and our diagonal groups&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(p^{3/2})$&lt;/code&gt; for KFAC and our Kronecker product with dense groups&lt;/li&gt;
-    &lt;/ul&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(k p)$&lt;/code&gt; for our Kronecker product with triangular groups, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$0&amp;lt;k&amp;lt;p^{1/2}$&lt;/code&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O( (k_1+k_2) p)$&lt;/code&gt; for our  Kronecker product with hierarchical groups, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$0&amp;lt;k_1+k_2&amp;lt;p^{1/2}$&lt;/code&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(p)$&lt;/code&gt; for Adam and our diagonal groups&lt;/li&gt;
+        &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(p^{3/2})$&lt;/code&gt; for KFAC and our Kronecker product with dense groups&lt;/li&gt;
+      &lt;/ul&gt;
 
-    &lt;p&gt;Implementation:&lt;/p&gt;
-    &lt;ul&gt;
-      &lt;li&gt;Automatically parallelized by Auto-Differentiation&lt;/li&gt;
-      &lt;li&gt;No sequential conjugate-gradient (CG) steps&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/fieldset&gt;
+      &lt;p&gt;Implementation:&lt;/p&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Automatically parallelized by Auto-Differentiation&lt;/li&gt;
+        &lt;li&gt;No sequential conjugate-gradient (CG) steps&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
-&lt;details&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
 	&lt;summary&gt;Image classification problems: (Click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;p&gt;Kronecker product of lower-triangular groups for a CNN&lt;/p&gt;
+      &lt;p&gt;Kronecker product of lower-triangular groups for a CNN&lt;/p&gt;
 
-    &lt;p&gt;&lt;img src=&quot;/img/icml2021-stl10.png&quot; width=&quot;500&quot; /&gt; |  &lt;img src=&quot;/img/icml2021-cifar10.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
-  &lt;/fieldset&gt;
+      &lt;p&gt;&lt;img src=&quot;/img/icml2021-stl10.png&quot; width=&quot;500&quot; /&gt; |  &lt;img src=&quot;/img/icml2021-cifar10.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
 &lt;h2 id=&quot;variational-inference-with-gaussian-mixtures&quot;&gt;Variational Inference with Gaussian Mixtures&lt;/h2&gt;
 
@@ -2994,14 +3017,16 @@ _1$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&q
   &lt;li&gt;gives efficient stochastic natural-gradient variational methods beyond mean-field/diagonal covariance&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;details&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
 	&lt;summary&gt;Approximating 80-dim multimodal distributions: (Click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;p&gt;First 8 marginal distributions of our approximation (mixture with a block upper-triangular group, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=5$&lt;/code&gt;)&lt;/p&gt;
+      &lt;p&gt;First 8 marginal distributions of our approximation (mixture with a block upper-triangular group, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=5$&lt;/code&gt;)&lt;/p&gt;
 
-    &lt;p&gt;&lt;img src=&quot;/img/icml2021-tmm80d-01.png&quot; width=&quot;500&quot; /&gt; |  &lt;img src=&quot;/img/icml2021-tmm80d-02.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
-  &lt;/fieldset&gt;
+      &lt;p&gt;&lt;img src=&quot;/img/icml2021-tmm80d-01.png&quot; width=&quot;500&quot; /&gt; |  &lt;img src=&quot;/img/icml2021-tmm80d-02.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
 &lt;hr /&gt;
 &lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
