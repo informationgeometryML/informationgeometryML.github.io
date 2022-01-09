@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T09:28:07-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T10:30:30-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -1489,7 +1489,7 @@ We assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\n
 $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class=&quot;notice--info&quot;&gt;
-  &lt;p&gt;Each possible vecotor &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; lives in the same (vector) space at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;Each possible vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; lives in the same (vector) space at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;It is easy to see that the optimal solution of Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$&lt;/code&gt;, which is the (Euclidean) steepest direction at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.&lt;/p&gt;
@@ -1509,13 +1509,13 @@ $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;The positive-definiteness of the FIM is essential since we do not want a non-zero vector has a zero length.&lt;/p&gt;
 
-&lt;p&gt;The distance (and orthogonality) between two &lt;span style=&quot;color:red&quot;&gt;vectors&lt;/span&gt; at  &lt;span style=&quot;color:red&quot;&gt;point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;&lt;/span&gt;  point is also induced by the FIM since we can define them by the inner product as
+&lt;p&gt;The distance (and orthogonality) between two &lt;span style=&quot;color:red&quot;&gt;vectors&lt;/span&gt; at  &lt;span style=&quot;color:red&quot;&gt;point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;&lt;/span&gt;  is also induced by the FIM since we can define them by the inner product as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 d(\mathbf{v},\mathbf{w}) := \|\mathbf{v}-\mathbf{w}\|_F
 \end{aligned}
 $$&lt;/code&gt;
-where vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w}$&lt;/code&gt; live in the (vector) space at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
+where vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w}$&lt;/code&gt; live in the same (vector) space at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/tmanifold.png&quot; width=&quot;300&quot; /&gt;&lt;/p&gt;
 
@@ -1682,9 +1682,9 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;/details&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Given a scalar function $f(\mathbf{\tau})$, if its &lt;strong&gt;Euclidean&lt;/strong&gt; (steepest) gradient is $\nabla_\tau f(\mathbf{\tau})$, its &lt;strong&gt;Riemannian&lt;/strong&gt; (steepest) gradient is defined as $ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$ in literature.
+&lt;p&gt;Given a scalar function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau})$&lt;/code&gt;, if its (un-normalized) &lt;strong&gt;Euclidean&lt;/strong&gt; (steepest) gradient is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau})$&lt;/code&gt;, its (un-normalized) &lt;strong&gt;Riemannian&lt;/strong&gt; (steepest) gradient is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$&lt;/code&gt;.
 We use a learning-rate to control the length of a gradient instead of normalizing its length. 
-Since we use the Fisher-Rao metric, the Riemannian gradient is also known as the &lt;strong&gt;natural&lt;/strong&gt; gradient.&lt;/p&gt;
+Since we use the Fisher-Rao metric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}$&lt;/code&gt;, the Riemannian gradient is also known as the &lt;strong&gt;natural&lt;/strong&gt; gradient.&lt;/p&gt;
 
 &lt;div class=&quot;notice--info&quot;&gt;
   &lt;details&gt;
@@ -1750,7 +1750,10 @@ Under parametrization $\mathbf{\tau}$, we have the following parametric represen
 
 &lt;p&gt;Note that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; is a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is  a Riemannian gradient, which is a representation of the tangent vector of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma$&lt;/code&gt; at point $\mathbf{x}_0$.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: Be aware of the differences shown in the table.&lt;/p&gt;
+&lt;div class=&quot;notice--danger&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:
+Be aware of the differences shown in the table.&lt;/p&gt;
+&lt;/div&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -1802,15 +1805,19 @@ and the blue line segment &lt;code class=&quot;language-plaintext highlighter-ro
 
 &lt;blockquote&gt;
 
-  &lt;p&gt;Consider a smooth scalar function defined in the manifold $h: \mathcal{M} \to \mathcal{R}$. In the unit sphere case, consider &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h(\mathbf{x})$&lt;/code&gt; subject to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}^T \mathbf{x}=1$&lt;/code&gt;.
+  &lt;p&gt;Consider a smooth scalar function defined in the manifold $h: \mathcal{M} \to \mathcal{R}$. In the unit sphere case, consider &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h(\mathbf{z})$&lt;/code&gt; subject to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{z}^T \mathbf{z}=1$&lt;/code&gt;.
 Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h_\tau(\mathbf{\tau}):=h( (\tau_x,\tau_y,\sqrt{1-\tau_x^2-\tau_y^2}) )$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau \in \Omega_\tau$&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;By the definition of a directional derivative, the following identity holds for any smooth scalar function $h$: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$[\nabla h_\tau(\mathbf{\tau}_0)]^T \mathbf{v}(\mathbf{\tau}_0) =\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}$&lt;/code&gt;, where $h_\tau$ is the parametric representation of  $h$ . Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(h_\tau \circ {\gamma}_\tau) (t)$&lt;/code&gt; is a function defined from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau $&lt;/code&gt; to $\mathcal{R}^1$, where domain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau \subset \mathcal{R}^1$&lt;/code&gt;.&lt;/p&gt;
 
-  &lt;p&gt;The &lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;key&lt;/strong&gt; &lt;/span&gt; observation is that function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(h_\tau \circ {\gamma}_\tau) (t)$&lt;/code&gt; becomes a scalar function defined in $\mathcal{R}^1$ thanks to parametrization $\tau$. Thus, we can use the standard chain rule.&lt;/p&gt;
+  &lt;div class=&quot;notice--danger&quot;&gt;
+    &lt;p&gt;The key  observation:&lt;/p&gt;
+
+    &lt;p&gt;Function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(h_\tau \circ {\gamma}_\tau) (t)$&lt;/code&gt; becomes a scalar function defined in $\mathcal{R}^1$ thanks to parametrization $\tau$. Thus, we can safely use the standard chain rule.&lt;/p&gt;
+  &lt;/div&gt;
 
   &lt;p&gt;By the chain rule, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}=[\nabla h_\tau(\mathbf{\tau}_0)]^T  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_\tau(0)=\tau_0$&lt;/code&gt;. Thus,
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt; since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla h_\tau(\mathbf{\tau}_0)$&lt;/code&gt; can be arbitrary.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt; since (Euclidean gradient) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla h_\tau(\mathbf{\tau}_0)$&lt;/code&gt; is an arbitrary vector in $\mathcal{R}^2$.&lt;/p&gt;
 
   &lt;p&gt;In summary, a Riemannian gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0)$&lt;/code&gt; can be viewed as a parametric representation of the tangent vector 
  of curve $\gamma(t)$ at $\mathbf{x}_0$ since  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_\tau(t)$&lt;/code&gt; is the parametric representation of $\gamma(t)$.&lt;/p&gt;

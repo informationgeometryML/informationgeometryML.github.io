@@ -213,7 +213,7 @@ We assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mat
 $$</code></p>
 
 <div class="notice--info">
-  <p>Each possible vecotor <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (vector) space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
+  <p>Each possible vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (vector) space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
 </div>
 
 <p>It is easy to see that the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$</code>, which is the (Euclidean) steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
@@ -233,13 +233,13 @@ $$</code></p>
 
 <p>The positive-definiteness of the FIM is essential since we do not want a non-zero vector has a zero length.</p>
 
-<p>The distance (and orthogonality) between two <span style="color:red">vectors</span> at  <span style="color:red">point <code class="language-plaintext highlighter-rouge">$\tau_0$</code></span>  point is also induced by the FIM since we can define them by the inner product as
+<p>The distance (and orthogonality) between two <span style="color:red">vectors</span> at  <span style="color:red">point <code class="language-plaintext highlighter-rouge">$\tau_0$</code></span>  is also induced by the FIM since we can define them by the inner product as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 d(\mathbf{v},\mathbf{w}) := \|\mathbf{v}-\mathbf{w}\|_F
 \end{aligned}
 $$</code>
-where vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> live in the (vector) space at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
+where vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> live in the same (vector) space at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
 
 <p><img src="/img/tmanifold.png" width="300" /></p>
 
@@ -406,9 +406,9 @@ $$</code></p>
 </details>
 </div>
 
-<p>Given a scalar function $f(\mathbf{\tau})$, if its <strong>Euclidean</strong> (steepest) gradient is $\nabla_\tau f(\mathbf{\tau})$, its <strong>Riemannian</strong> (steepest) gradient is defined as $ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$ in literature.
+<p>Given a scalar function <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau})$</code>, if its (un-normalized) <strong>Euclidean</strong> (steepest) gradient is <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau})$</code>, its (un-normalized) <strong>Riemannian</strong> (steepest) gradient is defined as <code class="language-plaintext highlighter-rouge">$ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$</code>.
 We use a learning-rate to control the length of a gradient instead of normalizing its length. 
-Since we use the Fisher-Rao metric, the Riemannian gradient is also known as the <strong>natural</strong> gradient.</p>
+Since we use the Fisher-Rao metric <code class="language-plaintext highlighter-rouge">$\mathbf{F}$</code>, the Riemannian gradient is also known as the <strong>natural</strong> gradient.</p>
 
 <div class="notice--info">
   <details>
@@ -474,7 +474,10 @@ Under parametrization $\mathbf{\tau}$, we have the following parametric represen
 
 <p>Note that  <code class="language-plaintext highlighter-rouge">$\tau_0$</code> is a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is  a Riemannian gradient, which is a representation of the tangent vector of curve <code class="language-plaintext highlighter-rouge">$\gamma$</code> at point $\mathbf{x}_0$.</p>
 
-<p><strong>Warning</strong>: Be aware of the differences shown in the table.</p>
+<div class="notice--danger">
+  <p><strong>Warning</strong>:
+Be aware of the differences shown in the table.</p>
+</div>
 
 <table>
   <thead>
@@ -526,15 +529,19 @@ and the blue line segment <code class="language-plaintext highlighter-rouge">${\
 
 <blockquote>
 
-  <p>Consider a smooth scalar function defined in the manifold $h: \mathcal{M} \to \mathcal{R}$. In the unit sphere case, consider <code class="language-plaintext highlighter-rouge">$h(\mathbf{x})$</code> subject to <code class="language-plaintext highlighter-rouge">$\mathbf{x}^T \mathbf{x}=1$</code>.
+  <p>Consider a smooth scalar function defined in the manifold $h: \mathcal{M} \to \mathcal{R}$. In the unit sphere case, consider <code class="language-plaintext highlighter-rouge">$h(\mathbf{z})$</code> subject to <code class="language-plaintext highlighter-rouge">$\mathbf{z}^T \mathbf{z}=1$</code>.
 Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function as <code class="language-plaintext highlighter-rouge">$h_\tau(\mathbf{\tau}):=h( (\tau_x,\tau_y,\sqrt{1-\tau_x^2-\tau_y^2}) )$</code> where <code class="language-plaintext highlighter-rouge">$\tau \in \Omega_\tau$</code>.</p>
 
   <p>By the definition of a directional derivative, the following identity holds for any smooth scalar function $h$: <code class="language-plaintext highlighter-rouge">$[\nabla h_\tau(\mathbf{\tau}_0)]^T \mathbf{v}(\mathbf{\tau}_0) =\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}$</code>, where $h_\tau$ is the parametric representation of  $h$ . Note that <code class="language-plaintext highlighter-rouge">$(h_\tau \circ {\gamma}_\tau) (t)$</code> is a function defined from <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau $</code> to $\mathcal{R}^1$, where domain <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau \subset \mathcal{R}^1$</code>.</p>
 
-  <p>The <span style="color:red"> <strong>key</strong> </span> observation is that function <code class="language-plaintext highlighter-rouge">$(h_\tau \circ {\gamma}_\tau) (t)$</code> becomes a scalar function defined in $\mathcal{R}^1$ thanks to parametrization $\tau$. Thus, we can use the standard chain rule.</p>
+  <div class="notice--danger">
+    <p>The key  observation:</p>
+
+    <p>Function <code class="language-plaintext highlighter-rouge">$(h_\tau \circ {\gamma}_\tau) (t)$</code> becomes a scalar function defined in $\mathcal{R}^1$ thanks to parametrization $\tau$. Thus, we can safely use the standard chain rule.</p>
+  </div>
 
   <p>By the chain rule, we have <code class="language-plaintext highlighter-rouge">$\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}=[\nabla h_\tau(\mathbf{\tau}_0)]^T  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$</code>, where <code class="language-plaintext highlighter-rouge">${\gamma}_\tau(0)=\tau_0$</code>. Thus,
-<code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$</code> since <code class="language-plaintext highlighter-rouge">$\nabla h_\tau(\mathbf{\tau}_0)$</code> can be arbitrary.</p>
+<code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$</code> since (Euclidean gradient) <code class="language-plaintext highlighter-rouge">$\nabla h_\tau(\mathbf{\tau}_0)$</code> is an arbitrary vector in $\mathcal{R}^2$.</p>
 
   <p>In summary, a Riemannian gradient <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0)$</code> can be viewed as a parametric representation of the tangent vector 
  of curve $\gamma(t)$ at $\mathbf{x}_0$ since  <code class="language-plaintext highlighter-rouge">${\gamma}_\tau(t)$</code> is the parametric representation of $\gamma(t)$.</p>
