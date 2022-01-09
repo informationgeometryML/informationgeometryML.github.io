@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T09:26:02-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T09:28:07-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -1612,24 +1612,6 @@ The main reason is that &lt;code class=&quot;language-plaintext highlighter-roug
 &lt;/details&gt;
 &lt;/div&gt;
 
-&lt;div class=&quot;notice--info&quot;&gt;
-  &lt;details&gt;
-&lt;summary&gt;Example: multivariate Gaussian (click to expand)&lt;/summary&gt;
-&lt;fieldset class=&quot;field-set&quot;&gt;
-      &lt;blockquote&gt;
-
-        &lt;p&gt;Consider a $d$-dimensional Gaussian family $\mathbf{\tau}$ of the family as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathbf{S}   \succ \mathbf{0} \}$&lt;/code&gt; with zero mean and precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; discussed in &lt;a href=&quot;/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold&quot;&gt;Part I&lt;/a&gt;.&lt;/p&gt;
-
-        &lt;p&gt;Parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \mathrm{vech}(\mathbf{S})$&lt;/code&gt; is intrinsic while
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta = \mathrm{vec}(\mathbf{S})$&lt;/code&gt; is not, where
-map $\mathrm{vech}()$ is the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization map&lt;/a&gt; and map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vec}()$&lt;/code&gt; is the standard vectorization map.
-Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d+1)}{2}$&lt;/code&gt;-dim parameter array while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d^2$&lt;/code&gt;-dim parameter array.&lt;/p&gt;
-
-      &lt;/blockquote&gt;
-    &lt;/fieldset&gt;
-&lt;/details&gt;
-&lt;/div&gt;
-
 &lt;h1 id=&quot;riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
@@ -1703,6 +1685,26 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Given a scalar function $f(\mathbf{\tau})$, if its &lt;strong&gt;Euclidean&lt;/strong&gt; (steepest) gradient is $\nabla_\tau f(\mathbf{\tau})$, its &lt;strong&gt;Riemannian&lt;/strong&gt; (steepest) gradient is defined as $ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$ in literature.
 We use a learning-rate to control the length of a gradient instead of normalizing its length. 
 Since we use the Fisher-Rao metric, the Riemannian gradient is also known as the &lt;strong&gt;natural&lt;/strong&gt; gradient.&lt;/p&gt;
+
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
+&lt;summary&gt;Example: multivariate Gaussian (click to expand)&lt;/summary&gt;
+&lt;fieldset class=&quot;field-set&quot;&gt;
+      &lt;blockquote&gt;
+
+        &lt;p&gt;Consider a $d$-dimensional Gaussian family $\mathbf{\tau}$ of the family as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathbf{S}   \succ \mathbf{0} \}$&lt;/code&gt; with zero mean and precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; discussed in &lt;a href=&quot;/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold&quot;&gt;Part I&lt;/a&gt;.&lt;/p&gt;
+
+        &lt;p&gt;Parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \mathrm{vech}(\mathbf{S})$&lt;/code&gt; is intrinsic while
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta = \mathrm{vec}(\mathbf{S})$&lt;/code&gt; is not, where
+map $\mathrm{vech}()$ is the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization map&lt;/a&gt; and map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vec}()$&lt;/code&gt; is the standard vectorization map.
+Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d+1)}{2}$&lt;/code&gt;-dim parameter array while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d^2$&lt;/code&gt;-dim parameter array,&lt;/p&gt;
+
+        &lt;p&gt;In other words, the FIM w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;  is singular if  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is considered as a matrix parameter with $d^2$ degrees of freedom.
+In the literature, a natural gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}(\mathbf{v})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is a natural-gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;.&lt;/p&gt;
+      &lt;/blockquote&gt;
+    &lt;/fieldset&gt;
+&lt;/details&gt;
+&lt;/div&gt;
 
 &lt;h1 id=&quot;riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Riemannian gradients as tangent vectors (optional)&lt;/h1&gt;
 &lt;hr /&gt;
