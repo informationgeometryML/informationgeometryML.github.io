@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T02:13:56-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T08:24:35-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -2429,13 +2429,13 @@ We will discuss more about this at &lt;a href=&quot;#caveats-of-the-fisher-matri
 The partial derivatives are
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
- \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
+\partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
   &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
- \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
+\partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
 \end{aligned}
 $$&lt;/code&gt;
 If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$&lt;/code&gt; holds for any $w$, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_1=c_2=0$&lt;/code&gt;, which implies  linear independence.&lt;/p&gt;
@@ -2452,7 +2452,7 @@ The partial derivatives are&lt;/p&gt;
 
   &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
- \partial_{\pi_0} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{\pi_1}{(\pi_0+\pi_1)^2}   
+\partial_{\pi_0} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{\pi_1}{(\pi_0+\pi_1)^2}   
 \end{aligned}
 $$&lt;/code&gt;
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -2486,7 +2486,7 @@ In statistics, this metric is closely related to  maximum likelihood estimation,
 These statistical principles &lt;a class=&quot;citation&quot; href=&quot;#casella2002statistical&quot;&gt;[10]&lt;/a&gt; play essential roles in training and estimating machine learning models. In other words,
 the Fisher-Rao metric is special.&lt;/p&gt;
 
-&lt;p&gt;Given an intrinstic parameterization, we can define the Fisher-Rao metric under this parameterization as:
+&lt;p&gt;Given an intrinsic parameterization, we can define the Fisher-Rao metric under this parameterization as:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ].
@@ -2519,19 +2519,19 @@ An arbitrary Riemannian metric often is NOT useful for applications in machine l
 &lt;/div&gt;
 
 &lt;p&gt;Recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
-If this smoothness requirement is satisfied, we can obtain a new intrinsic parameterization via the transformation.
+If this smoothness requirement&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; is satisfied, we can obtain a new intrinsic parameterization via the transformation.
 In &lt;a href=&quot;/posts/2021/11/Geomopt03/#Pparameter-transform-and-invariance&quot;&gt;Part III&lt;/a&gt;,
 we will show the FIM is also positive definite under this new intrinsic parameterization.&lt;/p&gt;
 
 &lt;h1 id=&quot;caveats-of-the-fisher-matrix-computation&quot;&gt;Caveats of the Fisher matrix computation&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;There are some caveats when it comes to the Fisher matrix computation. In particular, the regularity condition should be satisfied.
-It is possible to define the FIM under a non-intrinstic parameterization. However, the FIM often is singular or ill-defined under a non-intrinstic  parameterization as shown below.&lt;/p&gt;
+It is possible to define the FIM under a non-intrinsic parameterization. However, the FIM often is singular or ill-defined under a non-intrinsic  parameterization as shown below.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Example 1 (Ill-defined FIM):&lt;/p&gt;
 
-  &lt;p&gt;Consider Bernoulli family  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;.
+  &lt;p&gt;Consider Bernoulli family  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$&lt;/code&gt; with non-intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;.
 The following computation is not correct. Do you make similar mistakes like this?&lt;/p&gt;
 
   &lt;p&gt;Let &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;. The derivative is
@@ -2566,7 +2566,7 @@ In other words, the above Fisher matrix computation is not correct since &lt;cod
 &lt;blockquote&gt;
   &lt;p&gt;Example 2  (Singular FIM):&lt;/p&gt;
 
-  &lt;p&gt;Consider Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1) $&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;Consider Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0  \}$&lt;/code&gt; with  non-intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1) $&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;The FIM under this  parameterization is singular as shown below.&lt;/p&gt;
 
@@ -2594,7 +2594,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Example 3  (Valid FIM):&lt;/p&gt;
 
-  &lt;p&gt;Consider Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi)  \Big| 0&amp;lt;\pi&amp;lt;1 \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \pi $&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;Consider Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi)  \Big| 0&amp;lt;\pi&amp;lt;1 \}$&lt;/code&gt; with  &lt;strong&gt;intrinsic&lt;/strong&gt; parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \pi $&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;The FIM under this parameterization is non-singular as shown below.&lt;/p&gt;
 
@@ -2723,6 +2723,9 @@ $$&lt;/code&gt;&lt;/p&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
       &lt;p&gt;In differential geometry, an intrinsic parametrization is known as a coordinate chart. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;In differential geometry, the smoothness requirement is known as a diffeomorphism. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that, The FIM plays an essential role in statistics and machine learning For a parametric distribution, it induces a Riemannian geometric-structure</summary></entry><entry><title type="html">Structured Natural Gradient Descent (ICML 2021)</title><link href="/posts/2021/07/ICML/" rel="alternate" type="text/html" title="Structured Natural Gradient Descent (ICML 2021)" /><published>2021-07-05T00:00:00-07:00</published><updated>2021-07-05T00:00:00-07:00</updated><id>/posts/2021/07/GeomProj01</id><content type="html" xml:base="/posts/2021/07/ICML/">&lt;p&gt;More about this work &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[1]&lt;/a&gt;: &lt;a href=&quot;https://www.youtube.com/watch?v=vEY1ZxDJX8o&amp;amp;t=11s&quot;&gt;(Youtube) talk&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2102.07405&quot;&gt;ICML paper&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2107.10884&quot;&gt;workshop paper&lt;/a&gt;,

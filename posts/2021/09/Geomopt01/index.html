@@ -388,13 +388,13 @@ We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-comput
 The partial derivatives are
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
- \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
+\partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
 \end{aligned}
 $$</code></p>
 
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
- \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
+\partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
 \end{aligned}
 $$</code>
 If <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code> holds for any $w$, we have <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies  linear independence.</p>
@@ -411,7 +411,7 @@ The partial derivatives are</p>
 
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
- \partial_{\pi_0} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{\pi_1}{(\pi_0+\pi_1)^2}   
+\partial_{\pi_0} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{\pi_1}{(\pi_0+\pi_1)^2}   
 \end{aligned}
 $$</code>
 <code class="language-plaintext highlighter-rouge">$$
@@ -445,7 +445,7 @@ In statistics, this metric is closely related to  maximum likelihood estimation,
 These statistical principles <a class="citation" href="#casella2002statistical">[10]</a> play essential roles in training and estimating machine learning models. In other words,
 the Fisher-Rao metric is special.</p>
 
-<p>Given an intrinstic parameterization, we can define the Fisher-Rao metric under this parameterization as:
+<p>Given an intrinsic parameterization, we can define the Fisher-Rao metric under this parameterization as:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ].
@@ -478,19 +478,19 @@ An arbitrary Riemannian metric often is NOT useful for applications in machine l
 </div>
 
 <p>Recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
-If this smoothness requirement is satisfied, we can obtain a new intrinsic parameterization via the transformation.
+If this smoothness requirement<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> is satisfied, we can obtain a new intrinsic parameterization via the transformation.
 In <a href="/posts/2021/11/Geomopt03/#Pparameter-transform-and-invariance">Part III</a>,
 we will show the FIM is also positive definite under this new intrinsic parameterization.</p>
 
 <h1 id="caveats-of-the-fisher-matrix-computation">Caveats of the Fisher matrix computation</h1>
 <hr />
 <p>There are some caveats when it comes to the Fisher matrix computation. In particular, the regularity condition should be satisfied.
-It is possible to define the FIM under a non-intrinstic parameterization. However, the FIM often is singular or ill-defined under a non-intrinstic  parameterization as shown below.</p>
+It is possible to define the FIM under a non-intrinsic parameterization. However, the FIM often is singular or ill-defined under a non-intrinsic  parameterization as shown below.</p>
 
 <blockquote>
   <p>Example 1 (Ill-defined FIM):</p>
 
-  <p>Consider Bernoulli family  <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>.
+  <p>Consider Bernoulli family  <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$</code> with non-intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>.
 The following computation is not correct. Do you make similar mistakes like this?</p>
 
   <p>Let <code class="language-plaintext highlighter-rouge">$  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$</code>, where <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. The derivative is
@@ -525,7 +525,7 @@ In other words, the above Fisher matrix computation is not correct since <code c
 <blockquote>
   <p>Example 2  (Singular FIM):</p>
 
-  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1) $</code>.</p>
+  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with  non-intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1) $</code>.</p>
 
   <p>The FIM under this  parameterization is singular as shown below.</p>
 
@@ -553,7 +553,7 @@ $$</code></p>
 <blockquote>
   <p>Example 3  (Valid FIM):</p>
 
-  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi)  \Big| 0&lt;\pi&lt;1 \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi $</code>.</p>
+  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi)  \Big| 0&lt;\pi&lt;1 \}$</code> with  <strong>intrinsic</strong> parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi $</code>.</p>
 
   <p>The FIM under this parameterization is non-singular as shown below.</p>
 
@@ -682,6 +682,9 @@ $$</code></p>
   <ol>
     <li id="fn:1" role="doc-endnote">
       <p>In differential geometry, an intrinsic parametrization is known as a coordinate chart. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>In differential geometry, the smoothness requirement is known as a diffeomorphism. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
