@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part II: Natural-Gradients Evaluted at one Point - Information Geometry in Machine Learning</title>
-<meta name="description" content="GoalThis blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.The main propose of this post is to show how to compute/define a natural-gradient.The space of natural-gradients evaluated at the same point is called a tangent space at that point.">
+<meta name="description" content="GoalThis blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.The main propose of this post is to show how to define and compute natural-gradients.The space of natural-gradients evaluated at the same point is called a tangent space at that point.">
 
 
 
@@ -21,7 +21,7 @@
 <meta property="og:url" content="/posts/2021/10/Geomopt02/">
 
 
-  <meta property="og:description" content="GoalThis blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.The main propose of this post is to show how to compute/define a natural-gradient.The space of natural-gradients evaluated at the same point is called a tangent space at that point.">
+  <meta property="og:description" content="GoalThis blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.The main propose of this post is to show how to define and compute natural-gradients.The space of natural-gradients evaluated at the same point is called a tangent space at that point.">
 
 
 
@@ -167,7 +167,7 @@
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <meta itemprop="headline" content="Part II: Natural-Gradients Evaluted at one Point">
-    <meta itemprop="description" content="GoalThis blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.The main propose of this post is to show how to compute/define a natural-gradient.The space of natural-gradients evaluated at the same point is called a tangent space at that point.">
+    <meta itemprop="description" content="GoalThis blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.The main propose of this post is to show how to define and compute natural-gradients.The space of natural-gradients evaluated at the same point is called a tangent space at that point.">
     <meta itemprop="datePublished" content="October 04, 2021">
     
 
@@ -192,7 +192,7 @@
         
         <h2 id="goal">Goal</h2>
 <p>This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric.
-The main propose of this post is to show how to compute/define a natural-gradient.
+The main propose of this post is to show how to define and compute natural-gradients.
 The space of natural-gradients evaluated at the same point is called a tangent space at that point.</p>
 
 <p>We will give an informal introduction with a focus on high level of ideas.</p>
@@ -203,12 +203,18 @@ The space of natural-gradients evaluated at the same point is called a tangent s
 
 <p>We will show a Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we extend the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a natural-gradient.</p>
 
-<p>Given a smooth scalar function $\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$ in a <strong>vector space</strong> <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, we can define the (Euclidean) steepest direction at current <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> as the optimal solution to the following optimization problem. We can express the optimization problem in terms of a <strong>directional derivative</strong> along vector $\mathbf{v}$. We assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.
-<code class="language-plaintext highlighter-rouge">$$
+<p>Given a smooth scalar function $\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$ in a <strong>vector space</strong> <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, we can define the (Euclidean) steepest direction at current <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> as the optimal solution to the following optimization problem. We can express the optimization problem in terms of a <strong>directional derivative</strong> along vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code>.
+We assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \min_{\|v\|^2=1} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0) )^T \mathbf{v} 
 \end{aligned}\tag{1}\label{1}
 $$</code></p>
+
+<div class="notice--info">
+  <p>Each possible vecotor <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the tangent space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
+</div>
 
 <p>It is easy to see that the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$</code>, which is the (Euclidean) steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
 
@@ -227,19 +233,32 @@ $$</code></p>
 
 <p>The positive-definiteness of FIM is essential since we do not want a non-zero vector has a zero length.</p>
 
-<p>The distance (and orthogonality) between two <span style="color:red">vectors</span> at the <span style="color:red">same</span>  point is also induced by FIM since we can define them by the inner product as
+<p>The distance (and orthogonality) between two <span style="color:red">vectors</span> at  <span style="color:red">point <code class="language-plaintext highlighter-rouge">$\tau_0$</code></span>  point is also induced by FIM since we can define them by the inner product as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 d(\mathbf{v},\mathbf{w}) := \|\mathbf{v}-\mathbf{w}\|_F
 \end{aligned}
 $$</code>
-where <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> are two vectors evaluted at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
+where vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> live in the tangent space at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
+
+<p><img src="/img/tmanifold.png" width="300" /></p>
 
 <p>In manifold cases, we have to distinguish the difference between a point (e.g., parameter array $\tau_0$) and a vector (e.g., Riemannian gradient under a parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code>).
 This point is crucial to (natural) gradient-based methods in <a href="/posts/2021/11/Geomopt04/#two-kinds-of-spaces">Part IV</a>.</p>
 
-<p><span style="color:red"><strong>Warning</strong></span>: We do NOT define the distance between two points in the manifold, which will be discussed <a href="#riemannian-gradients-as-tangent-vectors-optional">here</a>.
-We also do NOT define the distance between a vector at one point and another vector at a distinct point.</p>
+<div class="notice--danger">
+  <p><strong>Warning</strong>:</p>
+  <ul>
+    <li>
+      <p>We do NOT define the distance between two points in the manifold, which will be discussed <a href="#riemannian-gradients-as-tangent-vectors-optional">here</a>.</p>
+    </li>
+    <li>
+      <p>We also do NOT define how to compute the distance between a vector at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code> and another vector at a distinct point
+<code class="language-plaintext highlighter-rouge">$\tau_1$</code>, which involves the concept of parallel transport in a curved space. For simplicity, we do not how to parallelly transport a
+vector in this post.</p>
+    </li>
+  </ul>
+</div>
 
 <h1 id="directional-derivatives-in-a-manifold">Directional derivatives in a manifold</h1>
 <hr />
@@ -305,8 +324,11 @@ Now, we can introduce the Riemannian steepest direction. We will use this to def
 \begin{aligned}
 \min_{ \color{red} {\|v\|_{F}^2=1} } ( \nabla_\tau f(\mathbf{\tau}_0) )^T  \mathbf{v} 
 \end{aligned} \tag{2}\label{2}
-$$</code> 
-where $\mathbf{v}$ can be any (Riemannian) vector at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> satisfied the norm constraint.</p>
+$$</code></p>
+
+<div class="notice--info">
+  <p>Each possible (Riemannian) vecotor <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the tangent space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> in a given manifold.</p>
+</div>
 
 <p>The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
 <code class="language-plaintext highlighter-rouge">$$
