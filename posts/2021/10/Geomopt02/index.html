@@ -310,7 +310,7 @@ We will show later that Riemannian gradient vector <code class="language-plainte
 
         <div class="notice--danger">
           <p><strong>Warning</strong>:
-Curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> is NOT the shortest curve in the manifold between <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{x}_1$</code>.</p>
+Curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> often is NOT the shortest curve in the manifold from <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code> to  <code class="language-plaintext highlighter-rouge">$\mathbf{x}_1$</code>.</p>
         </div>
       </blockquote>
     </fieldset>
@@ -329,7 +329,7 @@ Curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> is N
 
         <p><img src="/img/tangent_non.png" alt="Figure 1" /></p>
 
-        <p>Any other point <code class="language-plaintext highlighter-rouge">$\tau_0 + t\mathbf{v}$</code> in the line segment leaves the manifold for <code class="language-plaintext highlighter-rouge">$t\neq 0$</code> and thus, <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau}_0+t\mathbf{v})$</code> is not well-defined.
+        <p>Any  point <code class="language-plaintext highlighter-rouge">$\tau_0 + t\mathbf{v}$</code> in the line segment leaves the manifold when <code class="language-plaintext highlighter-rouge">$t\neq 0$</code>.  Thus, <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau}_0+t\mathbf{v})$</code> is not well-defined.
 The main reason is that <code class="language-plaintext highlighter-rouge">$\tau$</code> is not an intrinsic parameterization.</p>
       </blockquote>
     </fieldset>
@@ -424,7 +424,9 @@ map $\mathrm{vech}()$ is the <a href="https://en.wikipedia.org/wiki/Vectorizatio
 Note that <code class="language-plaintext highlighter-rouge">$\tau$</code> is a <code class="language-plaintext highlighter-rouge">$\frac{d(d+1)}{2}$</code>-dim parameter array while <code class="language-plaintext highlighter-rouge">$\eta$</code> is <code class="language-plaintext highlighter-rouge">$d^2$</code>-dim parameter array,</p>
 
         <p>In other words, the FIM w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>  is singular if  <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is considered as a matrix parameter with $d^2$ degrees of freedom.
-In the literature, a natural gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is defined as <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is a natural-gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>.</p>
+Strictly speaking, a natural gradient/vector w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is not well-defined.</p>
+
+        <p>In the literature, a natural gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is  defined as <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is a valid natural gradient w.r.t. intrinsic parameter <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>.</p>
       </blockquote>
     </fieldset>
 </details>
@@ -537,11 +539,11 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
   <div class="notice--danger">
     <p>The key  observation:</p>
 
-    <p>Function <code class="language-plaintext highlighter-rouge">$(h_\tau \circ {\gamma}_\tau) (t)$</code> becomes a scalar function defined in $\mathcal{R}^1$ thanks to parametrization $\tau$. Thus, we can safely use the standard chain rule.</p>
+    <p>Function <code class="language-plaintext highlighter-rouge">$(h_\tau \circ {\gamma}_\tau) (t)$</code> becomes a standard real-scalar function thanks to parametrization $\tau$. Thus, we can safely use the standard chain rule.</p>
   </div>
 
   <p>By the chain rule, we have <code class="language-plaintext highlighter-rouge">$\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}=[\nabla h_\tau(\mathbf{\tau}_0)]^T  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$</code>, where <code class="language-plaintext highlighter-rouge">${\gamma}_\tau(0)=\tau_0$</code>. Thus,
-<code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$</code> since (Euclidean gradient) <code class="language-plaintext highlighter-rouge">$\nabla h_\tau(\mathbf{\tau}_0)$</code> is an arbitrary vector in $\mathcal{R}^2$.</p>
+<code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$</code> since (Euclidean gradient) <code class="language-plaintext highlighter-rouge">$\nabla h_\tau(\mathbf{\tau}_0)$</code> is an arbitrary vector in $\mathcal{R}^2$ and <code class="language-plaintext highlighter-rouge">$\tau$</code> is a 2-dim parameter array.</p>
 
   <p>In summary, a Riemannian gradient <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0)$</code> can be viewed as a parametric representation of the tangent vector 
  of curve $\gamma(t)$ at $\mathbf{x}_0$ since  <code class="language-plaintext highlighter-rouge">${\gamma}_\tau(t)$</code> is the parametric representation of $\gamma(t)$.</p>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T10:30:30-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T11:17:02-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -1586,7 +1586,7 @@ We will show later that Riemannian gradient vector &lt;code class=&quot;language
 
         &lt;div class=&quot;notice--danger&quot;&gt;
           &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:
-Curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; is NOT the shortest curve in the manifold between &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_1$&lt;/code&gt;.&lt;/p&gt;
+Curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; often is NOT the shortest curve in the manifold from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt; to  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_1$&lt;/code&gt;.&lt;/p&gt;
         &lt;/div&gt;
       &lt;/blockquote&gt;
     &lt;/fieldset&gt;
@@ -1605,7 +1605,7 @@ Curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma
 
         &lt;p&gt;&lt;img src=&quot;/img/tangent_non.png&quot; alt=&quot;Figure 1&quot; /&gt;&lt;/p&gt;
 
-        &lt;p&gt;Any other point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0 + t\mathbf{v}$&lt;/code&gt; in the line segment leaves the manifold for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$t\neq 0$&lt;/code&gt; and thus, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau}_0+t\mathbf{v})$&lt;/code&gt; is not well-defined.
+        &lt;p&gt;Any  point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0 + t\mathbf{v}$&lt;/code&gt; in the line segment leaves the manifold when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$t\neq 0$&lt;/code&gt;.  Thus, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau}_0+t\mathbf{v})$&lt;/code&gt; is not well-defined.
 The main reason is that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is not an intrinsic parameterization.&lt;/p&gt;
       &lt;/blockquote&gt;
     &lt;/fieldset&gt;
@@ -1700,7 +1700,9 @@ map $\mathrm{vech}()$ is the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vect
 Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d+1)}{2}$&lt;/code&gt;-dim parameter array while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d^2$&lt;/code&gt;-dim parameter array,&lt;/p&gt;
 
         &lt;p&gt;In other words, the FIM w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;  is singular if  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is considered as a matrix parameter with $d^2$ degrees of freedom.
-In the literature, a natural gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}(\mathbf{v})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is a natural-gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;.&lt;/p&gt;
+Strictly speaking, a natural gradient/vector w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is not well-defined.&lt;/p&gt;
+
+        &lt;p&gt;In the literature, a natural gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is  defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}(\mathbf{v})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is a valid natural gradient w.r.t. intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;.&lt;/p&gt;
       &lt;/blockquote&gt;
     &lt;/fieldset&gt;
 &lt;/details&gt;
@@ -1813,11 +1815,11 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
   &lt;div class=&quot;notice--danger&quot;&gt;
     &lt;p&gt;The key  observation:&lt;/p&gt;
 
-    &lt;p&gt;Function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(h_\tau \circ {\gamma}_\tau) (t)$&lt;/code&gt; becomes a scalar function defined in $\mathcal{R}^1$ thanks to parametrization $\tau$. Thus, we can safely use the standard chain rule.&lt;/p&gt;
+    &lt;p&gt;Function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(h_\tau \circ {\gamma}_\tau) (t)$&lt;/code&gt; becomes a standard real-scalar function thanks to parametrization $\tau$. Thus, we can safely use the standard chain rule.&lt;/p&gt;
   &lt;/div&gt;
 
   &lt;p&gt;By the chain rule, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}=[\nabla h_\tau(\mathbf{\tau}_0)]^T  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_\tau(0)=\tau_0$&lt;/code&gt;. Thus,
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt; since (Euclidean gradient) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla h_\tau(\mathbf{\tau}_0)$&lt;/code&gt; is an arbitrary vector in $\mathcal{R}^2$.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt; since (Euclidean gradient) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla h_\tau(\mathbf{\tau}_0)$&lt;/code&gt; is an arbitrary vector in $\mathcal{R}^2$ and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a 2-dim parameter array.&lt;/p&gt;
 
   &lt;p&gt;In summary, a Riemannian gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0)$&lt;/code&gt; can be viewed as a parametric representation of the tangent vector 
  of curve $\gamma(t)$ at $\mathbf{x}_0$ since  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_\tau(t)$&lt;/code&gt; is the parametric representation of $\gamma(t)$.&lt;/p&gt;
