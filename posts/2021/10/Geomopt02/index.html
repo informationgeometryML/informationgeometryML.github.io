@@ -182,7 +182,7 @@
 
 
 
-  11 minute read
+  12 minute read
 </p>
           
         </header>
@@ -213,7 +213,7 @@ We assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mat
 $$</code></p>
 
 <div class="notice--info">
-  <p>Each possible vecotor <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the tangent space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
+  <p>Each possible vecotor <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (vector) space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
 </div>
 
 <p>It is easy to see that the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$</code>, which is the (Euclidean) steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
@@ -239,7 +239,7 @@ $$</code></p>
 d(\mathbf{v},\mathbf{w}) := \|\mathbf{v}-\mathbf{w}\|_F
 \end{aligned}
 $$</code>
-where vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> live in the tangent space at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
+where vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> live in the (vector) space at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
 
 <p><img src="/img/tmanifold.png" width="300" /></p>
 
@@ -250,7 +250,7 @@ This point is crucial to (natural) gradient-based methods in <a href="/posts/202
   <p><strong>Warning</strong>:</p>
   <ul>
     <li>
-      <p>We do NOT define the distance between two points in the manifold, which will be discussed <a href="#riemannian-gradients-as-tangent-vectors-optional">here</a>.</p>
+      <p>We do NOT define how to compute the distance between two points in the manifold, which will be discussed <a href="#riemannian-gradients-as-tangent-vectors-optional">here</a>.</p>
     </li>
     <li>
       <p>We also do NOT define how to compute the distance between a vector at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code> and another vector at a distinct point
@@ -275,8 +275,23 @@ Therefore, when $|t|$ is small enough, <code class="language-plaintext highlight
 Note that we only require <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$</code> when $|t|$ is small enough. When $|t|$ is small enough, this is possible since a line segment <code class="language-plaintext highlighter-rouge">$ \mathbf{\tau}_0+t\mathbf{v} \in E$</code> and <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>.
  Technically, this is because  $\Omega_\tau$ is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
 
-<p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the <strong>local vector space</strong> structure.
+<p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the <strong>local vector space</strong> structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
 <code class="language-plaintext highlighter-rouge">$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v}. \end{aligned}$$</code></p>
+
+<div class="notice--danger">
+  <p>Note:</p>
+  <ul>
+    <li>
+      <p><code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}$</code> lives in the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> when scalar <code class="language-plaintext highlighter-rouge">$|t|$</code> is small enough</p>
+    </li>
+    <li>
+      <p>vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in a distinct space. This space is called the tangent/gradient vector  space <code class="language-plaintext highlighter-rouge">$\mathcal{R}^k$</code> at current point <code class="language-plaintext highlighter-rouge">$\tau_0$</code></p>
+    </li>
+  </ul>
+
+</div>
+
+<p><img src="/img/sphere.png" width="500" /></p>
 
 <p>The following example illustrates directional derivatives in manifold cases.</p>
 
@@ -334,7 +349,7 @@ Now, we can introduce the Riemannian steepest direction. We will use this to def
 $$</code></p>
 
 <div class="notice--info">
-  <p>Each possible (Riemannian) vecotor <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the tangent space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> in a given manifold.</p>
+  <p>Each possible (Riemannian) vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (tangent) vector space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
 </div>
 
 <p>The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
@@ -485,12 +500,12 @@ Under parametrization $\mathbf{\tau}$, we have the following parametric represen
 
 <p>Under <strong>intrinsic</strong> parametrization $\tau$, we have <code class="language-plaintext highlighter-rouge">$\Omega_\tau \subset \mathcal{R}^2$</code>. Thus, we can perform this operation in $\Omega_\tau$ space: <code class="language-plaintext highlighter-rouge">$\tau_0 +t\mathbf{v}(\tau_0) \in \Omega_\tau$</code> when scalar <code class="language-plaintext highlighter-rouge">$|t|$</code> is small enough. Note that we only define the <a href="#distance-induced-by-the-fisher-rao-metric">distance</a> between two vectors in the <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> space. The distance between two points in the <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> space is undefined in this post.</p>
 
-<h2 id="parameterization-free-repesentation-of--vector-mathbfv">Parameterization-free repesentation of  vector $\mathbf{v}$</h2>
+<h2 id="parameterization-free-representation-of--vector-mathbfv">Parameterization-free representation of  vector $\mathbf{v}$</h2>
 
 <p>The tangent vector $\mathbf{v}$ at point $\mathbf{x_0}$  can be viewed as the <strong>tangent direction</strong> of a (1-dimensional) smooth curve $\gamma(t) \in \mathcal{M}$, where $\gamma(0)=\mathbf{x_0}$,  <code class="language-plaintext highlighter-rouge">$\frac{d {\gamma}(t) }{d t} \Big|_{t=0}=\mathbf{v}$</code> and the support of $\gamma(t)$ denoted by $\mathbf{I}$ is an open interval in  <code class="language-plaintext highlighter-rouge">$\mathcal{R}^1$</code> containing 0. 
 Since a curve $\gamma(t)$ is a geometric object, this is a parameterization-free repesentation of a vector.</p>
 
-<h2 id="parameterization-dependent-repesentation-of-vector-mathbfv">Parameterization-dependent repesentation of vector $\mathbf{v}$</h2>
+<h2 id="parameterization-dependent-representation-of-vector-mathbfv">Parameterization-dependent representation of vector $\mathbf{v}$</h2>
 
 <p>Given intrinsic parametrization $\tau$, we can define the parametric representation of the curve denoted by ${\gamma}_\tau(t)$, where the domain is <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau \subset \mathcal{R}^1$</code>.
 The parametric representation of vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is defined as <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_{\tau}(t) }{d t} \Big|_{t=0}$</code>, where <code class="language-plaintext highlighter-rouge">${\gamma}_{\tau}(0)=\tau_0$</code>.</p>

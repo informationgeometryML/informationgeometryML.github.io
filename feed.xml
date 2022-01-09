@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T08:24:35-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T09:05:29-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -1489,7 +1489,7 @@ We assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\n
 $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class=&quot;notice--info&quot;&gt;
-  &lt;p&gt;Each possible vecotor &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; lives in the tangent space at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;Each possible vecotor &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; lives in the same (vector) space at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;It is easy to see that the optimal solution of Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$&lt;/code&gt;, which is the (Euclidean) steepest direction at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.&lt;/p&gt;
@@ -1515,7 +1515,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 d(\mathbf{v},\mathbf{w}) := \|\mathbf{v}-\mathbf{w}\|_F
 \end{aligned}
 $$&lt;/code&gt;
-where vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w}$&lt;/code&gt; live in the tangent space at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
+where vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{w}$&lt;/code&gt; live in the (vector) space at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/tmanifold.png&quot; width=&quot;300&quot; /&gt;&lt;/p&gt;
 
@@ -1526,7 +1526,7 @@ This point is crucial to (natural) gradient-based methods in &lt;a href=&quot;/p
   &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:&lt;/p&gt;
   &lt;ul&gt;
     &lt;li&gt;
-      &lt;p&gt;We do NOT define the distance between two points in the manifold, which will be discussed &lt;a href=&quot;#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+      &lt;p&gt;We do NOT define how to compute the distance between two points in the manifold, which will be discussed &lt;a href=&quot;#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
     &lt;/li&gt;
     &lt;li&gt;
       &lt;p&gt;We also do NOT define how to compute the distance between a vector at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; and another vector at a distinct point
@@ -1551,8 +1551,23 @@ Therefore, when $|t|$ is small enough, &lt;code class=&quot;language-plaintext h
 Note that we only require &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$&lt;/code&gt; when $|t|$ is small enough. When $|t|$ is small enough, this is possible since a line segment &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{\tau}_0+t\mathbf{v} \in E$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$E \subset \Omega_\tau$&lt;/code&gt;.
  Technically, this is because  $\Omega_\tau$ is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Under &lt;strong&gt;intrinsic&lt;/strong&gt; parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the &lt;strong&gt;local vector space&lt;/strong&gt; structure.
+&lt;p&gt;Under &lt;strong&gt;intrinsic&lt;/strong&gt; parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the &lt;strong&gt;local vector space&lt;/strong&gt; structure in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v}. \end{aligned}$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;notice--danger&quot;&gt;
+  &lt;p&gt;Note:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v}$&lt;/code&gt; lives in the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; when scalar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$|t|$&lt;/code&gt; is small enough&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; lives in a distinct space. This space is called the tangent/gradient vector  space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^k$&lt;/code&gt; at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The following example illustrates directional derivatives in manifold cases.&lt;/p&gt;
 
@@ -1610,7 +1625,7 @@ Now, we can introduce the Riemannian steepest direction. We will use this to def
 $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class=&quot;notice--info&quot;&gt;
-  &lt;p&gt;Each possible (Riemannian) vecotor &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; lives in the tangent space at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; in a given manifold.&lt;/p&gt;
+  &lt;p&gt;Each possible (Riemannian) vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; lives in the same (tangent) vector space at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
@@ -1761,12 +1776,12 @@ Under parametrization $\mathbf{\tau}$, we have the following parametric represen
 
 &lt;p&gt;Under &lt;strong&gt;intrinsic&lt;/strong&gt; parametrization $\tau$, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau \subset \mathcal{R}^2$&lt;/code&gt;. Thus, we can perform this operation in $\Omega_\tau$ space: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0 +t\mathbf{v}(\tau_0) \in \Omega_\tau$&lt;/code&gt; when scalar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$|t|$&lt;/code&gt; is small enough. Note that we only define the &lt;a href=&quot;#distance-induced-by-the-fisher-rao-metric&quot;&gt;distance&lt;/a&gt; between two vectors in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^2$&lt;/code&gt; space. The distance between two points in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; space is undefined in this post.&lt;/p&gt;
 
-&lt;h2 id=&quot;parameterization-free-repesentation-of--vector-mathbfv&quot;&gt;Parameterization-free repesentation of  vector $\mathbf{v}$&lt;/h2&gt;
+&lt;h2 id=&quot;parameterization-free-representation-of--vector-mathbfv&quot;&gt;Parameterization-free representation of  vector $\mathbf{v}$&lt;/h2&gt;
 
 &lt;p&gt;The tangent vector $\mathbf{v}$ at point $\mathbf{x_0}$  can be viewed as the &lt;strong&gt;tangent direction&lt;/strong&gt; of a (1-dimensional) smooth curve $\gamma(t) \in \mathcal{M}$, where $\gamma(0)=\mathbf{x_0}$,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d {\gamma}(t) }{d t} \Big|_{t=0}=\mathbf{v}$&lt;/code&gt; and the support of $\gamma(t)$ denoted by $\mathbf{I}$ is an open interval in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^1$&lt;/code&gt; containing 0. 
 Since a curve $\gamma(t)$ is a geometric object, this is a parameterization-free repesentation of a vector.&lt;/p&gt;
 
-&lt;h2 id=&quot;parameterization-dependent-repesentation-of-vector-mathbfv&quot;&gt;Parameterization-dependent repesentation of vector $\mathbf{v}$&lt;/h2&gt;
+&lt;h2 id=&quot;parameterization-dependent-representation-of-vector-mathbfv&quot;&gt;Parameterization-dependent representation of vector $\mathbf{v}$&lt;/h2&gt;
 
 &lt;p&gt;Given intrinsic parametrization $\tau$, we can define the parametric representation of the curve denoted by ${\gamma}_\tau(t)$, where the domain is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau \subset \mathcal{R}^1$&lt;/code&gt;.
 The parametric representation of vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_{\tau}(t) }{d t} \Big|_{t=0}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_{\tau}(0)=\tau_0$&lt;/code&gt;.&lt;/p&gt;
