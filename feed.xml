@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-08T23:50:20-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-09T02:13:56-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -1477,7 +1477,7 @@ The space of natural-gradients evaluated at the same point is called a tangent s
 &lt;hr /&gt;
 &lt;p&gt;Before we discuss natural-gradients, we first revisit Euclidean gradients.&lt;/p&gt;
 
-&lt;p&gt;We will show a Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we extend the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a natural-gradient.&lt;/p&gt;
+&lt;p&gt;We will show a (unit) Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we extend the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a natural-gradient.&lt;/p&gt;
 
 &lt;p&gt;Given a smooth scalar function $\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$ in a &lt;strong&gt;vector space&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, we can define the (Euclidean) steepest direction at current &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; as the optimal solution to the following optimization problem. We can express the optimization problem in terms of a &lt;strong&gt;directional derivative&lt;/strong&gt; along vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt;.
 We assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$&lt;/code&gt;.&lt;/p&gt;
@@ -1498,18 +1498,18 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;hr /&gt;
 
 &lt;p&gt;To generalize  the steepest direction at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; in a Riemannian manifold, we first formulate a similar optimization problem like Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; in the manifold case.
-To do so, we have to define the length of a vector in manifold cases. In &lt;a href=&quot;/posts/2021/11/Geomopt03/#standard-euclidean-gradients-are-not-invariant&quot;&gt;Part III&lt;/a&gt;, we will show that the (standard) length does not perseve under a parameter transform while the length induced by the Fisher-Rao metric does.&lt;/p&gt;
+To do so, we have to define the length of a vector in manifold cases. In &lt;a href=&quot;/posts/2021/11/Geomopt03/#standard-euclidean-gradients-are-not-invariant&quot;&gt;Part III&lt;/a&gt;, we will show that the (standard) length does not perseve under a parameter transformation while the length induced by the Fisher-Rao metric does.&lt;/p&gt;
 
-&lt;p&gt;As mentioned at &lt;a href=&quot;/posts/2021/09/Geomopt01/#fisher-rao-metric&quot;&gt;Part I&lt;/a&gt;, the FIM $\mathbf{F}$ should be positive definite. We can use FIM to define the length/norm of a vector (e.g., a Riemannian gradient) $\mathbf{v}$ at a point in a manifold via a weighted inner product.
+&lt;p&gt;As mentioned at &lt;a href=&quot;/posts/2021/09/Geomopt01/#fisher-rao-metric&quot;&gt;Part I&lt;/a&gt;, the FIM $\mathbf{F}$ should be positive definite. We can use the FIM to define the length/norm of a vector (e.g., a Riemannian gradient) $\mathbf{v}$ at a point in a manifold via a weighted inner product.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \|\mathbf{v}\|_F := \sqrt{\mathbf{v}^T \mathbf{F} \mathbf{v}}
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;The positive-definiteness of FIM is essential since we do not want a non-zero vector has a zero length.&lt;/p&gt;
+&lt;p&gt;The positive-definiteness of the FIM is essential since we do not want a non-zero vector has a zero length.&lt;/p&gt;
 
-&lt;p&gt;The distance (and orthogonality) between two &lt;span style=&quot;color:red&quot;&gt;vectors&lt;/span&gt; at  &lt;span style=&quot;color:red&quot;&gt;point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;&lt;/span&gt;  point is also induced by FIM since we can define them by the inner product as
+&lt;p&gt;The distance (and orthogonality) between two &lt;span style=&quot;color:red&quot;&gt;vectors&lt;/span&gt; at  &lt;span style=&quot;color:red&quot;&gt;point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;&lt;/span&gt;  point is also induced by the FIM since we can define them by the inner product as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 d(\mathbf{v},\mathbf{w}) := \|\mathbf{v}-\mathbf{w}\|_F
@@ -1552,43 +1552,50 @@ Note that we only require &lt;code class=&quot;language-plaintext highlighter-ro
  Technically, this is because  $\Omega_\tau$ is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Under &lt;strong&gt;intrinsic&lt;/strong&gt; parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the &lt;strong&gt;local vector space&lt;/strong&gt; structure.
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v} \end{aligned}$$&lt;/code&gt;.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v}. \end{aligned}$$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;The following example illustrates directional derivatives in manifold cases.&lt;/p&gt;
 
-&lt;details&gt;
-&lt;summary&gt;Valid case:&lt;/summary&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
+&lt;summary&gt;Valid case: (click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;blockquote&gt;
+      &lt;blockquote&gt;
 
-      &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a &lt;strong&gt;local intrinsic&lt;/strong&gt; parameterization for the unit sphere.&lt;/p&gt;
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a &lt;strong&gt;local intrinsic&lt;/strong&gt; parameterization for the unit sphere.&lt;/p&gt;
 
-      &lt;p&gt;The line segment from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} $&lt;/code&gt;  is shown in blue, which is the parameter representation of the yellow curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; in the manifold.
+        &lt;p&gt;The line segment from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} $&lt;/code&gt;  is shown in blue, which is the parameter representation of the yellow curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; in the manifold.
 We will show later that Riemannian gradient vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; under this parametrization at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; is the &lt;strong&gt;parameter representation&lt;/strong&gt; of the tangent vector of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt;.&lt;/p&gt;
 
-      &lt;p&gt;&lt;img src=&quot;/img/sphere_simple.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;img src=&quot;/img/sphere_simple.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
 
-      &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: Curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; is NOT the shortest curve in the manifold between &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_1$&lt;/code&gt;.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/fieldset&gt;
+        &lt;div class=&quot;notice--danger&quot;&gt;
+          &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:
+Curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; is NOT the shortest curve in the manifold between &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_1$&lt;/code&gt;.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/blockquote&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
-&lt;details&gt;
-&lt;summary&gt;Invalid case:&lt;/summary&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
+&lt;summary&gt;Invalid case: (click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;blockquote&gt;
+      &lt;blockquote&gt;
 
-      &lt;p&gt;A directional derivative can be ill-defined under a &lt;strong&gt;non-intrinsic&lt;/strong&gt; parameterization.&lt;/p&gt;
+        &lt;p&gt;A directional derivative can be ill-defined under a &lt;strong&gt;non-intrinsic&lt;/strong&gt; parameterization.&lt;/p&gt;
 
-      &lt;p&gt;We use &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;parameterization 3&lt;/a&gt; for unit circle &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{S}^1$&lt;/code&gt;, where the red line segment passes through &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0=(0,1) \in \mathcal{S}^1 $&lt;/code&gt;.&lt;/p&gt;
+        &lt;p&gt;We use &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;parameterization 3&lt;/a&gt; for unit circle &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{S}^1$&lt;/code&gt;, where the red line segment passes through &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0=(0,1) \in \mathcal{S}^1 $&lt;/code&gt;.&lt;/p&gt;
 
-      &lt;p&gt;&lt;img src=&quot;/img/tangent_non.png&quot; alt=&quot;Figure 1&quot; /&gt;&lt;/p&gt;
+        &lt;p&gt;&lt;img src=&quot;/img/tangent_non.png&quot; alt=&quot;Figure 1&quot; /&gt;&lt;/p&gt;
 
-      &lt;p&gt;Any other point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0 + t\mathbf{v}$&lt;/code&gt; in the line segment leaves the manifold for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$t\neq 0$&lt;/code&gt; and thus, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau}_0+t\mathbf{v})$&lt;/code&gt; is not well-defined.
+        &lt;p&gt;Any other point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0 + t\mathbf{v}$&lt;/code&gt; in the line segment leaves the manifold for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$t\neq 0$&lt;/code&gt; and thus, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau}_0+t\mathbf{v})$&lt;/code&gt; is not well-defined.
 The main reason is that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is not an intrinsic parameterization.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/fieldset&gt;
+      &lt;/blockquote&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
 &lt;h1 id=&quot;riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/h1&gt;
 &lt;hr /&gt;
@@ -1611,27 +1618,28 @@ $$&lt;/code&gt;&lt;/p&gt;
 \begin{aligned}
 L(\mathbf{v},\lambda) =  ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v} + \lambda (\|v\|_{F}^2 - 1) = \mathbf{v}^T \nabla_\tau f(\mathbf{\tau}_0) + \lambda (\mathbf{v}^T \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}  - 1) 
 \end{aligned}
-$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\mathbf{\tau}_0)$&lt;/code&gt; is FIM evaluated at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\mathbf{\tau}_0)$&lt;/code&gt; is the FIM evaluated at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;One of the Karush–Kuhn–Tucker (KKT) necessary conditions implies that
+&lt;p&gt;One of the &lt;a href=&quot;https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions&quot;&gt;Karush–Kuhn–Tucker&lt;/a&gt; (KKT) necessary conditions implies that
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{0} = \nabla_{v} L(\mathbf{v}_{\text{opt}},\lambda) = \nabla_\tau f(\mathbf{\tau}_0) + 2 \lambda \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}_{\text{opt}}
 \end{aligned}
 $$&lt;/code&gt;
-When $\lambda \neq 0$, vector 	&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}$&lt;/code&gt; should be proportional to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0)$&lt;/code&gt;, where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}^{-1}(\mathbf{\tau}_0)$&lt;/code&gt; is well-defined since FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\mathbf{\tau}_0)$&lt;/code&gt; is positive definite.&lt;/p&gt;
+When $\lambda \neq 0$, vector 	&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}$&lt;/code&gt; should be proportional to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0)$&lt;/code&gt;, where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}^{-1}(\mathbf{\tau}_0)$&lt;/code&gt; is well-defined since the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\mathbf{\tau}_0)$&lt;/code&gt; is positive definite.&lt;/p&gt;
 
 &lt;p&gt;We can show that the optimal solution of Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$&lt;/code&gt;, which gives us the Riemannian steepest direction at current &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;The &lt;strong&gt;Euclidean&lt;/strong&gt; steepest direction &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{euclid}}= -\frac{ \nabla_\tau f(\mathbf{\tau}_0) }{\| \nabla_\tau f(\mathbf{\tau}_0) \|_F}$&lt;/code&gt; is &lt;strong&gt;not&lt;/strong&gt; the optimal solution of  Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\tau_0) \neq \mathbf{I}$&lt;/code&gt;.
 We will illustrate this by using an example.&lt;/p&gt;
 
-&lt;details&gt;
-&lt;summary&gt;Euclidean steepest direction is not the optimal solution of  Eq. $\eqref{2}$&lt;/summary&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
+&lt;summary&gt;Euclidean steepest direction is not the optimal solution of  Eq. $\eqref{2}$ (click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;blockquote&gt;
+      &lt;blockquote&gt;
 
-      &lt;p&gt;Consider &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\tau_0)=\begin{bmatrix} 1 &amp;amp; 0 \\ 0 &amp;amp; \frac{1}{2} \end{bmatrix}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)=\begin{bmatrix} 1\\1 \end{bmatrix}$&lt;/code&gt;.
+        &lt;p&gt;Consider &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\tau_0)=\begin{bmatrix} 1 &amp;amp; 0 \\ 0 &amp;amp; \frac{1}{2} \end{bmatrix}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)=\begin{bmatrix} 1\\1 \end{bmatrix}$&lt;/code&gt;.
 We have the following results
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -1640,42 +1648,45 @@ We have the following results
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-      &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{v}_{\text{opt}} = -\begin{bmatrix} \frac{1}{\sqrt{3}} \\ \frac{2}{\sqrt{3}} \end{bmatrix}; \,\,\,
 \mathbf{v}_{\text{euclid}}=
 -\begin{bmatrix} \sqrt{\frac{2}{3}} \\ \sqrt{\frac{2}{3}} \end{bmatrix}\end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-      &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{v}_{\text{opt}}^T \nabla_\tau f(\mathbf{\tau}_0)= -\sqrt{3}  &amp;lt;  -\frac{2\sqrt{2}}{\sqrt{3}} = \mathbf{v}_{\text{euclid}}^T \nabla_\tau f(\mathbf{\tau}_0) 
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-      &lt;p&gt;Therefore, the Euclidean steepest direction &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{euclid}}$&lt;/code&gt; is not the optimal solution of  Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt;.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/fieldset&gt;
+        &lt;p&gt;Therefore, the Euclidean steepest direction &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{euclid}}$&lt;/code&gt; is not the optimal solution of  Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt;.&lt;/p&gt;
+      &lt;/blockquote&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Given a scalar function $f(\mathbf{\tau})$, if its &lt;strong&gt;Euclidean&lt;/strong&gt; (steepest) gradient is $\nabla_\tau f(\mathbf{\tau})$, its &lt;strong&gt;Riemannian&lt;/strong&gt; (steepest) gradient is defined as $ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$ in literature.
 We use a learning-rate to control the length of a gradient instead of normalizing its length. 
 Since we use the Fisher-Rao metric, the Riemannian gradient is also known as the &lt;strong&gt;natural&lt;/strong&gt; gradient.&lt;/p&gt;
 
-&lt;details&gt;
-&lt;summary&gt;Example: multivariate Gaussian&lt;/summary&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
+&lt;summary&gt;Example: multivariate Gaussian (click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-    &lt;blockquote&gt;
+      &lt;blockquote&gt;
 
-      &lt;p&gt;Consider a $d$-dimensional Gaussian family with zero mean and precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; discussed in &lt;a href=&quot;/posts/2021/09/Geomopt01/#manifold-dimension&quot;&gt;Part I&lt;/a&gt;. &lt;br /&gt;
+        &lt;p&gt;Consider a $d$-dimensional Gaussian family with zero mean and precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; discussed in &lt;a href=&quot;/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold&quot;&gt;Part I&lt;/a&gt; &lt;br /&gt;
 We specify an intrinsic parameterization $\mathbf{\tau}$ of the family as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathrm{MatH}(\tau) = \mathbf{S}   \succ \mathbf{0} \}$&lt;/code&gt; with parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \mathrm{vech}(\mathbf{S})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a $\frac{d(d+1)}{2}$-dim array and map $\mathrm{MatH}()$ is the inverse map of  the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization function&lt;/a&gt; $\mathrm{vech}()$.&lt;/p&gt;
 
-      &lt;p&gt;Technically speaking, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is NOT an intrinsic parameter due to the symmetry constraint. In other words, FIM w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; will be singular if  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is considered as a matrix parameter with $d^2$ degrees of freedom.&lt;/p&gt;
+        &lt;p&gt;As mentioned in  &lt;a href=&quot;/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold&quot;&gt;Part I&lt;/a&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is NOT an intrinsic parameter due to the symmetry constraint. In other words, the FIM w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; will be singular if  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is considered as a matrix parameter with $d^2$ degrees of freedom.&lt;/p&gt;
 
-      &lt;p&gt;In the literature, a natural gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}(\mathbf{v})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is a natural-gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;.&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/fieldset&gt;
+        &lt;p&gt;In the literature, a natural gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}(\mathbf{v})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is a natural-gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;.&lt;/p&gt;
+      &lt;/blockquote&gt;
+    &lt;/fieldset&gt;
 &lt;/details&gt;
+&lt;/div&gt;
 
 &lt;h1 id=&quot;riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Riemannian gradients as tangent vectors (optional)&lt;/h1&gt;
 &lt;hr /&gt;
@@ -1791,7 +1802,7 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 
 &lt;p&gt;We can also define vector additions and real scalar products in a tangent vector space by using tangent directions of curves in the manifold with/without a parameterization.&lt;/p&gt;
 
-&lt;p&gt;The key takeway is that a vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;. Recall that a parameter space is a parametric representation of a set of &lt;strong&gt;points&lt;/strong&gt; in a manifold.
+&lt;p&gt;The key takeway is that a vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;. Recall that a parameter space is a parametric representation of a  set of &lt;strong&gt;points&lt;/strong&gt; in a manifold.
 We will discuss more about this in &lt;a href=&quot;/posts/2021/11/Geomopt04/#two-kinds-of-spaces&quot;&gt;Part IV&lt;/a&gt;&lt;/p&gt;
 
 &lt;!--
