@@ -303,7 +303,8 @@ This structure is also known as a manifold structure <a class="citation" href="#
 <p>The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined (finite).
 These properties will play a key role in <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space">Part IV</a> for natural-gradient descent.</p>
 
-<p>We require that a manifold should be locally like a vector space denoted by $ E $ under a parameterization.</p>
+<p>We require that a manifold should be locally like a vector space denoted by <code class="language-plaintext highlighter-rouge">$ E $</code> under a parameterization. Informally, we refer to 
+such structure as a local vector-space structure.</p>
 
 <div class="notice--info">
   <p>Local <strong>vector-space structure</strong>:</p>
@@ -440,10 +441,10 @@ The main reason is that the parameter space is not open in $\mathcal{R}^2$.</p>
 
 <h1 id="fisher-rao-metric">Fisher-Rao Metric</h1>
 <hr />
-<p>As we can see from the <a href="#motivation">previous section</a>, we  use the Fisher-Rao metric to design fast algorithms.
+<p>As we can see from the <a href="#motivation">previous section</a>, we can use the Fisher-Rao metric to design fast and efficient algorithms.
 In statistics, this metric is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.
-These statistical principles <a class="citation" href="#casella2002statistical">[10]</a> play essential roles in training and estimating machine learning models. In other words,
-the Fisher-Rao metric is special.</p>
+These statistical principles <a class="citation" href="#casella2002statistical">[10]</a> play essential roles in training and estimating machine learning models.
+Moreover, the Fisher-Rao metric has been theorically and emprically used in machine learning and statistics.</p>
 
 <p>Given an intrinsic parameterization, we can define the Fisher-Rao metric under this parameterization as:
 <code class="language-plaintext highlighter-rouge">$$
@@ -577,7 +578,7 @@ $$</code></p>
 <hr />
 <p>We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
 Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#lee2013introduction">[8]</a>.
-This also gives us a tool to help identify non-manifold examples.
+This also gives us a tool to help identify non-manifold cases.
 We now illustrate this by examples.</p>
 
 <table>
@@ -767,7 +768,7 @@ $$</code></p>
 ">Previous</a>
     
     
-      <a href="/posts/2021/10/Geomopt02/" class="pagination--pager" title="Part II: Natural-Gradients Evaluted at one Point
+      <a href="/posts/2021/10/Geomopt02/" class="pagination--pager" title="Part II: Natural-Gradients Evaluated at one Point
 ">Next</a>
     
   </nav>
