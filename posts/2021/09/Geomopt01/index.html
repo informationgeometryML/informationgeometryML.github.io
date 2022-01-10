@@ -544,15 +544,17 @@ $$</code></p>
 F(\tau) = E_{p(w|\tau) } [ \frac{( \mathcal{I}(w=0) - \mathcal{I}(w=1))^2 }{p^2(w|\tau)} \begin{bmatrix} \frac{\pi_1^2}{(\pi_0+\pi_1)^4}  &amp; \frac{-\pi_0 \pi_1}{(\pi_0+\pi_1)^4} \\ \frac{-\pi_0 \pi_1}{(\pi_0+\pi_1)^4}  &amp;  \frac{\pi_0^2}{(\pi_0+\pi_1)^4} \end{bmatrix} ]   =\frac{1}{(\pi_0+\pi_1)^2} \begin{bmatrix} \frac{\pi_1}{\pi_0} &amp;  -1 \\ -1 &amp;  \frac{\pi_0}{\pi_1} \end{bmatrix}
 \end{aligned}
 $$</code>
-where <code class="language-plaintext highlighter-rouge">$$
+where this FIM is singular since the matrix determinant is zero as shown below. <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathrm{det}\big( \begin{bmatrix} \frac{\pi_1}{\pi_0} &amp;  -1 \\ -1 &amp;  \frac{\pi_0}{\pi_1} \end{bmatrix}\big) = 0.
 \end{aligned}
 $$</code></p>
 </blockquote>
 
+<p>Now, we give an example to show that the FIM of a Bernoulli family can be non-singular when we use an instrinsic parameterization.</p>
+
 <blockquote>
-  <p>Example 3  (Valid FIM):</p>
+  <p>Example 3  (Non-singular FIM):</p>
 
   <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi)  \Big| 0&lt;\pi&lt;1 \}$</code> with  <strong>intrinsic</strong> parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi $</code>.</p>
 
