@@ -559,6 +559,7 @@ We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">colors</span>
 <span class="kn">from</span> <span class="nn">jax.config</span> <span class="kn">import</span> <span class="n">config</span><span class="p">;</span> <span class="n">config</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="s">"jax_enable_x64"</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="n">jnp</span>
 <span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">grad</span><span class="p">,</span> <span class="n">jit</span><span class="p">,</span> <span class="n">value_and_grad</span>
@@ -580,8 +581,6 @@ We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">gd</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_fun</span><span class="p">,</span> <span class="n">step_size</span><span class="p">,</span> <span class="n">num_iters</span><span class="p">):</span>
-
-
     <span class="n">J_history</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">mu_hist</span><span class="p">,</span> <span class="n">s_hist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#For plotting afterwards  
 </span>    
@@ -606,7 +605,6 @@ We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-
 </code></pre></div></div>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">ngd_pre</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_fun</span><span class="p">,</span> <span class="n">step_size</span><span class="p">,</span> <span class="n">num_iters</span><span class="p">):</span>
-
     <span class="n">J_history</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">mu_hist</span><span class="p">,</span> <span class="n">s_hist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#For plotting afterwards  
 </span>    
@@ -622,8 +620,7 @@ We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-
         
         <span class="c1">#NGD
 </span>        <span class="n">cur_params</span>  <span class="o">=</span> <span class="n">cur_params</span> <span class="o">-</span> <span class="n">step_size</span><span class="o">*</span> <span class="n">ng</span>
-
-        
+ 
     <span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">cur_params</span><span class="p">)</span>
     <span class="n">J_history</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
     <span class="n">mu_hist</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -638,32 +635,25 @@ We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-
 <span class="c1">#Computing the cost function for each theta combination
 </span><span class="n">zs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span>  <span class="p">[</span><span class="n">loss_pre</span><span class="p">(</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu</span><span class="p">,</span><span class="n">s</span><span class="p">])</span> <span class="p">)</span> 
                      <span class="k">for</span> <span class="n">mu</span><span class="p">,</span><span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">mu_list</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">s_list</span><span class="p">))</span> <span class="p">]</span> <span class="p">)</span>
-
-<span class="n">zs</span> <span class="o">=</span> <span class="n">zs</span>   <span class="c1">#- np.min(zs) + 1e-6
-</span><span class="n">Z</span> <span class="o">=</span> <span class="n">zs</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mu_list</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mu_0</span> <span class="o">=</span> <span class="o">-</span><span class="mf">8.0</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">zs</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mu_list</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">mu_0</span> <span class="o">=</span> <span class="o">-</span><span class="mf">8.0</span>
 <span class="n">s_0</span> <span class="o">=</span> <span class="mf">1.0</span>
 <span class="n">max_num_iters</span> <span class="o">=</span> <span class="mi">200</span>
-<span class="n">init_params</span> <span class="o">=</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu_0</span><span class="p">,</span><span class="n">s_0</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">init_params</span> <span class="o">=</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu_0</span><span class="p">,</span><span class="n">s_0</span><span class="p">])</span>
 <span class="n">gd_pre_history</span><span class="p">,</span> <span class="n">mu_gd_pre_hist</span><span class="p">,</span> <span class="n">s_gd_pre_hist</span> <span class="o">=</span> <span class="n">gd</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_f_pre</span><span class="p">,</span> <span class="n">step_size</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="n">num_iters</span><span class="o">=</span><span class="n">max_num_iters</span><span class="p">)</span>
 <span class="n">anglesx_gd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_gd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_gd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">anglesy_gd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_gd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_gd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mu_0</span> <span class="o">=</span> <span class="o">-</span><span class="mf">8.0</span>
-<span class="n">s_0</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="n">max_num_iters</span> <span class="o">=</span> <span class="mi">200</span>
-<span class="n">init_params</span> <span class="o">=</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu_0</span><span class="p">,</span><span class="n">s_0</span><span class="p">])</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">init_params</span> <span class="o">=</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu_0</span><span class="p">,</span><span class="n">s_0</span><span class="p">])</span>
 <span class="n">ngd_pre_history</span><span class="p">,</span> <span class="n">mu_ngd_pre_hist</span><span class="p">,</span> <span class="n">s_ngd_pre_hist</span> <span class="o">=</span> <span class="n">ngd_pre</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_f_pre</span><span class="p">,</span> <span class="n">step_size</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="n">num_iters</span><span class="o">=</span><span class="n">max_num_iters</span><span class="p">)</span>
 <span class="n">anglesx_ngd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_ngd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_ngd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 <span class="n">anglesy_ngd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_ngd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_ngd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 </code></pre></div></div>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">colors</span>
-<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
 
 <span class="c1">#Contour plot
