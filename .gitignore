@@ -4,6 +4,7 @@ _site/
 .sass-cache
 .vagrant
 .jekyll-cache
+.ipynb_checkpoints
 
 _drafts
 *.gitignored
