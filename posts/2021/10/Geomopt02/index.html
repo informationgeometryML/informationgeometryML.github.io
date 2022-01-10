@@ -182,7 +182,7 @@
 
 
 
-  12 minute read
+  14 minute read
 </p>
           
         </header>
@@ -556,433 +556,146 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 <p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that a parameter space is a parametric representation of a  set of <strong>points</strong> in a manifold.
 We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-of-spaces">Part IV</a></p>
 
-<!--
-```python
-%matplotlib inline
-import numpy as np
-import scipy as sp
-import matplotlib.pyplot as plt
-import random
-from scipy import stats
-from scipy.optimize import fmin
-```
-
-### Gradient Descent
-
-<b>Gradient descent</b>, also known as <b>steepest descent</b>, is an optimization algorithm for finding the local minimum of a function. To find a local minimum, the function "steps" in the  direction of the negative of the gradient. <b>Gradient ascent</b> is the same as gradient descent, except that it steps in the direction of the positive of the gradient and therefore finds local maximums instead of minimums. The algorithm of gradient descent can be outlined as follows:
-
-&nbsp;&nbsp;&nbsp; 1: &nbsp; Choose initial guess $x_0$ <br>
-&nbsp;&nbsp;&nbsp;    2: &nbsp; <b>for</b> k = 0, 1, 2, ... <b>do</b> <br>
-&nbsp;&nbsp;&nbsp;    3:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $s_k$ = -$\nabla f(x_k)$ <br>
-&nbsp;&nbsp;&nbsp;    4:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; choose $\alpha_k$ to minimize $f(x_k+\alpha_k s_k)$ <br>
-&nbsp;&nbsp;&nbsp;    5:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $x_{k+1} = x_k + \alpha_k s_k$ <br>
-&nbsp;&nbsp;&nbsp;    6: &nbsp;  <b>end for</b>
-
-As a simple example, let's find a local minimum for the function $f(x) = x^3-2x^2+2$
-
-```python
-f = lambda x: x**3-2*x**2+2
-```
-
-```python
-x = np.linspace(-1,2.5,1000)
-plt.plot(x,f(x))
-plt.xlim([-1,2.5])
-plt.ylim([0,3])
-plt.show()
-```
-
-![png](/img/nb_sgd_demo/nb_sgd_demo_5_0.png){: .center-image }
-
-We can see from plot above that our local minimum is gonna be near around 1.4 or 1.5 (on the x-axis), but let's pretend that we don't know that, so we set our starting point (arbitrarily, in this case) at $x_0 = 2$
-
-```python
-x_old = 0
-x_new = 2 # The algorithm starts at x=2
-n_k = 0.1 # step size
-precision = 0.0001
-
-x_list, y_list = [x_new], [f(x_new)]
-
-# returns the value of the derivative of our function
-def f_prime(x):
-    return 3*x**2-4*x
- 
-while abs(x_new - x_old) > precision:
-    x_old = x_new
-    s_k = -f_prime(x_old)
-    x_new = x_old + n_k * s_k
-    x_list.append(x_new)
-    y_list.append(f(x_new))
-print("Local minimum occurs at:", x_new)
-print("Number of steps:", len(x_list))
-```
-
-    Local minimum occurs at: 1.3334253508453249
-    Number of steps: 17
-
-The figures below show the route that was taken to find the local minimum.
-
-```python
-plt.figure(figsize=[10,3])
-plt.subplot(1,2,1)
-plt.scatter(x_list,y_list,c="r")
-plt.plot(x_list,y_list,c="r")
-plt.plot(x,f(x), c="b")
-plt.xlim([-1,2.5])
-plt.ylim([0,3])
-plt.title("Gradient descent")
-plt.subplot(1,2,2)
-plt.scatter(x_list,y_list,c="r")
-plt.plot(x_list,y_list,c="r")
-plt.plot(x,f(x), c="b")
-plt.xlim([1.2,2.1])
-plt.ylim([0,3])
-plt.title("Gradient descent (zoomed in)")
-plt.show()
-```
-
-![png](/img/nb_sgd_demo/nb_sgd_demo_9_0.png){: .center-image }
-
-You'll notice that the step size (also called learning rate) in the implementation above is constant, unlike the algorithm in the pseudocode. Doing this makes it easier to implement the algorithm. However, it also presents some issues: If the step size is too small, then convergence will be very slow, but if we make it too large, then the method may fail to converge at all. 
-
-A solution to this is to use adaptive step sizes as the algorithm below does (using scipy's fmin function to find optimal step sizes):
-
-```python
-# we setup this function to pass into the fmin algorithm
-def f2(n,x,s):
-    x = x + n*s
-    return f(x)
-
-x_old = 0
-x_new = 2 # The algorithm starts at x=2
-precision = 0.0001
-
-x_list, y_list = [x_new], [f(x_new)]
-
-# returns the value of the derivative of our function
-def f_prime(x):
-    return 3*x**2-4*x
-
-while abs(x_new - x_old) > precision:
-    x_old = x_new
-    s_k = -f_prime(x_old)
-    
-    # use scipy fmin function to find ideal step size.
-    n_k = fmin(f2,0.1,(x_old,s_k), full_output = False, disp = False)
-
-    x_new = x_old + n_k * s_k
-    x_list.append(x_new)
-    y_list.append(f(x_new))
-    
-print("Local minimum occurs at ", float(x_new))
-print("Number of steps:", len(x_list))
-```
-
-    Local minimum occurs at  1.3333333284505209
-    Number of steps: 4
-
-With adaptive step sizes, the algorithm converges in just 4 iterations rather than 17. Of course, it takes time to compute the appropriate step size at each iteration. Here are some plots of the path taken below. You can see that it converges very quickly to a point near the local minimum, so it's hard to even discern the dots after the first two steps until we zoom in very close in the third frame below:
-
-```python
-plt.figure(figsize=[15,3])
-plt.subplot(1,3,1)
-plt.scatter(x_list,y_list,c="r")
-plt.plot(x_list,y_list,c="r")
-plt.plot(x,f(x), c="b")
-plt.xlim([-1,2.5])
-plt.title("Gradient descent")
-plt.subplot(1,3,2)
-plt.scatter(x_list,y_list,c="r")
-plt.plot(x_list,y_list,c="r")
-plt.plot(x,f(x), c="b")
-plt.xlim([1.2,2.1])
-plt.ylim([0,3])
-plt.title("zoomed in")
-plt.subplot(1,3,3)
-plt.scatter(x_list,y_list,c="r")
-plt.plot(x_list,y_list,c="r")
-plt.plot(x,f(x), c="b")
-plt.xlim([1.3333,1.3335])
-plt.ylim([0,3])
-plt.title("zoomed in more")
-plt.show()
-```
-
-![png](/img/nb_sgd_demo/nb_sgd_demo_13_0.png){: .center-image }
-
-Another approach to update the step size is choosing a decrease constant $d$ that shrinks the step size over time:
-$\eta(t+1) = \eta(t) / (1+t \times d)$.
-
-```python
-x_old = 0
-x_new = 2 # The algorithm starts at x=2
-n_k = 0.17 # step size
-precision = 0.0001
-t, d = 0, 1
-
-x_list, y_list = [x_new], [f(x_new)]
-
-# returns the value of the derivative of our function
-def f_prime(x):
-    return 3*x**2-4*x
- 
-while abs(x_new - x_old) > precision:
-    x_old = x_new
-    s_k = -f_prime(x_old)
-    x_new = x_old + n_k * s_k
-    x_list.append(x_new)
-    y_list.append(f(x_new))
-    n_k = n_k / (1 + t * d)
-    t += 1
-
-print("Local minimum occurs at:", x_new)
-print("Number of steps:", len(x_list))
-```
-
-    Local minimum occurs at: 1.3308506740900838
-    Number of steps: 6
-
-Let's now consider an example which is a little bit more complicated. Consider a simple linear regression where we want to see how the temperature affects the noises made by crickets. We have a data set of cricket chirp rates at various temperatures. First we'll load that data set in and plot it:
-
-```python
-#Load the dataset
-data = np.loadtxt('SGD_data.txt', delimiter=',')
- 
-#Plot the data
-plt.scatter(data[:, 0], data[:, 1], marker='o', c='b')
-plt.title('cricket chirps vs temperature')
-plt.xlabel('chirps/sec for striped ground crickets')
-plt.ylabel('temperature in degrees Fahrenheit')
-plt.xlim([13,21])
-plt.ylim([65,95])
-plt.show()
-```
-
-![png](/img/nb_sgd_demo/nb_sgd_demo_17_0.png){: .center-image }
-
-Our goal is to find the equation of the straight line $h_\theta(x) = \theta_0 + \theta_1 x$ that best fits our data points. The function that we are trying to minimize in this case is:
-
-$J(\theta_0,\theta_1) = {1 \over 2m} \sum\limits_{i=1}^m (h_\theta(x_i)-y_i)^2$
-
-In this case, our gradient will be defined in two dimensions:
-
-$\frac{\partial}{\partial \theta_0} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m (h_\theta(x_i)-y_i)$
-
-$\frac{\partial}{\partial \theta_1} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m ((h_\theta(x_i)-y_i) \cdot x_i)$
-
-Below, we set up our function for h, J and the gradient:
-
-```python
-h = lambda theta_0,theta_1,x: theta_0 + theta_1*x
-
-def J(x,y,m,theta_0,theta_1):
-    returnValue = 0
-    for i in range(m):
-        returnValue += (h(theta_0,theta_1,x[i])-y[i])**2
-    returnValue = returnValue/(2*m)
-    return returnValue
-
-def grad_J(x,y,m,theta_0,theta_1):
-    returnValue = np.array([0.,0.])
-    for i in range(m):
-        returnValue[0] += (h(theta_0,theta_1,x[i])-y[i])
-        returnValue[1] += (h(theta_0,theta_1,x[i])-y[i])*x[i]
-    returnValue = returnValue/(m)
-    return returnValue
-```
-
-Now, we'll load our data into the x and y variables;
-
-```python
-x = data[:, 0]
-y = data[:, 1]
-m = len(x)
-```
-
-And we run our gradient descent algorithm (without adaptive step sizes in this example):
-
-```python
-theta_old = np.array([0.,0.])
-theta_new = np.array([1.,1.]) # The algorithm starts at [1,1]
-n_k = 0.001 # step size
-precision = 0.001
-num_steps = 0
-s_k = float("inf")
-
-while np.linalg.norm(s_k) > precision:
-    num_steps += 1
-    theta_old = theta_new
-    s_k = -grad_J(x,y,m,theta_old[0],theta_old[1])
-    theta_new = theta_old + n_k * s_k
-
-print("Local minimum occurs where:")
-print("theta_0 =", theta_new[0])
-print("theta_1 =", theta_new[1])
-print("This took",num_steps,"steps to converge")
-```
-
-    Local minimum occurs where:
-    theta_0 = 25.128552558595363
-    theta_1 = 3.297264756251897
-    This took 565859 steps to converge
-
-For comparison, let's get the actual values for $\theta_0$ and $\theta_1$:
-
-```python
-actualvalues = sp.stats.linregress(x,y)
-print("Actual values for theta are:")
-print("theta_0 =", actualvalues.intercept)
-print("theta_1 =", actualvalues.slope)
-```
-
-    Actual values for theta are:
-    theta_0 = 25.232304983426026
-    theta_1 = 3.2910945679475647
-
-So we see that our values are relatively close to the actual values (even though our method was pretty slow). If you look at the source code of [linregress](https://github.com/scipy/scipy/blob/master/scipy/stats/_stats_mstats_common.py), it uses the convariance matrix of x and y to compute fastly. Below, you can see a plot of the line drawn with our theta values against the data:
-
-```python
-xx = np.linspace(0,21,1000)
-plt.scatter(data[:, 0], data[:, 1], marker='o', c='b')
-plt.plot(xx,h(theta_new[0],theta_new[1],xx))
-plt.xlim([13,21])
-plt.ylim([65,95])
-plt.title('cricket chirps vs temperature')
-plt.xlabel('chirps/sec for striped ground crickets')
-plt.ylabel('temperature in degrees Fahrenheit')
-plt.show()
-```
-
-![png](/img/nb_sgd_demo/nb_sgd_demo_27_0.png){: .center-image }
-
-Notice that in the method above we need to calculate the gradient in every step of our algorithm. In the example with the crickets, this is not a big deal since there are only 15 data points. But imagine that we had 10 million data points. If this were the case, it would certainly make the method above far less efficient.
-
-In machine learning, the algorithm above is often called <b>batch gradient descent</b> to contrast it with <b>mini-batch gradient descent</b> (which we will not go into here) and <b>stochastic gradient descent</b>.
-
-### Stochastic gradient descent
-
-As we said above, in batch gradient descent, we must look at every example in the entire training set on every step (in cases where a training set is used for gradient descent). This can be quite slow if the training set is sufficiently large. In <b>stochastic gradient descent</b>, we update our values after looking at <i>each</i> item in the training set, so that we can start making progress right away. Recall the linear regression example above. In that example, we calculated the gradient for each of the two theta values as follows:
-
-$\frac{\partial}{\partial \theta_0} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m (h_\theta(x_i)-y_i)$
-
-$\frac{\partial}{\partial \theta_1} J(\theta_0,\theta_1) = \frac{1}{m}  \sum\limits_{i=1}^m ((h_\theta(x_i)-y_i) \cdot x_i)$
-
-Where $h_\theta(x) = \theta_0 + \theta_1 x$
-
-Then we followed this algorithm (where $\alpha$ was a non-adapting stepsize):
-
-&nbsp;&nbsp;&nbsp; 1: &nbsp; Choose initial guess $x_0$ <br>
-&nbsp;&nbsp;&nbsp;    2: &nbsp; <b>for</b> k = 0, 1, 2, ... <b>do</b> <br>
-&nbsp;&nbsp;&nbsp;    3:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $s_k$ = -$\nabla f(x_k)$ <br>
-&nbsp;&nbsp;&nbsp;    4:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $x_{k+1} = x_k + \alpha s_k$ <br>
-&nbsp;&nbsp;&nbsp;    5: &nbsp;  <b>end for</b>
-
-When the sample data had 15 data points as in the example above, calculating the gradient was not very costly. But for very large data sets, this would not be the case. So instead, we consider a stochastic gradient descent algorithm for simple linear regression such as the following, where m is the size of the data set:
-
-&nbsp;&nbsp;&nbsp; 1: &nbsp; Randomly shuffle the data set <br>
-&nbsp;&nbsp;&nbsp;    2: &nbsp; <b>for</b> k = 0, 1, 2, ... <b>do</b> <br>
-&nbsp;&nbsp;&nbsp;    3: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>for</b> i = 1 to m <b>do</b> <br>
-&nbsp;&nbsp;&nbsp;    4:   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $\begin{bmatrix}
- \theta_{1} \\ 
- \theta_2 \\ 
- \end{bmatrix}=\begin{bmatrix}
- \theta_1 \\ 
- \theta_2 \\ 
- \end{bmatrix}-\alpha\begin{bmatrix}
- 2(h_\theta(x_i)-y_i) \\ 
- 2x_i(h_\theta(x_i)-y_i) \\ 
- \end{bmatrix}$ <br>
-&nbsp;&nbsp;&nbsp;    5: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>end for</b> <br> 
-&nbsp;&nbsp;&nbsp;    6: &nbsp;  <b>end for</b>
-
-Typically, with stochastic gradient descent, you will run through the entire data set 1 to 10 times (see value for k in line 2 of the pseudocode above), depending on how fast the data is converging and how large the data set is.
-
-With batch gradient descent, we must go through the entire data set before we make any progress. With this algorithm though, we can make progress right away and continue to make progress as we go through the data set. Therefore, stochastic gradient descent is often preferred when dealing with large data sets.
-
-Unlike gradient descent, stochastic gradient descent will tend to oscillate <i>near</i> a minimum value rather than continuously getting closer. It may never actually converge to the minimum though. One way around this is to slowly decrease the step size $\alpha$ as the algorithm runs. However, this is less common than using a fixed $\alpha$.
-
-Let's look at another example where we illustrate the use of stochastic gradient descent for linear regression. In the example below, we'll create a set of 500,000 points around the line $y = 2x+17+\epsilon$, for values of x between 0 and 100:
-
-```python
-f = lambda x: x*2+17+np.random.randn(len(x))*10
-
-x = np.random.random(500000)*100
-y = f(x) 
-m = len(y)
-```
-
-First, let's randomly shuffle around our dataset. Note that in this example, this step isn't strictly necessary since the data is already in a random order. However, that obviously may not always be the case:
-
-```python
-from random import shuffle
-
-x_shuf = []
-y_shuf = []
-index_shuf = list(range(len(x)))
-shuffle(index_shuf)
-for i in index_shuf:
-    x_shuf.append(x[i])
-    y_shuf.append(y[i])
-```
-
-Now we'll setup our h function and our cost function, which we will use to check how the value is improving.
-
-```python
-h = lambda theta_0,theta_1,x: theta_0 + theta_1*x
-cost = lambda theta_0,theta_1, x_i, y_i: 0.5*(h(theta_0,theta_1,x_i)-y_i)**2
-```
-
-Now we'll run our stochastic gradient descent algorithm. To see it's progress, we'll take a cost measurement at every step. Every 10,000 steps, we'll get an average cost from the last 10,000 steps and then append that to our cost_list variable. We will run through the entire list 10 times here:
-
-```python
-theta_old = np.array([0.,0.])
-theta_new = np.array([1.,1.]) # The algorithm starts at [1,1]
-n_k = 0.000005 # step size
-
-iter_num = 0
-s_k = np.array([float("inf"),float("inf")])
-sum_cost = 0
-cost_list = []
-
-for j in range(10):
-    for i in range(m):
-        iter_num += 1
-        theta_old = theta_new
-        s_k[0] = (h(theta_old[0],theta_old[1],x[i])-y[i])
-        s_k[1] = (h(theta_old[0],theta_old[1],x[i])-y[i])*x[i]
-        s_k = (-1)*s_k
-        theta_new = theta_old + n_k * s_k
-        sum_cost += cost(theta_old[0],theta_old[1],x[i],y[i])
-        if (i+1) % 10000 == 0:
-            cost_list.append(sum_cost/10000.0)
-            sum_cost = 0   
-            
-print("Local minimum occurs where:")
-print("theta_0 =", theta_new[0])
-print("theta_1 =", theta_new[1])
-```
-
-    Local minimum occurs where:
-    theta_0 = 16.955415496837382
-    theta_1 = 1.999169728242732
-
-As you can see, our values for $\theta_0$ and $\theta_1$ are close to their true values of 17 and 2.
-
-Now, we plot our cost versus the number of iterations. As you can see, the cost goes down quickly at first, but starts to level off as we go through more iterations:
-
-```python
-iterations = np.arange(len(cost_list))*10000
-plt.plot(iterations,cost_list)
-plt.xlabel("iterations")
-plt.ylabel("avg cost")
-plt.show()
-```
-
-![png](/img/nb_sgd_demo/nb_sgd_demo_39_0.png){: .center-image }
-
- 
--->
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">jax.config</span> <span class="kn">import</span> <span class="n">config</span><span class="p">;</span> <span class="n">config</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="s">"jax_enable_x64"</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="n">jnp</span>
+<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">grad</span><span class="p">,</span> <span class="n">jit</span><span class="p">,</span> <span class="n">value_and_grad</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">jit</span>
+<span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+    <span class="n">b1</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">;</span> <span class="n">b2</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">;</span>
+    <span class="n">a1</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span> <span class="n">a2</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span>
+    <span class="n">ls</span> <span class="o">=</span> <span class="n">b1</span><span class="o">*</span><span class="p">(</span><span class="n">mu</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">v</span> <span class="o">-</span> <span class="mf">2.0</span><span class="o">*</span><span class="n">a1</span><span class="o">*</span><span class="n">mu</span> <span class="o">+</span> <span class="n">a1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">b2</span><span class="o">*</span><span class="p">(</span> <span class="p">(</span><span class="n">mu</span><span class="o">**</span><span class="mi">3</span><span class="o">+</span><span class="mf">3.0</span><span class="o">*</span><span class="n">mu</span><span class="o">*</span><span class="n">v</span><span class="p">)</span> <span class="o">-</span> <span class="mf">3.0</span><span class="o">*</span><span class="n">a2</span><span class="o">*</span><span class="p">(</span><span class="n">mu</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">v</span><span class="p">)</span> <span class="o">+</span> <span class="mf">3.0</span><span class="o">*</span><span class="p">(</span><span class="n">a2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">mu</span> <span class="o">-</span> <span class="n">a2</span><span class="o">**</span><span class="mi">3</span> <span class="p">)</span> <span class="o">+</span><span class="mf">4.0</span><span class="o">/</span><span class="n">v</span>
+    <span class="k">return</span> <span class="n">ls</span>
+
+<span class="o">@</span><span class="n">jit</span>
+<span class="k">def</span> <span class="nf">loss_pre</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
+    <span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="o">=</span> <span class="n">params</span>
+    <span class="k">return</span> <span class="n">loss</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="mf">1.0</span><span class="o">/</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="n">jnp</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+
+<span class="n">loss_f_pre</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="n">value_and_grad</span><span class="p">(</span><span class="n">loss_pre</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">gd</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_fun</span><span class="p">,</span> <span class="n">step_size</span><span class="p">,</span> <span class="n">num_iters</span><span class="p">):</span>
+
+
+    <span class="n">J_history</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">mu_hist</span><span class="p">,</span> <span class="n">s_hist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#For plotting afterwards  
+</span>    
+    <span class="n">cur_params</span> <span class="o">=</span> <span class="n">init_params</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iters</span><span class="p">):</span>
+        
+        <span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">g</span><span class="p">)</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">cur_params</span><span class="p">)</span>
+        <span class="n">mu_hist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">s_hist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
+        <span class="n">J_history</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        
+        <span class="c1">#GD
+</span>        <span class="n">cur_params</span>  <span class="o">=</span> <span class="n">cur_params</span> <span class="o">-</span> <span class="n">step_size</span><span class="o">*</span> <span class="n">g</span>
+
+        
+    <span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">cur_params</span><span class="p">)</span>
+    <span class="n">J_history</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="n">mu_hist</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">s_hist</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
+
+    <span class="k">return</span> <span class="n">J_history</span><span class="p">,</span> <span class="n">mu_hist</span><span class="p">,</span> <span class="n">s_hist</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">ngd_pre</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_fun</span><span class="p">,</span> <span class="n">step_size</span><span class="p">,</span> <span class="n">num_iters</span><span class="p">):</span>
+
+    <span class="n">J_history</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">mu_hist</span><span class="p">,</span> <span class="n">s_hist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#For plotting afterwards  
+</span>    
+    <span class="n">cur_params</span> <span class="o">=</span> <span class="n">init_params</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iters</span><span class="p">):</span>
+        <span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">s</span><span class="p">)</span><span class="o">=</span><span class="n">cur_params</span>
+        <span class="p">(</span><span class="n">val</span><span class="p">,(</span><span class="n">g_mu</span><span class="p">,</span><span class="n">g_s</span><span class="p">))</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">cur_params</span><span class="p">)</span>
+        <span class="n">ng</span> <span class="o">=</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span><span class="n">g_mu</span><span class="o">/</span><span class="n">s</span><span class="p">,</span> <span class="mf">2.0</span><span class="o">*</span><span class="p">(</span><span class="n">s</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">g_s</span> <span class="p">]</span> <span class="p">)</span>
+
+        <span class="n">mu_hist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">s_hist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
+        <span class="n">J_history</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        
+        <span class="c1">#NGD
+</span>        <span class="n">cur_params</span>  <span class="o">=</span> <span class="n">cur_params</span> <span class="o">-</span> <span class="n">step_size</span><span class="o">*</span> <span class="n">ng</span>
+
+        
+    <span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">cur_params</span><span class="p">)</span>
+    <span class="n">J_history</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="n">mu_hist</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">s_hist</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
+
+    <span class="k">return</span> <span class="n">J_history</span><span class="p">,</span> <span class="n">mu_hist</span><span class="p">,</span> <span class="n">s_hist</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Setup of meshgrid of theta values
+</span><span class="n">mu_list</span><span class="p">,</span> <span class="n">s_list</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">200</span><span class="p">),</span><span class="n">np</span><span class="p">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mi">800</span><span class="p">))</span>
+
+<span class="c1">#Computing the cost function for each theta combination
+</span><span class="n">zs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span>  <span class="p">[</span><span class="n">loss_pre</span><span class="p">(</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu</span><span class="p">,</span><span class="n">s</span><span class="p">])</span> <span class="p">)</span> 
+                     <span class="k">for</span> <span class="n">mu</span><span class="p">,</span><span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">mu_list</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">s_list</span><span class="p">))</span> <span class="p">]</span> <span class="p">)</span>
+
+<span class="n">zs</span> <span class="o">=</span> <span class="n">zs</span>   <span class="c1">#- np.min(zs) + 1e-6
+</span><span class="n">Z</span> <span class="o">=</span> <span class="n">zs</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mu_list</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mu_0</span> <span class="o">=</span> <span class="o">-</span><span class="mf">8.0</span>
+<span class="n">s_0</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">max_num_iters</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">init_params</span> <span class="o">=</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu_0</span><span class="p">,</span><span class="n">s_0</span><span class="p">])</span>
+<span class="n">gd_pre_history</span><span class="p">,</span> <span class="n">mu_gd_pre_hist</span><span class="p">,</span> <span class="n">s_gd_pre_hist</span> <span class="o">=</span> <span class="n">gd</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_f_pre</span><span class="p">,</span> <span class="n">step_size</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="n">num_iters</span><span class="o">=</span><span class="n">max_num_iters</span><span class="p">)</span>
+<span class="n">anglesx_gd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_gd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_gd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">anglesy_gd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_gd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_gd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mu_0</span> <span class="o">=</span> <span class="o">-</span><span class="mf">8.0</span>
+<span class="n">s_0</span> <span class="o">=</span> <span class="mf">1.0</span>
+<span class="n">max_num_iters</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">init_params</span> <span class="o">=</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu_0</span><span class="p">,</span><span class="n">s_0</span><span class="p">])</span>
+<span class="n">ngd_pre_history</span><span class="p">,</span> <span class="n">mu_ngd_pre_hist</span><span class="p">,</span> <span class="n">s_ngd_pre_hist</span> <span class="o">=</span> <span class="n">ngd_pre</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_f_pre</span><span class="p">,</span> <span class="n">step_size</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">,</span> <span class="n">num_iters</span><span class="o">=</span><span class="n">max_num_iters</span><span class="p">)</span>
+<span class="n">anglesx_ngd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_ngd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_ngd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">anglesy_ngd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_ngd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_ngd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">colors</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">#Contour plot
+</span><span class="n">ax</span><span class="p">.</span><span class="n">contour</span><span class="p">(</span><span class="n">mu_list</span><span class="p">,</span> <span class="n">s_list</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s">'jet'</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">mu_gd_pre_hist</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">s_gd_pre_hist</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">anglesx_gd_pre</span><span class="p">,</span> <span class="n">anglesy_gd_pre</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'GD $(\mu,s)$'</span><span class="p">,</span> <span class="n">scale_units</span> <span class="o">=</span> <span class="s">'xy'</span><span class="p">,</span> <span class="n">angles</span> <span class="o">=</span> <span class="s">'xy'</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">'r'</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="p">.</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">mu_ngd_pre_hist</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">s_ngd_pre_hist</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">anglesx_ngd_pre</span><span class="p">,</span> <span class="n">anglesy_ngd_pre</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'NGD $(\mu,s)$'</span><span class="p">,</span> <span class="n">scale_units</span> <span class="o">=</span> <span class="s">'xy'</span><span class="p">,</span> <span class="n">angles</span> <span class="o">=</span> <span class="s">'xy'</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">'g'</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="p">.</span><span class="mi">9</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'$\mu$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'$s$'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'upper right'</span><span class="p">)</span>
+
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">))),</span><span class="n">gd_pre_history</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">'GD $(\mu,s)$'</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s">'r'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">))),</span><span class="n">ngd_pre_history</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">'NGD $(\mu,s)$'</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s">'g'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'upper right'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'# of iters'</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'loss'</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/img/nb_gd_vs_ngd/nb_gd_vs_ngd_7_0.png" alt="png" class="center-image" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
 
         
       </section>
