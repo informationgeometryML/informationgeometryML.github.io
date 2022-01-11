@@ -534,8 +534,7 @@ The natural/Riemannian gradient is
 \end{aligned}
 $$</code></p>
 
-        <p>Now, consider the following re-parametrization of the function, where 
- $v=\frac{1}{s}$.</p>
+        <p>Now, consider the following re-parametrization of the function</p>
 
         <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -543,7 +542,7 @@ h_\lambda(\lambda)= E_{q(w|\lambda)} [ w^2 + \log q(w|\lambda)]
 = \mu^2 + v - \frac{1}{2} \log(v) - \frac{1}{2}(1+\log(2\pi))
 \end{aligned}
 $$</code>
-where <code class="language-plaintext highlighter-rouge">$q(w|\lambda)= \mathcal{N}(w|\mu,v)$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code> and variance <code class="language-plaintext highlighter-rouge">$v$</code>,
+where <code class="language-plaintext highlighter-rouge">$q(w|\lambda)= \mathcal{N}(w|\mu,v)$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code> and variance <code class="language-plaintext highlighter-rouge">$v=\frac{1}{s}$</code>,
   intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\lambda=(\mu,v)$</code>, and parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\lambda=\{(\mu,v)|\mu \in \mathcal{R},v&gt;0 \}$</code>.</p>
 
         <p>The FIM of Gaussian $q(w|\lambda)$ under parametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code> is
