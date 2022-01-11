@@ -469,13 +469,13 @@ $$</code></p>
 
 <div class="notice--info">
   <details>
-<summary>Example (univariate Gaussian):</summary>
+<summary>Univariate Gaussian example: (click to expand)</summary>
 <fieldset class="field-set">
       <blockquote>
         <p>Consider the following scalar function
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-f(\tau):= E_{q(w|\tau)} [ w^2 + \log q(w|\tau) ]
+h_\tau(\tau):= E_{q(w|\tau)} [ w^2 + \log q(w|\tau) ]
 = \mu^2 + \frac{1}{s} + \frac{1}{2} \log(s)- \frac{1}{2}(1+\log(2\pi))
 \end{aligned}
 $$</code>
@@ -498,7 +498,7 @@ The Euclidean gradient is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{g}_\tau (\tau_0) :=
-\nabla_\tau f(\tau_0) =
+\nabla_\tau h_\tau(\tau_0) =
 \begin{bmatrix}
 2 \mu \\
 -\frac{1}{s^2} +\frac{1}{2s}
@@ -512,7 +512,7 @@ The natural/Riemannian gradient is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \hat{\mathbf{g}}_\tau (\tau_0) :=
-\mathbf{F}_\tau^{-1} (\tau_0) \nabla_\tau f(\tau_0) =
+\mathbf{F}_\tau^{-1} (\tau_0) \nabla_\tau h_\tau(\tau_0) =
 \begin{bmatrix}
 2 \mu s^{-1}  \\
 ( -\frac{1}{s^2} +\frac{1}{2s} ) (2s^2)
@@ -528,7 +528,7 @@ $$</code></p>
 
         <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-f(\lambda)= E_{q(w|\lambda)} [ w^2 + \log q(w|\lambda)]
+h_\lambda(\lambda)= E_{q(w|\lambda)} [ w^2 + \log q(w|\lambda)]
 = \mu^2 + v - \frac{1}{2} \log(v) - \frac{1}{2}(1+\log(2\pi))
 \end{aligned}
 $$</code>
@@ -565,7 +565,7 @@ The Euclidean gradient is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{g}_\lambda (\lambda_0) :=
-\nabla_\lambda f(\lambda_0) =
+\nabla_\lambda h_\lambda(\lambda_0) =
 \begin{bmatrix}
 2 \mu \\
 1 - \frac{1}{2v}
@@ -581,7 +581,7 @@ We can verify that <code class="language-plaintext highlighter-rouge">$\eqref{6}
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \hat{\mathbf{g}}_\lambda (\lambda_0) :=
-\mathbf{F}_\lambda^{-1} (\lambda_0) \nabla_\lambda f(\lambda_0) =
+\mathbf{F}_\lambda^{-1} (\lambda_0) \nabla_\lambda h_\lambda(\lambda_0) =
 \begin{bmatrix}
 2 \mu  v \\
 ( 1 - \frac{1}{2v} ) (2v^2)
