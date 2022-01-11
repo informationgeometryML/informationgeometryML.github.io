@@ -1,6 +1,7 @@
 _site/
 .bundle/
 *.swp
+*.swo
 .sass-cache
 .vagrant
 .jekyll-cache
