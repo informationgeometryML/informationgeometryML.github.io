@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-10T23:17:34-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-11T00:33:12-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -2431,7 +2431,7 @@ The main reason is that the parameter space is not open in $\mathcal{R}^2$.&lt;/
 &lt;hr /&gt;
 &lt;p&gt;As we can see from the &lt;a href=&quot;#motivation&quot;&gt;previous section&lt;/a&gt;, we can use the Fisher-Rao metric to design fast and efficient algorithms.
 In statistics, this metric is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.
-These statistical principles &lt;a class=&quot;citation&quot; href=&quot;#casella2002statistical&quot;&gt;[10]&lt;/a&gt; play essential roles in training and estimating machine learning models.
+These statistical principles  &lt;a class=&quot;citation&quot; href=&quot;#casella2002statistical&quot;&gt;[10]&lt;/a&gt; &lt;a class=&quot;citation&quot; href=&quot;#jaynes1957information&quot;&gt;[11]&lt;/a&gt; play essential roles in training and estimating machine learning models.
 Moreover, the Fisher-Rao metric has been theorically and emprically used in machine learning and statistics.&lt;/p&gt;
 
 &lt;p&gt;Given an intrinsic parameterization, we can define the Fisher-Rao metric under this parameterization as:
@@ -2459,7 +2459,7 @@ where $K$ is the number of entries of parameter array $\tau$ and
 The condition is also related to the model identification in maximum likelihood estimation.&lt;/p&gt;
 
 &lt;p&gt;In the following discussion, we will assume the metric is well-defined.
-In such cases, the Fisher-Rao metric is a valid Riemannian metric &lt;a class=&quot;citation&quot; href=&quot;#lee2018introduction&quot;&gt;[11]&lt;/a&gt; since the corresponding FIM is positive definite everywhere in an &lt;strong&gt;intrinsic&lt;/strong&gt; parameter space.&lt;/p&gt;
+In such cases, the Fisher-Rao metric is a valid Riemannian metric &lt;a class=&quot;citation&quot; href=&quot;#lee2018introduction&quot;&gt;[12]&lt;/a&gt; since the corresponding FIM is positive definite everywhere in an &lt;strong&gt;intrinsic&lt;/strong&gt; parameter space.&lt;/p&gt;
 
 &lt;div class=&quot;notice--danger&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:
@@ -2665,7 +2665,8 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;tu2011introduction&quot;&gt;[8] L. W. Tu, &quot;An introduction to manifolds. Second,&quot; &lt;i&gt;New York, US: Springer&lt;/i&gt; (2011).&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;amari2016information&quot;&gt;[9] S.-ichi Amari, &lt;i&gt;Information geometry and its applications&lt;/i&gt; (Springer, 2016).&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;casella2002statistical&quot;&gt;[10] G. Casella &amp;amp; R. L. Berger, &lt;i&gt;Statistical inference&lt;/i&gt; (2002).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;lee2018introduction&quot;&gt;[11] J. M. Lee, &lt;i&gt;Introduction to Riemannian manifolds&lt;/i&gt; (Springer, 2018).&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;jaynes1957information&quot;&gt;[11] E. T. Jaynes, &quot;Information theory and statistical mechanics,&quot; &lt;i&gt;Physical review&lt;/i&gt; &lt;b&gt;106&lt;/b&gt;:620 (1957).&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;lee2018introduction&quot;&gt;[12] J. M. Lee, &lt;i&gt;Introduction to Riemannian manifolds&lt;/i&gt; (Springer, 2018).&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;footnotes&quot;&gt;Footnotes:&lt;/h2&gt;
 
