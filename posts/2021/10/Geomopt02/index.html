@@ -471,7 +471,7 @@ $$</code></p>
 
 <div class="notice--info">
   <details>
-<summary>Example: multivariate Gaussian (click to expand)</summary>
+<summary>Example: Multivariate Gaussian (click to expand)</summary>
 <fieldset class="field-set">
       <blockquote>
 
@@ -732,18 +732,21 @@ ax.quiver(mu_gd_pre_hist[:-1], s_gd_pre_hist[:-1], anglesx_gd_pre, anglesy_gd_pr
 ax.quiver(mu_ngd_pre_hist[:-1], s_ngd_pre_hist[:-1], anglesx_ngd_pre, anglesy_ngd_pre, 
           label='NGD $(\mu,s)$', scale_units = 'xy', angles = 'xy', scale = 1, color = 'r', alpha = .9)
 
-ax.set_xlabel('$\mu$')
-ax.set_ylabel('$s$')
-ax.legend(loc='upper right')
+ax.set_xlabel('$\mu$', fontsize=18)
+ax.set_ylabel('$s$', fontsize=18)
+ax.legend(loc='upper right', fontsize=18)
 
 ax = fig.add_subplot(1, 2, 2)
 ax.plot(np.array(list(range(0, max_num_iters+1))),gd_pre_history,label='GD $(\mu,s)$',color='g')
 ax.plot(np.array(list(range(0, max_num_iters+1))),ngd_pre_history,label='NGD $(\mu,s)$',color='r')
-ax.legend(loc='upper right')
-ax.set_xlabel('# of iters')
-ax.set_ylabel('loss')
+ax.legend(loc='upper right', fontsize=18)
+ax.set_xlabel('# of iters', fontsize=18)
+ax.set_ylabel('loss', fontsize=18)
+
+
 
 plt.tight_layout()
+plt.savefig('gd_vs_ngd.png')
 plt.show()
 ```
 
