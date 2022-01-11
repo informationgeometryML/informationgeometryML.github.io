@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-10T20:27:54-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-10T21:35:05-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -1473,6 +1473,8 @@ The space of natural-gradients evaluated at the same point is called a tangent s
 
 &lt;p&gt;We will give an informal introduction with a focus on high level of ideas.&lt;/p&gt;
 
+&lt;p&gt;&lt;img src=&quot;/img/gd_vs_ngd.png&quot; width=&quot;1000&quot; /&gt;&lt;/p&gt;
+
 &lt;h1 id=&quot;euclidean-steepest-direction-and-directional-derivative&quot;&gt;Euclidean steepest direction and directional derivative&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;Before we discuss natural-gradients, we first revisit Euclidean gradients.&lt;/p&gt;
@@ -1617,7 +1619,7 @@ The main reason is that &lt;code class=&quot;language-plaintext highlighter-roug
 &lt;h1 id=&quot;riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
-Now, we can introduce the Riemannian steepest direction. We will use this to define/compute natrual-gradients.&lt;/p&gt;
+Now, we can introduce the Riemannian steepest direction &lt;a class=&quot;citation&quot; href=&quot;#absil2009optimization&quot;&gt;[1]&lt;/a&gt; . We will use this to define/compute natrual-gradients.&lt;/p&gt;
 
 &lt;p&gt;Given  a smooth scalar funcion defined in a manifold $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$ under an intrinsic parameterization $\mathbf{\tau}$. We can define the Riemannian steepest direction as the optimal solution to the following optimization problem.  The optimization problem is expressed in terms of a directional derivative along Riemannian vector $\mathbf{v}$, where we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -1686,9 +1688,62 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;/details&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Given a scalar function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau})$&lt;/code&gt; with an intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;, we define its (un-normalized) &lt;strong&gt;Riemannian&lt;/strong&gt; (steepest) gradient as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$&lt;/code&gt; if its (un-normalized) &lt;strong&gt;Euclidean&lt;/strong&gt; (steepest) gradient is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau})$&lt;/code&gt;.
+&lt;p&gt;Given a scalar function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau})$&lt;/code&gt; with an intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;, we define its (un-normalized) &lt;strong&gt;Riemannian&lt;/strong&gt; (steepest) gradient as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}_\tau^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$&lt;/code&gt; if its (un-normalized) &lt;strong&gt;Euclidean&lt;/strong&gt; (steepest) gradient is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau})$&lt;/code&gt;.
 We use a learning-rate to control the length of a gradient instead of normalizing its length. 
 Since we use the Fisher-Rao metric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}$&lt;/code&gt;, the Riemannian gradient is also known as the &lt;strong&gt;natural&lt;/strong&gt; gradient.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Example: Univariate Gaussian&lt;/p&gt;
+
+  &lt;p&gt;Consider the following scalar function
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+f(\tau):= E_{q(w|\tau)} [ w^2 ] + \frac{1}{2} \log(s)
+= \mu^2 + \frac{1}{s} + \frac{1}{2} \log(s)
+\end{aligned}
+$$&lt;/code&gt;
+where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\tau)= \mathcal{N}(w|\mu,s^{-1})$&lt;/code&gt; is a Gaussian family with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu$&lt;/code&gt;, variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$s^{-1}$&lt;/code&gt;, 
+  intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau=(\mu,s)$&lt;/code&gt;, and the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau=\{(\mu,s)|\mu \in \mathcal{R},s&amp;gt;0 \}$&lt;/code&gt;.&lt;/p&gt;
+
+  &lt;p&gt;The Fisher information matrix of Gaussian $q(w|\tau)$ under this parametrization is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{F}_\tau (\tau)  = -E_{q(w|\tau)} [ \nabla_\tau^2 \log q(w|\tau) ] 
+=
+\begin{bmatrix}
+\frac{1}{s} &amp;amp; 0 \\
+0 &amp;amp; \frac{1}{2s^2}
+\end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;
+Now, we consider a member $\tau_0=(0.5,1)$ in the Gaussian family.
+The Euclidean gradient is 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\nabla_\tau f(\tau_0) =
+\begin{bmatrix}
+2 \mu \\
+-\frac{1}{s^2} +\frac{1}{2s}
+\end{bmatrix}_{\tau=\tau_0}
+=\begin{bmatrix}
+1 \\ -\frac{1}{2}
+\end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;
+The Riemannian gradient is 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{F}_\tau^{-1} (\tau_0) \nabla_\tau f(\tau_0) =
+\begin{bmatrix}
+2 \mu s \\
+( -\frac{1}{s^2} +\frac{1}{2s} ) (2s^2)
+\end{bmatrix}_{\tau=\tau_0}
+=\begin{bmatrix}
+1 \\ -1
+\end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;div class=&quot;notice--info&quot;&gt;
   &lt;details&gt;
@@ -1715,7 +1770,7 @@ Strictly speaking, a natural gradient/vector w.r.t. &lt;code class=&quot;languag
 &lt;h1 id=&quot;riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Riemannian gradients as tangent vectors (optional)&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
-Now, we will disucss abstract Riemannian vectors without a parametrization. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transform-and-invariance&quot;&gt;Part III&lt;/a&gt;.  In physics, this invariance means that a law of physics should be independent of the choice of (reference) coordinate systems.&lt;/p&gt;
+Now, we will disucss abstract Riemannian vectors without a parametrization &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[2]&lt;/a&gt;. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transform-and-invariance&quot;&gt;Part III&lt;/a&gt;.  In physics, this invariance means that a law of physics should be independent of the choice of (reference) coordinate systems.&lt;/p&gt;
 
 &lt;p&gt;A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$ of a smooth curve in the manifold under the parametrization $\tau$. 
 The set of tangent vectors evaluated at $\mathbf{\tau}_0$ is called the tangent space at the corresponding point. 
@@ -1836,131 +1891,145 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 &lt;p&gt;The key takeway is that a vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;. Recall that a parameter space is a parametric representation of a  set of &lt;strong&gt;points&lt;/strong&gt; in a manifold.
 We will discuss more about this in &lt;a href=&quot;/posts/2021/11/Geomopt04/#two-kinds-of-spaces&quot;&gt;Part IV&lt;/a&gt;&lt;/p&gt;
 
-&lt;h1 id=&quot;notebook&quot;&gt;Notebook&lt;/h1&gt;
+&lt;!--# Notebook--&gt;
+&lt;!--
+```python
+%matplotlib inline
+from jax.config import config; config.update(&quot;jax_enable_x64&quot;, True)
+import jax.numpy as jnp
+from jax import grad, jit, value_and_grad
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib import ticker, colors
+```
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matplotlib&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inline&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;jax.config&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;jax_enable_x64&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;jax.numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jnp&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;jax&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;value_and_grad&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ticker&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;colors&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+```python
+@jit
+def loss_lik(mu,v):
+    b1 = 0.5; b2 = 0.01;
+    a1 = 2.0; a2 = 5.0;
+    ls = b1*(mu**2+v-2.0*a1*mu+a1**2)+b2*((mu**3+3.0*mu*v)-3.0*a2*(mu**2+v)+3.0*(a2**2)*mu-a2**3)+4.0/v
+    return ls
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jit&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loss_lik&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;b1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;a1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;5.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;4.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ls&lt;/span&gt;
+@jit
+def loss_pre(params):
+    (mu,s) = params
+    return loss_lik(mu,1.0/s) + jnp.log(s)/2
 
-&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jit&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;loss_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_lik&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jnp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+loss_f_pre = jit(value_and_grad(loss_pre))
+```
 
-&lt;span class=&quot;n&quot;&gt;loss_f_pre&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value_and_grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;gd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_fun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;step_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;J_history&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;mu_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_hist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#For plotting  
-&lt;/span&gt;    
-    &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init_params&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+```python
+def gd(init_params, loss_fun, step_size, num_iters):
+    J_history = np.zeros(num_iters+1)
+    mu_hist, s_hist = np.zeros(num_iters+1), np.zeros(num_iters+1) #For plotting  
+    
+    cur_params = init_params
+    for i in range(num_iters):
         
-        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_fun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#Euclidean gradient
-&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;mu_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;s_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
-        &lt;span class=&quot;n&quot;&gt;J_history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;
+        (val,g) = loss_fun(cur_params) #Euclidean gradient
+        mu_hist[i] = cur_params[0]
+        s_hist[i] = cur_params[1] 
+        J_history[i] = val
         
-        &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;step_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#GD
-&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_fun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;J_history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;mu_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;s_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+        cur_params  = cur_params - step_size* g #GD
 
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;J_history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mu_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_hist&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+    (val,_) = loss_fun(cur_params)
+    J_history[num_iters] = val
+    mu_hist[num_iters] = cur_params[0]
+    s_hist[num_iters] = cur_params[1] 
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ngd_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_fun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;step_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;J_history&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;mu_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_hist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zeros&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#For plotting  
-&lt;/span&gt;    
-    &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init_params&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g_mu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g_s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_fun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;ng&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jnp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g_mu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g_s&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#Natural gradient
-&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;mu_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;s_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
-        &lt;span class=&quot;n&quot;&gt;J_history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;
+    return J_history, mu_hist, s_hist
+```
+
+```python
+def ngd_pre(init_params, loss_fun, step_size, num_iters):
+    J_history = np.zeros(num_iters+1)
+    mu_hist, s_hist = np.zeros(num_iters+1), np.zeros(num_iters+1) #For plotting  
+    
+    cur_params = init_params
+    for i in range(num_iters):
+        (mu,s)=cur_params
+        (val,(g_mu,g_s)) = loss_fun(cur_params)
+        ng = jnp.array( [g_mu/s, 2.0*(s**2)*g_s ] ) #Natural gradient
+
+        mu_hist[i] = cur_params[0]
+        s_hist[i] = cur_params[1] 
+        J_history[i] = val
         
-        &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;step_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ng&lt;/span&gt;     &lt;span class=&quot;c1&quot;&gt;#NGD
-&lt;/span&gt; 
-    &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_fun&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;J_history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;val&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;mu_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;s_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cur_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+        cur_params  = cur_params - step_size* ng     #NGD
+ 
+    (val,_) = loss_fun(cur_params)
+    J_history[num_iters] = val
+    mu_hist[num_iters] = cur_params[0]
+    s_hist[num_iters] = cur_params[1] 
 
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;J_history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mu_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_hist&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+    return J_history, mu_hist, s_hist
+```
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#Setup of meshgrid of theta values
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;meshgrid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;linspace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;logspace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+```python
+#Setup of meshgrid of theta values
+mu_list, s_list = np.meshgrid(np.linspace(-10,10,200),np.logspace(-1,0.2,800))
 
-&lt;span class=&quot;c1&quot;&gt;#Computing the cost function for each theta combination
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jnp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; 
-                     &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mu&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;zip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ravel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ravel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Z&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reshape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;shape&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;mu_0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;8.0&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;s_0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;max_num_iters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+#Computing the cost function for each theta combination
+zs = np.array(  [loss_pre( jnp.array([mu,s]) ) 
+                     for mu,s in zip(np.ravel(mu_list), np.ravel(s_list)) ] )
+Z = zs.reshape(mu_list.shape)
+mu_0 = -8.0
+s_0 = 1.0
+max_num_iters = 200
+```
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;init_params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jnp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;gd_pre_history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mu_gd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_gd_pre_hist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_f_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;step_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1e-2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
-                                                   &lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;anglesx_gd_pre&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_gd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_gd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;anglesy_gd_pre&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_gd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_gd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+```python
+init_params = jnp.array([mu_0,s_0])
+gd_pre_history, mu_gd_pre_hist, s_gd_pre_hist = gd(init_params, loss_f_pre, step_size = 1e-2, 
+                                                   num_iters=max_num_iters)
+anglesx_gd_pre = np.array(mu_gd_pre_hist)[1:] - np.array(mu_gd_pre_hist)[:-1]
+anglesy_gd_pre = np.array(s_gd_pre_hist)[1:] - np.array(s_gd_pre_hist)[:-1]
+```
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;init_params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;jnp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ngd_pre_history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mu_ngd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_ngd_pre_hist&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ngd_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;init_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;loss_f_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;step_size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1e-2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
-                                                           &lt;span class=&quot;n&quot;&gt;num_iters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_num_iters&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;anglesx_ngd_pre&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_ngd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_ngd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;anglesy_ngd_pre&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_ngd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_ngd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+```python
+init_params = jnp.array([mu_0,s_0])
+ngd_pre_history, mu_ngd_pre_hist, s_ngd_pre_hist = ngd_pre(init_params, loss_f_pre, step_size = 1e-2, 
+                                                           num_iters=max_num_iters)
+anglesx_ngd_pre = np.array(mu_ngd_pre_hist)[1:] - np.array(mu_ngd_pre_hist)[:-1]
+anglesy_ngd_pre = np.array(s_ngd_pre_hist)[1:] - np.array(s_ngd_pre_hist)[:-1]
+```
 
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+```python
+fig = plt.figure(figsize = (16,8))
+ax = fig.add_subplot(1, 2, 1)
 
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;contour&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmap&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'jet'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ax.contour(mu_list, s_list, Z, 50, cmap = 'jet')
 
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quiver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_gd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_gd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;anglesx_gd_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;anglesy_gd_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
-          &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'GD $(\mu,s)$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale_units&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'xy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;angles&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'xy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'g'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ax.quiver(mu_gd_pre_hist[:-1], s_gd_pre_hist[:-1], anglesx_gd_pre, anglesy_gd_pre, 
+          label='GD $(\mu,s)$', scale_units = 'xy', angles = 'xy', scale = 1, color = 'g', alpha = .9)
 
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;quiver&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mu_ngd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s_ngd_pre_hist&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;anglesx_ngd_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;anglesy_ngd_pre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; 
-          &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'NGD $(\mu,s)$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale_units&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'xy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;angles&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'xy'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alpha&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ax.quiver(mu_ngd_pre_hist[:-1], s_ngd_pre_hist[:-1], anglesx_ngd_pre, anglesy_ngd_pre, 
+          label='NGD $(\mu,s)$', scale_units = 'xy', angles = 'xy', scale = 1, color = 'r', alpha = .9)
 
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'$\mu$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'$s$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'upper right'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ax.set_xlabel('$\mu$')
+ax.set_ylabel('$s$')
+ax.legend(loc='upper right')
 
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_subplot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_num_iters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gd_pre_history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'GD $(\mu,s)$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'g'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_num_iters&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ngd_pre_history&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'NGD $(\mu,s)$'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'upper right'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'# of iters'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'loss'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ax = fig.add_subplot(1, 2, 2)
+ax.plot(np.array(list(range(0, max_num_iters+1))),gd_pre_history,label='GD $(\mu,s)$',color='g')
+ax.plot(np.array(list(range(0, max_num_iters+1))),ngd_pre_history,label='NGD $(\mu,s)$',color='r')
+ax.legend(loc='upper right')
+ax.set_xlabel('# of iters')
+ax.set_ylabel('loss')
 
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tight_layout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+plt.tight_layout()
+plt.show()
+```
 
-&lt;p&gt;&lt;img src=&quot;/img/nb_gd_vs_ngd/nb_gd_vs_ngd_7_0.png&quot; alt=&quot;png&quot; class=&quot;center-image&quot; /&gt;&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. The main propose of this post is to show how to define and compute natural-gradients. The space of natural-gradients evaluated at the same point is called a tangent space at that point.</summary></entry><entry><title type="html">Part I: Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+![png](/img/nb_gd_vs_ngd/nb_gd_vs_ngd_7_0.png){: .center-image }
+--&gt;
+
+&lt;hr /&gt;
+&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
+&lt;p class=&quot;bibliography&quot;&gt;&lt;p&gt;&lt;span id=&quot;absil2009optimization&quot;&gt;[1] P.-A. Absil, R. Mahony, &amp;amp; R. Sepulchre, &lt;i&gt;Optimization algorithms on matrix manifolds&lt;/i&gt; (Princeton University Press, 2009).&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;tu2011introduction&quot;&gt;[2] L. W. Tu, &quot;An introduction to manifolds. Second,&quot; &lt;i&gt;New York, US: Springer&lt;/i&gt; (2011).&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. The main propose of this post is to show how to define and compute natural-gradients. The space of natural-gradients evaluated at the same point is called a tangent space at that point.</summary></entry><entry><title type="html">Part I: Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that,&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;The FIM plays an essential role in statistics and machine learning&lt;/li&gt;
@@ -2068,7 +2137,7 @@ The following figure illustrates four distributions in a Gaussian family denoted
 &lt;hr /&gt;
 &lt;p&gt;We start by discussing parameterizations for a distribution family. As we will see, a proper parameterization plays an important role in defining the FIM.
 We can not use an arbitrary differentiable parameterization to represent a geometric structure.
-This structure is also known as a manifold structure &lt;a class=&quot;citation&quot; href=&quot;#lee2013introduction&quot;&gt;[8]&lt;/a&gt;. A (smooth) manifold should be locally like a “flat” vector space. For example, consider the (curved) Earth surface. It looks like a (locally) flat space to us.&lt;/p&gt;
+This structure is also known as a manifold structure &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[8]&lt;/a&gt;. A (smooth) manifold should be locally like a “flat” vector space. For example, consider the (curved) Earth surface. It looks like a (locally) flat space to us.&lt;/p&gt;
 
 &lt;p&gt;The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined (finite).
 These properties will play a key role in &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space&quot;&gt;Part IV&lt;/a&gt; for natural-gradient descent.&lt;/p&gt;
@@ -2349,7 +2418,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;h1 id=&quot;dimensionality-of-a-manifold&quot;&gt;Dimensionality of a manifold&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
-Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom &lt;a class=&quot;citation&quot; href=&quot;#lee2013introduction&quot;&gt;[8]&lt;/a&gt;.
+Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[8]&lt;/a&gt;.
 This also gives us a tool to help identify non-manifold cases.
 We now illustrate this by examples.&lt;/p&gt;
 
@@ -2444,7 +2513,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;khan2017conjugate&quot;&gt;[5] M. Khan &amp;amp; W. Lin, &quot;Conjugate-computation variational inference: Converting variational inference in non-conjugate models to inferences in conjugate models,&quot; &lt;i&gt;Artificial Intelligence and Statistics&lt;/i&gt; (PMLR, 2017), pp. 878–887.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;wierstra2014natural&quot;&gt;[6] D. Wierstra, T. Schaul, T. Glasmachers, Y. Sun, J. Peters, &amp;amp; J. Schmidhuber, &quot;Natural evolution strategies,&quot; &lt;i&gt;The Journal of Machine Learning Research&lt;/i&gt; &lt;b&gt;15&lt;/b&gt;:949–980 (2014).&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;kakade2001natural&quot;&gt;[7] S. M. Kakade, &quot;A natural policy gradient,&quot; &lt;i&gt;Advances in neural information processing systems&lt;/i&gt; &lt;b&gt;14&lt;/b&gt; (2001).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;lee2013introduction&quot;&gt;[8] J. M. Lee, &lt;i&gt;Introduction to smooth  manifolds&lt;/i&gt; (Springer, 2013).&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;tu2011introduction&quot;&gt;[8] L. W. Tu, &quot;An introduction to manifolds. Second,&quot; &lt;i&gt;New York, US: Springer&lt;/i&gt; (2011).&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;amari2016information&quot;&gt;[9] S.-ichi Amari, &lt;i&gt;Information geometry and its applications&lt;/i&gt; (Springer, 2016).&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;casella2002statistical&quot;&gt;[10] G. Casella &amp;amp; R. L. Berger, &lt;i&gt;Statistical inference&lt;/i&gt; (2002).&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;lee2018introduction&quot;&gt;[11] J. M. Lee, &lt;i&gt;Introduction to Riemannian manifolds&lt;/i&gt; (Springer, 2018).&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;

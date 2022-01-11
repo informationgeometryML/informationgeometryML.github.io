@@ -182,7 +182,7 @@
 
 
 
-  14 minute read
+  13 minute read
 </p>
           
         </header>
@@ -196,6 +196,8 @@ The main propose of this post is to show how to define and compute natural-gradi
 The space of natural-gradients evaluated at the same point is called a tangent space at that point.</p>
 
 <p>We will give an informal introduction with a focus on high level of ideas.</p>
+
+<p><img src="/img/gd_vs_ngd.png" width="1000" /></p>
 
 <h1 id="euclidean-steepest-direction-and-directional-derivative">Euclidean steepest direction and directional derivative</h1>
 <hr />
@@ -341,7 +343,7 @@ The main reason is that <code class="language-plaintext highlighter-rouge">$\tau
 <h1 id="riemannian-steepest-direction">Riemannian steepest direction</h1>
 <hr />
 <p>Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
-Now, we can introduce the Riemannian steepest direction. We will use this to define/compute natrual-gradients.</p>
+Now, we can introduce the Riemannian steepest direction <a class="citation" href="#absil2009optimization">[1]</a> . We will use this to define/compute natrual-gradients.</p>
 
 <p>Given  a smooth scalar funcion defined in a manifold $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$ under an intrinsic parameterization $\mathbf{\tau}$. We can define the Riemannian steepest direction as the optimal solution to the following optimization problem.  The optimization problem is expressed in terms of a directional derivative along Riemannian vector $\mathbf{v}$, where we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.
 <code class="language-plaintext highlighter-rouge">$$
@@ -410,9 +412,62 @@ $$</code></p>
 </details>
 </div>
 
-<p>Given a scalar function <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau})$</code> with an intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, we define its (un-normalized) <strong>Riemannian</strong> (steepest) gradient as <code class="language-plaintext highlighter-rouge">$ \mathbf{F}^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$</code> if its (un-normalized) <strong>Euclidean</strong> (steepest) gradient is <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau})$</code>.
+<p>Given a scalar function <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau})$</code> with an intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, we define its (un-normalized) <strong>Riemannian</strong> (steepest) gradient as <code class="language-plaintext highlighter-rouge">$ \mathbf{F}_\tau^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$</code> if its (un-normalized) <strong>Euclidean</strong> (steepest) gradient is <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau})$</code>.
 We use a learning-rate to control the length of a gradient instead of normalizing its length. 
 Since we use the Fisher-Rao metric <code class="language-plaintext highlighter-rouge">$\mathbf{F}$</code>, the Riemannian gradient is also known as the <strong>natural</strong> gradient.</p>
+
+<blockquote>
+  <p>Example: Univariate Gaussian</p>
+
+  <p>Consider the following scalar function
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+f(\tau):= E_{q(w|\tau)} [ w^2 ] + \frac{1}{2} \log(s)
+= \mu^2 + \frac{1}{s} + \frac{1}{2} \log(s)
+\end{aligned}
+$$</code>
+where  <code class="language-plaintext highlighter-rouge">$q(w|\tau)= \mathcal{N}(w|\mu,s^{-1})$</code> is a Gaussian family with mean <code class="language-plaintext highlighter-rouge">$\mu$</code>, variance <code class="language-plaintext highlighter-rouge">$s^{-1}$</code>, 
+  intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau=(\mu,s)$</code>, and the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\{(\mu,s)|\mu \in \mathcal{R},s&gt;0 \}$</code>.</p>
+
+  <p>The Fisher information matrix of Gaussian $q(w|\tau)$ under this parametrization is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{F}_\tau (\tau)  = -E_{q(w|\tau)} [ \nabla_\tau^2 \log q(w|\tau) ] 
+=
+\begin{bmatrix}
+\frac{1}{s} &amp; 0 \\
+0 &amp; \frac{1}{2s^2}
+\end{bmatrix}
+\end{aligned}
+$$</code>
+Now, we consider a member $\tau_0=(0.5,1)$ in the Gaussian family.
+The Euclidean gradient is 
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\nabla_\tau f(\tau_0) =
+\begin{bmatrix}
+2 \mu \\
+-\frac{1}{s^2} +\frac{1}{2s}
+\end{bmatrix}_{\tau=\tau_0}
+=\begin{bmatrix}
+1 \\ -\frac{1}{2}
+\end{bmatrix}
+\end{aligned}
+$$</code>
+The Riemannian gradient is 
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{F}_\tau^{-1} (\tau_0) \nabla_\tau f(\tau_0) =
+\begin{bmatrix}
+2 \mu s \\
+( -\frac{1}{s^2} +\frac{1}{2s} ) (2s^2)
+\end{bmatrix}_{\tau=\tau_0}
+=\begin{bmatrix}
+1 \\ -1
+\end{bmatrix}
+\end{aligned}
+$$</code></p>
+</blockquote>
 
 <div class="notice--info">
   <details>
@@ -439,7 +494,7 @@ Strictly speaking, a natural gradient/vector w.r.t. <code class="language-plaint
 <h1 id="riemannian-gradients-as-tangent-vectors-optional">Riemannian gradients as tangent vectors (optional)</h1>
 <hr />
 <p>In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
-Now, we will disucss abstract Riemannian vectors without a parametrization. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in <a href="/posts/2021/11/Geomopt03/#parameter-transform-and-invariance">Part III</a>.  In physics, this invariance means that a law of physics should be independent of the choice of (reference) coordinate systems.</p>
+Now, we will disucss abstract Riemannian vectors without a parametrization <a class="citation" href="#tu2011introduction">[2]</a>. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in <a href="/posts/2021/11/Geomopt03/#parameter-transform-and-invariance">Part III</a>.  In physics, this invariance means that a law of physics should be independent of the choice of (reference) coordinate systems.</p>
 
 <p>A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$ of a smooth curve in the manifold under the parametrization $\tau$. 
 The set of tangent vectors evaluated at $\mathbf{\tau}_0$ is called the tangent space at the corresponding point. 
@@ -560,131 +615,145 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 <p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that a parameter space is a parametric representation of a  set of <strong>points</strong> in a manifold.
 We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-of-spaces">Part IV</a></p>
 
-<h1 id="notebook">Notebook</h1>
+<!--# Notebook-->
+<!--
+```python
+%matplotlib inline
+from jax.config import config; config.update("jax_enable_x64", True)
+import jax.numpy as jnp
+from jax import grad, jit, value_and_grad
+import numpy as np
+from matplotlib import pyplot as plt
+from matplotlib import ticker, colors
+```
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-<span class="kn">from</span> <span class="nn">jax.config</span> <span class="kn">import</span> <span class="n">config</span><span class="p">;</span> <span class="n">config</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="s">"jax_enable_x64"</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="n">jnp</span>
-<span class="kn">from</span> <span class="nn">jax</span> <span class="kn">import</span> <span class="n">grad</span><span class="p">,</span> <span class="n">jit</span><span class="p">,</span> <span class="n">value_and_grad</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">colors</span>
-</code></pre></div></div>
+```python
+@jit
+def loss_lik(mu,v):
+    b1 = 0.5; b2 = 0.01;
+    a1 = 2.0; a2 = 5.0;
+    ls = b1*(mu**2+v-2.0*a1*mu+a1**2)+b2*((mu**3+3.0*mu*v)-3.0*a2*(mu**2+v)+3.0*(a2**2)*mu-a2**3)+4.0/v
+    return ls
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">@</span><span class="n">jit</span>
-<span class="k">def</span> <span class="nf">loss_lik</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
-    <span class="n">b1</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">;</span> <span class="n">b2</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">;</span>
-    <span class="n">a1</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">;</span> <span class="n">a2</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">;</span>
-    <span class="n">ls</span> <span class="o">=</span> <span class="n">b1</span><span class="o">*</span><span class="p">(</span><span class="n">mu</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">v</span><span class="o">-</span><span class="mf">2.0</span><span class="o">*</span><span class="n">a1</span><span class="o">*</span><span class="n">mu</span><span class="o">+</span><span class="n">a1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">+</span><span class="n">b2</span><span class="o">*</span><span class="p">((</span><span class="n">mu</span><span class="o">**</span><span class="mi">3</span><span class="o">+</span><span class="mf">3.0</span><span class="o">*</span><span class="n">mu</span><span class="o">*</span><span class="n">v</span><span class="p">)</span><span class="o">-</span><span class="mf">3.0</span><span class="o">*</span><span class="n">a2</span><span class="o">*</span><span class="p">(</span><span class="n">mu</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="n">v</span><span class="p">)</span><span class="o">+</span><span class="mf">3.0</span><span class="o">*</span><span class="p">(</span><span class="n">a2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">mu</span><span class="o">-</span><span class="n">a2</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span><span class="o">+</span><span class="mf">4.0</span><span class="o">/</span><span class="n">v</span>
-    <span class="k">return</span> <span class="n">ls</span>
+@jit
+def loss_pre(params):
+    (mu,s) = params
+    return loss_lik(mu,1.0/s) + jnp.log(s)/2
 
-<span class="o">@</span><span class="n">jit</span>
-<span class="k">def</span> <span class="nf">loss_pre</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
-    <span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="o">=</span> <span class="n">params</span>
-    <span class="k">return</span> <span class="n">loss_lik</span><span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="mf">1.0</span><span class="o">/</span><span class="n">s</span><span class="p">)</span> <span class="o">+</span> <span class="n">jnp</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+loss_f_pre = jit(value_and_grad(loss_pre))
+```
 
-<span class="n">loss_f_pre</span> <span class="o">=</span> <span class="n">jit</span><span class="p">(</span><span class="n">value_and_grad</span><span class="p">(</span><span class="n">loss_pre</span><span class="p">))</span>
-</code></pre></div></div>
-
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">gd</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_fun</span><span class="p">,</span> <span class="n">step_size</span><span class="p">,</span> <span class="n">num_iters</span><span class="p">):</span>
-    <span class="n">J_history</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">mu_hist</span><span class="p">,</span> <span class="n">s_hist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#For plotting  
-</span>    
-    <span class="n">cur_params</span> <span class="o">=</span> <span class="n">init_params</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iters</span><span class="p">):</span>
+```python
+def gd(init_params, loss_fun, step_size, num_iters):
+    J_history = np.zeros(num_iters+1)
+    mu_hist, s_hist = np.zeros(num_iters+1), np.zeros(num_iters+1) #For plotting  
+    
+    cur_params = init_params
+    for i in range(num_iters):
         
-        <span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">g</span><span class="p">)</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">cur_params</span><span class="p">)</span> <span class="c1">#Euclidean gradient
-</span>        <span class="n">mu_hist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">s_hist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
-        <span class="n">J_history</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+        (val,g) = loss_fun(cur_params) #Euclidean gradient
+        mu_hist[i] = cur_params[0]
+        s_hist[i] = cur_params[1] 
+        J_history[i] = val
         
-        <span class="n">cur_params</span>  <span class="o">=</span> <span class="n">cur_params</span> <span class="o">-</span> <span class="n">step_size</span><span class="o">*</span> <span class="n">g</span> <span class="c1">#GD
-</span>
-    <span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">cur_params</span><span class="p">)</span>
-    <span class="n">J_history</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-    <span class="n">mu_hist</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">s_hist</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
+        cur_params  = cur_params - step_size* g #GD
 
-    <span class="k">return</span> <span class="n">J_history</span><span class="p">,</span> <span class="n">mu_hist</span><span class="p">,</span> <span class="n">s_hist</span>
-</code></pre></div></div>
+    (val,_) = loss_fun(cur_params)
+    J_history[num_iters] = val
+    mu_hist[num_iters] = cur_params[0]
+    s_hist[num_iters] = cur_params[1] 
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">ngd_pre</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_fun</span><span class="p">,</span> <span class="n">step_size</span><span class="p">,</span> <span class="n">num_iters</span><span class="p">):</span>
-    <span class="n">J_history</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">mu_hist</span><span class="p">,</span> <span class="n">s_hist</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#For plotting  
-</span>    
-    <span class="n">cur_params</span> <span class="o">=</span> <span class="n">init_params</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_iters</span><span class="p">):</span>
-        <span class="p">(</span><span class="n">mu</span><span class="p">,</span><span class="n">s</span><span class="p">)</span><span class="o">=</span><span class="n">cur_params</span>
-        <span class="p">(</span><span class="n">val</span><span class="p">,(</span><span class="n">g_mu</span><span class="p">,</span><span class="n">g_s</span><span class="p">))</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">cur_params</span><span class="p">)</span>
-        <span class="n">ng</span> <span class="o">=</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">(</span> <span class="p">[</span><span class="n">g_mu</span><span class="o">/</span><span class="n">s</span><span class="p">,</span> <span class="mf">2.0</span><span class="o">*</span><span class="p">(</span><span class="n">s</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">g_s</span> <span class="p">]</span> <span class="p">)</span> <span class="c1">#Natural gradient
-</span>
-        <span class="n">mu_hist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">s_hist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
-        <span class="n">J_history</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    return J_history, mu_hist, s_hist
+```
+
+```python
+def ngd_pre(init_params, loss_fun, step_size, num_iters):
+    J_history = np.zeros(num_iters+1)
+    mu_hist, s_hist = np.zeros(num_iters+1), np.zeros(num_iters+1) #For plotting  
+    
+    cur_params = init_params
+    for i in range(num_iters):
+        (mu,s)=cur_params
+        (val,(g_mu,g_s)) = loss_fun(cur_params)
+        ng = jnp.array( [g_mu/s, 2.0*(s**2)*g_s ] ) #Natural gradient
+
+        mu_hist[i] = cur_params[0]
+        s_hist[i] = cur_params[1] 
+        J_history[i] = val
         
-        <span class="n">cur_params</span>  <span class="o">=</span> <span class="n">cur_params</span> <span class="o">-</span> <span class="n">step_size</span><span class="o">*</span> <span class="n">ng</span>     <span class="c1">#NGD
-</span> 
-    <span class="p">(</span><span class="n">val</span><span class="p">,</span><span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">loss_fun</span><span class="p">(</span><span class="n">cur_params</span><span class="p">)</span>
-    <span class="n">J_history</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
-    <span class="n">mu_hist</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">s_hist</span><span class="p">[</span><span class="n">num_iters</span><span class="p">]</span> <span class="o">=</span> <span class="n">cur_params</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> 
+        cur_params  = cur_params - step_size* ng     #NGD
+ 
+    (val,_) = loss_fun(cur_params)
+    J_history[num_iters] = val
+    mu_hist[num_iters] = cur_params[0]
+    s_hist[num_iters] = cur_params[1] 
 
-    <span class="k">return</span> <span class="n">J_history</span><span class="p">,</span> <span class="n">mu_hist</span><span class="p">,</span> <span class="n">s_hist</span>
-</code></pre></div></div>
+    return J_history, mu_hist, s_hist
+```
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Setup of meshgrid of theta values
-</span><span class="n">mu_list</span><span class="p">,</span> <span class="n">s_list</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">200</span><span class="p">),</span><span class="n">np</span><span class="p">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mi">800</span><span class="p">))</span>
+```python
+#Setup of meshgrid of theta values
+mu_list, s_list = np.meshgrid(np.linspace(-10,10,200),np.logspace(-1,0.2,800))
 
-<span class="c1">#Computing the cost function for each theta combination
-</span><span class="n">zs</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span>  <span class="p">[</span><span class="n">loss_pre</span><span class="p">(</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu</span><span class="p">,</span><span class="n">s</span><span class="p">])</span> <span class="p">)</span> 
-                     <span class="k">for</span> <span class="n">mu</span><span class="p">,</span><span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">mu_list</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">s_list</span><span class="p">))</span> <span class="p">]</span> <span class="p">)</span>
-<span class="n">Z</span> <span class="o">=</span> <span class="n">zs</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mu_list</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="n">mu_0</span> <span class="o">=</span> <span class="o">-</span><span class="mf">8.0</span>
-<span class="n">s_0</span> <span class="o">=</span> <span class="mf">1.0</span>
-<span class="n">max_num_iters</span> <span class="o">=</span> <span class="mi">200</span>
-</code></pre></div></div>
+#Computing the cost function for each theta combination
+zs = np.array(  [loss_pre( jnp.array([mu,s]) ) 
+                     for mu,s in zip(np.ravel(mu_list), np.ravel(s_list)) ] )
+Z = zs.reshape(mu_list.shape)
+mu_0 = -8.0
+s_0 = 1.0
+max_num_iters = 200
+```
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">init_params</span> <span class="o">=</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu_0</span><span class="p">,</span><span class="n">s_0</span><span class="p">])</span>
-<span class="n">gd_pre_history</span><span class="p">,</span> <span class="n">mu_gd_pre_hist</span><span class="p">,</span> <span class="n">s_gd_pre_hist</span> <span class="o">=</span> <span class="n">gd</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_f_pre</span><span class="p">,</span> <span class="n">step_size</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">,</span> 
-                                                   <span class="n">num_iters</span><span class="o">=</span><span class="n">max_num_iters</span><span class="p">)</span>
-<span class="n">anglesx_gd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_gd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_gd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">anglesy_gd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_gd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_gd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</code></pre></div></div>
+```python
+init_params = jnp.array([mu_0,s_0])
+gd_pre_history, mu_gd_pre_hist, s_gd_pre_hist = gd(init_params, loss_f_pre, step_size = 1e-2, 
+                                                   num_iters=max_num_iters)
+anglesx_gd_pre = np.array(mu_gd_pre_hist)[1:] - np.array(mu_gd_pre_hist)[:-1]
+anglesy_gd_pre = np.array(s_gd_pre_hist)[1:] - np.array(s_gd_pre_hist)[:-1]
+```
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">init_params</span> <span class="o">=</span> <span class="n">jnp</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">mu_0</span><span class="p">,</span><span class="n">s_0</span><span class="p">])</span>
-<span class="n">ngd_pre_history</span><span class="p">,</span> <span class="n">mu_ngd_pre_hist</span><span class="p">,</span> <span class="n">s_ngd_pre_hist</span> <span class="o">=</span> <span class="n">ngd_pre</span><span class="p">(</span><span class="n">init_params</span><span class="p">,</span> <span class="n">loss_f_pre</span><span class="p">,</span> <span class="n">step_size</span> <span class="o">=</span> <span class="mf">1e-2</span><span class="p">,</span> 
-                                                           <span class="n">num_iters</span><span class="o">=</span><span class="n">max_num_iters</span><span class="p">)</span>
-<span class="n">anglesx_ngd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_ngd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">mu_ngd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">anglesy_ngd_pre</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_ngd_pre_hist</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">s_ngd_pre_hist</span><span class="p">)[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</code></pre></div></div>
+```python
+init_params = jnp.array([mu_0,s_0])
+ngd_pre_history, mu_ngd_pre_hist, s_ngd_pre_hist = ngd_pre(init_params, loss_f_pre, step_size = 1e-2, 
+                                                           num_iters=max_num_iters)
+anglesx_ngd_pre = np.array(mu_ngd_pre_hist)[1:] - np.array(mu_ngd_pre_hist)[:-1]
+anglesy_ngd_pre = np.array(s_ngd_pre_hist)[1:] - np.array(s_ngd_pre_hist)[:-1]
+```
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+```python
+fig = plt.figure(figsize = (16,8))
+ax = fig.add_subplot(1, 2, 1)
 
-<span class="n">ax</span><span class="p">.</span><span class="n">contour</span><span class="p">(</span><span class="n">mu_list</span><span class="p">,</span> <span class="n">s_list</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s">'jet'</span><span class="p">)</span>
+ax.contour(mu_list, s_list, Z, 50, cmap = 'jet')
 
-<span class="n">ax</span><span class="p">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">mu_gd_pre_hist</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">s_gd_pre_hist</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">anglesx_gd_pre</span><span class="p">,</span> <span class="n">anglesy_gd_pre</span><span class="p">,</span> 
-          <span class="n">label</span><span class="o">=</span><span class="s">'GD $(\mu,s)$'</span><span class="p">,</span> <span class="n">scale_units</span> <span class="o">=</span> <span class="s">'xy'</span><span class="p">,</span> <span class="n">angles</span> <span class="o">=</span> <span class="s">'xy'</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">'g'</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="p">.</span><span class="mi">9</span><span class="p">)</span>
+ax.quiver(mu_gd_pre_hist[:-1], s_gd_pre_hist[:-1], anglesx_gd_pre, anglesy_gd_pre, 
+          label='GD $(\mu,s)$', scale_units = 'xy', angles = 'xy', scale = 1, color = 'g', alpha = .9)
 
-<span class="n">ax</span><span class="p">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">mu_ngd_pre_hist</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">s_ngd_pre_hist</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">anglesx_ngd_pre</span><span class="p">,</span> <span class="n">anglesy_ngd_pre</span><span class="p">,</span> 
-          <span class="n">label</span><span class="o">=</span><span class="s">'NGD $(\mu,s)$'</span><span class="p">,</span> <span class="n">scale_units</span> <span class="o">=</span> <span class="s">'xy'</span><span class="p">,</span> <span class="n">angles</span> <span class="o">=</span> <span class="s">'xy'</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s">'r'</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="p">.</span><span class="mi">9</span><span class="p">)</span>
+ax.quiver(mu_ngd_pre_hist[:-1], s_ngd_pre_hist[:-1], anglesx_ngd_pre, anglesy_ngd_pre, 
+          label='NGD $(\mu,s)$', scale_units = 'xy', angles = 'xy', scale = 1, color = 'r', alpha = .9)
 
-<span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'$\mu$'</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'$s$'</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'upper right'</span><span class="p">)</span>
+ax.set_xlabel('$\mu$')
+ax.set_ylabel('$s$')
+ax.legend(loc='upper right')
 
-<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="p">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">))),</span><span class="n">gd_pre_history</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">'GD $(\mu,s)$'</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s">'g'</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_num_iters</span><span class="o">+</span><span class="mi">1</span><span class="p">))),</span><span class="n">ngd_pre_history</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s">'NGD $(\mu,s)$'</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s">'r'</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">'upper right'</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s">'# of iters'</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s">'loss'</span><span class="p">)</span>
+ax = fig.add_subplot(1, 2, 2)
+ax.plot(np.array(list(range(0, max_num_iters+1))),gd_pre_history,label='GD $(\mu,s)$',color='g')
+ax.plot(np.array(list(range(0, max_num_iters+1))),ngd_pre_history,label='NGD $(\mu,s)$',color='r')
+ax.legend(loc='upper right')
+ax.set_xlabel('# of iters')
+ax.set_ylabel('loss')
 
-<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
-</code></pre></div></div>
+plt.tight_layout()
+plt.show()
+```
 
-<p><img src="/img/nb_gd_vs_ngd/nb_gd_vs_ngd_7_0.png" alt="png" class="center-image" /></p>
+![png](/img/nb_gd_vs_ngd/nb_gd_vs_ngd_7_0.png){: .center-image }
+-->
+
+<hr />
+<h1 id="references">References</h1>
+<p class="bibliography"><p><span id="absil2009optimization">[1] P.-A. Absil, R. Mahony, &amp; R. Sepulchre, <i>Optimization algorithms on matrix manifolds</i> (Princeton University Press, 2009).</span></p>
+<p><span id="tu2011introduction">[2] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p></p>
 
 
         
