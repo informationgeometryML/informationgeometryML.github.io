@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-11T01:19:15-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-11T09:20:36-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -1161,6 +1161,137 @@ In other words, geometric properties should be persevered in any valid coordinat
   &lt;/tbody&gt;
 &lt;/table&gt;
 
+&lt;p&gt;The following example illustrates these transformation rules.&lt;/p&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
+&lt;summary&gt;Univariate Gaussian example: (click to expand)&lt;/summary&gt;
+&lt;fieldset class=&quot;field-set&quot;&gt;
+      &lt;blockquote&gt;
+        &lt;p&gt;Consider the following scalar function
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+h_\tau(\tau):= E_{q(w|\tau)} [ w^2 + \log q(w|\tau) ]
+= \mu^2 + \frac{1}{s} + \frac{1}{2} \log(s)- \frac{1}{2}(1+\log(2\pi))
+\end{aligned}
+$$&lt;/code&gt;
+where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\tau)= \mathcal{N}(w|\mu,s^{-1})$&lt;/code&gt; is a Gaussian family with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu$&lt;/code&gt;, variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$s^{-1}$&lt;/code&gt;, 
+  intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau=(\mu,s)$&lt;/code&gt;, and parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau=\{(\mu,s)|\mu \in \mathcal{R},s&amp;gt;0 \}$&lt;/code&gt;.&lt;/p&gt;
+
+        &lt;p&gt;The FIM of Gaussian $q(w|\tau)$ under parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{F}_\tau (\tau) := -E_{q(w|\tau)} [ \nabla_\tau^2 \log q(w|\tau) ] 
+=
+\begin{bmatrix}
+s &amp;amp; 0 \\
+0 &amp;amp; \frac{1}{2s^2}
+\end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;
+We consider a member $\tau_0=(0.5,0.5)$ in the Gaussian family.
+The Euclidean gradient is 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{g}_\tau (\tau_0) :=
+\nabla_\tau h_\tau(\tau_0) =
+\begin{bmatrix}
+2 \mu \\
+-\frac{1}{s^2} +\frac{1}{2s}
+\end{bmatrix}_{\tau=\tau_0}
+=\begin{bmatrix}
+1 \\ -3
+\end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;
+The natural/Riemannian gradient is 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\hat{\mathbf{g}}_\tau (\tau_0) :=
+\mathbf{F}_\tau^{-1} (\tau_0) \nabla_\tau h_\tau(\tau_0) =
+\begin{bmatrix}
+2 \mu s^{-1}  \\
+( -\frac{1}{s^2} +\frac{1}{2s} ) (2s^2)
+\end{bmatrix}_{\tau=\tau_0}
+=\begin{bmatrix}
+2 \\ -\frac{3}{2}
+\end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+        &lt;p&gt;Now, consider the following re-parametrization of the function&lt;/p&gt;
+
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+h_\lambda(\lambda)= E_{q(w|\lambda)} [ w^2 + \log q(w|\lambda)]
+= \mu^2 + v - \frac{1}{2} \log(v) - \frac{1}{2}(1+\log(2\pi))
+\end{aligned}
+$$&lt;/code&gt;
+where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\lambda)= \mathcal{N}(w|\mu,v)$&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu$&lt;/code&gt; and variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$v=s^{-1}$&lt;/code&gt;,
+  intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda=(\mu,v)$&lt;/code&gt;, and parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\lambda=\{(\mu,v)|\mu \in \mathcal{R},v&amp;gt;0 \}$&lt;/code&gt;.&lt;/p&gt;
+
+        &lt;p&gt;The FIM of Gaussian $q(w|\lambda)$ under parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{F}_\lambda (\lambda):= -E_{q(w|\lambda)} [ \nabla_\lambda^2 \log q(w|\lambda) ] 
+=
+\begin{bmatrix}
+\frac{1}{v} &amp;amp; 0 \\
+0 &amp;amp; \frac{1}{2v^2}
+\end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+        &lt;p&gt;The Jacobian matrix is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{J} :=\frac{\partial \lambda(\tau)}{\partial \tau} = 
+\begin{bmatrix}
+1 &amp;amp; 0 \\
+0 &amp;amp; -\frac{1}{s^2}
+\end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt; where $\lambda(\tau)=(\mu,v)=(\mu,\frac{1}{s})$ and $\tau=(\mu,s)$.&lt;/p&gt;
+
+        &lt;p&gt;We can verify that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{8}$&lt;/code&gt; holds for the FIM.&lt;/p&gt;
+
+        &lt;p&gt;Consider the same member $\lambda_0=(0.5,2)$ in the Gaussian family.
+The Euclidean gradient is 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{g}_\lambda (\lambda_0) :=
+\nabla_\lambda h_\lambda(\lambda_0) =
+\begin{bmatrix}
+2 \mu \\
+1 - \frac{1}{2v}
+\end{bmatrix}_{\lambda=\lambda_0}
+=\begin{bmatrix}
+1 \\ \frac{3}{4}
+\end{bmatrix} 
+\end{aligned}
+$$&lt;/code&gt;
+We can verify that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{6}$&lt;/code&gt; holds for the Euclidean gradient.&lt;/p&gt;
+
+        &lt;p&gt;The natural/Riemannian gradient is 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\hat{\mathbf{g}}_\lambda (\lambda_0) :=
+\mathbf{F}_\lambda^{-1} (\lambda_0) \nabla_\lambda h_\lambda(\lambda_0) =
+\begin{bmatrix}
+2 \mu  v \\
+( 1 - \frac{1}{2v} ) (2v^2)
+\end{bmatrix}_{\lambda=\lambda_0}
+=\begin{bmatrix}
+2 \\ 6
+\end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+        &lt;p&gt;We can verify that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; holds for the Riemannian gradient&lt;/p&gt;
+      &lt;/blockquote&gt;
+    &lt;/fieldset&gt;
+&lt;/details&gt;
+&lt;/div&gt;
+
 &lt;div class=&quot;notice--danger&quot;&gt;
   &lt;p&gt;We will show that two key &lt;strong&gt;geometric properties&lt;/strong&gt; remains the same under any &lt;strong&gt;intrinsic&lt;/strong&gt; parameter transformation.&lt;/p&gt;
   &lt;ol&gt;
@@ -1405,136 +1536,6 @@ $$&lt;/code&gt;&lt;/p&gt;
 &amp;amp;= [\hat{\mathbf{g}}_\lambda]^T  \mathbf{F}_{\lambda} (\lambda_0)  \hat{\mathbf{g}}_\lambda = \| \hat{\mathbf{g}}_\lambda \|^2_{F_{\lambda_0}}
 \end{aligned}\tag{9}\label{9}
 $$&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;notice--info&quot;&gt;
-  &lt;details&gt;
-&lt;summary&gt;Univariate Gaussian example: (click to expand)&lt;/summary&gt;
-&lt;fieldset class=&quot;field-set&quot;&gt;
-      &lt;blockquote&gt;
-        &lt;p&gt;Consider the following scalar function
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-h_\tau(\tau):= E_{q(w|\tau)} [ w^2 + \log q(w|\tau) ]
-= \mu^2 + \frac{1}{s} + \frac{1}{2} \log(s)- \frac{1}{2}(1+\log(2\pi))
-\end{aligned}
-$$&lt;/code&gt;
-where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\tau)= \mathcal{N}(w|\mu,s^{-1})$&lt;/code&gt; is a Gaussian family with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu$&lt;/code&gt;, variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$s^{-1}$&lt;/code&gt;, 
-  intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau=(\mu,s)$&lt;/code&gt;, and parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau=\{(\mu,s)|\mu \in \mathcal{R},s&amp;gt;0 \}$&lt;/code&gt;.&lt;/p&gt;
-
-        &lt;p&gt;The FIM of Gaussian $q(w|\tau)$ under parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-\mathbf{F}_\tau (\tau) := -E_{q(w|\tau)} [ \nabla_\tau^2 \log q(w|\tau) ] 
-=
-\begin{bmatrix}
-s &amp;amp; 0 \\
-0 &amp;amp; \frac{1}{2s^2}
-\end{bmatrix}
-\end{aligned}
-$$&lt;/code&gt;
-We consider a member $\tau_0=(0.5,0.5)$ in the Gaussian family.
-The Euclidean gradient is 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-\mathbf{g}_\tau (\tau_0) :=
-\nabla_\tau h_\tau(\tau_0) =
-\begin{bmatrix}
-2 \mu \\
--\frac{1}{s^2} +\frac{1}{2s}
-\end{bmatrix}_{\tau=\tau_0}
-=\begin{bmatrix}
-1 \\ -3
-\end{bmatrix}
-\end{aligned}
-$$&lt;/code&gt;
-The natural/Riemannian gradient is 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-\hat{\mathbf{g}}_\tau (\tau_0) :=
-\mathbf{F}_\tau^{-1} (\tau_0) \nabla_\tau h_\tau(\tau_0) =
-\begin{bmatrix}
-2 \mu s^{-1}  \\
-( -\frac{1}{s^2} +\frac{1}{2s} ) (2s^2)
-\end{bmatrix}_{\tau=\tau_0}
-=\begin{bmatrix}
-2 \\ -\frac{3}{2}
-\end{bmatrix}
-\end{aligned}
-$$&lt;/code&gt;&lt;/p&gt;
-
-        &lt;p&gt;Now, consider the following re-parametrization of the function&lt;/p&gt;
-
-        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-h_\lambda(\lambda)= E_{q(w|\lambda)} [ w^2 + \log q(w|\lambda)]
-= \mu^2 + v - \frac{1}{2} \log(v) - \frac{1}{2}(1+\log(2\pi))
-\end{aligned}
-$$&lt;/code&gt;
-where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\lambda)= \mathcal{N}(w|\mu,v)$&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu$&lt;/code&gt; and variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$v=\frac{1}{s}$&lt;/code&gt;,
-  intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda=(\mu,v)$&lt;/code&gt;, and parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\lambda=\{(\mu,v)|\mu \in \mathcal{R},v&amp;gt;0 \}$&lt;/code&gt;.&lt;/p&gt;
-
-        &lt;p&gt;The FIM of Gaussian $q(w|\lambda)$ under parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt; is
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-\mathbf{F}_\lambda (\lambda):= -E_{q(w|\lambda)} [ \nabla_\lambda^2 \log q(w|\lambda) ] 
-=
-\begin{bmatrix}
-\frac{1}{v} &amp;amp; 0 \\
-0 &amp;amp; \frac{1}{2v^2}
-\end{bmatrix}
-\end{aligned}
-$$&lt;/code&gt;&lt;/p&gt;
-
-        &lt;p&gt;The Jacobian matrix is
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-\mathbf{J} :=\frac{\partial \lambda(\tau)}{\partial \tau} = 
-\begin{bmatrix}
-1 &amp;amp; 0 \\
-0 &amp;amp; -\frac{1}{s^2}
-\end{bmatrix}
-\end{aligned}
-$$&lt;/code&gt; where $\lambda(\tau)=(\mu,v)=(\mu,\frac{1}{s})$ and $\tau=(\mu,s)$.&lt;/p&gt;
-
-        &lt;p&gt;We can verify that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{8}$&lt;/code&gt; holds for the FIM.&lt;/p&gt;
-
-        &lt;p&gt;Consider the same member $\lambda_0=(0.5,2)$ in the Gaussian family.
-The Euclidean gradient is 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-\mathbf{g}_\lambda (\lambda_0) :=
-\nabla_\lambda h_\lambda(\lambda_0) =
-\begin{bmatrix}
-2 \mu \\
-1 - \frac{1}{2v}
-\end{bmatrix}_{\lambda=\lambda_0}
-=\begin{bmatrix}
-1 \\ \frac{3}{4}
-\end{bmatrix} 
-\end{aligned}
-$$&lt;/code&gt;
-We can verify that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{6}$&lt;/code&gt; holds for the Euclidean gradient.&lt;/p&gt;
-
-        &lt;p&gt;The natural/Riemannian gradient is 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-\hat{\mathbf{g}}_\lambda (\lambda_0) :=
-\mathbf{F}_\lambda^{-1} (\lambda_0) \nabla_\lambda h_\lambda(\lambda_0) =
-\begin{bmatrix}
-2 \mu  v \\
-( 1 - \frac{1}{2v} ) (2v^2)
-\end{bmatrix}_{\lambda=\lambda_0}
-=\begin{bmatrix}
-2 \\ 6
-\end{bmatrix}
-\end{aligned}
-$$&lt;/code&gt;&lt;/p&gt;
-
-        &lt;p&gt;We can verify that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; holds for the Riemannian gradient&lt;/p&gt;
-      &lt;/blockquote&gt;
-    &lt;/fieldset&gt;
-&lt;/details&gt;
-&lt;/div&gt;
 
 &lt;h1 id=&quot;riemannian-steepest-direction-is-invariant&quot;&gt;Riemannian Steepest Direction is Invariant&lt;/h1&gt;
 &lt;hr /&gt;
