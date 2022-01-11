@@ -355,7 +355,7 @@ $$</code></p>
 <div class="notice--danger">
   <p>Note:</p>
 
-  <p>Like the Euclidean case, each possible (Riemannian) vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (tangent) vector space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
+  <p>Int this case, each possible (Riemannian) vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (tangent) vector space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
 </div>
 
 <p>The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
@@ -412,7 +412,7 @@ $$</code></p>
 </details>
 </div>
 
-<p>Given a scalar function <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau})$</code> with an intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, we define its (un-normalized) <strong>Riemannian</strong> (steepest) gradient as <code class="language-plaintext highlighter-rouge">$ \mathbf{F}_\tau^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$</code> if its (un-normalized) <strong>Euclidean</strong> (steepest) gradient is <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau})$</code>.
+<p>Given a scalar function <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau})$</code> with an intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, we define its (un-normalized) <strong>Riemannian</strong>  gradient as <code class="language-plaintext highlighter-rouge">$ \mathbf{F}_\tau^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$</code> if its (un-normalized) <strong>Euclidean</strong> gradient is <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau})$</code>.
 We use a learning-rate to control the length of a gradient instead of normalizing its length. 
 Since we use the Fisher-Rao metric <code class="language-plaintext highlighter-rouge">$\mathbf{F}$</code>, the Riemannian gradient is also known as the <strong>natural</strong> gradient.</p>
 
@@ -422,12 +422,12 @@ Since we use the Fisher-Rao metric <code class="language-plaintext highlighter-r
   <p>Consider the following scalar function
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-f(\tau):= E_{q(w|\tau)} [ w^2 ] + \frac{1}{2} \log(s)
-= \mu^2 + \frac{1}{s} + \frac{1}{2} \log(s)
+f(\tau):= E_{q(w|\tau)} [ w^2 + \log q(w|\tau) ]
+= \mu^2 + \frac{1}{s} + \frac{1}{2} \log(s) - \frac{1}{2}(1+\log(2\pi))
 \end{aligned}
 $$</code>
 where  <code class="language-plaintext highlighter-rouge">$q(w|\tau)= \mathcal{N}(w|\mu,s^{-1})$</code> is a Gaussian family with mean <code class="language-plaintext highlighter-rouge">$\mu$</code>, variance <code class="language-plaintext highlighter-rouge">$s^{-1}$</code>, 
-  intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau=(\mu,s)$</code>, and the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\{(\mu,s)|\mu \in \mathcal{R},s&gt;0 \}$</code>.</p>
+  intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau=(\mu,s)$</code>, and parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\{(\mu,s)|\mu \in \mathcal{R},s&gt;0 \}$</code>.</p>
 
   <p>The Fisher information matrix of Gaussian $q(w|\tau)$ under this parametrization is
 <code class="language-plaintext highlighter-rouge">$$
@@ -435,7 +435,7 @@ where  <code class="language-plaintext highlighter-rouge">$q(w|\tau)= \mathcal{N
 \mathbf{F}_\tau (\tau)  = -E_{q(w|\tau)} [ \nabla_\tau^2 \log q(w|\tau) ] 
 =
 \begin{bmatrix}
-\frac{1}{s} &amp; 0 \\
+s &amp; 0 \\
 0 &amp; \frac{1}{2s^2}
 \end{bmatrix}
 \end{aligned}
@@ -454,12 +454,12 @@ The Euclidean gradient is
 \end{bmatrix}
 \end{aligned}
 $$</code>
-The Riemannian gradient is 
+The natural/Riemannian gradient is 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{F}_\tau^{-1} (\tau_0) \nabla_\tau f(\tau_0) =
 \begin{bmatrix}
-2 \mu s \\
+2 \mu s^{-1}  \\
 ( -\frac{1}{s^2} +\frac{1}{2s} ) (2s^2)
 \end{bmatrix}_{\tau=\tau_0}
 =\begin{bmatrix}
@@ -953,7 +953,7 @@ plt.show()
 
 
 
-  10 minute read
+  12 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Goal
