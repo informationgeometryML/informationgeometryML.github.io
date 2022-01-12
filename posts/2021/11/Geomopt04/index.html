@@ -182,7 +182,7 @@
 
 
 
-  15 minute read
+  17 minute read
 </p>
           
         </header>
@@ -336,9 +336,9 @@ gradient-based method does not dependent on the choice of intrinsic parametrizat
 <p>We will first introduce the concept of a (one-dimensional) geodesic $\gamma(t)$, which is the “shortest curve” on a manifold with a Riemannian metric (i.e., the Fisher-Rao metric).
 Recall that in  <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a> we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold. 
 In statistics, the distance induced by a geodesic with the Fisher-Rao metric is known as the Rao distance. This is
-known as a boundary value problem (BVP) of a geodesic. The boundary condition is specified by  a starting point and an end
-point in the manifold. To solve this problem, we often has to solve an easier problem, which is known as an initial value
-problem (IVP) of a geodesic. The initial condition is specified by a starting point and an initial Riemannian gradient/velocity.</p>
+known as a boundary value problem (BVP) of a geodesic. The boundary conditions are  specified by  a starting point and an end
+point in the manifold. To solve this problem, we often solve an easier problem, which is known as an initial value
+problem (IVP) of a geodesic. The initial conditions are  specified by a starting point and an initial Riemannian gradient/velocity.</p>
 
 <p>We will only consider the IVP of a geodesic for simplicity. 
 Consider an intrinsic parametrization $\tau$, where $\gamma_\tau(t)$ is the parameter representation of the geodesic.
@@ -349,15 +349,15 @@ The geodesic is the solution of a system of second-order non-linear ordinary dif
 \gamma_\tau(0) = \tau_0; \,\,\,\,\,\,
 \frac{d \gamma_\tau(t) }{d t} \Big|_{t=0} = \mathbf{v}_{\tau_0}
 \end{aligned}
-$$</code> where the geodesic is determined by the initial conditions and  <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau$</code> is the domain of the parametric geodesic curve. We assume 0 is contained in the domain for simplicity.</p>
+$$</code> where the geodesic is uniquely determined by the initial conditions and  <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau$</code> is the domain of the parametric geodesic curve. We assume 0 is contained in the domain for simplicity.</p>
 
-<p>In a <a href="https://en.wikipedia.org/wiki/Geodesic_manifold">geodesically complete</a> manifold, the domain of the geodesic is the whole space  <code class="language-plaintext highlighter-rouge">$\mathbf{I}_{\tau}
+<p>For a <a href="https://en.wikipedia.org/wiki/Geodesic_manifold">geodesically complete</a> manifold, the domain of the geodesic is the whole space  <code class="language-plaintext highlighter-rouge">$\mathbf{I}_{\tau}
 =\mathcal{R}$</code>. We will only consider this case in this post.</p>
 
-<p>To avoid writing down the VIP of a geodesic (i.e., Christoffel symbols), 
-researchers refer to it as the manifold expoential map.
+<p>To avoid writing down the differential equations of a geodesic (i.e., Christoffel symbols), 
+researchers refer to it as the manifold exponential map.
 Given an intrinsic parametrization $\tau$,
-the representation of the map at point $\tau_0$  is defined as
+the  map at point $\tau_0$  is defined as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathrm{Exp}_{\tau_0}\colon  T\mathcal{M}_{\tau_0} &amp; \mapsto \mathcal{M}\\
@@ -369,22 +369,20 @@ $$</code>  where <code class="language-plaintext highlighter-rouge">$t$</code> i
 <div class="notice--danger">
   <p><strong>Warning</strong>:</p>
 
-  <p>We only consider the parametrization-dependent view due to computational reasons.</p>
-
-  <p>The expoential map defined here is a parametric representation of a geodesic curve.
-Since the map is a representation of the curve, it does depend on the choice of an parametrization.</p>
+  <p>The exponential map defined here is a parametric representation of a geodesic curve.
+Since the map is a representation of the curve, the form of the map does depend on the choice of  parametrizations.</p>
 </div>
 
 <p>Now, we can define Riemannian gradient descent.
-Under intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> of a geodesically complete manifold, (exact) Riemannian gradient descent is defined as 
+Under intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> of a manifold, (exact) Riemannian gradient descent is defined as 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \mathrm{Exp}_{\tau_k} (- \alpha  \hat{\mathbf{g}}_{\tau_k} ) 
 \end{aligned}
 $$</code> 
- where <code class="language-plaintext highlighter-rouge">$\tau_{k+1}$</code> always stays in the manifold thanks to the exponetial map since <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\tau_k}$</code> is in the domain of the exponetial map.</p>
+ where <code class="language-plaintext highlighter-rouge">$\tau_{k+1}$</code> always stays in the manifold thanks to the exponential map since <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\tau_k}$</code> is in the domain of the exponential map.</p>
 
-<p>The invariance of this update is due to the uniqueness of ODE and invariance of Euler-Lagrange equations. We will not discuss this further in this post to avoid complicated derivations. 
+<p>The invariance of this update is due to the uniqueness of the geodesic and the invariance of Euler-Lagrange equations. We will not discuss this further in this post to avoid complicated derivations. 
 Although Riemannian gradient descent is nice, the exponential map or the geodesic often has high computational cost and does not admit a closed-form expression.</p>
 
 <h1 id="many-faces-of-natural-gradient-descent">Many faces of Natural-gradient Descent</h1>
@@ -407,7 +405,7 @@ $$</code></p>
   <p>This approximation does not guarantee that the approximated geodesic stays on the manifold for all $t \neq 0$.</p>
 </div>
 
-<p>Recall that the expoential map is defined via the geodesic <code class="language-plaintext highlighter-rouge">$\gamma_\tau(1)$</code>.
+<p>Recall that the exponential map is defined via the geodesic <code class="language-plaintext highlighter-rouge">$\gamma_\tau(1)$</code>.
 We can use an approximation of the geodesic (A.K.A. the Euclidean retraction map) as shown below.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -431,16 +429,15 @@ methods.</p>
 <p>As we mentioned before, the <strong>distances</strong> in the gradient space and the parameter space are defined differently. 
 In the <a href="#riemannian-gradient-descent-and-its-non-linear-invariance">previous section</a>, we use the geodesic to define the distance between two points in a parameter space.</p>
 
-<p>We could also use other “distances” denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(.,.)$</code> (e.g., Kullback–Leibler divergence or other f-divergence) to define the length between two points in a parameter space.
-Given such a  “distance”, we can perform the unconstrained proximal-gradient descent as shown below.
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \frac{1}{\alpha} \mathrm{D}(y,\tau_k) \}
-\end{aligned}
-$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\tau_k}$</code> is a Eulcidean gradient and the parameter space is unconstrained.</p>
+<p>We could also use other “distances” denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(.,.)$</code> (e.g., Kullback–Leibler divergence or other f-divergence) to define the length between two points in a parameter space.</p>
+
+<p>In the following section, we assume <code class="language-plaintext highlighter-rouge">$y$</code> and <code class="language-plaintext highlighter-rouge">$\tau_k$</code> are two members in
+the same parametric distribution family <code class="language-plaintext highlighter-rouge">$p(w|\tau)$</code>.
+The f-divergence can be defined in a more general setting.</p>
 
 <h2 id="f-divergence">f-divergence</h2>
-<p>Let  <code class="language-plaintext highlighter-rouge">$f:(0,\infty)\mapsto \mathcal{R}$</code> be a scalar function satisfying the following conditions.</p>
+
+<p>Let <code class="language-plaintext highlighter-rouge">$f:(0,\infty)\mapsto \mathcal{R}$</code> be a scalar function satisfying the following conditions.</p>
 <ul>
   <li>convex in its domain</li>
   <li><code class="language-plaintext highlighter-rouge">$f(1)=0$</code></li>
@@ -448,20 +445,84 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{
 </ul>
 
 <p>A f-divergence is defined as
-<code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(y,\tau) := \int_w f(\frac{p(w|y)}{p(w|\tau)}) p(w|\tau) dw$</code></p>
+<code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(y,\tau) := \int_w f(\frac{p(w|y)}{p(w|\tau)}) p(w|\tau) dw$</code>.</p>
 
-<p>When <code class="language-plaintext highlighter-rouge">$\mathrm{D}(y,\tau_k)$</code> is a secord-order Taylor approximation of any f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(y,\tau_k)$</code> at <code class="language-plaintext highlighter-rouge">$y=\tau_k$</code>, this  proximal-gradient method recovers natural-gradient descent.</p>
+<p>Thanks to Jensen’s inequality,
+a f-divergence is always non-negative as  <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(y,\tau) \geq  f( \int_w \frac{p(w|y)}{p(w|\tau)} p(w|\tau) dw )  = f(\int_w p(w|y)dw) =f(1) =0 $</code>.</p>
 
-<p><code class="language-plaintext highlighter-rouge">$$
+<h2 id="proximal-gradient-descent">Proximal-gradient descent</h2>
+<p>Given such a “distance”, we can perform unconstrained proximal-gradient descent as shown below.
+<code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\nabla_{y}^2 \mathrm{D}_f(y,\tau_k) \Big|_{y=\tau_k} &amp; = 
-\int_w \nabla_{y}^2 f\big(\frac{p(w|y)}{p(w|\tau_k)}\big) p(w|\tau_k) dw  \Big|_{y=\tau_k} \\
-&amp;= \int_w \nabla_{y} [\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \Big|_{y=\tau_k}\\
-&amp;= \int_w [\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} +\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) (\frac{\nabla_y p(w|y)}{p(w|\tau_k)})^2 ] p(w|\tau_k) dw \Big|_{y=\tau_k}\\
+\tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \frac{1}{\alpha} \mathrm{D}(y,\tau_k) \}
+\end{aligned}
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\tau_k}$</code> is a Eulcidean gradient and the parameter space is unconstrained.</p>
+
+<p>Claim: when <code class="language-plaintext highlighter-rouge">$\mathrm{D}(y,\tau_k)$</code> is a secord-order Taylor approximation of a f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(y,\tau_k)$</code> at <code class="language-plaintext highlighter-rouge">$y=\tau_k$</code>, the proximal-gradient method recovers natural-gradient descent.</p>
+
+<div class="notice--info">
+  <details>
+<summary>Proof of the claim: (click to expand)</summary>
+<fieldset class="field-set">
+      <p>Proof:</p>
+
+      <p>To see that, we first show that the Hessian of any f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(y,\tau_k)$</code> at <code class="language-plaintext highlighter-rouge">$y=\tau_k$</code> becomes the Fisher information matrix <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau_k)$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\nabla_{y}^2 \mathrm{D}_f(y,\tau_k) &amp; = 
+\int_w \nabla_{y}^2 f\big(\frac{p(w|y)}{p(w|\tau_k)}\big) p(w|\tau_k) dw  \\
+&amp;= \int_w \nabla_{y} [\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \\
+&amp;= \int_w [\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)}+\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw 
+\end{aligned}
+$$</code>
+Note that when $y=\tau_k$, we can simplify the expression since <code class="language-plaintext highlighter-rouge">$\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big)=\ddot{f}(1)=1$</code> and 
+<code class="language-plaintext highlighter-rouge">$\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big)=\dot{f}(1)$</code> is a constant.</p>
+
+      <p>Therefore,
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\nabla_{y}^2 \mathrm{D}_f(y,\tau_k) \Big|_{y=\tau_k} 
+&amp;= \int_w [\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)}\frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} +\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \Big|_{y=\tau_k} \\
+&amp;=\underbrace{\int_w  \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} p(w|\tau_k) dw  \Big|_{y=\tau_k}}_{\text{Term I}} + \underbrace{\int_w \dot{f}(1) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)}  p(w|\tau_k) dw  \Big|_{y=\tau_k}}_{\text{Term II}}
 \end{aligned}
 $$</code></p>
 
-<p>In <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-unconstrained-mirror-descent">Part V</a>   , we will show that  <code class="language-plaintext highlighter-rouge">$\mathrm{D}(y,\tau_k)$</code> can also be an exact KL divergence for expoential family.
+      <p>Term II is zero since
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\int_w \dot{f}(1) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)}  p(w|\tau_k) dw \Big|_{y=\tau_k}= \dot{f}(1) \int_w  \nabla_y^2 p(w|y) dw \Big|_{y=\tau_k}= \dot{f}(1) \nabla_y^2 \underbrace{\Big[\int_w   p(w|y) dw \Big] }_{=1} \Big|_{y=\tau_k}=0
+\end{aligned}
+$$</code></p>
+
+      <p>Term I is the FIM since
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\int_w  \underbrace{ \frac{\nabla_y p(w|y)}{p(w|\tau_k)}}_{= \nabla_y \log p(w|y)}  \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} p(w|\tau_k) dw  \Big|_{y=\tau_k} &amp;=
+E_{p(w|\tau_k)} \Big[ \nabla_y \log p(w|y)   \nabla_y^T \log p(w|y) \Big] \Big|_{y=\tau_k} \\
+&amp;=
+E_{p(w|\tau_k)} \Big[ \nabla_\tau \log p(w|\tau_k)   \nabla_\tau^T \log p(w|\tau_k) \Big] \\
+&amp;= \mathbf{F}_\tau(\tau_k)
+\end{aligned}
+$$</code></p>
+
+      <p>Thus the second-order Talor approximation at $y=\tau_k$ is
+<code class="language-plaintext highlighter-rouge">$$
+\mathrm{D}(y,\tau_k) := \mathrm{D}_f(\tau,\tau_k) + 0 + (\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k)
+$$</code></p>
+
+      <p>Therefore,
+ the unconstrained proximal-gradient descent can be re-expressed as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y} \rangle   + \frac{1}{\alpha} (\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k) (\mathbf{y}-\tau_k) \}
+\end{aligned}
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\tau_k}$</code> is a Eulcidean gradient and the parameter space is unconstrained.</p>
+
+    </fieldset>
+</details>
+</div>
+
+<p>In <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-unconstrained-mirror-descent">Part V</a>   , we will show that  <code class="language-plaintext highlighter-rouge">$\mathrm{D}(y,\tau_k)$</code> can also be an exact KL divergence for exponential family.
 Under a particular parametrization,  natural-gradient descent also can be viewed as (unconstrained) mirror descent.</p>
 
 <p>By using an intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, its parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set of a (Riemannian)
@@ -694,7 +755,7 @@ $$</code></p>
 <a href="/posts/2021/12/Geomopt05/#minimal-parametrizations-of-exponential-family">Part V</a>, for a special parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> (known as a natural parametrization) of <a href="/posts/2021/12/Geomopt05/#exponential-family">exponential family</a>, the FIM under this parametrization can be computed  as
 <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = \nabla_\tau^2 A_\tau(\tau)$</code>, where <code class="language-plaintext highlighter-rouge">$A_\tau(\tau)$</code> is a strictly convex function.</p>
 
-<p>In the literature, the expoential family with a natural parametrization is known as a Hessian manifold, where the FIM
+<p>In the literature, the exponential family with a natural parametrization is known as a Hessian manifold, where the FIM
 under this kind of parametrization is called a Hessian metric.
 However, a non-linear reparametrization will lead to a non-natural parametrization.</p>
 

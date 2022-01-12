@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-11T17:57:08-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-11T22:46:18-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -830,9 +830,9 @@ gradient-based method does not dependent on the choice of intrinsic parametrizat
 &lt;p&gt;We will first introduce the concept of a (one-dimensional) geodesic $\gamma(t)$, which is the “shortest curve” on a manifold with a Riemannian metric (i.e., the Fisher-Rao metric).
 Recall that in  &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold. 
 In statistics, the distance induced by a geodesic with the Fisher-Rao metric is known as the Rao distance. This is
-known as a boundary value problem (BVP) of a geodesic. The boundary condition is specified by  a starting point and an end
-point in the manifold. To solve this problem, we often has to solve an easier problem, which is known as an initial value
-problem (IVP) of a geodesic. The initial condition is specified by a starting point and an initial Riemannian gradient/velocity.&lt;/p&gt;
+known as a boundary value problem (BVP) of a geodesic. The boundary conditions are  specified by  a starting point and an end
+point in the manifold. To solve this problem, we often solve an easier problem, which is known as an initial value
+problem (IVP) of a geodesic. The initial conditions are  specified by a starting point and an initial Riemannian gradient/velocity.&lt;/p&gt;
 
 &lt;p&gt;We will only consider the IVP of a geodesic for simplicity. 
 Consider an intrinsic parametrization $\tau$, where $\gamma_\tau(t)$ is the parameter representation of the geodesic.
@@ -843,15 +843,15 @@ The geodesic is the solution of a system of second-order non-linear ordinary dif
 \gamma_\tau(0) = \tau_0; \,\,\,\,\,\,
 \frac{d \gamma_\tau(t) }{d t} \Big|_{t=0} = \mathbf{v}_{\tau_0}
 \end{aligned}
-$$&lt;/code&gt; where the geodesic is determined by the initial conditions and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau$&lt;/code&gt; is the domain of the parametric geodesic curve. We assume 0 is contained in the domain for simplicity.&lt;/p&gt;
+$$&lt;/code&gt; where the geodesic is uniquely determined by the initial conditions and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau$&lt;/code&gt; is the domain of the parametric geodesic curve. We assume 0 is contained in the domain for simplicity.&lt;/p&gt;
 
-&lt;p&gt;In a &lt;a href=&quot;https://en.wikipedia.org/wiki/Geodesic_manifold&quot;&gt;geodesically complete&lt;/a&gt; manifold, the domain of the geodesic is the whole space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_{\tau}
+&lt;p&gt;For a &lt;a href=&quot;https://en.wikipedia.org/wiki/Geodesic_manifold&quot;&gt;geodesically complete&lt;/a&gt; manifold, the domain of the geodesic is the whole space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_{\tau}
 =\mathcal{R}$&lt;/code&gt;. We will only consider this case in this post.&lt;/p&gt;
 
-&lt;p&gt;To avoid writing down the VIP of a geodesic (i.e., Christoffel symbols), 
-researchers refer to it as the manifold expoential map.
+&lt;p&gt;To avoid writing down the differential equations of a geodesic (i.e., Christoffel symbols), 
+researchers refer to it as the manifold exponential map.
 Given an intrinsic parametrization $\tau$,
-the representation of the map at point $\tau_0$  is defined as
+the  map at point $\tau_0$  is defined as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathrm{Exp}_{\tau_0}\colon  T\mathcal{M}_{\tau_0} &amp;amp; \mapsto \mathcal{M}\\
@@ -863,22 +863,20 @@ $$&lt;/code&gt;  where &lt;code class=&quot;language-plaintext highlighter-rouge
 &lt;div class=&quot;notice--danger&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:&lt;/p&gt;
 
-  &lt;p&gt;We only consider the parametrization-dependent view due to computational reasons.&lt;/p&gt;
-
-  &lt;p&gt;The expoential map defined here is a parametric representation of a geodesic curve.
-Since the map is a representation of the curve, it does depend on the choice of an parametrization.&lt;/p&gt;
+  &lt;p&gt;The exponential map defined here is a parametric representation of a geodesic curve.
+Since the map is a representation of the curve, the form of the map does depend on the choice of  parametrizations.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Now, we can define Riemannian gradient descent.
-Under intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; of a geodesically complete manifold, (exact) Riemannian gradient descent is defined as 
+Under intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; of a manifold, (exact) Riemannian gradient descent is defined as 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \mathrm{Exp}_{\tau_k} (- \alpha  \hat{\mathbf{g}}_{\tau_k} ) 
 \end{aligned}
 $$&lt;/code&gt; 
- where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k+1}$&lt;/code&gt; always stays in the manifold thanks to the exponetial map since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\tau_k}$&lt;/code&gt; is in the domain of the exponetial map.&lt;/p&gt;
+ where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k+1}$&lt;/code&gt; always stays in the manifold thanks to the exponential map since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\tau_k}$&lt;/code&gt; is in the domain of the exponential map.&lt;/p&gt;
 
-&lt;p&gt;The invariance of this update is due to the uniqueness of ODE and invariance of Euler-Lagrange equations. We will not discuss this further in this post to avoid complicated derivations. 
+&lt;p&gt;The invariance of this update is due to the uniqueness of the geodesic and the invariance of Euler-Lagrange equations. We will not discuss this further in this post to avoid complicated derivations. 
 Although Riemannian gradient descent is nice, the exponential map or the geodesic often has high computational cost and does not admit a closed-form expression.&lt;/p&gt;
 
 &lt;h1 id=&quot;many-faces-of-natural-gradient-descent&quot;&gt;Many faces of Natural-gradient Descent&lt;/h1&gt;
@@ -901,7 +899,7 @@ $$&lt;/code&gt;&lt;/p&gt;
   &lt;p&gt;This approximation does not guarantee that the approximated geodesic stays on the manifold for all $t \neq 0$.&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Recall that the expoential map is defined via the geodesic &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(1)$&lt;/code&gt;.
+&lt;p&gt;Recall that the exponential map is defined via the geodesic &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(1)$&lt;/code&gt;.
 We can use an approximation of the geodesic (A.K.A. the Euclidean retraction map) as shown below.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -925,16 +923,15 @@ methods.&lt;/p&gt;
 &lt;p&gt;As we mentioned before, the &lt;strong&gt;distances&lt;/strong&gt; in the gradient space and the parameter space are defined differently. 
 In the &lt;a href=&quot;#riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;previous section&lt;/a&gt;, we use the geodesic to define the distance between two points in a parameter space.&lt;/p&gt;
 
-&lt;p&gt;We could also use other “distances” denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(.,.)$&lt;/code&gt; (e.g., Kullback–Leibler divergence or other f-divergence) to define the length between two points in a parameter space.
-Given such a  “distance”, we can perform the unconstrained proximal-gradient descent as shown below.
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-\tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \frac{1}{\alpha} \mathrm{D}(y,\tau_k) \}
-\end{aligned}
-$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient and the parameter space is unconstrained.&lt;/p&gt;
+&lt;p&gt;We could also use other “distances” denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(.,.)$&lt;/code&gt; (e.g., Kullback–Leibler divergence or other f-divergence) to define the length between two points in a parameter space.&lt;/p&gt;
+
+&lt;p&gt;In the following section, we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_k$&lt;/code&gt; are two members in
+the same parametric distribution family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(w|\tau)$&lt;/code&gt;.
+The f-divergence can be defined in a more general setting.&lt;/p&gt;
 
 &lt;h2 id=&quot;f-divergence&quot;&gt;f-divergence&lt;/h2&gt;
-&lt;p&gt;Let  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f:(0,\infty)\mapsto \mathcal{R}$&lt;/code&gt; be a scalar function satisfying the following conditions.&lt;/p&gt;
+
+&lt;p&gt;Let &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f:(0,\infty)\mapsto \mathcal{R}$&lt;/code&gt; be a scalar function satisfying the following conditions.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;convex in its domain&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(1)=0$&lt;/code&gt;&lt;/li&gt;
@@ -942,20 +939,84 @@ $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&
 &lt;/ul&gt;
 
 &lt;p&gt;A f-divergence is defined as
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(y,\tau) := \int_w f(\frac{p(w|y)}{p(w|\tau)}) p(w|\tau) dw$&lt;/code&gt;&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(y,\tau) := \int_w f(\frac{p(w|y)}{p(w|\tau)}) p(w|\tau) dw$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; is a secord-order Taylor approximation of any f-divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(y,\tau_k)$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y=\tau_k$&lt;/code&gt;, this  proximal-gradient method recovers natural-gradient descent.&lt;/p&gt;
+&lt;p&gt;Thanks to Jensen’s inequality,
+a f-divergence is always non-negative as  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(y,\tau) \geq  f( \int_w \frac{p(w|y)}{p(w|\tau)} p(w|\tau) dw )  = f(\int_w p(w|y)dw) =f(1) =0 $&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+&lt;h2 id=&quot;proximal-gradient-descent&quot;&gt;Proximal-gradient descent&lt;/h2&gt;
+&lt;p&gt;Given such a “distance”, we can perform unconstrained proximal-gradient descent as shown below.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\nabla_{y}^2 \mathrm{D}_f(y,\tau_k) \Big|_{y=\tau_k} &amp;amp; = 
-\int_w \nabla_{y}^2 f\big(\frac{p(w|y)}{p(w|\tau_k)}\big) p(w|\tau_k) dw  \Big|_{y=\tau_k} \\
-&amp;amp;= \int_w \nabla_{y} [\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \Big|_{y=\tau_k}\\
-&amp;amp;= \int_w [\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} +\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) (\frac{\nabla_y p(w|y)}{p(w|\tau_k)})^2 ] p(w|\tau_k) dw \Big|_{y=\tau_k}\\
+\tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, y\rangle   + \frac{1}{\alpha} \mathrm{D}(y,\tau_k) \}
+\end{aligned}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient and the parameter space is unconstrained.&lt;/p&gt;
+
+&lt;p&gt;Claim: when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; is a secord-order Taylor approximation of a f-divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(y,\tau_k)$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y=\tau_k$&lt;/code&gt;, the proximal-gradient method recovers natural-gradient descent.&lt;/p&gt;
+
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
+&lt;summary&gt;Proof of the claim: (click to expand)&lt;/summary&gt;
+&lt;fieldset class=&quot;field-set&quot;&gt;
+      &lt;p&gt;Proof:&lt;/p&gt;
+
+      &lt;p&gt;To see that, we first show that the Hessian of any f-divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(y,\tau_k)$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y=\tau_k$&lt;/code&gt; becomes the Fisher information matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\tau(\tau_k)$&lt;/code&gt;.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\nabla_{y}^2 \mathrm{D}_f(y,\tau_k) &amp;amp; = 
+\int_w \nabla_{y}^2 f\big(\frac{p(w|y)}{p(w|\tau_k)}\big) p(w|\tau_k) dw  \\
+&amp;amp;= \int_w \nabla_{y} [\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \\
+&amp;amp;= \int_w [\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)}+\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw 
+\end{aligned}
+$$&lt;/code&gt;
+Note that when $y=\tau_k$, we can simplify the expression since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big)=\ddot{f}(1)=1$&lt;/code&gt; and 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big)=\dot{f}(1)$&lt;/code&gt; is a constant.&lt;/p&gt;
+
+      &lt;p&gt;Therefore,
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\nabla_{y}^2 \mathrm{D}_f(y,\tau_k) \Big|_{y=\tau_k} 
+&amp;amp;= \int_w [\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)}\frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} +\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \Big|_{y=\tau_k} \\
+&amp;amp;=\underbrace{\int_w  \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} p(w|\tau_k) dw  \Big|_{y=\tau_k}}_{\text{Term I}} + \underbrace{\int_w \dot{f}(1) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)}  p(w|\tau_k) dw  \Big|_{y=\tau_k}}_{\text{Term II}}
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;In &lt;a href=&quot;/posts/2021/12/Geomopt05/#natural-gradient-descent-as-unconstrained-mirror-descent&quot;&gt;Part V&lt;/a&gt;   , we will show that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; can also be an exact KL divergence for expoential family.
+      &lt;p&gt;Term II is zero since
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\int_w \dot{f}(1) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)}  p(w|\tau_k) dw \Big|_{y=\tau_k}= \dot{f}(1) \int_w  \nabla_y^2 p(w|y) dw \Big|_{y=\tau_k}= \dot{f}(1) \nabla_y^2 \underbrace{\Big[\int_w   p(w|y) dw \Big] }_{=1} \Big|_{y=\tau_k}=0
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+      &lt;p&gt;Term I is the FIM since
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\int_w  \underbrace{ \frac{\nabla_y p(w|y)}{p(w|\tau_k)}}_{= \nabla_y \log p(w|y)}  \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} p(w|\tau_k) dw  \Big|_{y=\tau_k} &amp;amp;=
+E_{p(w|\tau_k)} \Big[ \nabla_y \log p(w|y)   \nabla_y^T \log p(w|y) \Big] \Big|_{y=\tau_k} \\
+&amp;amp;=
+E_{p(w|\tau_k)} \Big[ \nabla_\tau \log p(w|\tau_k)   \nabla_\tau^T \log p(w|\tau_k) \Big] \\
+&amp;amp;= \mathbf{F}_\tau(\tau_k)
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+      &lt;p&gt;Thus the second-order Talor approximation at $y=\tau_k$ is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\mathrm{D}(y,\tau_k) := \mathrm{D}_f(\tau,\tau_k) + 0 + (\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k)
+$$&lt;/code&gt;&lt;/p&gt;
+
+      &lt;p&gt;Therefore,
+ the unconstrained proximal-gradient descent can be re-expressed as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y} \rangle   + \frac{1}{\alpha} (\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k) (\mathbf{y}-\tau_k) \}
+\end{aligned}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient and the parameter space is unconstrained.&lt;/p&gt;
+
+    &lt;/fieldset&gt;
+&lt;/details&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In &lt;a href=&quot;/posts/2021/12/Geomopt05/#natural-gradient-descent-as-unconstrained-mirror-descent&quot;&gt;Part V&lt;/a&gt;   , we will show that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; can also be an exact KL divergence for exponential family.
 Under a particular parametrization,  natural-gradient descent also can be viewed as (unconstrained) mirror descent.&lt;/p&gt;
 
 &lt;p&gt;By using an intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;, its parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set of a (Riemannian)
@@ -1188,7 +1249,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;a href=&quot;/posts/2021/12/Geomopt05/#minimal-parametrizations-of-exponential-family&quot;&gt;Part V&lt;/a&gt;, for a special parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; (known as a natural parametrization) of &lt;a href=&quot;/posts/2021/12/Geomopt05/#exponential-family&quot;&gt;exponential family&lt;/a&gt;, the FIM under this parametrization can be computed  as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\tau(\tau) = \nabla_\tau^2 A_\tau(\tau)$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\tau(\tau)$&lt;/code&gt; is a strictly convex function.&lt;/p&gt;
 
-&lt;p&gt;In the literature, the expoential family with a natural parametrization is known as a Hessian manifold, where the FIM
+&lt;p&gt;In the literature, the exponential family with a natural parametrization is known as a Hessian manifold, where the FIM
 under this kind of parametrization is called a Hessian metric.
 However, a non-linear reparametrization will lead to a non-natural parametrization.&lt;/p&gt;
 
