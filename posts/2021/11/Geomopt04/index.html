@@ -461,9 +461,9 @@ $$</code>.</p>
 a f-divergence is always non-negative as<br />
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 
+\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 .
 \end{aligned}
-$$</code>.</p>
+$$</code></p>
 
 <h3 id="proximal-gradient-descent">Proximal-gradient descent</h3>
 <p>Given such a “distance” <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code>, we could perform an unconstrained proximal-gradient update as
@@ -499,10 +499,10 @@ $$</code>.</p>
       <p>For the first-order term, we have
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\nabla_y \mathrm{D}_f(\mathbf{y},\tau_k)   =
-\int_w \nabla_y f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw 
-=\int_w  \dot{f}\big(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw 
-=\int_w  \dot{f}\big(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}\big) \nabla_y p(w|\mathbf{y}) dw 
+\nabla_y \mathrm{D}_f(\mathbf{y},\tau_k) &amp;  =
+\int_w \nabla_y f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw \\
+&amp;=\int_w  \dot{f}\big(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw \\
+&amp;=\int_w  \dot{f}\big(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}\big) \nabla_y p(w|\mathbf{y}) dw 
 \end{aligned}
 $$</code>.</p>
 
