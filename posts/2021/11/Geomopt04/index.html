@@ -373,14 +373,17 @@ $$</code>  where <code class="language-plaintext highlighter-rouge">$t$</code> i
 Since the map is a representation of the curve, the form of the map does depend on the choice of  parametrizations.</p>
 </div>
 
-<p>Now, we can define Riemannian gradient descent.
-Under intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> of a manifold, (exact) Riemannian gradient descent is defined as 
-<code class="language-plaintext highlighter-rouge">$$
+<p>Now, we can define a Riemannian gradient method.
+Under intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> of a manifold, (exact) Riemannian gradient descent (RGD) is defined as</p>
+<div class="notice--danger">
+  <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
+\mathrm{RGD:} &amp;\,\,\,\,\, 
 \tau_{k+1} \leftarrow \mathrm{Exp}_{\tau_k} (- \alpha  \hat{\mathbf{g}}_{\tau_k} ) 
 \end{aligned}
-$$</code> 
- where <code class="language-plaintext highlighter-rouge">$\tau_{k+1}$</code> always stays in the manifold thanks to the exponential map since <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\tau_k}$</code> is in the domain of the exponential map.</p>
+$$</code></p>
+</div>
+<p>where <code class="language-plaintext highlighter-rouge">$\tau_{k+1}$</code> always stays in the manifold thanks to the exponential map since <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\tau_k}$</code> is in the domain of the exponential map.</p>
 
 <p>The invariance of this update is due to the uniqueness of the geodesic and the invariance of Euler-Lagrange equations. We will not discuss this further in this post to avoid complicated derivations. 
 Although Riemannian gradient descent is nice, the exponential map or the geodesic often has high computational cost and does not admit a closed-form expression.</p>
@@ -446,12 +449,21 @@ Note that a f-divergence can be defined in a more general setting.</p>
 </ul>
 
 <p>A f-divergence for a parametric family <code class="language-plaintext highlighter-rouge">$p(w|\tau)$</code> is defined as
-<code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\tau_k) := \int_w f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw$</code>.</p>
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{D}_f(\mathbf{y},\tau_k) := \int_w f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw
+\end{aligned}
+$$</code>.</p>
 
 <p>The KL divergence is a speical case of a f-divergence where $f(t)=-\log(t)$.</p>
 
 <p>Thanks to Jensen’s inequality,
-a f-divergence is always non-negative as  <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 $</code>.</p>
+a f-divergence is always non-negative as<br />
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 
+\end{aligned}
+$$</code>.</p>
 
 <h3 id="proximal-gradient-descent">Proximal-gradient descent</h3>
 <p>Given such a “distance” <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code>, we could perform an unconstrained proximal-gradient update as

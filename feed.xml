@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-12T10:15:36-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-12T10:20:15-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -867,14 +867,17 @@ $$&lt;/code&gt;  where &lt;code class=&quot;language-plaintext highlighter-rouge
 Since the map is a representation of the curve, the form of the map does depend on the choice of  parametrizations.&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Now, we can define Riemannian gradient descent.
-Under intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; of a manifold, (exact) Riemannian gradient descent is defined as 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+&lt;p&gt;Now, we can define a Riemannian gradient method.
+Under intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; of a manifold, (exact) Riemannian gradient descent (RGD) is defined as&lt;/p&gt;
+&lt;div class=&quot;notice--danger&quot;&gt;
+  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
+\mathrm{RGD:} &amp;amp;\,\,\,\,\, 
 \tau_{k+1} \leftarrow \mathrm{Exp}_{\tau_k} (- \alpha  \hat{\mathbf{g}}_{\tau_k} ) 
 \end{aligned}
-$$&lt;/code&gt; 
- where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k+1}$&lt;/code&gt; always stays in the manifold thanks to the exponential map since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\tau_k}$&lt;/code&gt; is in the domain of the exponential map.&lt;/p&gt;
+$$&lt;/code&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k+1}$&lt;/code&gt; always stays in the manifold thanks to the exponential map since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\tau_k}$&lt;/code&gt; is in the domain of the exponential map.&lt;/p&gt;
 
 &lt;p&gt;The invariance of this update is due to the uniqueness of the geodesic and the invariance of Euler-Lagrange equations. We will not discuss this further in this post to avoid complicated derivations. 
 Although Riemannian gradient descent is nice, the exponential map or the geodesic often has high computational cost and does not admit a closed-form expression.&lt;/p&gt;
@@ -940,12 +943,21 @@ Note that a f-divergence can be defined in a more general setting.&lt;/p&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;A f-divergence for a parametric family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(w|\tau)$&lt;/code&gt; is defined as
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(\mathbf{y},\tau_k) := \int_w f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw$&lt;/code&gt;.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathrm{D}_f(\mathbf{y},\tau_k) := \int_w f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw
+\end{aligned}
+$$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;The KL divergence is a speical case of a f-divergence where $f(t)=-\log(t)$.&lt;/p&gt;
 
 &lt;p&gt;Thanks to Jensen’s inequality,
-a f-divergence is always non-negative as  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 $&lt;/code&gt;.&lt;/p&gt;
+a f-divergence is always non-negative as&lt;br /&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 
+\end{aligned}
+$$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;proximal-gradient-descent&quot;&gt;Proximal-gradient descent&lt;/h3&gt;
 &lt;p&gt;Given such a “distance” &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(\mathbf{y},\tau_k)$&lt;/code&gt;, we could perform an unconstrained proximal-gradient update as
