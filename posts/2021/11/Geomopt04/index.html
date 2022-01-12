@@ -182,7 +182,7 @@
 
 
 
-  17 minute read
+  18 minute read
 </p>
           
         </header>
@@ -429,7 +429,7 @@ methods.</p>
 <p>As we mentioned before, the <strong>distances</strong> in the gradient space and the parameter space are defined differently. 
 In the <a href="#riemannian-gradient-descent-and-its-non-linear-invariance">previous section</a>, we use the geodesic to define the distance between two points in a parameter space.</p>
 
-<p>We could also use other “distances” denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(.,.)$</code> (i.e., Kullback–Leibler divergence or other f-divergence) to define the length between two points in a parameter space.</p>
+<p>We could also use other “distances” denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(.,.)$</code> (i.e., Kullback–Leibler divergence or other f-divergence) <a class="citation" href="#khan2016faster">[2]</a> to define the length between two points in a parameter space.</p>
 
 <p>In the following section, we assume <code class="language-plaintext highlighter-rouge">$y$</code> and <code class="language-plaintext highlighter-rouge">$\tau_k$</code> are two members in a  distribution family <code class="language-plaintext highlighter-rouge">$p(w|\tau)$</code>
 under the same parametrization.
@@ -634,7 +634,7 @@ mean $\mu_0$ and  covariance $\mathbf{\Sigma}_0$.</p>
  </details>
     </div>
   </li>
-  <li>It is tempting to approximate the singular FIM by an emprical FIM with a scalar damping term and use Woodbury matrix identity to reduce the iteration cost of computing natural-gradients. However, sample-based emprical approximations could be problematic.
+  <li>It is tempting to approximate the singular FIM by an emprical FIM with a scalar damping term and use Woodbury matrix identity to reduce the iteration cost of computing natural-gradients. However, sample-based emprical approximations could be problematic <a class="citation" href="#kunstner2019limitations">[3]</a>.
 Moreover, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.</li>
 </ol>
 
@@ -805,7 +805,9 @@ However, a non-linear reparametrization will lead to a non-natural parametrizati
 
 <hr />
 <h1 id="references">References</h1>
-<p class="bibliography"><p><span id="amari1998natural">[1] S.-I. Amari, "Natural gradient works efficiently in learning," <i>Neural computation</i> <b>10</b>:251–276 (1998).</span></p></p>
+<p class="bibliography"><p><span id="amari1998natural">[1] S.-I. Amari, "Natural gradient works efficiently in learning," <i>Neural computation</i> <b>10</b>:251–276 (1998).</span></p>
+<p><span id="khan2016faster">[2] M. E. Khan, R. Babanezhad, W. Lin, M. Schmidt, &amp; M. Sugiyama, "Faster stochastic variational inference using Proximal-Gradient methods with general divergence functions," <i>Proceedings of the Thirty-Second Conference on Uncertainty in Artificial Intelligence</i> (2016), pp. 319–328.</span></p>
+<p><span id="kunstner2019limitations">[3] F. Kunstner, P. Hennig, &amp; L. Balles, "Limitations of the empirical Fisher approximation for natural gradient descent," <i>Advances in Neural Information Processing Systems</i> <b>32</b>:4156–4167 (2019).</span></p></p>
 
 
         
