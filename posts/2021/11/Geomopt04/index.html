@@ -436,7 +436,7 @@ under the same parametrization.
 We define a f-divergence for this case. 
 Note that a f-divergence can be defined in a more general setting.</p>
 
-<h2 id="f-divergence">f-divergence</h2>
+<h3 id="f-divergence">f-divergence</h3>
 
 <p>Let <code class="language-plaintext highlighter-rouge">$f:(0,\infty)\mapsto \mathcal{R}$</code> be a scalar smooth function satisfying all the following conditions.</p>
 <ul>
@@ -453,7 +453,7 @@ Note that a f-divergence can be defined in a more general setting.</p>
 <p>Thanks to Jensen’s inequality,
 a f-divergence is always non-negative as  <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 $</code>.</p>
 
-<h2 id="proximal-gradient-descent">Proximal-gradient descent</h2>
+<h3 id="proximal-gradient-descent">Proximal-gradient descent</h3>
 <p>Given such a “distance” <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code>, we could perform an unconstrained proximal-gradient update as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
