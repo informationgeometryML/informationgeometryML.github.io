@@ -207,7 +207,7 @@ The space of natural-gradients evaluated at the same point is called a tangent s
 
 <p>Given a smooth scalar function $\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$ in a <strong>vector space</strong> <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, we can define the (Euclidean) steepest direction at current <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> as the optimal solution to the following optimization problem. We can express the optimization problem in terms of a <strong>directional derivative</strong> along vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code>.
 We want to find the optimal directional derivative, which is the steepest direction.</p>
-<div class="notice--danger">
+<div class="notice--success">
   <p>Note:</p>
 
   <p>Each possible vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (vector) space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
@@ -282,7 +282,7 @@ Note that we only require <code class="language-plaintext highlighter-rouge">$\m
 <p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the <strong>local vector space</strong> structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
 <code class="language-plaintext highlighter-rouge">$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v}. \end{aligned}$$</code></p>
 
-<div class="notice--danger">
+<div class="notice--success">
   <p>Note:</p>
   <ul>
     <li>
@@ -352,7 +352,7 @@ Now, we can introduce the Riemannian steepest direction <a class="citation" href
 \end{aligned} \tag{2}\label{2}
 $$</code></p>
 
-<div class="notice--danger">
+<div class="notice--success">
   <p>Note:</p>
 
   <p>Each possible (Riemannian) vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (tangent) vector space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
@@ -595,8 +595,8 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 
   <p>By the definition of a directional derivative, the following identity holds for any smooth scalar function $h$: <code class="language-plaintext highlighter-rouge">$[\nabla h_\tau(\mathbf{\tau}_0)]^T \mathbf{v}(\mathbf{\tau}_0) =\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}$</code>, where $h_\tau$ is the parametric representation of  $h$ . Note that <code class="language-plaintext highlighter-rouge">$(h_\tau \circ {\gamma}_\tau) (t)$</code> is a function defined from <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau $</code> to $\mathcal{R}^1$, where domain <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau \subset \mathcal{R}^1$</code>.</p>
 
-  <div class="notice--danger">
-    <p>The key  observation:</p>
+  <div class="notice--success">
+    <p>The <strong>key</strong> observation:</p>
 
     <p>Function <code class="language-plaintext highlighter-rouge">$(h_\tau \circ {\gamma}_\tau) (t)$</code> becomes a standard real-scalar function thanks to parametrization $\tau$. Thus, we can safely use the standard chain rule.</p>
   </div>
@@ -900,7 +900,7 @@ plt.show()
 
 
 
-  15 minute read
+  17 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)

@@ -364,7 +364,7 @@ $$</code></p>
 </details>
 </div>
 
-<div class="notice--danger">
+<div class="notice--success">
   <p>We will show that two key <strong>geometric properties</strong> remains the same under any <strong>intrinsic</strong> parameter transformation.</p>
   <ol>
     <li>Directional derivative</li>
@@ -509,7 +509,7 @@ $$</code></p>
 
 <p>Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> gives us the transformation rule for Eulcidean gradients (denoted by a row vector)  as below in a vector form.</p>
 
-<div class="notice--danger">
+<div class="notice--success">
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}
@@ -522,7 +522,7 @@ $$</code></p>
 
 <p>By Eq <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>, we obtain the transformation rule for Riemannian gradients  (denoted by a column vector) as below,  where <code class="language-plaintext highlighter-rouge">$\mathbf{Q}:=\mathbf{J}^{-1}$</code> is also a Jacobian matrix and <code class="language-plaintext highlighter-rouge">$Q_{ki}=\frac{\partial \tau^k(\lambda)}{\partial \lambda^i}$</code> is the <code class="language-plaintext highlighter-rouge">$(k,i)$</code> entry of matrix <code class="language-plaintext highlighter-rouge">$\mathbf{Q}$</code>.</p>
 
-<div class="notice--danger">
+<div class="notice--success">
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \hat{\mathbf{g}}_\tau= \mathbf{J}^{-1}  \hat{\mathbf{g}}_\lambda 
@@ -530,7 +530,7 @@ $$</code></p>
 $$</code></p>
 
   <p>Note:
-<span style="color:blue"><strong>column</strong></span> vector <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code> can be computed via a Jacobian-vector product used in forward-mode differentiation <a class="citation" href="#salimbeni2018natural">[1]</a> given that <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> is pre-computed.</p>
+<span style="color:blue"><strong>column</strong></span> vector <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code> can be computed via a Jacobian-vector product used in forward-mode differentiation  <a class="citation" href="#lin2021tractable">[1]</a> <a class="citation" href="#salimbeni2018natural">[2]</a> given that <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> is pre-computed.</p>
 </div>
 
 <p>The elementwise expression of the transformation rule for Riemannian gradients is
@@ -589,7 +589,7 @@ $$</code></p>
 
 <p>We can re-express the above expression in a matrix form as below. This is the transformation rule for the Fisher information matrix.</p>
 
-<div class="notice--danger">
+<div class="notice--success">
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{F}_{\tau} (\tau_0) = \underbrace{\mathbf{J}^T}_{  \frac{ \partial \lambda^i(\tau_0) }{ \partial \tau^k }  } \mathbf{F}_{\lambda} (\lambda_0) \underbrace{\mathbf{J}}_{  \frac{ \partial \lambda^l(\tau_0) }{ \partial \tau^j }  } 
@@ -684,7 +684,8 @@ Moreover, Euclidean gradient descent is not invariant under a parameter transfor
 
 <hr />
 <h1 id="references">References</h1>
-<p class="bibliography"><p><span id="salimbeni2018natural">[1] H. Salimbeni, S. Eleftheriadis, &amp; J. Hensman, "Natural gradients in practice: Non-conjugate variational inference in Gaussian process models," <i>International Conference on Artificial Intelligence and Statistics</i> (PMLR, 2018), pp. 689–697.</span></p></p>
+<p class="bibliography"><p><span id="lin2021tractable">[1] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Tractable structured natural gradient descent using local parameterizations," <i>International Conference on Machine Learning (ICML)</i> (2021).</span></p>
+<p><span id="salimbeni2018natural">[2] H. Salimbeni, S. Eleftheriadis, &amp; J. Hensman, "Natural gradients in practice: Non-conjugate variational inference in Gaussian process models," <i>International Conference on Artificial Intelligence and Statistics</i> (PMLR, 2018), pp. 689–697.</span></p></p>
 
 
         
@@ -828,7 +829,7 @@ Moreover, Euclidean gradient descent is not invariant under a parameter transfor
 
 
 
-  15 minute read
+  17 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
