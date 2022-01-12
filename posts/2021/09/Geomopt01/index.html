@@ -638,11 +638,14 @@ the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vect
 The map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>  returns  a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array obtained by vectorizing only the lower triangular part of a (symmetric) <code class="language-plaintext highlighter-rouge">$d$</code>-by-<code class="language-plaintext highlighter-rouge">$d$</code> matrix <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.
 The map <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}()$</code> is the inverse map of  <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code>.</p>
 
-<p>The following example illustrates these two maps.</p>
-<blockquote>
-  <p>Consider the following symmetric 2-by-2 matrix</p>
+<div class="notice--info">
+  <details>
+<summary>Illustration of these maps (click to expand)</summary>
+<fieldset class="field-set">
+      <blockquote>
+        <p>Consider the following symmetric 2-by-2 matrix</p>
 
-  <p><code class="language-plaintext highlighter-rouge">$$
+        <p><code class="language-plaintext highlighter-rouge">$$
 \mathbf{S} = 
 \begin{aligned}
 \begin{bmatrix} 2 &amp;  -1 \\  -1  &amp; 3  \end{bmatrix}
@@ -656,14 +659,17 @@ The output of map <code class="language-plaintext highlighter-rouge">$\mathrm{ve
 \end{aligned}
 $$</code></p>
 
-  <p>The output of  map <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code> is
+        <p>The output of  map <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code> is
 <code class="language-plaintext highlighter-rouge">$$
 \mathrm{MatH}(\mathbf{v}) = 
 \begin{aligned}
 \begin{bmatrix} 2 &amp;  -1 \\  -1  &amp; 3  \end{bmatrix}
 \end{aligned}
 $$</code></p>
-</blockquote>
+      </blockquote>
+    </fieldset>
+</details>
+</div>
 
 <hr />
 <h1 id="references">References</h1>
