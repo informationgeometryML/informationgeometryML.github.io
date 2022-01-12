@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-11T17:19:13-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-11T17:57:08-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -925,7 +925,7 @@ methods.&lt;/p&gt;
 &lt;p&gt;As we mentioned before, the &lt;strong&gt;distances&lt;/strong&gt; in the gradient space and the parameter space are defined differently. 
 In the &lt;a href=&quot;#riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;previous section&lt;/a&gt;, we use the geodesic to define the distance between two points in a parameter space.&lt;/p&gt;
 
-&lt;p&gt;We could also use other “distances” denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(.,.)$&lt;/code&gt; (e.g., Kullback–Leibler divergence or f-divergence) to define the length between two points in a parameter space.
+&lt;p&gt;We could also use other “distances” denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(.,.)$&lt;/code&gt; (e.g., Kullback–Leibler divergence or other f-divergence) to define the length between two points in a parameter space.
 Given such a  “distance”, we can perform the unconstrained proximal-gradient descent as shown below.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -933,7 +933,27 @@ Given such a  “distance”, we can perform the unconstrained proximal-gradient
 \end{aligned}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient and the parameter space is unconstrained.&lt;/p&gt;
 
-&lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; is a secord-order Taylor approximation of  the KL divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{KL} [p(w|\tau_k) || p(w|y)]$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y=\tau_k$&lt;/code&gt;, this  proximal-gradient method recovers natural-gradient descent.&lt;/p&gt;
+&lt;h2 id=&quot;f-divergence&quot;&gt;f-divergence&lt;/h2&gt;
+&lt;p&gt;Let  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f:(0,\infty)\mapsto \mathcal{R}$&lt;/code&gt; be a scalar function satisfying the following conditions.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;convex in its domain&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(1)=0$&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\ddot{f}(1)=1$&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A f-divergence is defined as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(y,\tau) := \int_w f(\frac{p(w|y)}{p(w|\tau)}) p(w|\tau) dw$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; is a secord-order Taylor approximation of any f-divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(y,\tau_k)$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y=\tau_k$&lt;/code&gt;, this  proximal-gradient method recovers natural-gradient descent.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\nabla_{y}^2 \mathrm{D}_f(y,\tau_k) \Big|_{y=\tau_k} &amp;amp; = 
+\int_w \nabla_{y}^2 f\big(\frac{p(w|y)}{p(w|\tau_k)}\big) p(w|\tau_k) dw  \Big|_{y=\tau_k} \\
+&amp;amp;= \int_w \nabla_{y} [\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \Big|_{y=\tau_k}\\
+&amp;amp;= \int_w [\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} +\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) (\frac{\nabla_y p(w|y)}{p(w|\tau_k)})^2 ] p(w|\tau_k) dw \Big|_{y=\tau_k}\\
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;In &lt;a href=&quot;/posts/2021/12/Geomopt05/#natural-gradient-descent-as-unconstrained-mirror-descent&quot;&gt;Part V&lt;/a&gt;   , we will show that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; can also be an exact KL divergence for expoential family.
 Under a particular parametrization,  natural-gradient descent also can be viewed as (unconstrained) mirror descent.&lt;/p&gt;
