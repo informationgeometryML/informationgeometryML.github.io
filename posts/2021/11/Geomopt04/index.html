@@ -429,7 +429,7 @@ methods.</p>
 <p>As we mentioned before, the <strong>distances</strong> in the gradient space and the parameter space are defined differently. 
 In the <a href="#riemannian-gradient-descent-and-its-non-linear-invariance">previous section</a>, we use the geodesic to define the distance between two points in a parameter space.</p>
 
-<p>We could also use other “distances” denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(.,.)$</code> (e.g., Kullback–Leibler divergence or other f-divergence) to define the length between two points in a parameter space.</p>
+<p>We could also use other “distances” denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(.,.)$</code> (i.e., Kullback–Leibler divergence or other f-divergence) to define the length between two points in a parameter space.</p>
 
 <p>In the following section, we assume <code class="language-plaintext highlighter-rouge">$y$</code> and <code class="language-plaintext highlighter-rouge">$\tau_k$</code> are two members in a  distribution family <code class="language-plaintext highlighter-rouge">$p(w|\tau)$</code>
 under the same parametrization.
@@ -454,14 +454,14 @@ Note that a f-divergence can be defined in a more general setting.</p>
 a f-divergence is always non-negative as  <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 $</code>.</p>
 
 <h2 id="proximal-gradient-descent">Proximal-gradient descent</h2>
-<p>Given such a “distance”, we can perform unconstrained proximal-gradient descent as shown below.
+<p>Given such a “distance” <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code>, we could perform an unconstrained proximal-gradient update as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \arg\min_{\mathbf{y} \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y}\rangle   + \frac{1}{\alpha} \mathrm{D}(\mathbf{y},\tau_k) \}
 \end{aligned}
-$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\tau_k}$</code> is a Eulcidean gradient and the parameter space is unconstrained.</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\tau_k}$</code> is a Eulcidean gradient and the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is unconstrained.</p>
 
-<p>Claim: when <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code> is a secord-order Taylor approximation of a f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\tau_k)$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\tau_k$</code>, the proximal-gradient method recovers natural-gradient descent.</p>
+<p><strong>Claim</strong>: The secord-order Taylor approximation of any f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\tau_k)$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\tau_k$</code> is  <code class="language-plaintext highlighter-rouge">$\frac{1}{2}(\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k) (\mathbf{y}-\tau_k)$</code></p>
 
 <div class="notice--info">
   <details>
@@ -469,23 +469,7 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{
 <fieldset class="field-set">
       <p>Proof:</p>
 
-      <p>To see that, we will show that the second-order Talor approximation at $\mathbf{y}=\tau_k$ is
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\mathrm{D}(\mathbf{y},\tau_k) := \mathrm{D}_f(\tau_k,\tau_k) + (\mathbf{y}-\tau_k)^T  [\nabla_y  \mathrm{D}_f(\mathbf{y},\tau_k)\big|_{y=\tau_k}] + \frac{1}{2}(\mathbf{y}-\tau_k)^T [\nabla_y^2  \mathrm{D}_f(\mathbf{y},\tau_k)\big|_{y=\tau_k}] (\mathbf{y}-\tau_k) = \frac{1}{2} (\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k) (\mathbf{y}-\tau_k)
-\end{aligned}
-$$</code></p>
-
-      <p>Therefore, the unconstrained proximal-gradient descent can be re-expressed as
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y} \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k) (\mathbf{y}-\tau_k) \}
-\end{aligned}
-$$</code></p>
-
-      <p>It is easy to see that we can obtain the natural-gradient update from the above expression.</p>
-
-      <p>Now, we show that the second-order Talor approximation at $\mathbf{y}=\tau_k$ can be re-expressed as below.
+      <p>We will show that the second-order Talor approximation at $\mathbf{y}=\tau_k$ can be re-expressed as below.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathrm{D}(\mathbf{y},\tau_k) = \underbrace{\mathrm{D}_f(\tau_k,\tau_k)}_{=0} + (\mathbf{y}-\tau_k)^T \underbrace{ [\nabla_y  \mathrm{D}_f(\mathbf{y},\tau_k) \big|_{y=\tau_k}]}_{=0} +\frac{1}{2} (\mathbf{y}-\tau_k)^T \underbrace{ [\nabla_y^2  \mathrm{D}_f(\mathbf{y},\tau_k)\big|_{y=\tau_k}]}_{ =\mathbf{F}_\tau(\tau_k) } (\mathbf{y}-\tau_k)
@@ -527,7 +511,7 @@ $$</code>.</p>
 \nabla_{y}^2 \mathrm{D}_f(y,\tau_k) &amp; = 
 \int_w \nabla_{y}^2 f\big(\frac{p(w|y)}{p(w|\tau_k)}\big) p(w|\tau_k) dw  \\
 &amp;= \int_w \nabla_{y} [\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \\
-&amp;= \int_w [\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)}+\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw 
+&amp;= \int_w \Big[\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)}+\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} \Big] p(w|\tau_k) dw 
 \end{aligned}
 $$</code>
 Note that when $y=\tau_k$, we can simplify the expression since <code class="language-plaintext highlighter-rouge">$\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big)=\ddot{f}(1)=1$</code> and 
@@ -537,7 +521,7 @@ Note that when $y=\tau_k$, we can simplify the expression since <code class="lan
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \nabla_{y}^2 \mathrm{D}_f(y,\tau_k) \Big|_{y=\tau_k} 
-&amp;= \int_w [\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)}\frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} +\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \Big|_{y=\tau_k} \\
+&amp;= \int_w \Big[\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} +\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} \Big] p(w|\tau_k) dw \Big|_{y=\tau_k} \\
 &amp;=\underbrace{\int_w  \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} p(w|\tau_k) dw  \Big|_{y=\tau_k}}_{\text{Term I}} + \underbrace{\int_w \dot{f}(1) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)}  p(w|\tau_k) dw  \Big|_{y=\tau_k}}_{\text{Term II}}
 \end{aligned}
 $$</code></p>
@@ -564,14 +548,29 @@ $$</code></p>
 </details>
 </div>
 
-<p>In <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-unconstrained-mirror-descent">Part V</a>   , we will show that  <code class="language-plaintext highlighter-rouge">$\mathrm{D}(y,\tau_k)$</code> can also be an exact KL divergence for exponential family.
+<p>By the claim, when <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code> is the second-order Talor approximatio of a
+f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\tau_k)$</code>  at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\tau_k$</code>,
+the unconstrained proximal-gradient descent can be re-expressed as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y} \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k) (\mathbf{y}-\tau_k) \}
+\end{aligned}
+$$</code></p>
+
+<p>It is easy to see that we can obtain the following natural-gradient update  from the above expression.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \tau_{k} - \alpha \underbrace{ \mathbf{F}^{-1}_\tau(\tau_k) \mathbf{g}_{\tau_k}}_{ =\hat{\mathbf{g}}_{\tau_k} }
+\end{aligned}
+$$</code></p>
+
+<p>In <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-unconstrained-mirror-descent">Part V</a>   , we will show that  <code class="language-plaintext highlighter-rouge">$\mathrm{D}(y,\tau_k)$</code> can also be an exact KL divergence when $p(w)$ is an exponential family.
 Under a particular parametrization,  natural-gradient descent also can be viewed as (unconstrained) mirror descent.</p>
 
 <div class="notice--danger">
   <p><strong>Warning</strong>:</p>
 
-  <p>The connection bewteen natural-gradient descent and proximal-gradient/mirror descent breaks down when
-the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is constrained. In constrained cases, these methods could be distinct from each other. We will cover more about this point in <a href="/posts/2021/12/Geomopt06/">Part VI</a>.</p>
+  <p>The connection bewteen natural-gradient descent and proximal-gradient/mirror descent could break down in constrained cases. We will cover more about this point in <a href="/posts/2021/12/Geomopt06/">Part VI</a>.</p>
 </div>
 
 <h1 id="natural-gradient-descent-in-non-intrinstic-parameter-spaces">Natural-gradient Descent in Non-intrinstic Parameter Spaces</h1>
@@ -580,51 +579,60 @@ the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\
 We now discuss issues when it comes to  natural-gradient descent over non-intrinsic parametrizations including overparameterization.</p>
 
 <ol>
-  <li>We may not have a local vector space structure in a non-intrinstic parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM could also be ill-defined in such cases. We will illustrate this by examples.
-    <details>
- <summary>Bernoulli Example: Invalid NGD</summary>
+  <li>
+    <p>We may not have a local vector space structure in a non-intrinstic parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM could also be ill-defined in such cases. We will illustrate this by examples.</p>
+
+    <div class="notice--info">
+      <details>
+ <summary>Bernoulli Example: Invalid NGD (click to expand)</summary>
  <fieldset class="field-set">
-        <blockquote>
+          <blockquote>
 
-          <p>Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.</p>
+            <p>Consider Bernoulli family  $ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$ with parameter $\tau = (\pi_0,\pi_1)$.</p>
 
-          <p>As we shown in <a href="/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation">Part I</a>, the FIM is ill-defined due to this eqaulity constraint.</p>
+            <p>As we shown in <a href="/posts/2021/09/Geomopt01/#caveats-of-the-fisher-matrix-computation">Part I</a>, the FIM is ill-defined due to this eqaulity constraint.</p>
 
-          <p>Moreover, the NGD update will violate the eqaulity constraint.</p>
-        </blockquote>
-      </fieldset>
+            <p>Moreover, the NGD update will violate the eqaulity constraint.</p>
+          </blockquote>
+        </fieldset>
  </details>
+    </div>
 
-    <details>
- <summary>Von Mises–Fisher Example: Invalid NGD</summary>
+    <div class="notice--info">
+      <details>
+ <summary>Von Mises–Fisher Example: Invalid NGD  (click to expand)</summary>
  <fieldset class="field-set">
-        <blockquote>
+          <blockquote>
 
-          <p>Consider $2$-dimensional Von Mises–Fisher family  $ \{p(\mathbf{w}|\tau):= C(\kappa) \exp(\kappa (w_1\mu_1+w_2\mu_2) ) \Big| \kappa&gt;0, \mu_1^2+\mu_2^2 =1  \}$ with parameter $\tau = (\kappa,\mu_1,\mu_2)$, where $ C(\kappa)$ is the normalization constant, <code class="language-plaintext highlighter-rouge">$\kappa$</code> is a positive scalar, $\mathbf{w}=(w_1,w_2)$ is a random unit vector defined in a circle,
+            <p>Consider $2$-dimensional <a href="https://en.wikipedia.org/wiki/Von_Mises%E2%80%93Fisher_distribution">Von Mises–Fisher family</a>  $ \{p(\mathbf{w}|\tau):= C(\kappa) \exp(\kappa (w_1\mu_1+w_2\mu_2) ) \Big| \kappa&gt;0, \mu_1^2+\mu_2^2 =1  \}$ with parameter $\tau = (\kappa,\mu_1,\mu_2)$, where $ C(\kappa)$ is the normalization constant, <code class="language-plaintext highlighter-rouge">$\kappa$</code> is a positive scalar, $\mathbf{w}=(w_1,w_2)$ is a random unit vector defined in a circle,
  and <code class="language-plaintext highlighter-rouge">$\mathbf{\mu}=(\mu_1,\mu_2)$</code> is also a unit vector.</p>
 
-          <p>We can show that the FIM is ill-defined under this parametrization due to this eqaulity constraint.</p>
-        </blockquote>
-      </fieldset>
+            <p>We can show that the FIM is ill-defined under this parametrization due to this eqaulity constraint.</p>
+          </blockquote>
+        </fieldset>
  </details>
+    </div>
   </li>
   <li>The FIM is singular in a non-intrinstic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">singular value decomposition</a> (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example.
-    <details>
- <summary>Example: High iteation cost</summary>
+    <div class="notice--info">
+      <details>
+ <summary>Example: High iteation cost (click to expand)</summary>
  <fieldset class="field-set">
-        <blockquote>
+          <blockquote>
 
-          <p>Consider a $d$-dimensional Gaussian mixture family <code class="language-plaintext highlighter-rouge">$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $</code>. This is a non-intrinstic parameterization.</p>
+            <p>Consider a $d$-dimensional Gaussian mixture family <code class="language-plaintext highlighter-rouge">$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $</code>. This is a non-intrinstic parameterization.</p>
 
-          <p>If we  use the following initialization such that all $C$ components have the same mean $\mu_0$ and the same covariance $\Sigma_0$, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
+            <p>If we  use the following initialization such that all $C$ components have the same mean <code class="language-plaintext highlighter-rouge">$\mu_0$</code> and the same covariance <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}_0$</code>, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
 The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.</p>
 
-          <p>Now, consider the equivalent Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mathbf{\mu}_0,  \mathbf{\Sigma}_0)  \Big|  \mathbf{\mu}_0 \in \mathcal{R}^d,  \mathbf{\Sigma}_0  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda =( \mu_0,\Sigma_0 ) $</code>, where $\lambda$ is an intrinsic parameterization of the Gaussian family.</p>
+            <p>Now, consider the equivalent Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mathbf{\mu},  \mathbf{\Sigma})  \Big|  \mathbf{\mu} \in \mathcal{R}^d,  \mathbf{\Sigma}  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda =( \mu,\mathrm{vech}(\mathbf{\Sigma}) ) $</code>, where $\lambda$ is an intrinsic parameterization of the Gaussian family and initialized by 
+mean $\mu_0$ and  covariance $\mathbf{\Sigma}_0$.</p>
 
-          <p>As we will show in <a href="/posts/2021/12/Geomopt05/">Part V</a>, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.</p>
-        </blockquote>
-      </fieldset>
+            <p>As we will show in <a href="/posts/2021/12/Geomopt05/">Part V</a>, the iteration cost of natural-gradient descent in this parameter space $\Omega_\lambda$ will be $O(d^3)$ if we exploit structures of the exact non-singular FIM.</p>
+          </blockquote>
+        </fieldset>
  </details>
+    </div>
   </li>
   <li>It is tempting to approximate the singular FIM by an emprical FIM with a scalar damping term and use Woodbury matrix identity to reduce the iteration cost of computing natural-gradients. However, sample-based emprical approximations could be problematic.
 Moreover, damping introduces an additional tuning hyper-parameter and destories the linear invariance property of  natural-gradient descent.</li>
@@ -755,11 +763,12 @@ rule of a metric in non-linear cases.</p>
 as
 <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\tau(\tau) = E_{p(w|\tau)}\big[ -\nabla_\tau^2 \log p(w|\tau) \big]$</code>.</p>
 
+<p><strong>Claim</strong>: the FIM follows the transformation
+rule even in non-linear cases.</p>
 <div class="notice--info">
   <details>
 <summary>
-Claim: the FIM follows the transformation
-rule even in non-linear cases.
+Proof of the claim (click to expand)
 </summary>
 <fieldset class="field-set">
       <blockquote>
