@@ -265,12 +265,6 @@ The parameter transformation can be non-linear.</p>
 
 <p>It is natural to expect that natural-gradient descent has a similar property. Unfortunately, natural-gradient descent is only invariant under  an intrinsic <strong>linear</strong> transformation. Note that Newton’s method is also linearly invariant while Euclidean gradient descent is not.</p>
 
-<div class="notice--danger">
-  <p><strong>Warning</strong>:</p>
-
-  <p>Be aware of the difference of the invaraince property between natural gradients and natural-gradient updates.</p>
-</div>
-
 <p>Let’s consider the following (scalar) optimization problem on a smooth manifold $\mathcal{M}$ with the Fisher-Rao metric $F$.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
