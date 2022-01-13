@@ -715,7 +715,7 @@ Therefore,  Euclidean gradient descent is not invariant.</p>
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$h_\tau(\tau)$</code> is strongly convex and twice continuously differentiable w.r.t. <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
 
-<p>Newton’s method in parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> is
+<p>Newton’s method under parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \tau_{k} - \alpha \mathbf{H}^{-1}_\tau(\tau_k) {\mathbf{g}}_{\tau_k} 
@@ -727,9 +727,9 @@ $$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}
 \begin{aligned}
 \min_{\lambda \in \mathcal{R}^K } h_\lambda(\lambda):= h_\tau( \mathbf{U}^{-1} \lambda)
 \end{aligned}
-$$</code> where <code class="language-plaintext highlighter-rouge">$h_\lambda(\lambda)$</code> is also stronly convex w.r.t. <code class="language-plaintext highlighter-rouge">$\lambda$</code> due to  <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>.</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$h_\lambda(\lambda)$</code> is also strongly convex w.r.t. <code class="language-plaintext highlighter-rouge">$\lambda$</code> due to  <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code>.</p>
 
-<p>Newton’s method  in parametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code> is
+<p>Newton’s method under parametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code> is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \lambda_{k+1} \leftarrow \lambda_{k} - \alpha \mathbf{H}^{-1}_\lambda(\lambda_k) {\mathbf{g}}_{\lambda_k} 
