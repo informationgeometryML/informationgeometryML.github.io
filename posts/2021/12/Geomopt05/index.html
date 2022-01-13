@@ -282,7 +282,7 @@ Since <code class="language-plaintext highlighter-rouge">$\sigma= -\frac{1}{2\et
   </details>
     </div>
   </li>
-  <li>The log-partition function can be differentiable w.r.t. <code class="language-plaintext highlighter-rouge">$\eta$</code> even when <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> is discrete.
+  <li>The log-partition function can be differentiable w.r.t. <code class="language-plaintext highlighter-rouge">$\eta$</code> <a class="citation" href="#johansen1979introduction">[1]</a> even when <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> is discrete.
     <div class="notice--info">
       <details>
   <summary>Bernoulli as an exponential family (click to expand)</summary>
@@ -343,7 +343,7 @@ using this class of parametrizations.</p>
   <p><strong>Minimal</strong> natural parametrization: the corresponding sufficient stattistics <code class="language-plaintext highlighter-rouge">$\mathcal{T}(\mathbf{w})$</code> is linearly independent.</p>
 </div>
 
-<p>A regular, minimal, and natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> has many nice properties.</p>
+<p>A regular, minimal, and natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> has many nice properties <a class="citation" href="#johansen1979introduction">[1]</a> <a class="citation" href="#wainwright2008graphical">[2]</a>.</p>
 
 <ul>
   <li>
@@ -550,7 +550,7 @@ $$</code> where
 <code class="language-plaintext highlighter-rouge">$\eta=\eta( \mathbf{m} )$</code>
 can be viewed  as a function of <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.</p>
 
-<p>Therefore, we can  efficinetly compute natural-gradients w.r.t. natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> <a class="citation" href="#khan2017conjugate">[1]</a>  if we  can  easily compute Euclidean gradients w.r.t. its expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.</p>
+<p>Therefore, we can  efficinetly compute natural-gradients w.r.t. natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> <a class="citation" href="#khan2017conjugate">[3]</a>  if we  can  easily compute Euclidean gradients w.r.t. its expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.</p>
 
 <p>Given a $d$-dim multivariate Gaussian with a full covariance structure, 
 the naive way to compute natural-gradients in this case has $O( (d^2)^3 )=O(d^6)$ iteration cost since the covariance matrix has $d^2$ entries.
@@ -852,7 +852,9 @@ _\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
 
 <hr />
 <h1 id="references">References</h1>
-<p class="bibliography"><p><span id="khan2017conjugate">[1] M. Khan &amp; W. Lin, "Conjugate-computation variational inference: Converting variational inference in non-conjugate models to inferences in conjugate models," <i>Artificial Intelligence and Statistics</i> (PMLR, 2017), pp. 878–887.</span></p></p>
+<p class="bibliography"><p><span id="johansen1979introduction">[1] S. Johansen, <i>Introduction to the theory of regular exponential families</i> (Institute of Mathematical Statistics, University of Copenhagen, 1979).</span></p>
+<p><span id="wainwright2008graphical">[2] M. J. Wainwright &amp; M. I. Jordan, <i>Graphical models, exponential families, and variational inference</i> (Now Publishers Inc, 2008).</span></p>
+<p><span id="khan2017conjugate">[3] M. Khan &amp; W. Lin, "Conjugate-computation variational inference: Converting variational inference in non-conjugate models to inferences in conjugate models," <i>Artificial Intelligence and Statistics</i> (PMLR, 2017), pp. 878–887.</span></p></p>
 
 
         
