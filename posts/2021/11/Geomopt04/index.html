@@ -182,7 +182,7 @@
 
 
 
-  18 minute read
+  19 minute read
 </p>
           
         </header>
@@ -263,7 +263,7 @@ descent in practice.</p>
 <p>Recall that in <a href="/posts/2021/11/Geomopt03/#parameter-transform-and-invariance">Part III</a>, we have shown that natural gradients are invariant under any intrinsic parameter transformation.
 The parameter transformation can be non-linear.</p>
 
-<p>It is natural to expect that natural-gradient descent has a similar property. Unfortunately, natural-gradient descent is only invariant under  an intrinsic <strong>linear</strong> transformation. Note that Newton’s method is also linearly invariant while Euclidean gradient descent is not.</p>
+<p>It is natural to expect that natural-gradient descent has a similar property. Unfortunately, natural-gradient descent is only invariant under an intrinsic <strong>linear</strong> transformation. Note that Newton’s method is also linearly invariant while Euclidean gradient descent is not.</p>
 
 <p>Let’s consider the following (scalar) optimization problem on a smooth manifold $\mathcal{M}$ with the Fisher-Rao metric $F$.
 <code class="language-plaintext highlighter-rouge">$$
@@ -403,14 +403,14 @@ $$</code></p>
 </div>
 
 <p>Recall that the exponential map is defined via the geodesic <code class="language-plaintext highlighter-rouge">$\gamma_\tau(1)$</code>.
-We can use an approximation of the geodesic (A.K.A. the Euclidean retraction map) as shown below.
+We can use an approximation of the geodesic to define a new map (A.K.A. the Euclidean retraction map) as shown below.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathrm{Ret}_{\tau_0}(\mathbf{v}_{\tau_0}) := \gamma_\tau(0) + \frac{d  \gamma_\tau(t)}{d t} \Big|_{t=0} (1-0) =\tau_0 + \mathbf{v}_{\tau_0}
 \end{aligned}
 $$</code></p>
 
-<p>Therefore, the inexact Riemannian gradient update is defined as 
+<p>Therefore, an inexact Riemannian gradient update with this new map is defined as 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \mathrm{Ret}_{\tau_k} (- \alpha  \hat{\mathbf{g}}_{\tau_k} )  = \tau_k  - \alpha  \hat{\mathbf{g}}_{\tau_k}
@@ -419,8 +419,63 @@ $$</code> which recovers natural-gradient descent.</p>
 
 <h2 id="natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Natural-gradient Descent as Unconstrained Proximal-gradient Descent</h2>
 
-<p>In this section, we will make an additional but key assumption: the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\mathcal{R}^K$</code> has a global (unconstrained) vector space structure.
-This assumption, in general, does not hold. However, we present this viewpoint since it closely relates to optimization
+<p>In this section, we will make an additional but key assumption:</p>
+
+<div class="notice--success">
+  <p>Additional assumption:</p>
+
+  <p>The parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\mathcal{R}^K$</code> is unconstrained.</p>
+</div>
+
+<p>As we mentioned before, the <strong>distances</strong> in the gradient space and the parameter space are defined differently. 
+In the <a href="#riemannian-gradient-descent-and-its-non-linear-invariance">previous section</a>, we use the geodesic to define the distance between two points in a parameter space.</p>
+
+<p>We could also use other “distances” denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(.,.)$</code> (i.e., Kullback–Leibler divergence or other f-divergence) <a class="citation" href="#khan2016faster">[3]</a> to define the length between two points in a parameter space.</p>
+
+<p>In the following section, we assume <code class="language-plaintext highlighter-rouge">$p(w|\mathbf{y})$</code> and <code class="language-plaintext highlighter-rouge">$p(w|\tau_k)$</code> are two members  in a parameteric distribution family <code class="language-plaintext highlighter-rouge">$p(w|\tau)$</code> indexed by  <code class="language-plaintext highlighter-rouge">$\mathbf{y}$</code> and <code class="language-plaintext highlighter-rouge">$\tau_k$</code>, respectively.</p>
+
+<p>We define a class of f-divergence in this case. 
+Note that a f-divergence can be defined in a more general setting.</p>
+
+<h3 id="csiszars-f-divergence">Csiszar’s f-divergence</h3>
+<hr />
+
+<p>Let <code class="language-plaintext highlighter-rouge">$f:(0,+\infty)\mapsto \mathcal{R}$</code> be a  smooth scalar function satisfying all the following conditions.</p>
+<ul>
+  <li>convex in its domain</li>
+  <li><code class="language-plaintext highlighter-rouge">$f(1)=0$</code></li>
+  <li><code class="language-plaintext highlighter-rouge">$\ddot{f}(1)=1$</code></li>
+</ul>
+
+<p>A f-divergence for a parametric family <code class="language-plaintext highlighter-rouge">$p(w|\tau)$</code> is defined as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{D}_f(\mathbf{y},\tau_k) := \int_w f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw.
+\end{aligned}
+$$</code>
+Thanks to Jensen’s inequality,
+a f-divergence is always non-negative as<br />
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 .
+\end{aligned}
+$$</code></p>
+
+<p>The KL divergence is a speical case of a f-divergence where $f(t)=-\log(t)$.</p>
+
+<h3 id="proximal-gradient-descent">Proximal-gradient descent</h3>
+<hr />
+<p>Given such a “distance” <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code>, we could perform an unconstrained proximal-gradient update as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \arg\min_{\mathbf{y} \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y}\rangle   + \frac{1}{\alpha} \mathrm{D}(\mathbf{y},\tau_k) \}
+\end{aligned}
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\tau_k}$</code> is a Eulcidean gradient and the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is unconstrained.</p>
+
+<p>&lt;div class=”
+the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\mathcal{R}^K$</code> has a global (unconstrained) vector space structure.</p>
+
+<p>This assumption, in general, does not hold. However, we present this viewpoint since it closely relates to optimization
 methods.</p>
 
 <p>As we mentioned before, the <strong>distances</strong> in the gradient space and the parameter space are defined differently. 
@@ -459,7 +514,7 @@ $$</code></p>
 
 <p>The KL divergence is a speical case of a f-divergence where $f(t)=-\log(t)$.</p>
 
-<h3 id="proximal-gradient-descent">Proximal-gradient descent</h3>
+<h3 id="proximal-gradient-descent-1">Proximal-gradient descent</h3>
 <hr />
 <p>Given such a “distance” <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code>, we could perform an unconstrained proximal-gradient update as
 <code class="language-plaintext highlighter-rouge">$$

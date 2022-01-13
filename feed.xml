@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-13T09:19:25-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-13T09:33:56-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -912,7 +912,7 @@ descent in practice.&lt;/p&gt;
 &lt;p&gt;Recall that in &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transform-and-invariance&quot;&gt;Part III&lt;/a&gt;, we have shown that natural gradients are invariant under any intrinsic parameter transformation.
 The parameter transformation can be non-linear.&lt;/p&gt;
 
-&lt;p&gt;It is natural to expect that natural-gradient descent has a similar property. Unfortunately, natural-gradient descent is only invariant under  an intrinsic &lt;strong&gt;linear&lt;/strong&gt; transformation. Note that Newton’s method is also linearly invariant while Euclidean gradient descent is not.&lt;/p&gt;
+&lt;p&gt;It is natural to expect that natural-gradient descent has a similar property. Unfortunately, natural-gradient descent is only invariant under an intrinsic &lt;strong&gt;linear&lt;/strong&gt; transformation. Note that Newton’s method is also linearly invariant while Euclidean gradient descent is not.&lt;/p&gt;
 
 &lt;p&gt;Let’s consider the following (scalar) optimization problem on a smooth manifold $\mathcal{M}$ with the Fisher-Rao metric $F$.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -1052,14 +1052,14 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Recall that the exponential map is defined via the geodesic &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(1)$&lt;/code&gt;.
-We can use an approximation of the geodesic (A.K.A. the Euclidean retraction map) as shown below.
+We can use an approximation of the geodesic to define a new map (A.K.A. the Euclidean retraction map) as shown below.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathrm{Ret}_{\tau_0}(\mathbf{v}_{\tau_0}) := \gamma_\tau(0) + \frac{d  \gamma_\tau(t)}{d t} \Big|_{t=0} (1-0) =\tau_0 + \mathbf{v}_{\tau_0}
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Therefore, the inexact Riemannian gradient update is defined as 
+&lt;p&gt;Therefore, an inexact Riemannian gradient update with this new map is defined as 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \mathrm{Ret}_{\tau_k} (- \alpha  \hat{\mathbf{g}}_{\tau_k} )  = \tau_k  - \alpha  \hat{\mathbf{g}}_{\tau_k}
@@ -1068,8 +1068,63 @@ $$&lt;/code&gt; which recovers natural-gradient descent.&lt;/p&gt;
 
 &lt;h2 id=&quot;natural-gradient-descent-as-unconstrained-proximal-gradient-descent&quot;&gt;Natural-gradient Descent as Unconstrained Proximal-gradient Descent&lt;/h2&gt;
 
-&lt;p&gt;In this section, we will make an additional but key assumption: the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau=\mathcal{R}^K$&lt;/code&gt; has a global (unconstrained) vector space structure.
-This assumption, in general, does not hold. However, we present this viewpoint since it closely relates to optimization
+&lt;p&gt;In this section, we will make an additional but key assumption:&lt;/p&gt;
+
+&lt;div class=&quot;notice--success&quot;&gt;
+  &lt;p&gt;Additional assumption:&lt;/p&gt;
+
+  &lt;p&gt;The parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau=\mathcal{R}^K$&lt;/code&gt; is unconstrained.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;p&gt;As we mentioned before, the &lt;strong&gt;distances&lt;/strong&gt; in the gradient space and the parameter space are defined differently. 
+In the &lt;a href=&quot;#riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;previous section&lt;/a&gt;, we use the geodesic to define the distance between two points in a parameter space.&lt;/p&gt;
+
+&lt;p&gt;We could also use other “distances” denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(.,.)$&lt;/code&gt; (i.e., Kullback–Leibler divergence or other f-divergence) &lt;a class=&quot;citation&quot; href=&quot;#khan2016faster&quot;&gt;[3]&lt;/a&gt; to define the length between two points in a parameter space.&lt;/p&gt;
+
+&lt;p&gt;In the following section, we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(w|\mathbf{y})$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(w|\tau_k)$&lt;/code&gt; are two members  in a parameteric distribution family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(w|\tau)$&lt;/code&gt; indexed by  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{y}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_k$&lt;/code&gt;, respectively.&lt;/p&gt;
+
+&lt;p&gt;We define a class of f-divergence in this case. 
+Note that a f-divergence can be defined in a more general setting.&lt;/p&gt;
+
+&lt;h3 id=&quot;csiszars-f-divergence&quot;&gt;Csiszar’s f-divergence&lt;/h3&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;Let &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f:(0,+\infty)\mapsto \mathcal{R}$&lt;/code&gt; be a  smooth scalar function satisfying all the following conditions.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;convex in its domain&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(1)=0$&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\ddot{f}(1)=1$&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A f-divergence for a parametric family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(w|\tau)$&lt;/code&gt; is defined as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathrm{D}_f(\mathbf{y},\tau_k) := \int_w f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw.
+\end{aligned}
+$$&lt;/code&gt;
+Thanks to Jensen’s inequality,
+a f-divergence is always non-negative as&lt;br /&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 .
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The KL divergence is a speical case of a f-divergence where $f(t)=-\log(t)$.&lt;/p&gt;
+
+&lt;h3 id=&quot;proximal-gradient-descent&quot;&gt;Proximal-gradient descent&lt;/h3&gt;
+&lt;hr /&gt;
+&lt;p&gt;Given such a “distance” &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(\mathbf{y},\tau_k)$&lt;/code&gt;, we could perform an unconstrained proximal-gradient update as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\tau_{k+1} \leftarrow \arg\min_{\mathbf{y} \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y}\rangle   + \frac{1}{\alpha} \mathrm{D}(\mathbf{y},\tau_k) \}
+\end{aligned}
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\tau_k}$&lt;/code&gt; is a Eulcidean gradient and the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is unconstrained.&lt;/p&gt;
+
+&lt;p&gt;&amp;lt;div class=”
+the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau=\mathcal{R}^K$&lt;/code&gt; has a global (unconstrained) vector space structure.&lt;/p&gt;
+
+&lt;p&gt;This assumption, in general, does not hold. However, we present this viewpoint since it closely relates to optimization
 methods.&lt;/p&gt;
 
 &lt;p&gt;As we mentioned before, the &lt;strong&gt;distances&lt;/strong&gt; in the gradient space and the parameter space are defined differently. 
@@ -1108,7 +1163,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;The KL divergence is a speical case of a f-divergence where $f(t)=-\log(t)$.&lt;/p&gt;
 
-&lt;h3 id=&quot;proximal-gradient-descent&quot;&gt;Proximal-gradient descent&lt;/h3&gt;
+&lt;h3 id=&quot;proximal-gradient-descent-1&quot;&gt;Proximal-gradient descent&lt;/h3&gt;
 &lt;hr /&gt;
 &lt;p&gt;Given such a “distance” &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(\mathbf{y},\tau_k)$&lt;/code&gt;, we could perform an unconstrained proximal-gradient update as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
