@@ -570,7 +570,7 @@ $\Sigma$ is considered as a d-by-d matrix with <code class="language-plaintext h
         <p>The corresponding expectation parameter  is $\mathbf{m}=( E_{p(w)}[ \mathbf{w} ], E_{p(w)}[ \mathrm{vec2h}( \mathbf{w}\mathbf{w}^T ) ]) = (\mu, \mathrm{vec2h}(\mu\mu^T+\Sigma ) ) $, where
 $\mathrm{vec2h}(\mathrm{S}):=\mathrm{vech}\big(2\mathrm{S} - \mathrm{Diag}( \mathrm{diag}(\mathrm{S}) ) \big)$ is defined in the previous section.</p>
 
-        <p>By using the result in this section, we can efficiently  compute each natural gradient w.r.t. $\eta$ by the corresponding computing Eucldiean gradient w.r.t. $\mathbf{m}$.</p>
+        <p>By using the result in this section, we can efficiently  compute each natural gradient w.r.t. $\eta$ by  computing the corresponding Eucldiean gradient w.r.t. $\mathbf{m}$.</p>
 
         <p>Denote $\mathbf{m}^{(1)}:=\mu$ and $\mathbf{m}^{(2)}:=\mathrm{vec2h}(\mu\mu^T+\Sigma)$.</p>
 
