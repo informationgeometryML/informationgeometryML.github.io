@@ -574,7 +574,7 @@ in $O( d^3 )$ iteration cost</p>
 <fieldset class="field-set">
       <blockquote>
         <p>As shown in <a href="#minimal-parametrizations-of-exponential-family">the previous section</a>, a minimal,regular, and natural parameter is <code class="language-plaintext highlighter-rouge">$\eta=(\mathbf{S}\mu,-\frac{1}{2}\mathrm{vech}(\mathbf{S}) )$</code>, where <code class="language-plaintext highlighter-rouge">$\Sigma$</code> is the covariance and <code class="language-plaintext highlighter-rouge">$\mathbf{S}= ( \Sigma )^{-1}$</code>.
-$\Sigma$ is considered as a d-by-d matrix with <code class="language-plaintext highlighter-rouge">$\frac{d(d+1)}{2}$</code> distinct entries.</p>
+$\Sigma$ is considered as a d-by-d matrix with <code class="language-plaintext highlighter-rouge">$\frac{d(d+1)}{2}$</code> distinct entries (degrees of freedom).</p>
 
         <p>The corresponding expectation parameter  is $\mathbf{m}=( E_{p(w)}[ \mathbf{w} ], E_{p(w)}[ \mathrm{vec2h}( \mathbf{w}\mathbf{w}^T ) ]) = (\mu, \mathrm{vec2h}(\mu\mu^T+\Sigma ) ) $, where
 $\mathrm{vec2h}(\mathrm{S}):=\mathrm{vech}\big(2\mathrm{S} - \mathrm{Diag}( \mathrm{diag}(\mathrm{S}) ) \big)$ is defined in the previous section.</p>
@@ -603,11 +603,11 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$m^{(1)}_i$</
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \frac{\partial \ell}{\partial \mu} &amp;= \mathbf{g}_\mu^T \\
-\frac{\partial \ell}{\partial \mathbf{V} } &amp; =\mathbf{g}_{V} \,\,\,\, ( \mathbf{V}=\Sigma \text{ is a d-by-d matrix with } d^2  \text{ distinct entries} ) \\
-\frac{\partial \ell}{\partial \Sigma } &amp; =\mathbf{g}_{\Sigma} \,\,\,\, ( \Sigma \text{ is a d-by-d matrix with } \frac{d(d+1)}{2}  \text{ distinct entries} ) \\
+\frac{\partial \ell}{\partial \mathbf{V} } &amp; =\mathbf{g}_{V} \,\,\,\, ( \mathbf{V} \text{ is a d-by-d matrix with } d^2  \text{ degrees of freedom} ) \\
+\frac{\partial \ell}{\partial \Sigma } &amp; =\mathbf{g}_{\Sigma} \,\,\,\, ( \Sigma \text{ is a d-by-d matrix with } \frac{d(d+1)}{2}  \text{ degrees of freedom} ) \\
 \frac{\partial \ell}{\partial \mathrm{vec2h}(\Sigma)} &amp;=  ( \mathrm{vech}(\mathbf{g}_{V}))^T 
 \end{aligned}
-$$</code></p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{V}$</code> takes the same value of <code class="language-plaintext highlighter-rouge">$\Sigma$</code>.</p>
 
         <div class="notice--danger">
           <p>Note:</p>

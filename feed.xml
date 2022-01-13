@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-13T10:21:41-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-13T10:26:25-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -534,7 +534,7 @@ in $O( d^3 )$ iteration cost&lt;/p&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
       &lt;blockquote&gt;
         &lt;p&gt;As shown in &lt;a href=&quot;#minimal-parametrizations-of-exponential-family&quot;&gt;the previous section&lt;/a&gt;, a minimal,regular, and natural parameter is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta=(\mathbf{S}\mu,-\frac{1}{2}\mathrm{vech}(\mathbf{S}) )$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Sigma$&lt;/code&gt; is the covariance and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}= ( \Sigma )^{-1}$&lt;/code&gt;.
-$\Sigma$ is considered as a d-by-d matrix with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d+1)}{2}$&lt;/code&gt; distinct entries.&lt;/p&gt;
+$\Sigma$ is considered as a d-by-d matrix with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d+1)}{2}$&lt;/code&gt; distinct entries (degrees of freedom).&lt;/p&gt;
 
         &lt;p&gt;The corresponding expectation parameter  is $\mathbf{m}=( E_{p(w)}[ \mathbf{w} ], E_{p(w)}[ \mathrm{vec2h}( \mathbf{w}\mathbf{w}^T ) ]) = (\mu, \mathrm{vec2h}(\mu\mu^T+\Sigma ) ) $, where
 $\mathrm{vec2h}(\mathrm{S}):=\mathrm{vech}\big(2\mathrm{S} - \mathrm{Diag}( \mathrm{diag}(\mathrm{S}) ) \big)$ is defined in the previous section.&lt;/p&gt;
@@ -563,11 +563,11 @@ $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \frac{\partial \ell}{\partial \mu} &amp;amp;= \mathbf{g}_\mu^T \\
-\frac{\partial \ell}{\partial \mathbf{V} } &amp;amp; =\mathbf{g}_{V} \,\,\,\, ( \mathbf{V}=\Sigma \text{ is a d-by-d matrix with } d^2  \text{ distinct entries} ) \\
-\frac{\partial \ell}{\partial \Sigma } &amp;amp; =\mathbf{g}_{\Sigma} \,\,\,\, ( \Sigma \text{ is a d-by-d matrix with } \frac{d(d+1)}{2}  \text{ distinct entries} ) \\
+\frac{\partial \ell}{\partial \mathbf{V} } &amp;amp; =\mathbf{g}_{V} \,\,\,\, ( \mathbf{V} \text{ is a d-by-d matrix with } d^2  \text{ degrees of freedom} ) \\
+\frac{\partial \ell}{\partial \Sigma } &amp;amp; =\mathbf{g}_{\Sigma} \,\,\,\, ( \Sigma \text{ is a d-by-d matrix with } \frac{d(d+1)}{2}  \text{ degrees of freedom} ) \\
 \frac{\partial \ell}{\partial \mathrm{vec2h}(\Sigma)} &amp;amp;=  ( \mathrm{vech}(\mathbf{g}_{V}))^T 
 \end{aligned}
-$$&lt;/code&gt;&lt;/p&gt;
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{V}$&lt;/code&gt; takes the same value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Sigma$&lt;/code&gt;.&lt;/p&gt;
 
         &lt;div class=&quot;notice--danger&quot;&gt;
           &lt;p&gt;Note:&lt;/p&gt;
@@ -1071,7 +1071,7 @@ $$&lt;/code&gt; which recovers natural-gradient descent.&lt;/p&gt;
 &lt;p&gt;In this section, we will make an additional but key assumption:&lt;/p&gt;
 
 &lt;div class=&quot;notice--success&quot;&gt;
-  &lt;p&gt;Additional assumption:&lt;/p&gt;
+  &lt;p&gt;&lt;strong&gt;Additional assumption&lt;/strong&gt;:&lt;/p&gt;
 
   &lt;p&gt;The parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau=\mathcal{R}^K$&lt;/code&gt; is unconstrained.&lt;/p&gt;
 &lt;/div&gt;
