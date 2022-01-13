@@ -182,7 +182,7 @@
 
 
 
-  19 minute read
+  18 minute read
 </p>
           
         </header>
@@ -215,7 +215,7 @@ speaking,  a (Riemannian) gradient space is much simpler and nicer than a  param
 <h1 id="natural-gradient-descent-in-an-intrinsic-parameter-space">Natural-gradient Descent in an Intrinsic Parameter Space</h1>
 <hr />
 
-<p>Using intrinstic parametrization $\tau$, we can perform a natural-gradient update known as natural-gradient descent (NGD) <a class="citation" href="#amari1998natural">[1]</a> when we use the Fisher-Rao metric.</p>
+<p>Using intrinsic parametrization $\tau$, we can perform a natural-gradient update known as natural-gradient descent (NGD) <a class="citation" href="#amari1998natural">[1]</a> when we use the Fisher-Rao metric.</p>
 
 <div class="notice--success">
   <p><code class="language-plaintext highlighter-rouge">$$
@@ -228,7 +228,7 @@ $$</code></p>
 <p>where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\tau_k}$</code> is a natural gradient evaluated at point <code class="language-plaintext highlighter-rouge">$\tau_{k}$</code> and $\alpha&gt;0$ is a step-size.</p>
 
 <p>This update in Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is inspired by the standard vector update in the <strong>gradient space</strong>.
-By choosing an intrinstic parametrization, this update is also valid in the <strong>parameter space</strong> as long as the step-size is small
+By choosing an intrinsic parametrization, this update is also valid in the <strong>parameter space</strong> as long as the step-size is small
 enough.</p>
 
 <p>The update in the parameter space is valid since the parameter space $\Omega_\tau$ has a local vector-space structure thanks to the use of an intrinsic parametrization.
@@ -273,7 +273,7 @@ The parameter transformation can be non-linear.</p>
 $$</code></p>
 
 <p>Note that $\mathcal{M}$ in general does not have a vector-space structure. 
-We has to <strong>artificially</strong> choose an intrinstic parameterization $\tau$ so that the parameter space $\Omega_\tau$ at least has a local  vector-space structure.
+We has to <strong>artificially</strong> choose an intrinsic parameterization $\tau$ so that the parameter space $\Omega_\tau$ at least has a local  vector-space structure.
 The problem in <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> can be re-expressed as below.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -288,7 +288,7 @@ $$</code> where $h_\tau$ is the parameter representation of the smooth function 
 \end{aligned}\tag{3}\label{3}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\tau_k} := [\mathbf{F}_\tau(\tau_k) ]^{-1} \nabla_\tau h_\tau(\tau_k)$</code> and the step-size $\alpha$ is small enough so that  $\tau_{k+1} \in \Omega_\tau$.</p>
 
-<p>Consider another intrinstic parameterization $\lambda$ so that $\lambda=\mathbf{U} \tau$, where $\mathbf{U}$ is a constant (square) invertible matrix. 
+<p>Consider another intrinsic parameterization $\lambda$ so that $\lambda=\mathbf{U} \tau$, where $\mathbf{U}$ is a constant (square) invertible matrix. 
 For simplicity,  we further assume <code class="language-plaintext highlighter-rouge">$\Omega_\lambda=\{ \mathbf{U}\tau |\tau \in\Omega_\tau \} $</code>, where $\Omega_\lambda$ is the parameter space of $\lambda$.</p>
 
 <p>Natural gradient descent in this parameter space $\Omega_\lambda$ is
@@ -322,7 +322,7 @@ Therefore, updates in <code class="language-plaintext highlighter-rouge">$\eqref
 <p>Now we discuss a gradient-based method that is invariant to any intrinsic parameter transformation.</p>
 
 <p>As mentioned before, a manifold in general does not have a vector-space structure. 
-We has to <strong>artificially</strong> choose an intrinstic parameterization <code class="language-plaintext highlighter-rouge">$\tau$</code>, which gives rise to
+We has to <strong>artificially</strong> choose an intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau$</code>, which gives rise to
 a parametrization-dependence.
 Therefore, it will be ideal if  a 
 gradient-based method does not dependent on the choice of intrinsic parametrizations.</p>
@@ -461,60 +461,9 @@ a f-divergence is always non-negative as<br />
 \end{aligned}
 $$</code></p>
 
-<p>The KL divergence is a speical case of a f-divergence where $f(t)=-\log(t)$.</p>
+<p>The KL divergence is a f-divergence where $f(t)=-\log(t)$.</p>
 
 <h3 id="proximal-gradient-descent">Proximal-gradient descent</h3>
-<hr />
-<p>Given such a “distance” <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code>, we could perform an unconstrained proximal-gradient update as
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\tau_{k+1} \leftarrow \arg\min_{\mathbf{y} \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y}\rangle   + \frac{1}{\alpha} \mathrm{D}(\mathbf{y},\tau_k) \}
-\end{aligned}
-$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{\tau_k}$</code> is a Eulcidean gradient and the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is unconstrained.</p>
-
-<p>&lt;div class=”
-the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\mathcal{R}^K$</code> has a global (unconstrained) vector space structure.</p>
-
-<p>This assumption, in general, does not hold. However, we present this viewpoint since it closely relates to optimization
-methods.</p>
-
-<p>As we mentioned before, the <strong>distances</strong> in the gradient space and the parameter space are defined differently. 
-In the <a href="#riemannian-gradient-descent-and-its-non-linear-invariance">previous section</a>, we use the geodesic to define the distance between two points in a parameter space.</p>
-
-<p>We could also use other “distances” denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(.,.)$</code> (i.e., Kullback–Leibler divergence or other f-divergence) <a class="citation" href="#khan2016faster">[3]</a> to define the length between two points in a parameter space.</p>
-
-<p>In the following section, we assume <code class="language-plaintext highlighter-rouge">$p(w|\mathbf{y})$</code> and <code class="language-plaintext highlighter-rouge">$p(w|\tau_k)$</code> are two members  in a parameteric distribution family <code class="language-plaintext highlighter-rouge">$p(w|\tau)$</code> indexed by  <code class="language-plaintext highlighter-rouge">$\mathbf{y}$</code> and <code class="language-plaintext highlighter-rouge">$\tau_k$</code>, respectively.</p>
-
-<p>We define a class of f-divergence in this case. 
-Note that a f-divergence can be defined in a more general setting.</p>
-
-<h3 id="f-divergence">f-divergence</h3>
-<hr />
-
-<p>Let <code class="language-plaintext highlighter-rouge">$f:(0,+\infty)\mapsto \mathcal{R}$</code> be a scalar smooth function satisfying all the following conditions.</p>
-<ul>
-  <li>convex in its domain</li>
-  <li><code class="language-plaintext highlighter-rouge">$f(1)=0$</code></li>
-  <li><code class="language-plaintext highlighter-rouge">$\ddot{f}(1)=1$</code></li>
-</ul>
-
-<p>A f-divergence for a parametric family <code class="language-plaintext highlighter-rouge">$p(w|\tau)$</code> is defined as
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\mathrm{D}_f(\mathbf{y},\tau_k) := \int_w f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw.
-\end{aligned}
-$$</code>
-Thanks to Jensen’s inequality,
-a f-divergence is always non-negative as<br />
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 .
-\end{aligned}
-$$</code></p>
-
-<p>The KL divergence is a speical case of a f-divergence where $f(t)=-\log(t)$.</p>
-
-<h3 id="proximal-gradient-descent-1">Proximal-gradient descent</h3>
 <hr />
 <p>Given such a “distance” <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code>, we could perform an unconstrained proximal-gradient update as
 <code class="language-plaintext highlighter-rouge">$$
@@ -614,7 +563,7 @@ $$</code></p>
 
 <p>By the claim, when <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code> is the second-order Talor approximatio of a
 f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\tau_k)$</code>  at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\tau_k$</code>,
-the unconstrained proximal-gradient descent can be re-expressed as
+the unconstrained proximal-gradient update  can be re-expressed as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y} \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k) (\mathbf{y}-\tau_k) \}
@@ -637,14 +586,14 @@ Under a particular parametrization,  natural-gradient descent also can be viewed
   <p>The connection bewteen natural-gradient descent and proximal-gradient/mirror descent could break down in constrained cases. We will cover more about this point in <a href="/posts/2021/12/Geomopt06/">Part VI</a>.</p>
 </div>
 
-<h1 id="natural-gradient-descent-in-non-intrinstic-parameter-spaces">Natural-gradient Descent in Non-intrinstic Parameter Spaces</h1>
+<h1 id="natural-gradient-descent-in-non-intrinsic-parameter-spaces">Natural-gradient Descent in Non-intrinsic Parameter Spaces</h1>
 <hr />
 <p>As mentioned in <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">Part I</a>, an intrinsic parametrization creates a nice parameter space (e.g., a local vector space structure) and guarantees a non-singular FIM.
 We now discuss issues when it comes to  natural-gradient descent over non-intrinsic parametrizations including overparameterization.</p>
 
 <ol>
   <li>
-    <p>We may not have a local vector space structure in a non-intrinstic parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM could also be ill-defined in such cases. We will illustrate this by examples.</p>
+    <p>We may not have a local vector space structure in a non-intrinsic parameter space. Therefore, natural-gradient descent in this parameter space is pointless since the updated parameter will leave the parameter space. Indeed, the FIM could also be ill-defined in such cases. We will illustrate this by examples.</p>
 
     <div class="notice--info">
       <details>
@@ -677,16 +626,19 @@ We now discuss issues when it comes to  natural-gradient descent over non-intrin
  </details>
     </div>
   </li>
-  <li>The FIM is singular in a non-intrinstic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">singular value decomposition</a> (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example.
+  <li>The FIM is singular in a non-intrinsic space. In theory, Moore–Penrose inverse could be used to compute natural-gradients so that natural-gradient descent is linearly invariant in this case. However, Moore–Penrose inverse often has to use the <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">singular value decomposition</a> (SVD) and  destroies structures of the FIM.  In practice, the iteration cost of Moore–Penrose inverse is very high as illustrated in the following example.
     <div class="notice--info">
       <details>
  <summary>Example: High iteation cost (click to expand)</summary>
  <fieldset class="field-set">
           <blockquote>
 
-            <p>Consider a $d$-dimensional Gaussian mixture family <code class="language-plaintext highlighter-rouge">$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $</code>. This is a non-intrinstic parameterization.</p>
+            <p>Consider a $d$-dimensional Gaussian mixture family <code class="language-plaintext highlighter-rouge">$ \{ \frac{1}{C} \sum_{k=1}^{C} \mathcal{N}(w |\mathbf{\mu}_k,  \mathbf{\Sigma}_k)  \Big|  \mathbf{\mu}_k \in \mathcal{R}^d,  \mathbf{\Sigma}_k  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\tau = \{ \mu_k,\Sigma_k\}_{k=1}^{C} $</code>.</p>
 
-            <p>If we  use the following initialization such that all $C$ components have the same mean <code class="language-plaintext highlighter-rouge">$\mu_0$</code> and the same covariance <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}_0$</code>, this family becomes a Gaussian family. In this case, the FIM of this mixture is singular.
+            <p>If we  use the following initialization such that all $C$ components have the same mean <code class="language-plaintext highlighter-rouge">$\mu_0$</code> and the same covariance <code class="language-plaintext highlighter-rouge">$\mathbf{\Sigma}_0$</code>, this family becomes a Gaussian family.
+In this case,
+$\tau$ a non-intrinsic parameterization for the Gaussian family. Note that the FIM is singular under
+ parametrization $\tau$.
 The iteration cost of natural-gradient descent in this parameter space $\Omega_\tau$ will be $O(C^3 d^6)$ if  Moore–Penrose inverse is employed.</p>
 
             <p>Now, consider the equivalent Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mathbf{\mu},  \mathbf{\Sigma})  \Big|  \mathbf{\mu} \in \mathcal{R}^d,  \mathbf{\Sigma}  \succ \mathbf{0}  \}$</code> with <code class="language-plaintext highlighter-rouge">$\lambda =( \mu,\mathrm{vech}(\mathbf{\Sigma}) ) $</code>, where $\lambda$ is an intrinsic parameterization of the Gaussian family and initialized by 
@@ -843,7 +795,7 @@ Proof of the claim (click to expand)
       <blockquote>
         <p>Proof</p>
 
-        <p>Given a non-linear intrinstic reparametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code>, recall that the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau_k)$</code> in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is no longer a constant matrix but a square and non-singular matrix.
+        <p>Given a non-linear intrinsic reparametrization <code class="language-plaintext highlighter-rouge">$\lambda$</code>, recall that the Jacobian matrix <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau_k)$</code> in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is no longer a constant matrix but a square and non-singular matrix.
 In this case, the FIM still follows the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a> thanks to <a href="https://en.wikipedia.org/wiki/Score_(statistics)#Mean">the expectation of the score function</a>.</p>
 
         <p><code class="language-plaintext highlighter-rouge">$$
