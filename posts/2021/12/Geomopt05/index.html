@@ -365,7 +365,12 @@ using this class of parametrizations.</p>
 <p>We will only show the first property in this post. The remaining properties can be found in the literature.
 Note that the linearity in the inner product <code class="language-plaintext highlighter-rouge">$\langle \mathbf{\eta} , \mathbf{T}_\eta(\mathbf{w}) \rangle$</code>,  plays a key role in showing these properties.</p>
 
-<p><strong>Claim</strong>: A regular, minimal, and natural parametrization is intrinstic.</p>
+<div class="notice--success">
+  <p><strong>Claim</strong>:</p>
+
+  <p>A regular, minimal, and natural parametrization is intrinstic.</p>
+</div>
+
 <div class="notice--info">
   <details>
 <summary>Proof of the claim (click to expand)</summary>
@@ -556,8 +561,12 @@ can be viewed  as a function of <code class="language-plaintext highlighter-roug
 the naive way to compute natural-gradients in this case has $O( (d^2)^3 )=O(d^6)$ iteration cost since the covariance matrix has $d^2$ entries.
 Now, we show how to efficiently  compute natural-gradients .</p>
 
-<p><strong>Claim</strong>: We can efficiently   compute natural-gradients 
+<div class="notice--success">
+  <p><strong>Claim</strong>:</p>
+
+  <p>We can efficiently   compute natural-gradients 
 in $O( d^3 )$ iteration cost</p>
+</div>
 
 <div class="notice--info">
   <details>
@@ -797,7 +806,11 @@ where  <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k} \in \Omega_m$</code>,  <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k):= \nabla_m f(\eta(\mathbf{m}_k))$</code> and the Bregman divergence <code class="language-plaintext highlighter-rouge">$\mathrm{B}_{A^*_\eta}(\cdot,\cdot)$</code> is well-defined
 since  <code class="language-plaintext highlighter-rouge">$A^*_\eta$</code> is strcitly convex in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.</p>
 
-<p><strong>Claim</strong>: when <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the solution of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is equivalent to <code class="language-plaintext highlighter-rouge">$\eta_{k+1}  \leftarrow  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>.</p>
+<div class="notice--success">
+  <p><strong>Claim</strong>:</p>
+
+  <p>when <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the solution of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is equivalent to <code class="language-plaintext highlighter-rouge">$\eta_{k+1}  \leftarrow  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>.</p>
+</div>
 
 <div class="notice--info">
   <details>
