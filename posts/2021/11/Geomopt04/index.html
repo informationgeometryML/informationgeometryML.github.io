@@ -404,7 +404,7 @@ $$</code></p>
 </div>
 
 <p>Recall that the exponential map is defined via the geodesic <code class="language-plaintext highlighter-rouge">$\gamma_\tau(1)$</code>.
-We can use an approximation of the geodesic to define a new map (A.K.A. the Euclidean retraction map) as shown below.
+We can use this approximation of the geodesic to define a new map (A.K.A. the Euclidean retraction map) as shown below.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathrm{Ret}_{\tau_0}(\mathbf{v}_{\tau_0}) := \gamma_\tau(0) + \frac{d  \gamma_\tau(t)}{d t} \Big|_{t=0} (1-0) =\tau_0 + \mathbf{v}_{\tau_0}
@@ -485,10 +485,10 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{g}_{
 <fieldset class="field-set">
       <p>Proof:</p>
 
-      <p>We will show that the second-order Talor approximation at $\mathbf{y}=\tau_k$ can be re-expressed as below.
+      <p>We will show that the second-order Talor approximation denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code>  can be expressed as below.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathrm{D}(\mathbf{y},\tau_k) = \underbrace{\mathrm{D}_f(\tau_k,\tau_k)}_{=0} + (\mathbf{y}-\tau_k)^T \underbrace{ [\nabla_y  \mathrm{D}_f(\mathbf{y},\tau_k) \big|_{y=\tau_k}]}_{=0} +\frac{1}{2} (\mathbf{y}-\tau_k)^T \underbrace{ [\nabla_y^2  \mathrm{D}_f(\mathbf{y},\tau_k)\big|_{y=\tau_k}]}_{ =\mathbf{F}_\tau(\tau_k) } (\mathbf{y}-\tau_k)
+\mathrm{D}(\mathbf{y},\tau_k) := \underbrace{\mathrm{D}_f(\tau_k,\tau_k)}_{=0} + (\mathbf{y}-\tau_k)^T \underbrace{ [\nabla_y  \mathrm{D}_f(\mathbf{y},\tau_k) \big|_{y=\tau_k}]}_{=0} +\frac{1}{2} (\mathbf{y}-\tau_k)^T \underbrace{ [\nabla_y^2  \mathrm{D}_f(\mathbf{y},\tau_k)\big|_{y=\tau_k}]}_{ =\mathbf{F}_\tau(\tau_k) } (\mathbf{y}-\tau_k)
 \end{aligned}
 $$</code></p>
 
