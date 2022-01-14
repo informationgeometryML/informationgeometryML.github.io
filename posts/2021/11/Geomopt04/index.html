@@ -513,11 +513,13 @@ $$</code></p>
       <p>Note that when $y=\tau_k$, we can simplify the expression since 
 <code class="language-plaintext highlighter-rouge">$\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big)=\dot{f}(1)$</code> is a constant.
 Therefore,
-`\(\begin{aligned}
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
 \nabla_y \mathrm{D}_f(\mathbf{y},\tau_k) \big|_{y=\tau_k}  
 =\int_w  \dot{f}(1) \nabla_y p(w|\mathbf{y}) \big|_{y=\tau_k} dw =  
 \dot{f}(1)  \nabla_y \underbrace{\Big[ \int_w   p(w|\mathbf{y}) dw \Big]}_{=1} \Big|_{y=\tau_k} = 0.
-\end{aligned}\).</p>
+\end{aligned}
+$$</code></p>
 
       <p>For the second-order term, we have
 <code class="language-plaintext highlighter-rouge">$$
