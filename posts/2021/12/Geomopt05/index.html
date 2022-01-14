@@ -564,8 +564,8 @@ Now, we show how to efficiently compute natural-gradients in this case.</p>
 <div class="notice--success">
   <p><strong>Claim</strong>:</p>
 
-  <p>We can efficiently   compute natural-gradients 
-in $O( d^3 )$ iteration cost</p>
+  <p>We can efficiently  compute natural-gradients 
+in $O( d^3 )$ iteration cost in this case.</p>
 </div>
 
 <div class="notice--info">
@@ -603,7 +603,7 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$m^{(1)}_i$</
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \frac{\partial \ell}{\partial \mu} &amp;= \mathbf{g}_\mu^T \\
-\frac{\partial \ell}{\partial \mathbf{V} } &amp; =\mathbf{g}_{V} \,\,\,\, ( \mathbf{V} \text{ is a d-by-d matrix with } d^2  \text{ degrees of freedom} ) \\
+\frac{\partial \ell}{\partial V } &amp; =\mathbf{g}_{V} \,\,\,\, ( \mathbf{V} \text{ is a d-by-d matrix with } d^2  \text{ degrees of freedom} ) \\
 \frac{\partial \ell}{\partial \Sigma } &amp; =\mathbf{g}_{\Sigma} \,\,\,\, ( \Sigma \text{ is a d-by-d matrix with } \frac{d(d+1)}{2}  \text{ degrees of freedom} ) \\
 \frac{\partial \ell}{\partial \mathrm{vec2h}(\Sigma)} &amp;=  ( \mathrm{vech}(\mathbf{g}_{V}))^T 
 \end{aligned}
@@ -804,12 +804,13 @@ where  <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta
 \mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
 \end{aligned}\tag{7}\label{7}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k} \in \Omega_m$</code>,  <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k):= \nabla_m f(\eta(\mathbf{m}_k))$</code> and the Bregman divergence <code class="language-plaintext highlighter-rouge">$\mathrm{B}_{A^*_\eta}(\cdot,\cdot)$</code> is well-defined
-since  <code class="language-plaintext highlighter-rouge">$A^*_\eta$</code> is strictly convex in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.</p>
+since  <code class="language-plaintext highlighter-rouge">$A^*_\eta$</code> is strictly convex in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.
+Recall  that <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> can still be constrained.</p>
 
 <div class="notice--success">
   <p><strong>Claim</strong>:</p>
 
-  <p>when <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the solution of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is equivalent to <code class="language-plaintext highlighter-rouge">$\eta_{k+1}  \leftarrow  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>.</p>
+  <p>When <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the solution of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is equivalent to <code class="language-plaintext highlighter-rouge">$\eta_{k+1}  \leftarrow  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>.</p>
 </div>
 
 <div class="notice--info">
