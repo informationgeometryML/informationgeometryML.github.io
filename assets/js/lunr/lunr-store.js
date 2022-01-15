@@ -35,7 +35,7 @@ var store = [{
         "url": "/posts/2021/07/ICML/",
         "teaser":null},{
         "title": "Part I: Smooth Manifolds with the Fisher-Rao Metric",
-        "excerpt":"Goal This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that, The FIM plays an essential role in statistics and machine learning For a parametric distribution, it induces a Riemannian geometric-structureThe discussion here is informal and focuses on...","categories": [],
+        "excerpt":"click to see how to cite this blog post @misc{lin2021blog01, title = {Smooth Manifolds with the Fisher-Rao Metric}, author = {Lin, Wu and Nielsen, Frank and Khan, Mohammad Emtiyaz and Schmidt, Mark}, url = {https://informationgeometryml.github.io/posts/2021/09/Geomopt01/}, howpublished = {\\url{https://informationgeometryml.github.io/posts/2021/09/Geomopt01/}}, year = {2021}, note = {Accessed: 2021-09-06}} Goal This blog post focuses...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/09/Geomopt01/",
         "teaser":null},{
