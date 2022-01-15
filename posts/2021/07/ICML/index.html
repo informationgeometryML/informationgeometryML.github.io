@@ -379,7 +379,7 @@ where <span style="color:red"><strong>tractable</strong></span> natural-gradient
 \begin{aligned}
     \hat{\mathbf{g}}_{\eta_0}^{(t)} =
  \Big(  \begin{array}{c} \hat{\mathbf{g}}_{\delta_0}^{(t)}\\ \mathrm{vec}(  \hat{\mathbf{g}}_{M_0}^{(t)})\end{array}   \Big)
-= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] &amp;&amp; \text{( tractable NG: easy to inverse the FIM ) }
+= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] &amp;&amp; \text{( tractable: easy to inverse the FIM ) }
 \end{aligned}
 $$</code></p>
 
@@ -768,7 +768,7 @@ _1$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{B}_2$
       <a href="#" class="pagination--pager disabled">Previous</a>
     
     
-      <a href="/posts/2021/09/Geomopt01/" class="pagination--pager" title="Part I: Manifolds with the Fisher-Rao Metric
+      <a href="/posts/2021/09/Geomopt01/" class="pagination--pager" title="Part I: Smooth Manifolds with the Fisher-Rao Metric
 ">Next</a>
     
   </nav>
