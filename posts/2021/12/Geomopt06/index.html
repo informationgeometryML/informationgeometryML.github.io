@@ -182,7 +182,7 @@
 
 
 
-  4 minute read
+  2 minute read
 </p>
           
         </header>
@@ -199,61 +199,6 @@
 
 <h1 id="handling-parameter-constraints">Handling Parameter Constraints</h1>
 <hr />
-<p>Unfortunately, the connection between natural-gradient descent and mirror desecent breaks down when the natural
-parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained.
-Since the Legendre transformation is defined in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> , which implies the dual (expectation) parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained in general.</p>
-
-<p>The following example illustrates this point.</p>
-
-<blockquote>
-  <p>Example: Univariate Gaussian family</p>
-
-  <p>We consider this family as discussed in <a href="#exponential-family">the previous section</a>
-<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean $\mu$ and variance $\sigma$.</p>
-
-  <p>It can be re-expressed in an exponential form as</p>
-
-  <p><code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-p({w}|\mathbf{\eta})
-&amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2\sigma} \\ \frac{\mu}{\sigma}  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix} w^2 \\ w  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ]     )   \\
-\end{aligned}
-$$</code>
-where  <code class="language-plaintext highlighter-rouge">$\sigma= -\frac{1}{2\eta_1} $</code>,  <code class="language-plaintext highlighter-rouge">$\mu = -\frac{\eta_2}{2\eta_1}$</code>, and  <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) = \frac{1} {2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ] = \frac{1}{2} [ \log ( 2\pi ) + \log (-\frac{1}{2\eta_1})-\frac{\eta_2^2}{2\eta_1} ] $</code>.</p>
-
-  <p>The natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ (\eta_1,\eta_2) | \eta_1&lt;0 , \eta_2 \in \mathcal{R} \}$</code> is a constrained open set in $\mathcal{R}^2$, where $K=2$.</p>
-
-  <p>The corresponding expectation parameter is <code class="language-plaintext highlighter-rouge">$\mathbf{m} = E_{q(w|\eta)}[ \mathbf{T}_\eta (w) ] = [ \mu^2+\sigma , \mu ] $</code>.</p>
-
-  <p>The expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m= \{ (m_1,m_2) | m_1 - m_2^2 &gt;0 , m_2 \in \mathcal{R} \}$</code> is a constrained open set in $\mathcal{R}^2$.</p>
-</blockquote>
-
-<p>Recall that when the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained,
-the expectation space <code class="language-plaintext highlighter-rouge">$\Omega_m $</code> in general is also constrained (<code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>).
-In this case,
-(constrained) mirror descent in <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> in general does not give us the same update in <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> as
-natural-gradient descent.</p>
-
-<blockquote>
-  <p>Proof by contradiction:</p>
-
-  <p>Suppose when <code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>,  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> gives the same update in <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> in general.</p>
-
-  <p>By the definition of (constrained) mirror descent in <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, the expectation parameter must satisfy <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k+1} \in \Omega_m$</code>.</p>
-
-  <p>Therefore, the corresponding natural parameter must satisfy <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>.</p>
-
-  <p>By our hypothesis, <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}$</code> is updated according to <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> and it must satisfy the natural parameter constraint.</p>
-
-  <p>However, it is obvious that <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> in general does not satisfy the natural parameter constraint when the step-size $\alpha$ is
-large enough since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>  is just a proper open subset of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.</p>
-
-  <p>This is a contradiction.</p>
-</blockquote>
-
-<p>The following example shows that it is also possible that
-the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained (<code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>) while
-the expectation space <code class="language-plaintext highlighter-rouge">$\Omega_m $</code> is still constrained (<code class="language-plaintext highlighter-rouge">$\Omega_m \neq \mathcal{R}^K$</code>).</p>
 
 <p>Recall that  in Part IV, we discuss 
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-faces-of-natural-gradient-descent">many faces of NGD</a> in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.</p>

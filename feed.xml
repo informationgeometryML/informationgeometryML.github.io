@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-15T00:48:09-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-15T00:56:11-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -7,61 +7,6 @@
 
 &lt;h1 id=&quot;handling-parameter-constraints&quot;&gt;Handling Parameter Constraints&lt;/h1&gt;
 &lt;hr /&gt;
-&lt;p&gt;Unfortunately, the connection between natural-gradient descent and mirror desecent breaks down when the natural
-parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is constrained.
-Since the Legendre transformation is defined in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; , which implies the dual (expectation) parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is constrained in general.&lt;/p&gt;
-
-&lt;p&gt;The following example illustrates this point.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Example: Univariate Gaussian family&lt;/p&gt;
-
-  &lt;p&gt;We consider this family as discussed in &lt;a href=&quot;#exponential-family&quot;&gt;the previous section&lt;/a&gt;
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with mean $\mu$ and variance $\sigma$.&lt;/p&gt;
-
-  &lt;p&gt;It can be re-expressed in an exponential form as&lt;/p&gt;
-
-  &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-p({w}|\mathbf{\eta})
-&amp;amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2\sigma} \\ \frac{\mu}{\sigma}  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix} w^2 \\ w  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ]     )   \\
-\end{aligned}
-$$&lt;/code&gt;
-where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sigma= -\frac{1}{2\eta_1} $&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu = -\frac{\eta_2}{2\eta_1}$&lt;/code&gt;, and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta(\mathbf{\eta}) = \frac{1} {2} [ \log ( 2\pi ) + \log \sigma + \frac{\mu^2}{\sigma} ] = \frac{1}{2} [ \log ( 2\pi ) + \log (-\frac{1}{2\eta_1})-\frac{\eta_2^2}{2\eta_1} ] $&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;p&gt;The natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta= \{ (\eta_1,\eta_2) | \eta_1&amp;lt;0 , \eta_2 \in \mathcal{R} \}$&lt;/code&gt; is a constrained open set in $\mathcal{R}^2$, where $K=2$.&lt;/p&gt;
-
-  &lt;p&gt;The corresponding expectation parameter is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m} = E_{q(w|\eta)}[ \mathbf{T}_\eta (w) ] = [ \mu^2+\sigma , \mu ] $&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;p&gt;The expectation parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m= \{ (m_1,m_2) | m_1 - m_2^2 &amp;gt;0 , m_2 \in \mathcal{R} \}$&lt;/code&gt; is a constrained open set in $\mathcal{R}^2$.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Recall that when the natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is constrained,
-the expectation space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m $&lt;/code&gt; in general is also constrained (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m \neq \mathcal{R}^K$&lt;/code&gt;).
-In this case,
-(constrained) mirror descent in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; in general does not give us the same update in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; as
-natural-gradient descent.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Proof by contradiction:&lt;/p&gt;
-
-  &lt;p&gt;Suppose when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m \neq \mathcal{R}^K$&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; gives the same update in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; in general.&lt;/p&gt;
-
-  &lt;p&gt;By the definition of (constrained) mirror descent in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;, the expectation parameter must satisfy &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k+1} \in \Omega_m$&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;p&gt;Therefore, the corresponding natural parameter must satisfy &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1} \in \Omega_\eta$&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;p&gt;By our hypothesis, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1}$&lt;/code&gt; is updated according to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; and it must satisfy the natural parameter constraint.&lt;/p&gt;
-
-  &lt;p&gt;However, it is obvious that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; in general does not satisfy the natural parameter constraint when the step-size $\alpha$ is
-large enough since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;  is just a proper open subset of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;p&gt;This is a contradiction.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The following example shows that it is also possible that
-the natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is unconstrained (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta = \mathcal{R}^K$&lt;/code&gt;) while
-the expectation space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m $&lt;/code&gt; is still constrained (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m \neq \mathcal{R}^K$&lt;/code&gt;).&lt;/p&gt;
 
 &lt;p&gt;Recall that  in Part IV, we discuss 
 &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-faces-of-natural-gradient-descent&quot;&gt;many faces of NGD&lt;/a&gt; in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.&lt;/p&gt;

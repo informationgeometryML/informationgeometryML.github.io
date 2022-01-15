@@ -60,7 +60,7 @@ var store = [{
         "url": "/posts/2021/12/Geomopt05/",
         "teaser":null},{
         "title": "Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods",
-        "excerpt":"Warning: working in Progress (incomplete) Goal This blog post should show that we can efficiently implement natural-gradient methods in many cases. We will give an informal introduction with a focus on high level of ideas. Handling Parameter Constraints Unfortunately, the connection between natural-gradient descent and mirror desecent breaks down when...","categories": [],
+        "excerpt":"Warning: working in Progress (incomplete) Goal This blog post should show that we can efficiently implement natural-gradient methods in many cases. We will give an informal introduction with a focus on high level of ideas. Handling Parameter Constraints Recall that in Part IV, we discuss many faces of NGD in...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold","Exponential Family"],
         "url": "/posts/2021/12/Geomopt06/",
         "teaser":null},{
