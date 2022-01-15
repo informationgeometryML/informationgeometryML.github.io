@@ -198,6 +198,15 @@
 <p>Natural-gradient descent (NGD) on structured parameter spaces  is computationally challenging.
 We propose a flexible and efficient NGD method to incorporate structures via matrix Lie groups.</p>
 
+<p>Motivations:</p>
+<ul>
+  <li>use low-rank or sparse covariance/precision matrix for Gaussian models</li>
+  <li>have flexiable posterior approximation for Bayesian models</li>
+  <li>use structured second-order information for optimization</li>
+  <li>enable non-diagonal adaptive gradient methods for deep learning</li>
+  <li>have a systemic approach to incorporate a range of (matrix) structures</li>
+</ul>
+
 <p>Our NGD method</p>
 <ul>
   <li>generalizes the exponential natural evolutionary strategy <a class="citation" href="#glasmachers2010exponential">[2]</a></li>
@@ -214,7 +223,28 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
   <li>variational inference (multimodal density with Monte Carlo reparameterization gradients).</li>
 </ul>
 
-<hr />
+<p>Issues in existing works:</p>
+<ul>
+  <li>Limited structures and singularity of the Fisher information matrix</li>
+  <li>Ad-hoc approximations for cost reductions</li>
+  <li>Complicated and inefficient NG computation</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">Existing approach for Gaussian rank-one covariance</th>
+      <th style="text-align: center">Our NGD for rank-one covariance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="/img/icml2021-fig02.png" width="500" /></td>
+      <td style="text-align: center"><img src="/img/icml2021-fig04.png" width="500" /></td>
+    </tr>
+  </tbody>
+</table>
+
 <h1 id="ngd-for-optimization-inference-and-search">NGD for Optimization, Inference, and Search</h1>
 
 <p>A unified view for problems in optimization, inference, and search
@@ -260,6 +290,15 @@ $$</code></li>
 
 <h1 id="ngd-using-local-parameterizations">NGD using Local Parameterizations</h1>
 
+<table>
+  <tbody>
+    <tr>
+      <td><img src="/img/icml2021-fig03.png" width="500" /></td>
+      <td>When <code class="language-plaintext highlighter-rouge">$\tau$</code> space has a local vector-space structure, <br /> standard NGD in $\tau$ space is a speical case of our NGD,  <br /> where we choose <code class="language-plaintext highlighter-rouge">$\psi$</code> to be the identity map and <code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> to be a linear map.</td>
+    </tr>
+  </tbody>
+</table>
+
 <p>Our method performs NGD updates in local parameter spaces while maintaining structures via matrix groups in auxiliary parameters. This decoupling enables a tractable update that exploits the structures in auxiliary parameter spaces.</p>
 
 <p>We consider the following three kinds of parameterizations.</p>
@@ -292,15 +331,6 @@ $$</code></p>
         \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
 \end{aligned} 
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\eta}(\eta_0)$</code>  is the (exact) FIM for  <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to  <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>.</p>
-
-<table>
-  <tbody>
-    <tr>
-      <td><img src="/img/icml2021-fig03.png" width="500" /></td>
-      <td>When <code class="language-plaintext highlighter-rouge">$\tau$</code> space has a local vector-space structure, <br /> standard NGD in $\tau$ space is a speical case of our NGD,  <br /> where we choose <code class="language-plaintext highlighter-rouge">$\psi$</code> to be the identity map and <code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> to be a linear map.</td>
-    </tr>
-  </tbody>
-</table>
 
 <h1 id="gaussian-example-with-full-precision">Gaussian Example with Full Precision</h1>
 
@@ -349,7 +379,7 @@ where <span style="color:red"><strong>tractable</strong></span> natural-gradient
 \begin{aligned}
     \hat{\mathbf{g}}_{\eta_0}^{(t)} =
  \Big(  \begin{array}{c} \hat{\mathbf{g}}_{\delta_0}^{(t)}\\ \mathrm{vec}(  \hat{\mathbf{g}}_{M_0}^{(t)})\end{array}   \Big)
-= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big]
+= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] &amp;&amp; \text{( tractable NG: easy to inverse the FIM ) }
 \end{aligned}
 $$</code></p>
 
@@ -505,21 +535,6 @@ $$</code></p>
     <li>induces exact and non-singular FIMs</li>
   </ul>
 </div>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">Existing NG approach for rank-one covariance</th>
-      <th style="text-align: center">Our NGD for rank-one covariance</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center"><img src="/img/icml2021-fig02.png" width="500" /></td>
-      <td style="text-align: center"><img src="/img/icml2021-fig04.png" width="500" /></td>
-    </tr>
-  </tbody>
-</table>
 
 <h1 id="applications">Applications</h1>
 

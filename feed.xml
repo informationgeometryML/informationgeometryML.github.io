@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-14T12:10:30-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-15T00:48:09-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -3069,6 +3069,15 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Natural-gradient descent (NGD) on structured parameter spaces  is computationally challenging.
 We propose a flexible and efficient NGD method to incorporate structures via matrix Lie groups.&lt;/p&gt;
 
+&lt;p&gt;Motivations:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;use low-rank or sparse covariance/precision matrix for Gaussian models&lt;/li&gt;
+  &lt;li&gt;have flexiable posterior approximation for Bayesian models&lt;/li&gt;
+  &lt;li&gt;use structured second-order information for optimization&lt;/li&gt;
+  &lt;li&gt;enable non-diagonal adaptive gradient methods for deep learning&lt;/li&gt;
+  &lt;li&gt;have a systemic approach to incorporate a range of (matrix) structures&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;p&gt;Our NGD method&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;generalizes the exponential natural evolutionary strategy &lt;a class=&quot;citation&quot; href=&quot;#glasmachers2010exponential&quot;&gt;[2]&lt;/a&gt;&lt;/li&gt;
@@ -3085,7 +3094,28 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
   &lt;li&gt;variational inference (multimodal density with Monte Carlo reparameterization gradients).&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;Issues in existing works:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Limited structures and singularity of the Fisher information matrix&lt;/li&gt;
+  &lt;li&gt;Ad-hoc approximations for cost reductions&lt;/li&gt;
+  &lt;li&gt;Complicated and inefficient NG computation&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Existing approach for Gaussian rank-one covariance&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Our NGD for rank-one covariance&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-fig02.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-fig04.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
 &lt;h1 id=&quot;ngd-for-optimization-inference-and-search&quot;&gt;NGD for Optimization, Inference, and Search&lt;/h1&gt;
 
 &lt;p&gt;A unified view for problems in optimization, inference, and search
@@ -3131,6 +3161,15 @@ $$&lt;/code&gt;&lt;/li&gt;
 
 &lt;h1 id=&quot;ngd-using-local-parameterizations&quot;&gt;NGD using Local Parameterizations&lt;/h1&gt;
 
+&lt;table&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;img src=&quot;/img/icml2021-fig03.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; space has a local vector-space structure, &lt;br /&gt; standard NGD in $\tau$ space is a speical case of our NGD,  &lt;br /&gt; where we choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi$&lt;/code&gt; to be the identity map and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; to be a linear map.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
 &lt;p&gt;Our method performs NGD updates in local parameter spaces while maintaining structures via matrix groups in auxiliary parameters. This decoupling enables a tractable update that exploits the structures in auxiliary parameter spaces.&lt;/p&gt;
 
 &lt;p&gt;We consider the following three kinds of parameterizations.&lt;/p&gt;
@@ -3163,15 +3202,6 @@ $$&lt;/code&gt;&lt;/p&gt;
         \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
 \end{aligned} 
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_{\eta}(\eta_0)$&lt;/code&gt;  is the (exact) FIM for  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt; tied to  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;.&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;&lt;img src=&quot;/img/icml2021-fig03.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
-      &lt;td&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; space has a local vector-space structure, &lt;br /&gt; standard NGD in $\tau$ space is a speical case of our NGD,  &lt;br /&gt; where we choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi$&lt;/code&gt; to be the identity map and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; to be a linear map.&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
 
 &lt;h1 id=&quot;gaussian-example-with-full-precision&quot;&gt;Gaussian Example with Full Precision&lt;/h1&gt;
 
@@ -3220,7 +3250,7 @@ where &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;tractable&lt;/strong
 \begin{aligned}
     \hat{\mathbf{g}}_{\eta_0}^{(t)} =
  \Big(  \begin{array}{c} \hat{\mathbf{g}}_{\delta_0}^{(t)}\\ \mathrm{vec}(  \hat{\mathbf{g}}_{M_0}^{(t)})\end{array}   \Big)
-= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp;amp; 0 \\ 0 &amp;amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big]
+= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp;amp; 0 \\ 0 &amp;amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] &amp;amp;&amp;amp; \text{( tractable NG: easy to inverse the FIM ) }
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
@@ -3376,21 +3406,6 @@ $$&lt;/code&gt;&lt;/p&gt;
     &lt;li&gt;induces exact and non-singular FIMs&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Existing NG approach for rank-one covariance&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Our NGD for rank-one covariance&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-fig02.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-fig04.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
 
 &lt;h1 id=&quot;applications&quot;&gt;Applications&lt;/h1&gt;
 

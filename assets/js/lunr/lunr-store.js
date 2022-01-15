@@ -30,7 +30,7 @@ var store = [{
         "url": "/news/workshop_icml2021/",
         "teaser":null},{
         "title": "Structured Natural Gradient Descent (ICML 2021)",
-        "excerpt":"More about this work [1]: (Youtube) talk, ICML paper, workshop paper,poster Introduction Natural-gradient descent (NGD) on structured parameter spaces is computationally challenging.We propose a flexible and efficient NGD method to incorporate structures via matrix Lie groups. Our NGD method generalizes the exponential natural evolutionary strategy [2] recovers existing Newton-like algorithms...","categories": [],
+        "excerpt":"More about this work [1]: (Youtube) talk, ICML paper, workshop paper,poster Introduction Natural-gradient descent (NGD) on structured parameter spaces is computationally challenging.We propose a flexible and efficient NGD method to incorporate structures via matrix Lie groups. Motivations: use low-rank or sparse covariance/precision matrix for Gaussian models have flexiable posterior approximation...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Matrix Lie Groups","Exponential Family"],
         "url": "/posts/2021/07/ICML/",
         "teaser":null},{
