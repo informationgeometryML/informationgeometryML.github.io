@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-15T00:56:11-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-15T01:06:18-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -1159,21 +1159,28 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;/details&gt;
 &lt;/div&gt;
 
-&lt;p&gt;By the claim, when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(\mathbf{y},\tau_k)$&lt;/code&gt; is the second-order Talor approximatio of a
+&lt;p&gt;By the claim, when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(\mathbf{y},\tau_k)$&lt;/code&gt; is the second-order Taylor approximation of a
 f-divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(\mathbf{y},\tau_k)$&lt;/code&gt;  at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{y}=\tau_k$&lt;/code&gt;,
-the unconstrained proximal-gradient update  can be re-expressed as
+the unconstrained proximal-gradient update can be re-expressed as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y} \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k) (\mathbf{y}-\tau_k) \}
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;It is easy to see that we can obtain the following natural-gradient update  from the above expression.
+&lt;p&gt;It is easy to see that we can obtain the following natural-gradient update from the above expression.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \tau_{k} - \alpha \underbrace{ \mathbf{F}^{-1}_\tau(\tau_k) \mathbf{g}_{\tau_k}}_{ =\hat{\mathbf{g}}_{\tau_k} }
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;notice--success&quot;&gt;
+  &lt;p&gt;Note&lt;/p&gt;
+
+  &lt;p&gt;By using this Taylor approximation,
+we essentially use the distance defined in a (Riemannian) gradient space to approximate the distance in a parameter space.&lt;/p&gt;
+&lt;/div&gt;
 
 &lt;p&gt;In &lt;a href=&quot;/posts/2021/12/Geomopt05/#natural-gradient-descent-as-unconstrained-mirror-descent&quot;&gt;Part V&lt;/a&gt;   , we will show that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}(y,\tau_k)$&lt;/code&gt; can also be an exact KL divergence when $p(w)$ is an exponential family.
 Under a particular parametrization,  natural-gradient descent also can be viewed as (unconstrained) mirror descent.&lt;/p&gt;

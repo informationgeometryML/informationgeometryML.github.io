@@ -564,21 +564,28 @@ $$</code></p>
 </details>
 </div>
 
-<p>By the claim, when <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code> is the second-order Talor approximatio of a
+<p>By the claim, when <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code> is the second-order Taylor approximation of a
 f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\tau_k)$</code>  at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\tau_k$</code>,
-the unconstrained proximal-gradient update  can be re-expressed as
+the unconstrained proximal-gradient update can be re-expressed as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \arg\min_{y \in  \mathcal{R}^K  } \{ \langle \mathbf{g}_{\tau_k}, \mathbf{y} \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\tau_k)^T \mathbf{F}_\tau(\tau_k) (\mathbf{y}-\tau_k) \}
 \end{aligned}
 $$</code></p>
 
-<p>It is easy to see that we can obtain the following natural-gradient update  from the above expression.
+<p>It is easy to see that we can obtain the following natural-gradient update from the above expression.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \tau_{k} - \alpha \underbrace{ \mathbf{F}^{-1}_\tau(\tau_k) \mathbf{g}_{\tau_k}}_{ =\hat{\mathbf{g}}_{\tau_k} }
 \end{aligned}
 $$</code></p>
+
+<div class="notice--success">
+  <p>Note</p>
+
+  <p>By using this Taylor approximation,
+we essentially use the distance defined in a (Riemannian) gradient space to approximate the distance in a parameter space.</p>
+</div>
 
 <p>In <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-unconstrained-mirror-descent">Part V</a>   , we will show that  <code class="language-plaintext highlighter-rouge">$\mathrm{D}(y,\tau_k)$</code> can also be an exact KL divergence when $p(w)$ is an exponential family.
 Under a particular parametrization,  natural-gradient descent also can be viewed as (unconstrained) mirror descent.</p>
