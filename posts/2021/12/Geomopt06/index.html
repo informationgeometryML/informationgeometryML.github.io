@@ -182,7 +182,7 @@
 
 
 
-  2 minute read
+  3 minute read
 </p>
           
         </header>
@@ -216,8 +216,9 @@
 $$</code> where we should use 
 the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> with the same FIM highlighted in red.</p>
 
-<p>On the other hand, the constrained mirror descent in the expectation space remains the same as in  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>. 
-<code class="language-plaintext highlighter-rouge">$$
+<p>On the other hand, the constrained mirror descent in the expectation space remains the same as in <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-mirror-descent">Part V</a>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
 \end{aligned}
@@ -235,8 +236,15 @@ $$</code></p>
 <p>Recall that in
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
 we show that natural-gradient descent can be viewed as an unconstrained proximal-gradient method, where we use the
-second-order Taylor expansion of <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code>.
-We could also obtain proximal natural-gradient descent without the Taylor expansion as</p>
+second-order Taylor expansion of <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k) = \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code>, where the KL divergence is also a f-divergence.</p>
+
+<div class="notice--success">
+  <p>Note:</p>
+
+  <p>The KL divergence is the only divergence that is both a f-divergence and a Bregman divergence.</p>
+</div>
+
+<p>We could also obtain proximal natural-gradient descent without the Taylor expansion as below since the KL divergence is not symmetric.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
