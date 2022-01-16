@@ -359,11 +359,12 @@ $$</code></p>
 
 <div class="notice--info">
 
-  <p>In <a class="citation" href="#glasmachers2010exponential">[2]</a>, the matrix exponential map is used for tractable natural-gradients.
-However, the exponential map is not numerical stable and has high iteration cost.</p>
-
-  <p>To fix these issues, 
-we propose using map <code class="language-plaintext highlighter-rouge">$\mathbf{h}()$</code> while keeping natural-gradient computation tractable.</p>
+  <p>we propose using map <code class="language-plaintext highlighter-rouge">$\mathbf{h}()$</code> to</p>
+  <ul>
+    <li>keep natural-gradient computation tractable</li>
+    <li>maintain numerical stability</li>
+    <li>have lower iteration cost than the map in <a class="citation" href="#glasmachers2010exponential">[2]</a></li>
+  </ul>
 </div>
 
 <p>Our NGD update in <code class="language-plaintext highlighter-rouge">$  \lambda $</code> space is shown below, where we assume $\eta_0=\mathbf{0}$.
