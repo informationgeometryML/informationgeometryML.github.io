@@ -198,21 +198,13 @@
 <p>Natural-gradient descent (NGD) on structured parameter spaces  is computationally challenging.
 We propose a flexible and efficient NGD method to incorporate structures via matrix Lie groups.</p>
 
-<p>Motivations:</p>
-<ul>
-  <li>use low-rank or sparse covariance/precision matrix for Gaussian models</li>
-  <li>have flexiable posterior approximation for Bayesian models</li>
-  <li>use structured second-order information for optimization</li>
-  <li>design non-diagonal adaptive gradient methods for deep learning</li>
-  <li>have a systemic approach to incorporate a range of structures</li>
-</ul>
-
 <p>Our NGD method</p>
 <ul>
   <li>generalizes the exponential natural evolutionary strategy <a class="citation" href="#glasmachers2010exponential">[2]</a></li>
   <li>recovers existing  Newton-like algorithms</li>
   <li>yields new structured 2nd-order methods and adaptive-gradient methods with group-structural invariance <a class="citation" href="#lin2021structured">[3]</a></li>
   <li>gives new NGD updates to learn structured covariances of Gaussian, Wishart and their mixtures</li>
+  <li>is a systemic approach to incorporate a range of structures</li>
 </ul>
 
 <p>Applications of our method:</p>
@@ -225,7 +217,7 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
 
 <p>Issues in existing works:</p>
 <ul>
-  <li>Limited structures and singularity of the Fisher information matrix</li>
+  <li>Limited structures and singularity of the Fisher information matrix (FIM)</li>
   <li>Ad-hoc approximations for cost reductions</li>
   <li>Complicated and inefficient NG computation</li>
 </ul>
@@ -233,7 +225,7 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
 <table>
   <thead>
     <tr>
-      <th style="text-align: center">Existing approach for Gaussian rank-one covariance</th>
+      <th style="text-align: center">Existing approach for rank-one covariance</th>
       <th style="text-align: center">Our NGD for rank-one covariance</th>
     </tr>
   </thead>
@@ -364,6 +356,15 @@ Maps <code class="language-plaintext highlighter-rouge">$\psi$</code> and  <code
        \Big \{ \begin{array}{c} \mu \\ \mathbf{B} \end{array} \Big \} = \phi_{\lambda_t}(\eta) &amp; := \Big \{ \begin{array}{c} \mu_t + \mathbf{B}_t^{-T} \delta \\ \mathbf{B}_t \mathbf{h} (\mathbf{M}) \end{array} \Big \}.
 \end{aligned} \tag{3}\label{3}
 $$</code></p>
+
+<div class="notice--info">
+
+  <p>In <a class="citation" href="#glasmachers2010exponential">[2]</a>, the matrix exponential map is used for tractable natural-gradients.
+However, the exponential map is not numerical stable and has high iteration cost.</p>
+
+  <p>To fix these issues, 
+we propose using map <code class="language-plaintext highlighter-rouge">$\mathbf{h}()$</code> while keeping natural-gradient computation tractable.</p>
+</div>
 
 <p>Our NGD update in <code class="language-plaintext highlighter-rouge">$  \lambda $</code> space is shown below, where we assume $\eta_0=\mathbf{0}$.
 <code class="language-plaintext highlighter-rouge">$$
