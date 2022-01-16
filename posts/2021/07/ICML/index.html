@@ -195,31 +195,24 @@
 
 <h1 id="introduction">Introduction</h1>
 
-<p>Natural-gradient descent (NGD) on structured parameter spaces  is computationally challenging.
-We propose a flexible and efficient NGD method to incorporate structures via matrix Lie groups.</p>
+<h2 id="motivation">Motivation</h2>
 
-<p>Our NGD method</p>
+<p>Many problems in optimization, inference, and search can be solved via natural-gradient descent (NGD)</p>
+
+<p>Structures play an essential role in</p>
 <ul>
-  <li>generalizes the exponential natural evolutionary strategy <a class="citation" href="#glasmachers2010exponential">[2]</a></li>
-  <li>recovers existing  Newton-like algorithms</li>
-  <li>yields new structured 2nd-order methods and adaptive-gradient methods with group-structural invariance <a class="citation" href="#lin2021structured">[3]</a></li>
-  <li>gives new NGD updates to learn structured covariances of Gaussian, Wishart and their mixtures</li>
-  <li>is a systemic approach to incorporate a range of structures</li>
+  <li>Preconditioners for gradient-free, adaptive-gradient, and second-order methods</li>
+  <li>Posterior Gaussian approximation for variational inference</li>
 </ul>
 
-<p>Applications of our method:</p>
-<ul>
-  <li>deep learning (structured adaptive-gradient),</li>
-  <li>non-convex optimization (structured 2nd-order),</li>
-  <li>evolution strategies (gradient-free),</li>
-  <li>variational inference (multimodal density with Monte Carlo reparameterization gradients).</li>
-</ul>
+<p>Natural-gradient descent on structured parameter spaces is computationally challenging.</p>
 
-<p>Issues in existing works:</p>
+<p>Existing NGD works</p>
 <ul>
   <li>Limited structures and singularity of the Fisher information matrix (FIM)</li>
   <li>Ad-hoc approximations for cost reductions</li>
   <li>Complicated and inefficient NG computation</li>
+  <li>Lack of a systemic approach to incorporate a range of structures</li>
 </ul>
 
 <table>
@@ -236,6 +229,26 @@ We propose a flexible and efficient NGD method to incorporate structures via mat
     </tr>
   </tbody>
 </table>
+
+<h2 id="our-contributions">Our Contributions</h2>
+
+<p>We propose a flexible and efficient NGD method to incorporate structures via matrix Lie groups.</p>
+
+<p>Our NGD method</p>
+<ul>
+  <li>generalizes the exponential natural evolutionary strategy <a class="citation" href="#glasmachers2010exponential">[2]</a></li>
+  <li>recovers existing  Newton-like algorithms</li>
+  <li>yields new structured 2nd-order methods and adaptive-gradient methods with group-structural invariance <a class="citation" href="#lin2021structured">[3]</a></li>
+  <li>gives new NGD updates to learn structured covariances of Gaussian, Wishart and their mixtures</li>
+</ul>
+
+<p>Applications of our method:</p>
+<ul>
+  <li>deep learning (structured adaptive-gradient),</li>
+  <li>non-convex optimization (structured 2nd-order),</li>
+  <li>evolution strategies (gradient-free),</li>
+  <li>variational inference (multimodal density with Monte Carlo reparameterization gradients).</li>
+</ul>
 
 <h1 id="ngd-for-optimization-inference-and-search">NGD for Optimization, Inference, and Search</h1>
 
