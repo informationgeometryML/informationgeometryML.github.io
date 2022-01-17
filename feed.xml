@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-16T18:40:59-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-16T18:48:00-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -470,6 +470,7 @@ can be viewed  as a function of &lt;code class=&quot;language-plaintext highligh
 
 &lt;p&gt;Therefore, we can  efficinetly compute natural-gradients w.r.t. natural parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; &lt;a class=&quot;citation&quot; href=&quot;#khan2017conjugate&quot;&gt;[3]&lt;/a&gt;  if we  can  easily compute Euclidean gradients w.r.t. its expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt;.&lt;/p&gt;
 
+&lt;h2 id=&quot;efficient-ngd-for-multivariate-gaussian&quot;&gt;Efficient NGD for multivariate Gaussian&lt;/h2&gt;
 &lt;p&gt;Given a $d$-dim multivariate Gaussian with a full covariance structure, 
 the naive way to compute natural-gradients in this case has $O( (d^2)^3 )=O(d^6)$ iteration cost since the covariance matrix has $d^2$ entries.
 Now, we show how to efficiently compute natural-gradients in this case.&lt;/p&gt;
@@ -2250,8 +2251,12 @@ Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\t
         &lt;p&gt;In other words, the FIM w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;  is singular if  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is considered as a matrix parameter with $d^2$ degrees of freedom.
 Strictly speaking, a natural gradient/vector w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is not well-defined.&lt;/p&gt;
 
-        &lt;p&gt;In the literature, a natural gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is  defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}(\mathbf{v})$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is a valid natural gradient w.r.t. intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;.&lt;/p&gt;
+        &lt;p&gt;In the literature, a natural gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is  defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}(\mathbf{v})$&lt;/code&gt;, where
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is a valid natural gradient w.r.t. intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;
+(see  &lt;a href=&quot;/posts/2021/12/Geomopt05/#efficient-ngd-for-multivariate-gaussian&quot;&gt;Part V&lt;/a&gt; for the
+details.)&lt;/p&gt;
       &lt;/blockquote&gt;
+
     &lt;/fieldset&gt;
 &lt;/details&gt;
 &lt;/div&gt;
