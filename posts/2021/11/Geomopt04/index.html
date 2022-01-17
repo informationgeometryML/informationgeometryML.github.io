@@ -420,7 +420,7 @@ $$</code> which recovers natural-gradient descent.</p>
 
 <h2 id="natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Natural-gradient Descent as Unconstrained Proximal-gradient Descent</h2>
 
-<p>In this section, we will make an additional but key assumption:</p>
+<p>In this section, we will make an additional  assumption:</p>
 
 <div class="notice--success">
   <p><strong>Additional assumption</strong>:</p>
@@ -431,7 +431,7 @@ $$</code> which recovers natural-gradient descent.</p>
 <p>As we mentioned before, the <strong>distances</strong> in the gradient space and the parameter space are defined differently. 
 In the <a href="#riemannian-gradient-descent-and-its-non-linear-invariance">previous section</a>, we use the geodesic to define the distance between two points in a parameter space.</p>
 
-<p>We could also use other “distances” denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(.,.)$</code> (i.e., Kullback–Leibler divergence or other f-divergence) <a class="citation" href="#khan2016faster">[3]</a> to define the length between two points in a parameter space.</p>
+<p>We could also use other “distances” denoted by <code class="language-plaintext highlighter-rouge">$\mathrm{D}(.,.)$</code> (i.e., Kullback–Leibler divergence) <a class="citation" href="#khan2016faster">[3]</a> to define the length between two points in a parameter space.</p>
 
 <p>In the following section, we assume <code class="language-plaintext highlighter-rouge">$p(w|\mathbf{y})$</code> and <code class="language-plaintext highlighter-rouge">$p(w|\tau_k)$</code> are two members  in a parameteric distribution family <code class="language-plaintext highlighter-rouge">$p(w|\tau)$</code> indexed by  <code class="language-plaintext highlighter-rouge">$\mathbf{y}$</code> and <code class="language-plaintext highlighter-rouge">$\tau_k$</code>, respectively.</p>
 
@@ -451,14 +451,14 @@ Note that a f-divergence can be defined in a more general setting.</p>
 <p>A f-divergence for a parametric family <code class="language-plaintext highlighter-rouge">$p(w|\tau)$</code> is defined as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathrm{D}_f(\mathbf{y},\tau_k) := \int_w f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw.
+\mathrm{D}_f(\mathbf{y},\tau_k) := \int f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw.
 \end{aligned}
 $$</code>
 Thanks to Jensen’s inequality,
 a f-divergence is always non-negative as<br />
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int_w \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int_w p(w|\mathbf{y})dw) =f(1) =0 .
+\mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int p(w|\mathbf{y})dw) =f(1) =0 .
 \end{aligned}
 $$</code></p>
 
@@ -495,8 +495,8 @@ $$</code></p>
       <p>For the zero-order term, we have
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathrm{D}_f(\tau_k,\tau_k) &amp; = \int_w f(\frac{p(w|{\tau_k})}{p(w|\tau_k)}) p(w|\tau_k) dw 
-= \int_w \underbrace{f(1)}_{=0} p(w|\tau_k) dw =0.
+\mathrm{D}_f(\tau_k,\tau_k) &amp; = \int f(\frac{p(w|{\tau_k})}{p(w|\tau_k)}) p(w|\tau_k) dw 
+= \int \underbrace{f(1)}_{=0} p(w|\tau_k) dw =0.
 \end{aligned}
 $$</code></p>
 
@@ -504,9 +504,9 @@ $$</code></p>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \nabla_y \mathrm{D}_f(\mathbf{y},\tau_k) &amp;  =
-\int_w \nabla_y f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw \\
-&amp;=\int_w  \dot{f}\big(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw \\
-&amp;=\int_w  \dot{f}\big(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}\big) \nabla_y p(w|\mathbf{y}) dw.
+\int \nabla_y f(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}) p(w|\tau_k) dw \\
+&amp;=\int  \dot{f}\big(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw \\
+&amp;=\int  \dot{f}\big(\frac{p(w|\mathbf{y})}{p(w|\tau_k)}\big) \nabla_y p(w|\mathbf{y}) dw.
 \end{aligned}
 $$</code></p>
 
@@ -516,8 +516,8 @@ Therefore,
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \nabla_y \mathrm{D}_f(\mathbf{y},\tau_k) \big|_{y=\tau_k}  
-=\int_w  \dot{f}(1) \nabla_y p(w|\mathbf{y}) \big|_{y=\tau_k} dw =  
-\dot{f}(1)  \nabla_y \underbrace{\Big[ \int_w   p(w|\mathbf{y}) dw \Big]}_{=1} \Big|_{y=\tau_k} = 0.
+=\int  \dot{f}(1) \nabla_y p(w|\mathbf{y}) \big|_{y=\tau_k} dw =  
+\dot{f}(1)  \nabla_y \underbrace{\Big[ \int   p(w|\mathbf{y}) dw \Big]}_{=1} \Big|_{y=\tau_k} = 0.
 \end{aligned}
 $$</code></p>
 
@@ -525,9 +525,9 @@ $$</code></p>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \nabla_{y}^2 \mathrm{D}_f(y,\tau_k) &amp; = 
-\int_w \nabla_{y}^2 f\big(\frac{p(w|y)}{p(w|\tau_k)}\big) p(w|\tau_k) dw  \\
-&amp;= \int_w \nabla_{y} [\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \\
-&amp;= \int_w \Big[\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)}+\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} \Big] p(w|\tau_k) dw 
+\int \nabla_{y}^2 f\big(\frac{p(w|y)}{p(w|\tau_k)}\big) p(w|\tau_k) dw  \\
+&amp;= \int \nabla_{y} [\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} ] p(w|\tau_k) dw \\
+&amp;= \int \Big[\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)}+\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} \Big] p(w|\tau_k) dw 
 \end{aligned}
 $$</code>
 Note that when $y=\tau_k$, we can simplify the expression since <code class="language-plaintext highlighter-rouge">$\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big)=\ddot{f}(1)=1$</code> and 
@@ -537,22 +537,22 @@ Note that when $y=\tau_k$, we can simplify the expression since <code class="lan
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \nabla_{y}^2 \mathrm{D}_f(y,\tau_k) \Big|_{y=\tau_k} 
-&amp;= \int_w \Big[\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} +\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} \Big] p(w|\tau_k) dw \Big|_{y=\tau_k} \\
-&amp;=\underbrace{\int_w  \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} p(w|\tau_k) dw  \Big|_{y=\tau_k}}_{\text{Term I}} + \underbrace{\int_w \dot{f}(1) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)}  p(w|\tau_k) dw  \Big|_{y=\tau_k}}_{\text{Term II}}
+&amp;= \int \Big[\ddot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} +\dot{f}\big(\frac{p(w|y)}{p(w|\tau_k)}\big) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)} \Big] p(w|\tau_k) dw \Big|_{y=\tau_k} \\
+&amp;=\underbrace{\int  \frac{\nabla_y p(w|y)}{p(w|\tau_k)} \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} p(w|\tau_k) dw  \Big|_{y=\tau_k}}_{\text{Term I}} + \underbrace{\int \dot{f}(1) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)}  p(w|\tau_k) dw  \Big|_{y=\tau_k}}_{\text{Term II}}
 \end{aligned}
 $$</code></p>
 
       <p>Term II is zero since
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\int_w \dot{f}(1) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)}  p(w|\tau_k) dw \Big|_{y=\tau_k}= \dot{f}(1) \int_w  \nabla_y^2 p(w|y) dw \Big|_{y=\tau_k}= \dot{f}(1) \nabla_y^2 \underbrace{\Big[\int_w   p(w|y) dw \Big] }_{=1} \Big|_{y=\tau_k}=0
+\int \dot{f}(1) \frac{\nabla_y^2 p(w|y)}{p(w|\tau_k)}  p(w|\tau_k) dw \Big|_{y=\tau_k}= \dot{f}(1) \int  \nabla_y^2 p(w|y) dw \Big|_{y=\tau_k}= \dot{f}(1) \nabla_y^2 \underbrace{\Big[\int   p(w|y) dw \Big] }_{=1} \Big|_{y=\tau_k}=0
 \end{aligned}
 $$</code></p>
 
       <p>Term I is the FIM since
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\int_w  \underbrace{ \frac{\nabla_y p(w|y)}{p(w|\tau_k)}}_{= \nabla_y \log p(w|y)}  \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} p(w|\tau_k) dw  \Big|_{y=\tau_k} &amp;=
+\int  \underbrace{ \frac{\nabla_y p(w|y)}{p(w|\tau_k)}}_{= \nabla_y \log p(w|y)}  \frac{\nabla_y^T p(w|y)}{p(w|\tau_k)} p(w|\tau_k) dw  \Big|_{y=\tau_k} &amp;=
 E_{p(w|\tau_k)} \Big[ \nabla_y \log p(w|y)   \nabla_y^T \log p(w|y) \Big] \Big|_{y=\tau_k} \\
 &amp;=
 E_{p(w|\tau_k)} \Big[ \nabla_\tau \log p(w|\tau_k)   \nabla_\tau^T \log p(w|\tau_k) \Big] \\
