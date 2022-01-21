@@ -483,7 +483,7 @@ Moreover, the Fisher-Rao metric has been theorically and emprically used in mach
 <p>Given an intrinsic parameterization, we can define the Fisher-Rao metric under this parameterization as:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log (w|\tau) \Big) ].
+F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log p(w|\tau) \Big) ].
 \end{aligned}
 $$</code>
 Note that the metric could be ill-defined since the expectation may not exist.</p>
@@ -492,7 +492,7 @@ Note that the metric could be ill-defined since the expectation may not exist.</
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{F}(\tau) := E_{ p(w|\tau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log (w|\tau) \Big)^T ],
+\mathbf{F}(\tau) := E_{ p(w|\tau) }  [ \Big( \nabla_{\tau} \log p(w|\tau ) \Big)  \Big(\nabla_{\tau} \log p(w|\tau) \Big)^T ],
 \end{aligned}
 $$</code>
 where $K$ is the number of entries of parameter array $\tau$ and 
