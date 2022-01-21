@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-17T08:31:38-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-21T11:23:55-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;
@@ -2561,13 +2561,14 @@ plt.show()
 &lt;ul&gt;
   &lt;li&gt;design efficient and simple algorithms for machine learning &lt;a class=&quot;citation&quot; href=&quot;#amari1998natural&quot;&gt;[1]&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;design methods that are robust and invariant to re-parametrization &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[2]&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;better understand models and algorithms through the lens of differential geometry, information geometry, and invariant theory &lt;a class=&quot;citation&quot; href=&quot;#liang2019fisher&quot;&gt;[3]&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;understand models and algorithms through the lens of differential geometry, information geometry, and invariant theory &lt;a class=&quot;citation&quot; href=&quot;#liang2019fisher&quot;&gt;[3]&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Probability distributions form the backbone of majority of machine-learning approaches, for example, any approach that uses probabilistic modeling is built upon such distributions. 
 For all such cases, we can exploit the underlying geometric structure, induced by the Fisher-Rao metric, which is the topic of this blog.&lt;/p&gt;
 
-&lt;p&gt;Below, we give some common examples from machine learning, where probability distributions naturally arise.&lt;/p&gt;
+&lt;p&gt;Below, we give some common examples from machine learning, where probability distributions naturally arise.
+In these cases, we can exploit the structure to design efficient learning algorithms.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Least Square (Empirical Risk Minimization):&lt;/p&gt;
@@ -2575,8 +2576,8 @@ For all such cases, we can exploit the underlying geometric structure, induced b
   &lt;p&gt;Given N input-output pairs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(x_i,y_i)$&lt;/code&gt;,  the least-square loss can be viewed as expectation under a probability distribution.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\min_{\tau} \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2  &amp;amp; = \max_{\tau} \frac{1}{n}  \sum_{i=1}^{n}  \log \mathcal{N}(y_i | x_i^T\tau,1) \\
-&amp;amp; \approx \int [ \log p(x,y | \tau) ]  d p(x,y | \tau) =  E_{ \color{red}  { p(x,y | \tau) } } [ \log  p(x,y | \tau)    ] 
+\min_{\tau} \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2 + \frac{1}{2}\log(2\pi)  &amp;amp; = - \frac{1}{n}  \sum_{i=1}^{n}  \log \mathcal{N}(y_i | x_i^T\tau,1) \\
+&amp;amp; \approx \int [ -\log p(x,y | \tau) ]  d p(x,y | \tau) =  E_{ \color{red}  { p(x,y | \tau) } } [ - \log  p(x,y | \tau)    ] 
 \end{aligned} \tag{1}\label{1}
 $$&lt;/code&gt;
 Here &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $&lt;/code&gt; is assumed to be the data-generating distribution, and the least-square loss is the finite-sample approximation of the expectation. The normal distribution is denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{N} (y | x^T\tau,1) $&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ x^T\tau $&lt;/code&gt; and variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ 1 $&lt;/code&gt;.&lt;/p&gt;

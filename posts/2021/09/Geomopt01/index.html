@@ -225,13 +225,14 @@
 <ul>
   <li>design efficient and simple algorithms for machine learning <a class="citation" href="#amari1998natural">[1]</a></li>
   <li>design methods that are robust and invariant to re-parametrization <a class="citation" href="#lin2021tractable">[2]</a></li>
-  <li>better understand models and algorithms through the lens of differential geometry, information geometry, and invariant theory <a class="citation" href="#liang2019fisher">[3]</a></li>
+  <li>understand models and algorithms through the lens of differential geometry, information geometry, and invariant theory <a class="citation" href="#liang2019fisher">[3]</a></li>
 </ul>
 
 <p>Probability distributions form the backbone of majority of machine-learning approaches, for example, any approach that uses probabilistic modeling is built upon such distributions. 
 For all such cases, we can exploit the underlying geometric structure, induced by the Fisher-Rao metric, which is the topic of this blog.</p>
 
-<p>Below, we give some common examples from machine learning, where probability distributions naturally arise.</p>
+<p>Below, we give some common examples from machine learning, where probability distributions naturally arise.
+In these cases, we can exploit the structure to design efficient learning algorithms.</p>
 
 <blockquote>
   <p>Least Square (Empirical Risk Minimization):</p>
@@ -239,8 +240,8 @@ For all such cases, we can exploit the underlying geometric structure, induced b
   <p>Given N input-output pairs <code class="language-plaintext highlighter-rouge">$(x_i,y_i)$</code>,  the least-square loss can be viewed as expectation under a probability distribution.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\min_{\tau} \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2  &amp; = \max_{\tau} \frac{1}{n}  \sum_{i=1}^{n}  \log \mathcal{N}(y_i | x_i^T\tau,1) \\
-&amp; \approx \int [ \log p(x,y | \tau) ]  d p(x,y | \tau) =  E_{ \color{red}  { p(x,y | \tau) } } [ \log  p(x,y | \tau)    ] 
+\min_{\tau} \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2 + \frac{1}{2}\log(2\pi)  &amp; = - \frac{1}{n}  \sum_{i=1}^{n}  \log \mathcal{N}(y_i | x_i^T\tau,1) \\
+&amp; \approx \int [ -\log p(x,y | \tau) ]  d p(x,y | \tau) =  E_{ \color{red}  { p(x,y | \tau) } } [ - \log  p(x,y | \tau)    ] 
 \end{aligned} \tag{1}\label{1}
 $$</code>
 Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution, and the least-square loss is the finite-sample approximation of the expectation. The normal distribution is denoted by <code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | x^T\tau,1) $</code> with mean <code class="language-plaintext highlighter-rouge">$ x^T\tau $</code> and variance <code class="language-plaintext highlighter-rouge">$ 1 $</code>.</p>
