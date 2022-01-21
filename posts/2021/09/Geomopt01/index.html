@@ -182,7 +182,7 @@
 
 
 
-  16 minute read
+  17 minute read
 </p>
           
         </header>
@@ -258,7 +258,7 @@ Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathc
   <p>Given a prior <code class="language-plaintext highlighter-rouge">$ p(z) $</code> and a likelihood <code class="language-plaintext highlighter-rouge">$ p(\mathcal{D} | z ) $</code> over an latent vector <code class="language-plaintext highlighter-rouge">$z$</code> and known data <code class="language-plaintext highlighter-rouge">$ \mathcal{D} $</code>, we can approximate the exact posterior <code class="language-plaintext highlighter-rouge">$ p( z | \mathcal{D} ) =\frac{p(z,\mathcal{D})}{p(\mathcal{D})} $</code> by optimizing a variational objective with respect to  an approximated distribution <code class="language-plaintext highlighter-rouge">$ q(z | \tau) $</code>:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\min_{\tau} \mathrm{KL} [ { q(z | \tau) || p( z | \mathcal{D} ) }   ] = E_{ \color{red}  {q(z | \tau)} } [ \log q(z | \tau) - \log p( z , \mathcal{D} )    ]  + \log p(\mathcal{D} ) 
+\min_{\tau} \mathrm{KL} [ { q(z | \tau) || p( z | \mathcal{D} ) }   ] = E_{ \color{red}  {q(z | \tau)} } [ \log q(z | \tau) - \log p( z , \mathcal{D} )    ]  + \underbrace{\log p(\mathcal{D} )}_{ \text{ constant w.r.t. } \tau } 
 \end{aligned} \tag{2}\label{2}
 $$</code>
 where <code class="language-plaintext highlighter-rouge">$ \mathrm{KL} [ q(z) ||  p(z) ] :=  E_{ {q(z)} } [ \log \big(\frac{q(z)}{p(z)}\big) ]$</code> is the Kullback–Leibler divergence.</p>
@@ -308,6 +308,17 @@ By doing so, we can exploit the geometric structure of a parametric family denot
     </tr>
   </tbody>
 </table>
+
+<div class="notice--success">
+  <p><strong>Note</strong>:</p>
+
+  <p>In machine learning applications, these algorithms such as <a class="citation" href="#lin2021tractable">[2]</a>  <a class="citation" href="#martens2020new">[4]</a> <a class="citation" href="#khan2017conjugate">[5]</a> <a class="citation" href="#wierstra2014natural">[6]</a>  <a class="citation" href="#kakade2001natural">[7]</a> can be efficiently implemented without
+explicitly computing the inverse of the FIM.</p>
+
+  <p>See 
+<a href="/posts/2021/12/Geomopt05/#efficient-natural-gradient-computation">Part V</a> for an
+example.</p>
+</div>
 
 <p>We will mainly focus on the geometric structure of (finite-dimensional) parametric families.
 For example, let’s consider a 1-dimensional Gaussian family.
