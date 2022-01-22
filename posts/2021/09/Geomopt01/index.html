@@ -251,7 +251,7 @@ _{ \text{ constant w.r.t. } \tau }
 $$</code>
 Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution, and the least-square loss is the finite-sample approximation of the expectation. The normal distribution is denoted by <code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | x^T\tau,1) $</code> with mean <code class="language-plaintext highlighter-rouge">$ x^T\tau $</code> and variance <code class="language-plaintext highlighter-rouge">$ 1 $</code>.</p>
 
-  <p>Algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[6]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>.</p>
+  <p>Algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[6]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>.  These algorithms can be generalized to neural network cases <a class="citation" href="#martens2020new">[6]</a>.</p>
 </blockquote>
 
 <blockquote>
