@@ -265,7 +265,7 @@ The parameter transformation can be non-linear.</p>
 
 <p>It is natural to expect that natural-gradient descent has a similar property. Unfortunately, natural-gradient descent is only invariant under an intrinsic <strong>linear</strong> transformation. Note that Newton’s method is also linearly invariant while Euclidean gradient descent is not.</p>
 
-<p>Let’s consider the following (scalar) optimization problem on a smooth manifold $\mathcal{M}$ with the Fisher-Rao metric $F$.
+<p>Let’s consider the following (scalar) optimization problem on a smooth manifold $\mathcal{M}$ with the Fisher-Rao metric <code class="language-plaintext highlighter-rouge">$F$</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \min_{x \in \mathcal{M}} h(x)
@@ -279,24 +279,24 @@ The problem in <code class="language-plaintext highlighter-rouge">$\eqref{2}$</c
 \begin{aligned}
 \min_{\tau \in \Omega_\tau} h_\tau(\tau)
 \end{aligned}
-$$</code> where $h_\tau$ is the parameter representation of the smooth function $h$.</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$h_\tau$</code> is the parameter representation of the smooth function <code class="language-plaintext highlighter-rouge">$h$</code>.</p>
 
-<p>Natural gradient descent in this parameter space $\Omega_\tau$ is
+<p>Natural gradient descent in this parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \tau_{k+1} \leftarrow \tau_{k} - \alpha \hat{\mathbf{g}}_{\tau_k} 
 \end{aligned}\tag{3}\label{3}
-$$</code> where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\tau_k} := [\mathbf{F}_\tau(\tau_k) ]^{-1} \nabla_\tau h_\tau(\tau_k)$</code> and the step-size $\alpha$ is small enough so that  $\tau_{k+1} \in \Omega_\tau$.</p>
+$$</code> where  <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\lambda$</code> is the FIM, natural gradient is <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\tau_k} := [\mathbf{F}_\tau(\tau_k) ]^{-1} \nabla_\tau h_\tau(\tau_k)$</code> and the step-size <code class="language-plaintext highlighter-rouge">$\alpha$</code> is small enough so that  <code class="language-plaintext highlighter-rouge">$\tau_{k+1} \in \Omega_\tau$</code>.</p>
 
-<p>Consider another intrinsic parameterization $\lambda$ so that $\lambda=\mathbf{U} \tau$, where $\mathbf{U}$ is a constant (square) invertible matrix. 
-For simplicity,  we further assume <code class="language-plaintext highlighter-rouge">$\Omega_\lambda=\{ \mathbf{U}\tau |\tau \in\Omega_\tau \} $</code>, where $\Omega_\lambda$ is the parameter space of $\lambda$.</p>
+<p>Consider another intrinsic parameterization $\lambda$ so that <code class="language-plaintext highlighter-rouge">$\lambda=\mathbf{U} \tau$</code>, where <code class="language-plaintext highlighter-rouge">$\mathbf{U}$</code> is a constant (square) invertible matrix. 
+For simplicity,  we further assume <code class="language-plaintext highlighter-rouge">$\Omega_\lambda=\{ \mathbf{U}\tau |\tau \in\Omega_\tau \} $</code>, where <code class="language-plaintext highlighter-rouge">$\Omega_\lambda$</code> is the parameter space of <code class="language-plaintext highlighter-rouge">$\lambda$</code>.</p>
 
-<p>Natural gradient descent in this parameter space $\Omega_\lambda$ is
+<p>Natural gradient descent in this parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\lambda$</code> is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \lambda_{k+1} \leftarrow \lambda_{k} -  \alpha  \hat{\mathbf{g}}_{\lambda_k} 
 \end{aligned}\tag{4}\label{4}
-$$</code> where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\lambda_k} := [\mathbf{F}_\lambda(\lambda_k) ]^{-1} \nabla_\lambda h_\lambda(\lambda_k)$</code>  and <code class="language-plaintext highlighter-rouge">$h_\lambda(\lambda) = h_\tau(\tau(\lambda))$</code>.</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\lambda_k} := [\mathbf{F}_\lambda(\lambda_k) ]^{-1} \nabla_\lambda h_\lambda(\lambda_k)$</code>  and the cost function is <code class="language-plaintext highlighter-rouge">$h_\lambda(\lambda) = h_\tau(\tau(\lambda))$</code>.</p>
 
 <p>Recall that we have the <a href="/posts/2021/11/Geomopt03/#transformation-rules-for-natural-gradients-and-euclidean-gradients">transformation rule</a> for natural gradients as
 <code class="language-plaintext highlighter-rouge">$$
@@ -751,15 +751,14 @@ $$</code> where <code class="language-plaintext highlighter-rouge">${\mathbf{g}}
 Euclidean gradients follow the <a href="/posts/2021/11/Geomopt03/#transformation-rules-for-natural-gradients-and-euclidean-gradients">transformation rule</a>  as <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau^T =  \mathbf{g}_\lambda^T \mathbf{J}$</code>, where
 <code class="language-plaintext highlighter-rouge">$\mathbf{J}=\mathbf{U}$</code>.</p>
 
-<p>Surprisingly, for a linear transformation, the Hessian follows the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a>  like the Fisher information
-matrix as</p>
+<p>Surprisingly, for a linear transformation, the Hessian follows the <a href="/posts/2021/11/Geomopt03/#transformation-rule-for-the-fisher-information-matrix">transformation rule</a>  like the FIM as</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{H}_{\tau} (\tau_k) &amp;= \nabla_\tau ( \mathbf{g}_{\tau_k} ) \\
 &amp;=\nabla_\tau ( \mathbf{J}^T \mathbf{g}_{\lambda_k} ) \\
-&amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) \,\,\,\,\text{(for a linear transformation, } \mathbf{J} = \mathbf{U} \text{ is a
-constant matrix)}   \\
+&amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) + \underbrace{[\nabla_\tau \mathbf{J}^T ]}_{=0} \mathbf{g}_{\lambda_k}  \,\,\,\,\text{(In linear cases, } \mathbf{J} = \mathbf{U} \text{ is a
+constant)}   \\
 &amp;=\mathbf{J}^T\nabla_\lambda (  \mathbf{g}_{\lambda_k} )\mathbf{J} \\ 
 &amp;=\mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} 
 \end{aligned}\tag{7}\label{7}
@@ -792,7 +791,7 @@ as
 <div class="notice--success">
   <p><strong>Claim</strong>:</p>
 
-  <p>the FIM follows the transformation
+  <p>The FIM follows the transformation
 rule even in non-linear cases.</p>
 </div>
 
