@@ -251,7 +251,7 @@ _{ \text{ constant w.r.t. } \tau }
 $$</code>
 Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution, and the least-square loss is the finite-sample approximation of the expectation. The normal distribution is denoted by <code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | x^T\tau,1) $</code> with mean <code class="language-plaintext highlighter-rouge">$ x^T\tau $</code> and variance <code class="language-plaintext highlighter-rouge">$ 1 $</code>.</p>
 
-  <p>Algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[6]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>.  These algorithms can be generalized to neural network cases <a class="citation" href="#martens2020new">[6]</a>.</p>
+  <p>Algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[6]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>.  These algorithms can be generalized to neural network cases <a class="citation" href="#martens2020new">[6]</a> from a frequentist viewpoint.</p>
 </blockquote>
 
 <blockquote>
@@ -265,7 +265,7 @@ Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathc
 $$</code>
 where <code class="language-plaintext highlighter-rouge">$ \mathrm{KL} [ q(z) ||  p(z) ] :=  E_{ {q(z)} } [ \log \big(\frac{q(z)}{p(z)}\big) ]$</code> is the Kullback–Leibler divergence.</p>
 
-  <p>The <strong>natural-gradient variational inference</strong> <a class="citation" href="#khan2017conjugate">[7]</a> is an algorithm that speeds up the inference by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$q(z|\tau)$</code> induced by the Fisher-Rao metric.</p>
+  <p>The <strong>natural-gradient variational inference</strong> <a class="citation" href="#khan2017conjugate">[7]</a> is an algorithm that speeds up the inference by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$q(z|\tau)$</code> induced by the Fisher-Rao metric. This approach can be generalized to neural network cases <a class="citation" href="#lin2021tractable">[2]</a> <a class="citation" href="#osawa2019practical">[8]</a>  from a Bayesian viewpoint.</p>
 </blockquote>
 
 <blockquote>
@@ -277,8 +277,8 @@ where <code class="language-plaintext highlighter-rouge">$ \mathrm{KL} [ q(z) ||
 \min_{\tau}  E_{ \color{red}  {\pi(a | \tau)} } [ h(a)  ]
 \end{aligned} \tag{3}\label{3}
 $$</code>
-The <strong>natural evolution strategies</strong> <a class="citation" href="#wierstra2014natural">[8]</a> is an algorithm that speeds up the search process by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$\pi(a|\tau)$</code>.
-In the context of reinforcement learning,  <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code> is known as the policy distribution to generate actions and the natural evolution strategies is known as the <strong>natural policy gradient</strong> method <a class="citation" href="#kakade2001natural">[9]</a>.</p>
+The <strong>natural evolution strategies</strong> <a class="citation" href="#wierstra2014natural">[9]</a> is an algorithm that speeds up the search process by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$\pi(a|\tau)$</code>.
+In the context of reinforcement learning,  <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code> is known as the policy distribution to generate actions and the natural evolution strategies is known as the <strong>natural policy gradient</strong> method <a class="citation" href="#kakade2001natural">[10]</a>.</p>
 </blockquote>
 
 <p>In these examples, we can express the objective function in terms of an expectation under a parametric family highlighted in red. 
@@ -314,7 +314,7 @@ By doing so, we can exploit the geometric structure of a parametric family denot
 <div class="notice--success">
   <p><strong>Note</strong>:</p>
 
-  <p>In machine learning applications, these algorithms such as <a class="citation" href="#lin2021tractable">[2]</a>  <a class="citation" href="#martens2020new">[6]</a> <a class="citation" href="#khan2017conjugate">[7]</a> <a class="citation" href="#wierstra2014natural">[8]</a>  <a class="citation" href="#kakade2001natural">[9]</a> can be efficiently implemented without
+  <p>In machine learning applications, these algorithms such as <a class="citation" href="#lin2021tractable">[2]</a>  <a class="citation" href="#martens2020new">[6]</a> <a class="citation" href="#khan2017conjugate">[7]</a> <a class="citation" href="#osawa2019practical">[8]</a>  <a class="citation" href="#wierstra2014natural">[9]</a>  <a class="citation" href="#kakade2001natural">[10]</a> can be efficiently implemented without
 explicitly computing the inverse of the FIM.</p>
 
   <p>See 
@@ -334,7 +334,7 @@ The following figure illustrates four distributions in a Gaussian family denoted
 <hr />
 <p>We start by discussing parameterizations for a distribution family. As we will see, a proper parameterization plays an important role in defining the FIM.
 We can not use an arbitrary differentiable parameterization to represent a geometric structure.
-This structure is also known as a manifold structure <a class="citation" href="#tu2011introduction">[10]</a>. A (smooth) manifold should be locally like a “flat” vector space. For example, consider the (curved) Earth surface. It looks like a (locally) flat space to us.</p>
+This structure is also known as a manifold structure <a class="citation" href="#tu2011introduction">[11]</a>. A (smooth) manifold should be locally like a “flat” vector space. For example, consider the (curved) Earth surface. It looks like a (locally) flat space to us.</p>
 
 <p>The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined (finite).
 These properties will play a key role in <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space">Part IV</a> for natural-gradient descent.</p>
@@ -399,7 +399,7 @@ Clearly, a point $ (0,1) $ highlighted in green is in the circle, where we consi
 
 <h1 id="intrinsic-parameterizations-for-parametric-families">Intrinsic Parameterizations for Parametric families</h1>
 <hr />
-<p>Now, we discuss how to choose a parameterization given a parametric family so that we can exploit the geometric structure <a class="citation" href="#amari2016information">[11]</a> induced by the Fisher-Rao metric.</p>
+<p>Now, we discuss how to choose a parameterization given a parametric family so that we can exploit the geometric structure <a class="citation" href="#amari2016information">[12]</a> induced by the Fisher-Rao metric.</p>
 
 <p>Given a parametric distribution family <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> indexed by its parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> should be smooth w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> by considering <code class="language-plaintext highlighter-rouge">$ w $</code> to be fixed.
 We say a parametrization is <strong>intrinsic</strong> if the following condition for parameter (array) <code class="language-plaintext highlighter-rouge">$\tau $</code> holds:</p>
@@ -479,7 +479,7 @@ The main reason is that the parameter space is not open in $\mathcal{R}^2$.</p>
 <hr />
 <p>As we can see from the <a href="#motivation">previous section</a>, we can use the Fisher-Rao metric to design fast and efficient algorithms.
 In statistics, this metric is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.
-These statistical principles  <a class="citation" href="#casella2002statistical">[12]</a> <a class="citation" href="#jaynes1957information">[13]</a> play essential roles in training and estimating machine learning models.
+These statistical principles  <a class="citation" href="#casella2002statistical">[13]</a> <a class="citation" href="#jaynes1957information">[14]</a> play essential roles in training and estimating machine learning models.
 Moreover, the Fisher-Rao metric has been theorically and emprically used in machine learning and statistics.</p>
 
 <p>Given an intrinsic parameterization, we can define the Fisher-Rao metric under this parameterization as:
@@ -507,7 +507,7 @@ where $K$ is the number of entries of parameter array $\tau$ and
 The condition is also related to the model identification in maximum likelihood estimation.</p>
 
 <p>In the following discussion, we will assume the metric is well-defined.
-In such cases, the Fisher-Rao metric is a valid Riemannian metric <a class="citation" href="#lee2018introduction">[14]</a> since the corresponding FIM is positive definite everywhere in an <strong>intrinsic</strong> parameter space.</p>
+In such cases, the Fisher-Rao metric is a valid Riemannian metric <a class="citation" href="#lee2018introduction">[15]</a> since the corresponding FIM is positive definite everywhere in an <strong>intrinsic</strong> parameter space.</p>
 
 <div class="notice--danger">
   <p><strong>Warning</strong>:
@@ -615,7 +615,7 @@ $$</code></p>
 <h1 id="dimensionality-of-a-manifold">Dimensionality of a manifold</h1>
 <hr />
 <p>We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
-Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#tu2011introduction">[10]</a>.
+Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#tu2011introduction">[11]</a>.
 This also gives us a tool to help identify non-manifold cases.
 We now illustrate this by examples.</p>
 
@@ -716,13 +716,14 @@ $$</code></p>
 <p><span id="ollivier2018online">[5] Y. Ollivier, "Online natural gradient as a Kalman filter," <i>Electronic Journal of Statistics</i> <b>12</b>:2930–2961 (2018).</span></p>
 <p><span id="martens2020new">[6] J. Martens, "New Insights and Perspectives on the Natural Gradient Method," <i>Journal of Machine Learning Research</i> <b>21</b>:1–76 (2020).</span></p>
 <p><span id="khan2017conjugate">[7] M. Khan &amp; W. Lin, "Conjugate-computation variational inference: Converting variational inference in non-conjugate models to inferences in conjugate models," <i>Artificial Intelligence and Statistics</i> (PMLR, 2017), pp. 878–887.</span></p>
-<p><span id="wierstra2014natural">[8] D. Wierstra, T. Schaul, T. Glasmachers, Y. Sun, J. Peters, &amp; J. Schmidhuber, "Natural evolution strategies," <i>The Journal of Machine Learning Research</i> <b>15</b>:949–980 (2014).</span></p>
-<p><span id="kakade2001natural">[9] S. M. Kakade, "A natural policy gradient," <i>Advances in neural information processing systems</i> <b>14</b> (2001).</span></p>
-<p><span id="tu2011introduction">[10] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p>
-<p><span id="amari2016information">[11] S.-ichi Amari, <i>Information geometry and its applications</i> (Springer, 2016).</span></p>
-<p><span id="casella2002statistical">[12] G. Casella &amp; R. L. Berger, <i>Statistical inference</i> (2002).</span></p>
-<p><span id="jaynes1957information">[13] E. T. Jaynes, "Information theory and statistical mechanics," <i>Physical review</i> <b>106</b>:620 (1957).</span></p>
-<p><span id="lee2018introduction">[14] J. M. Lee, <i>Introduction to Riemannian manifolds</i> (Springer, 2018).</span></p></p>
+<p><span id="osawa2019practical">[8] K. Osawa, S. Swaroop, A. Jain, R. Eschenhagen, R. E. Turner, R. Yokota, &amp; M. E. Khan, "Practical deep learning with Bayesian principles," <i>arXiv preprint arXiv:1906.02506</i> (2019).</span></p>
+<p><span id="wierstra2014natural">[9] D. Wierstra, T. Schaul, T. Glasmachers, Y. Sun, J. Peters, &amp; J. Schmidhuber, "Natural evolution strategies," <i>The Journal of Machine Learning Research</i> <b>15</b>:949–980 (2014).</span></p>
+<p><span id="kakade2001natural">[10] S. M. Kakade, "A natural policy gradient," <i>Advances in neural information processing systems</i> <b>14</b> (2001).</span></p>
+<p><span id="tu2011introduction">[11] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p>
+<p><span id="amari2016information">[12] S.-ichi Amari, <i>Information geometry and its applications</i> (Springer, 2016).</span></p>
+<p><span id="casella2002statistical">[13] G. Casella &amp; R. L. Berger, <i>Statistical inference</i> (2002).</span></p>
+<p><span id="jaynes1957information">[14] E. T. Jaynes, "Information theory and statistical mechanics," <i>Physical review</i> <b>106</b>:620 (1957).</span></p>
+<p><span id="lee2018introduction">[15] J. M. Lee, <i>Introduction to Riemannian manifolds</i> (Springer, 2018).</span></p></p>
 
 <h2 id="footnotes">Footnotes:</h2>
 
