@@ -557,7 +557,7 @@ can be viewed  as a function of <code class="language-plaintext highlighter-roug
 
 <p>Therefore, we can  efficinetly compute natural-gradients w.r.t. natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> <a class="citation" href="#khan2017conjugate">[3]</a>  if we  can  easily compute Euclidean gradients w.r.t. its expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.</p>
 
-<h2 id="efficient-ngd-for-multivariate-gaussian">Efficient NGD for multivariate Gaussian</h2>
+<h2 id="efficient-ngd-for-multivariate-gaussians">Efficient NGD for multivariate Gaussians</h2>
 <p>Given a $d$-dim multivariate Gaussian with a full covariance structure, 
 the naive way to compute natural-gradients in this case has $O( (d^2)^3 )=O(d^6)$ iteration cost since the covariance matrix has $d^2$ entries.
 Now, we show how to efficiently compute natural-gradients in this case.</p>
