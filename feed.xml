@@ -1,10 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-23T14:10:13-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-23T14:42:59-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h1 id=&quot;handling-parameter-constraints&quot;&gt;Handling Parameter Constraints&lt;/h1&gt;
 &lt;hr /&gt;
 
 &lt;p&gt;Recall that  in Part IV, we discuss 
-&lt;a href=&quot;/posts/2021/11/Geomopt04/#many-faces-of-natural-gradient-descent&quot;&gt;many faces of NGD&lt;/a&gt; in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.&lt;/p&gt;
+&lt;a href=&quot;/posts/2021/11/Geomopt04/#many-faces-of-natural-gradient-descent&quot;&gt;the many faces of NGD&lt;/a&gt; in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.&lt;/p&gt;
+
+&lt;p&gt;By using a natural parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; with parameter constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;, consider the following problem
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{\eta \in \Omega_\eta} \ell_\eta(\mathbf{\eta}) = E_{p(w|\eta)} [h(w)]
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We could solve the following reparameterized problem by using the expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt;.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\min_{m \in \Omega_m} \ell_m(\mathbf{m}) = E_{p(w| \eta(m) )} [h(w)] = \ell_\eta(\eta(\mathbf{m}))
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class=&quot;notice--success&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;:&lt;/p&gt;
@@ -24,19 +38,22 @@ equivalent in exponential family cases as long as &lt;code class=&quot;language-
 &lt;/div&gt;
 
 &lt;h2 id=&quot;projected-natural-gradient-descent&quot;&gt;Projected Natural Gradient Descent&lt;/h2&gt;
-&lt;p&gt;A straightforward approach from natural-gradient descent is the projected natural-gradient descent.
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+&lt;p&gt;A straightforward approach from natural-gradient descent is the projected natural-gradient descent, where we  use 
+the &lt;a href=&quot;/posts/2021/10/Geomopt02/
+#distance-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; 
+for the projection with the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\eta(\eta_k)$&lt;/code&gt; evaluted at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_k$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \eta_{k+1} &amp;amp; \leftarrow  \arg\min_{ \color{blue} {y} \in \Omega_\eta} \| \color{blue} {\mathbf{y}} - \eta_k + \alpha
-\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }\\
-&amp;amp;= \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)
-\big]^T \mathbf{F}_{\eta}(\eta_k) \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)
+\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k) \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }\\
+&amp;amp;= \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
+\big]^T \mathbf{F}_{\eta}(\eta_k) \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
 \big]\\
-&amp;amp;= \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta f(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T f(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta f(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
-&amp;amp;= \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
+&amp;amp;= \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta \ell_\eta(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T \ell_\eta(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta \ell_\eta(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
+&amp;amp;= \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
 \end{aligned}\tag{1}\label{1}
-$$&lt;/code&gt; where we should use 
-the &lt;a href=&quot;/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; with the same FIM highlighted in red.&lt;/p&gt;
+$$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;This approach is closely related to proximial-gradient descent.
 Recall that in
@@ -47,7 +64,7 @@ second-order Taylor expansion of &lt;code class=&quot;language-plaintext highlig
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \eta_{k+1} \leftarrow
-\arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
+\arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
@@ -58,7 +75,7 @@ Recall that the KL divergence is also a Bregman divergence &lt;code class=&quot;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \underbrace{ \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{blue}{\mathbf{y}})]}_{ = \mathrm{B}_{A_\eta}(\mathbf{\eta}_k,\color{blue}{\mathbf{y}})}  \} 
+\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \underbrace{ \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{blue}{\mathbf{y}})]}_{ = \mathrm{B}_{A_\eta}(\mathbf{\eta}_k,\color{blue}{\mathbf{y}})}  \} 
 \end{aligned}\tag{2}\label{2}
 $$&lt;/code&gt;&lt;/p&gt;
 
@@ -72,16 +89,16 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Mirror descent in the expectation space remains the same as in &lt;a href=&quot;/posts/2021/12/Geomopt05/#natural-gradient-descent-as-mirror-descent&quot;&gt;Part V&lt;/a&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell_m(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
 \end{aligned}\tag{3}\label{3}
 $$&lt;/code&gt;
 where 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \underbrace{ \eta(\mathbf{m}_k)}_{=\eta_k} )=  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$&lt;/code&gt;.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell_m(\mathbf{m}_k) = \nabla_m \ell_\eta( \underbrace{ \eta(\mathbf{m}_k)}_{=\eta_k} )=  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;We could also perform the constrained mirror descent in the natural parameter space as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{blue}{y} \in \Omega_\eta}\{ \langle \nabla_\eta f(\mathbf{\eta}_k), \color{blue}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{blue}{\mathbf{y}},\mathbf{\eta}_k) \}
+\mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{blue}{y} \in \Omega_\eta}\{ \langle \nabla_\eta \ell_\eta(\mathbf{\eta}_k), \color{blue}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{blue}{\mathbf{y}},\mathbf{\eta}_k) \}
 \end{aligned}\tag{4}\label{4}
 $$&lt;/code&gt;&lt;/p&gt;
 
@@ -93,7 +110,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;One idea is to use an adaptive step-size for natural-gradient descent without a projection.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \eta_k - \alpha_k \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)
+\eta_{k+1} \leftarrow \eta_k - \alpha_k \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
 \end{aligned}\tag{5}\label{5}
 $$&lt;/code&gt; where  the step-size &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha_k$&lt;/code&gt; is selected  so that
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{k+1} \in \Omega_\eta$&lt;/code&gt;.&lt;/p&gt;
@@ -112,7 +129,7 @@ Note that this approach is completely different from mirror descent.&lt;/p&gt;
 induces a retraction map.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \mathrm{Ret}_{\eta_k} (- \alpha  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) )  
+\eta_{k+1} \leftarrow \mathrm{Ret}_{\eta_k} (- \alpha  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k) )  
 \end{aligned}\tag{6}\label{6}
 $$&lt;/code&gt;&lt;/p&gt;
 
@@ -678,7 +695,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Consider the following optimization problem over a convex domain denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\theta$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\min_{\theta \in \Omega_\theta} \ell(\mathbf{\theta})
+\min_{\theta \in \Omega_\theta} \ell_\theta(\mathbf{\theta})
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
@@ -687,7 +704,7 @@ descent with step-size &lt;code class=&quot;language-plaintext highlighter-rouge
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mathbf{\theta}_{k+1} \leftarrow \arg \min_{x \in \Omega_\theta}\{ \langle \nabla_\theta \ell(\mathbf{\theta}_k), \mathbf{x}-\mathbf{\theta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{\Phi}(\mathbf{x},\mathbf{\theta}_k) \}
+\mathbf{\theta}_{k+1} \leftarrow \arg \min_{x \in \Omega_\theta}\{ \langle \nabla_\theta \ell_\theta(\mathbf{\theta}_k), \mathbf{x}-\mathbf{\theta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{\Phi}(\mathbf{x},\mathbf{\theta}_k) \}
 \end{aligned}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{B}_\Phi(\cdot,\cdot)$&lt;/code&gt; is a Bregman divergence  equipped  with the strictly convex function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Phi(\cdot)$&lt;/code&gt;.&lt;/p&gt;
 
@@ -738,16 +755,16 @@ where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi =
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell_m(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
 \end{aligned}\tag{7}\label{7}
-$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k} \in \Omega_m$&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell(\mathbf{m}_k):= \nabla_m f(\eta(\mathbf{m}_k))$&lt;/code&gt; and the Bregman divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{B}_{A^*_\eta}(\cdot,\cdot)$&lt;/code&gt; is well-defined
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_{k} \in \Omega_m$&lt;/code&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell_m(\mathbf{m}_k):= \nabla_m \ell_\eta (\eta(\mathbf{m}_k))$&lt;/code&gt; and the Bregman divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{B}_{A^*_\eta}(\cdot,\cdot)$&lt;/code&gt; is well-defined
 since  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A^*_\eta$&lt;/code&gt; is strictly convex in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;.
 Recall  that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; can still be constrained.&lt;/p&gt;
 
 &lt;div class=&quot;notice--success&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Claim&lt;/strong&gt;:&lt;/p&gt;
 
-  &lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta = \mathcal{R}^K$&lt;/code&gt;, the solution of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; is equivalent to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{k+1}  \leftarrow  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta = \mathcal{R}^K$&lt;/code&gt;, the solution of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; is equivalent to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{k+1}  \leftarrow  \eta_k - \alpha \nabla_m \ell_m(\mathbf{m}_k)$&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;div class=&quot;notice--info&quot;&gt;
@@ -760,8 +777,8 @@ Recall  that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;
         &lt;p&gt;Denote 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-u(\mathbf{x}) &amp;amp;:=\langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha} [ \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k)] \\
-&amp;amp; = \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  [A^*_\eta( \mathbf{x}) - A^*_\eta( \mathbf{m}_k) -    
+u(\mathbf{x}) &amp;amp;:=\langle \nabla_m \ell_m(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha} [ \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k)] \\
+&amp;amp; = \langle \nabla_m \ell_m(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  [A^*_\eta( \mathbf{x}) - A^*_\eta( \mathbf{m}_k) -    
 \langle \mathbf{x}-\mathbf{m}_k, \underbrace{ \nabla_{\mathbf{m}} A^*_\eta( \mathbf{m}_k)}_{ = \eta_k \text{ by } \eqref{6}  } \rangle ],
 \end{aligned}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}_k \in \Omega_m $&lt;/code&gt;.&lt;/p&gt;
@@ -771,12 +788,12 @@ condition.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{0} &amp;amp;= \nabla_x u(\hat{\mathbf{x}}) &amp;amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
-&amp;amp;= \nabla_m \ell(\mathbf{m}_k)+ \frac{1}{\alpha}  [ \nabla_x A^*_\eta( \hat{\mathbf{x}})  -  \eta_k ],
+&amp;amp;= \nabla_m \ell_m(\mathbf{m}_k)+ \frac{1}{\alpha}  [ \nabla_x A^*_\eta( \hat{\mathbf{x}})  -  \eta_k ],
 \end{aligned}
-$$&lt;/code&gt; which implies that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$&lt;/code&gt;&lt;/p&gt;
+$$&lt;/code&gt; which implies that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell_m(\mathbf{m}_k)$&lt;/code&gt;&lt;/p&gt;
 
         &lt;p&gt;We first show that there exists a stationary point in the domain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(\hat{\mathbf{x}} \in \Omega_m)$&lt;/code&gt;.
-Let’s denote &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1}:= \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$&lt;/code&gt;. Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is unconstrained, it
+Let’s denote &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1}:= \eta_k - \alpha \nabla_m \ell_m(\mathbf{m}_k)$&lt;/code&gt;. Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is unconstrained, it
 is obvious that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\eta}_{k+1} \in \Omega_\eta$&lt;/code&gt;.
 By &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}(\mathbf{\eta}_{k+1}) =\nabla_\eta A_\eta( \mathbf{\eta}_{k+1}) \in
 \Omega_m$&lt;/code&gt;. Notice that,  by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{6}$&lt;/code&gt;, we have  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m A^*_\eta ( \mathbf{m}(\mathbf{\eta}_{k+1}) ) = \mathbf{\eta}_{k+1}$&lt;/code&gt;, which implies that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}(\mathbf{\eta}_{k+1})$&lt;/code&gt; is a stationary point and 
@@ -792,7 +809,7 @@ In other words,
         &lt;p&gt;In summary, when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta = \mathcal{R}^K$&lt;/code&gt;, the unique solution of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; is 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\eta_{k+1} &amp;amp; \leftarrow  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k) \\
+\eta_{k+1} &amp;amp; \leftarrow  \eta_k - \alpha \nabla_m \ell_m(\mathbf{m}_k) \\
 \mathbf{m}_{k+1} &amp;amp; \leftarrow  \nabla_\eta A_\eta( {\mathbf{\eta}_{k+1}})
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
@@ -806,12 +823,12 @@ mirror descent of &lt;code class=&quot;language-plaintext highlighter-rouge&quot
 the following update
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)
-= \eta_k - \alpha\nabla_m f( \underbrace{ \eta(\mathbf{m}_k) }_{= \eta_k}),
+\eta_{k+1} \leftarrow \eta_k - \alpha \nabla_m \ell_m(\mathbf{m}_k)
+= \eta_k - \alpha\nabla_m \ell_\eta( \underbrace{ \eta(\mathbf{m}_k) }_{= \eta_k}),
 \end{aligned}\tag{8}\label{8}
 $$&lt;/code&gt; which is exactly natural gradient
-descent in &lt;strong&gt;natural&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta=\mathcal{R}^K$&lt;/code&gt; since by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \eta_k)= \mathbf{F}
-_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$&lt;/code&gt;.&lt;/p&gt;
+descent in &lt;strong&gt;natural&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta=\mathcal{R}^K$&lt;/code&gt; since by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell_m(\mathbf{m}_k) = \nabla_m \ell_\eta( \eta_k)= \mathbf{F}
+_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;hr /&gt;
 &lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;

@@ -742,7 +742,7 @@ $$</code></p>
 <p>Consider the following optimization problem over a convex domain denoted by <code class="language-plaintext highlighter-rouge">$\Omega_\theta$</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\min_{\theta \in \Omega_\theta} \ell(\mathbf{\theta})
+\min_{\theta \in \Omega_\theta} \ell_\theta(\mathbf{\theta})
 \end{aligned}
 $$</code></p>
 
@@ -751,7 +751,7 @@ descent with step-size <code class="language-plaintext highlighter-rouge">$\alph
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{\theta}_{k+1} \leftarrow \arg \min_{x \in \Omega_\theta}\{ \langle \nabla_\theta \ell(\mathbf{\theta}_k), \mathbf{x}-\mathbf{\theta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{\Phi}(\mathbf{x},\mathbf{\theta}_k) \}
+\mathbf{\theta}_{k+1} \leftarrow \arg \min_{x \in \Omega_\theta}\{ \langle \nabla_\theta \ell_\theta(\mathbf{\theta}_k), \mathbf{x}-\mathbf{\theta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{\Phi}(\mathbf{x},\mathbf{\theta}_k) \}
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathrm{B}_\Phi(\cdot,\cdot)$</code> is a Bregman divergence  equipped  with the strictly convex function <code class="language-plaintext highlighter-rouge">$\Phi(\cdot)$</code>.</p>
 
@@ -802,16 +802,16 @@ where  <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{x \in \Omega_m}\{ \langle \nabla_m \ell_m(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k) \}
 \end{aligned}\tag{7}\label{7}
-$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k} \in \Omega_m$</code>,  <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k):= \nabla_m f(\eta(\mathbf{m}_k))$</code> and the Bregman divergence <code class="language-plaintext highlighter-rouge">$\mathrm{B}_{A^*_\eta}(\cdot,\cdot)$</code> is well-defined
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{m}_{k} \in \Omega_m$</code>,  <code class="language-plaintext highlighter-rouge">$\nabla_m \ell_m(\mathbf{m}_k):= \nabla_m \ell_\eta (\eta(\mathbf{m}_k))$</code> and the Bregman divergence <code class="language-plaintext highlighter-rouge">$\mathrm{B}_{A^*_\eta}(\cdot,\cdot)$</code> is well-defined
 since  <code class="language-plaintext highlighter-rouge">$A^*_\eta$</code> is strictly convex in <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>.
 Recall  that <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> can still be constrained.</p>
 
 <div class="notice--success">
   <p><strong>Claim</strong>:</p>
 
-  <p>When <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the solution of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is equivalent to <code class="language-plaintext highlighter-rouge">$\eta_{k+1}  \leftarrow  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>.</p>
+  <p>When <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the solution of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is equivalent to <code class="language-plaintext highlighter-rouge">$\eta_{k+1}  \leftarrow  \eta_k - \alpha \nabla_m \ell_m(\mathbf{m}_k)$</code>.</p>
 </div>
 
 <div class="notice--info">
@@ -824,8 +824,8 @@ Recall  that <code class="language-plaintext highlighter-rouge">$\Omega_m$</code
         <p>Denote 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-u(\mathbf{x}) &amp;:=\langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha} [ \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k)] \\
-&amp; = \langle \nabla_m \ell(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  [A^*_\eta( \mathbf{x}) - A^*_\eta( \mathbf{m}_k) -    
+u(\mathbf{x}) &amp;:=\langle \nabla_m \ell_m(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha} [ \mathrm{B}_{A^*_\eta}(\mathbf{x},\mathbf{m}_k)] \\
+&amp; = \langle \nabla_m \ell_m(\mathbf{m}_k), \mathbf{x}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  [A^*_\eta( \mathbf{x}) - A^*_\eta( \mathbf{m}_k) -    
 \langle \mathbf{x}-\mathbf{m}_k, \underbrace{ \nabla_{\mathbf{m}} A^*_\eta( \mathbf{m}_k)}_{ = \eta_k \text{ by } \eqref{6}  } \rangle ],
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{m}_k \in \Omega_m $</code>.</p>
@@ -835,12 +835,12 @@ condition.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{0} &amp;= \nabla_x u(\hat{\mathbf{x}}) &amp; (\mathbf{m}_k \text{ is considered to be a constant}) \\
-&amp;= \nabla_m \ell(\mathbf{m}_k)+ \frac{1}{\alpha}  [ \nabla_x A^*_\eta( \hat{\mathbf{x}})  -  \eta_k ],
+&amp;= \nabla_m \ell_m(\mathbf{m}_k)+ \frac{1}{\alpha}  [ \nabla_x A^*_\eta( \hat{\mathbf{x}})  -  \eta_k ],
 \end{aligned}
-$$</code> which implies that <code class="language-plaintext highlighter-rouge">$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code></p>
+$$</code> which implies that <code class="language-plaintext highlighter-rouge">$\nabla_x A^*_\eta( \hat{\mathbf{x}}) =  \eta_k - \alpha \nabla_m \ell_m(\mathbf{m}_k)$</code></p>
 
         <p>We first show that there exists a stationary point in the domain <code class="language-plaintext highlighter-rouge">$(\hat{\mathbf{x}} \in \Omega_m)$</code>.
-Let’s denote <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}:= \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)$</code>. Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained, it
+Let’s denote <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1}:= \eta_k - \alpha \nabla_m \ell_m(\mathbf{m}_k)$</code>. Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained, it
 is obvious that <code class="language-plaintext highlighter-rouge">$\mathbf{\eta}_{k+1} \in \Omega_\eta$</code>.
 By <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\mathbf{\eta}_{k+1}) =\nabla_\eta A_\eta( \mathbf{\eta}_{k+1}) \in
 \Omega_m$</code>. Notice that,  by <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code>, we have  <code class="language-plaintext highlighter-rouge">$\nabla_m A^*_\eta ( \mathbf{m}(\mathbf{\eta}_{k+1}) ) = \mathbf{\eta}_{k+1}$</code>, which implies that <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\mathbf{\eta}_{k+1})$</code> is a stationary point and 
@@ -856,7 +856,7 @@ In other words,
         <p>In summary, when <code class="language-plaintext highlighter-rouge">$\Omega_\eta = \mathcal{R}^K$</code>, the unique solution of <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} &amp; \leftarrow  \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k) \\
+\eta_{k+1} &amp; \leftarrow  \eta_k - \alpha \nabla_m \ell_m(\mathbf{m}_k) \\
 \mathbf{m}_{k+1} &amp; \leftarrow  \nabla_\eta A_\eta( {\mathbf{\eta}_{k+1}})
 \end{aligned}
 $$</code></p>
@@ -870,12 +870,12 @@ mirror descent of <code class="language-plaintext highlighter-rouge">$\eqref{7}$
 the following update
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \eta_k - \alpha \nabla_m \ell(\mathbf{m}_k)
-= \eta_k - \alpha\nabla_m f( \underbrace{ \eta(\mathbf{m}_k) }_{= \eta_k}),
+\eta_{k+1} \leftarrow \eta_k - \alpha \nabla_m \ell_m(\mathbf{m}_k)
+= \eta_k - \alpha\nabla_m \ell_\eta( \underbrace{ \eta(\mathbf{m}_k) }_{= \eta_k}),
 \end{aligned}\tag{8}\label{8}
 $$</code> which is exactly natural gradient
-descent in <strong>natural</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta=\mathcal{R}^K$</code> since by <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, we have <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \eta_k)= \mathbf{F}
-_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
+descent in <strong>natural</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta=\mathcal{R}^K$</code> since by <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, we have <code class="language-plaintext highlighter-rouge">$\nabla_m \ell_m(\mathbf{m}_k) = \nabla_m \ell_\eta( \eta_k)= \mathbf{F}
+_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)$</code>.</p>
 
 <hr />
 <h1 id="references">References</h1>
