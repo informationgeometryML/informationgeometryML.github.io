@@ -210,7 +210,7 @@ equivalent in exponential family cases as long as <code class="language-plaintex
       <p>When <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained, these updates are <strong>distinct</strong> methods.</p>
     </li>
     <li>
-      <p>In constrained cases, either  <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> or <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>  can be an arbitrary open subset in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.</p>
+      <p>In constrained cases, either  <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> or <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>  can be an arbitrary open subset in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.  <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>, <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>, and <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> can be difficult to solve in general.</p>
     </li>
   </ul>
 </div>
@@ -230,7 +230,7 @@ equivalent in exponential family cases as long as <code class="language-plaintex
 $$</code> where we should use 
 the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> with the same FIM highlighted in red.</p>
 
-<p>This approach is closedly related to proximial-gradient descent.
+<p>This approach is closely related to proximial-gradient descent.
 Recall that in
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
 we show that natural-gradient descent can be viewed as an  proximal-gradient method, where we use the
@@ -313,6 +313,12 @@ $$</code></p>
 we have to carefully select a retraction map to handle the parameter constraint.
 For a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, it can be difficult to come out an efficient retraction map to satisfy
 the constraint.</p>
+
+<p>For positive-definite constraints in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, please see <a class="citation" href="#lin2020handling">[1]</a> as an example to derive efficient Riemannian gradient updates.</p>
+
+<hr />
+<h1 id="references">References</h1>
+<p class="bibliography"><p><span id="lin2020handling">[1] W. Lin, M. Schmidt, &amp; M. E. Khan, "Handling the positive-definite constraint in the bayesian learning rule," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 6116–6126.</span></p></p>
 
 
         
