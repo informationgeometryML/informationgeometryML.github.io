@@ -182,7 +182,7 @@
 
 
 
-  3 minute read
+  4 minute read
 </p>
           
         </header>
@@ -251,7 +251,7 @@ $$</code></p>
 Recall that in
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
 we show that natural-gradient descent can be viewed as an  proximal-gradient method, where we use the
-second-order Taylor expansion of <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k) = \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code>, where the KL divergence is  a f-divergence.</p>
+second-order Taylor expansion of any f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code> such as the KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)= \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code>.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -267,14 +267,31 @@ Recall that the KL divergence is also a Bregman divergence <code class="language
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \underbrace{ \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{blue}{\mathbf{y}})]}_{ = \mathrm{B}_{A_\eta}(\mathbf{\eta}_k,\color{blue}{\mathbf{y}})}  \} 
+\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \mathrm{D}_f(\mathbf{y},\eta_k)  \} 
 \end{aligned}\tag{2}\label{2}
 $$</code></p>
+
+<p>When the f-divergence is choosen to be the KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)= \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code>, we have more  nice results.</p>
+
+<ul>
+  <li>
+    <p>The KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})]=\mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k)$</code> is a f-divergence. The
+second-order Taylor expansion of <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code> at 
+ <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> is <code class="language-plaintext highlighter-rouge">$\frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)$</code>.
+This builds the connection between NGD and proximal gradient descent.</p>
+  </li>
+  <li>
+    <p>The <strong>reverse</strong> KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\color{red} {\mathbf{y}} ) || p(\mathbf{w}|\eta_k)]=\mathrm{B}_{A_\eta}(\color{red}{\mathbf{y}},\eta_k)$</code> is a Bregman divergence in this case.
+The
+second-order Taylor expansion of  at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> gives the same approximation as <code class="language-plaintext highlighter-rouge">$\frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)$</code>.
+This builds the connection between NGD and mirror descent.</p>
+  </li>
+</ul>
 
 <div class="notice--success">
   <p><strong>Note</strong>:</p>
 
-  <p>The KL divergence is the only divergence that is both a Csiszar f-divergence and a Bregman divergence.</p>
+  <p>The KL divergence is the only divergence that is both a  f-divergence and a Bregman divergence.</p>
 </div>
 
 <h2 id="mirror-descent">Mirror Descent</h2>
