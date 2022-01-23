@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-22T13:53:43-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-23T13:41:34-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h1 id=&quot;handling-parameter-constraints&quot;&gt;Handling Parameter Constraints&lt;/h1&gt;
 &lt;hr /&gt;
@@ -6,25 +6,74 @@
 &lt;p&gt;Recall that  in Part IV, we discuss 
 &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-faces-of-natural-gradient-descent&quot;&gt;many faces of NGD&lt;/a&gt; in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.&lt;/p&gt;
 
-&lt;h2 id=&quot;proximal-ngd--projected-ngd-and-constrained-mirror-descent&quot;&gt;Proximal NGD,  Projected NGD, and (Constrained) Mirror Descent&lt;/h2&gt;
+&lt;div class=&quot;notice--success&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;:&lt;/p&gt;
 
-&lt;p&gt;As we discussed before, natural-gradient descent and mirror desecent in general are &lt;strong&gt;distinct&lt;/strong&gt; methods when the natural parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is constrained.&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;
+      &lt;p&gt;Even when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is constrained, updates in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{3}$&lt;/code&gt; are
+equivalent in exponential family cases as long as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is unconstrained.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is constrained, these updates are &lt;strong&gt;distinct&lt;/strong&gt; methods.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;In constrained cases, either  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;  can be an arbitrary open subset in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
 
+&lt;h2 id=&quot;projected-natural-gradient-descent&quot;&gt;Projected Natural Gradient Descent&lt;/h2&gt;
 &lt;p&gt;A straightforward approach from natural-gradient descent is the projected natural-gradient descent.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{ \color{blue} {z} \in \Omega_\eta} \|\eta_k - \alpha
-\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) -\color{blue} {\mathbf{z}} \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }
-\end{aligned}\tag{6}\label{6}
+\eta_{k+1} &amp;amp; \leftarrow  \arg\min_{ \color{blue} {y} \in \Omega_\eta} \| \color{blue} {\mathbf{y}} - \eta_k + \alpha
+\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }\\
+&amp;amp;= \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)
+\big]^T \mathbf{F}_{\eta}(\eta_k) \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)
+\big]\\
+&amp;amp;= \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta f(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T f(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta f(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
+&amp;amp;= \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
+\end{aligned}\tag{1}\label{1}
 $$&lt;/code&gt; where we should use 
 the &lt;a href=&quot;/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; with the same FIM highlighted in red.&lt;/p&gt;
 
-&lt;p&gt;On the other hand, the constrained mirror descent in the expectation space remains the same as in &lt;a href=&quot;/posts/2021/12/Geomopt05/#natural-gradient-descent-as-mirror-descent&quot;&gt;Part V&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This approach is closedly related to proximial-gradient descent.
+Recall that in
+&lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent&quot;&gt;Part IV&lt;/a&gt;,
+we show that natural-gradient descent can be viewed as an  proximal-gradient method, where we use the
+second-order Taylor expansion of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(\mathbf{y},\eta_k) = \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y=\eta_k$&lt;/code&gt;, where the KL divergence is  a f-divergence.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
+\eta_{k+1} \leftarrow
+\arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
 \end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;proximal-gradient-descent&quot;&gt;Proximal Gradient Descent&lt;/h2&gt;
+
+&lt;p&gt;We could also obtain proximal natural-gradient descent without the Taylor expansion.
+Recall that the KL divergence is also a Bregman divergence &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{B}_{A_\eta}(\cdot,\cdot)$&lt;/code&gt; equipped with the log-partition function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$A_\eta$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \underbrace{ \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{blue}{\mathbf{y}})]}_{ = \mathrm{B}_{A_\eta}(\mathbf{\eta}_k,\color{blue}{\mathbf{y}})}  \} 
+\end{aligned}\tag{2}\label{2}
+$$&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;notice--success&quot;&gt;
+  &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;:&lt;/p&gt;
+
+  &lt;p&gt;The KL divergence is the only divergence that is both a Csiszar f-divergence and a Bregman divergence.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;mirror-descent&quot;&gt;Mirror Descent&lt;/h2&gt;
+&lt;p&gt;Mirror descent in the expectation space remains the same as in &lt;a href=&quot;/posts/2021/12/Geomopt05/#natural-gradient-descent-as-mirror-descent&quot;&gt;Part V&lt;/a&gt;.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\begin{aligned}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
+\end{aligned}\tag{3}\label{3}
 $$&lt;/code&gt;
 where 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \underbrace{ \eta(\mathbf{m}_k)}_{=\eta_k} )=  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$&lt;/code&gt;.&lt;/p&gt;
@@ -33,72 +82,51 @@ where
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{blue}{y} \in \Omega_\eta}\{ \langle \nabla_\eta f(\mathbf{\eta}_k), \color{blue}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{blue}{\mathbf{y}},\mathbf{\eta}_k) \}
-\end{aligned}\tag{7}\label{7}
+\end{aligned}\tag{4}\label{4}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Recall that in
-&lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent&quot;&gt;Part IV&lt;/a&gt;,
-we show that natural-gradient descent can be viewed as an unconstrained proximal-gradient method, where we use the
-second-order Taylor expansion of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{D}_f(\mathbf{y},\eta_k) = \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y=\eta_k$&lt;/code&gt;, where the KL divergence is also a f-divergence.&lt;/p&gt;
+&lt;p&gt;Clearly,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;  gives distinct updates since the KL divergence is not symmetric.&lt;/p&gt;
 
-&lt;div class=&quot;notice--success&quot;&gt;
-  &lt;p&gt;Note:&lt;/p&gt;
+&lt;h2 id=&quot;adaptive-step-size-selection&quot;&gt;Adaptive Step-size Selection&lt;/h2&gt;
+&lt;p&gt;Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt; is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, the standard natural-gradient descent is still valid when the step-size &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha_k$&lt;/code&gt; is small enough.&lt;/p&gt;
 
-  &lt;p&gt;The KL divergence is the only divergence that is both a f-divergence and a Bregman divergence.&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;p&gt;We could also obtain proximal natural-gradient descent without the Taylor expansion as below since the KL divergence is not symmetric.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \underbrace{ \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{blue}{\mathbf{y}})]}_{ = \mathrm{B}_{A_\eta}(\mathbf{\eta}_k,\color{blue}{\mathbf{y}})}  \} 
-\end{aligned}\tag{8}\label{8}
-$$&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;These methods could be very difficult to solve since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; can be an arbitrary open subset in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;.
-Moreover, in classical settings, a Bregman divergence is often defined in a closed set instead of an
-open constrained subset.&lt;/p&gt;
-
-&lt;h2 id=&quot;using-an-adaptive-step-size&quot;&gt;Using an Adaptive Step-size&lt;/h2&gt;
-
-&lt;p&gt;When the step-size &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha$&lt;/code&gt; is small enough, the connection between natural-gradient descent and mirror desecent could
-still hold.&lt;/p&gt;
-
-&lt;p&gt;Therefore, one idea is to use an adaptive step-size to satisfy the parameter constraint at each iteration.
+&lt;p&gt;One idea is to use an adaptive step-size for natural-gradient descent without a projection.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \eta_k - \alpha_k \nabla_m \ell(\mathbf{m}_k)
-\end{aligned}\tag{9}\label{9}
-$$&lt;/code&gt; where 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_m \ell(\mathbf{m}_k) =  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$&lt;/code&gt; and the step-size &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha_k$&lt;/code&gt; is selected  so that
+\eta_{k+1} \leftarrow \eta_k - \alpha_k \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)
+\end{aligned}\tag{5}\label{5}
+$$&lt;/code&gt; where  the step-size &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha_k$&lt;/code&gt; is selected  so that
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_{k+1} \in \Omega_\eta$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt; is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, this update is valid when the step-size &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha_k$&lt;/code&gt; is small enough.&lt;/p&gt;
-
-&lt;p&gt;However, for a general parameter constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;, this approach can be inefficient due to the selection precedure and will often select an extremally small step-size
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha_k$&lt;/code&gt;,
-which greatly slows down the progression of the method.&lt;/p&gt;
+&lt;p&gt;However, for a general parameter constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;, this approach results in a slow progression of the method.
+The step-size selection precedure has to check the constraint at each iteration and could select an extremely small step-size
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha_k$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;riemannian-gradient-descent&quot;&gt;Riemannian Gradient Descent&lt;/h2&gt;
 
 &lt;p&gt;An alternative approach is to use Riemannian gradient descent as we discussed in 
 &lt;a href=&quot;/posts/2021/11/Geomopt04/#riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;Part IV&lt;/a&gt;, which is a generalization of natural-gradient descent. 
-Note that this approach cannot be derived from mirror descent.&lt;/p&gt;
+Note that this approach is completely different from mirror descent.&lt;/p&gt;
 
 &lt;p&gt;To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) geodesic, which
 induces a retraction map.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \mathrm{Ret}_{\eta_k} (- \alpha  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) )  
-\end{aligned}\tag{10}\label{10}
+\end{aligned}\tag{6}\label{6}
 $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;As mentioned in 
 &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-as-inexact-riemannian-gradient-descent&quot;&gt;Part IV&lt;/a&gt;,
-we have to carefully select a retraction map to handle the parameter constraint.&lt;/p&gt;
+we have to carefully select a retraction map to handle the parameter constraint.
+For a general parameter constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\eta$&lt;/code&gt;, it can be difficult to come out an efficient retraction map to satisfy
+the constraint.&lt;/p&gt;
 
-&lt;p&gt;For a general parameter constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_m$&lt;/code&gt;, it can be difficult to come out an efficient retraction map to satisfy
-the constraint.&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+&lt;h1 id=&quot;efficient-riemannian-gradient-descent-for-multivariate-gaussians&quot;&gt;Efficient Riemannian Gradient Descent for Multivariate Gaussians&lt;/h1&gt;
+
+&lt;h2 id=&quot;natural-gradient-descent-as-a-newtons-update&quot;&gt;Natural Gradient Descent as a Newton’s update&lt;/h2&gt;
+
+&lt;h2 id=&quot;riemannian-retraction-map&quot;&gt;Riemannian Retraction Map&lt;/h2&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part V: Efficient Natural-gradient Methods for Exponential Family</title><link href="/posts/2021/12/Geomopt05/" rel="alternate" type="text/html" title="Part V: Efficient Natural-gradient Methods for Exponential Family" /><published>2021-12-14T00:00:00-08:00</published><updated>2021-12-14T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt05</id><content type="html" xml:base="/posts/2021/12/Geomopt05/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should show that we can efficiently implement natural-gradient methods in many cases.&lt;/p&gt;

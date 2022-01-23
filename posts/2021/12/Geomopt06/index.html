@@ -182,7 +182,7 @@
 
 
 
-  2 minute read
+  3 minute read
 </p>
           
         </header>
@@ -198,25 +198,74 @@
 <p>Recall that  in Part IV, we discuss 
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-faces-of-natural-gradient-descent">many faces of NGD</a> in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.</p>
 
-<h2 id="proximal-ngd--projected-ngd-and-constrained-mirror-descent">Proximal NGD,  Projected NGD, and (Constrained) Mirror Descent</h2>
+<div class="notice--success">
+  <p><strong>Note</strong>:</p>
 
-<p>As we discussed before, natural-gradient descent and mirror desecent in general are <strong>distinct</strong> methods when the natural parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained.</p>
+  <ul>
+    <li>
+      <p>Even when <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained, updates in <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>, <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, and <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code> are
+equivalent in exponential family cases as long as <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained.</p>
+    </li>
+    <li>
+      <p>When <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained, these updates are <strong>distinct</strong> methods.</p>
+    </li>
+    <li>
+      <p>In constrained cases, either  <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> or <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>  can be an arbitrary open subset in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.</p>
+    </li>
+  </ul>
+</div>
 
+<h2 id="projected-natural-gradient-descent">Projected Natural Gradient Descent</h2>
 <p>A straightforward approach from natural-gradient descent is the projected natural-gradient descent.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{ \color{blue} {z} \in \Omega_\eta} \|\eta_k - \alpha
-\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) -\color{blue} {\mathbf{z}} \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }
-\end{aligned}\tag{6}\label{6}
+\eta_{k+1} &amp; \leftarrow  \arg\min_{ \color{blue} {y} \in \Omega_\eta} \| \color{blue} {\mathbf{y}} - \eta_k + \alpha
+\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }\\
+&amp;= \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)
+\big]^T \mathbf{F}_{\eta}(\eta_k) \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)
+\big]\\
+&amp;= \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta f(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T f(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta f(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
+&amp;= \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
+\end{aligned}\tag{1}\label{1}
 $$</code> where we should use 
 the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> with the same FIM highlighted in red.</p>
 
-<p>On the other hand, the constrained mirror descent in the expectation space remains the same as in <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-mirror-descent">Part V</a>.</p>
+<p>This approach is closedly related to proximial-gradient descent.
+Recall that in
+<a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
+we show that natural-gradient descent can be viewed as an  proximal-gradient method, where we use the
+second-order Taylor expansion of <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k) = \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code>, where the KL divergence is  a f-divergence.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
+\eta_{k+1} \leftarrow
+\arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
 \end{aligned}
+$$</code></p>
+
+<h2 id="proximal-gradient-descent">Proximal Gradient Descent</h2>
+
+<p>We could also obtain proximal natural-gradient descent without the Taylor expansion.
+Recall that the KL divergence is also a Bregman divergence <code class="language-plaintext highlighter-rouge">$\mathrm{B}_{A_\eta}(\cdot,\cdot)$</code> equipped with the log-partition function <code class="language-plaintext highlighter-rouge">$A_\eta$</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \underbrace{ \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{blue}{\mathbf{y}})]}_{ = \mathrm{B}_{A_\eta}(\mathbf{\eta}_k,\color{blue}{\mathbf{y}})}  \} 
+\end{aligned}\tag{2}\label{2}
+$$</code></p>
+
+<div class="notice--success">
+  <p><strong>Note</strong>:</p>
+
+  <p>The KL divergence is the only divergence that is both a Csiszar f-divergence and a Bregman divergence.</p>
+</div>
+
+<h2 id="mirror-descent">Mirror Descent</h2>
+<p>Mirror descent in the expectation space remains the same as in <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-mirror-descent">Part V</a>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
+\end{aligned}\tag{3}\label{3}
 $$</code>
 where 
 <code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) = \nabla_m f( \underbrace{ \eta(\mathbf{m}_k)}_{=\eta_k} )=  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code>.</p>
@@ -225,72 +274,51 @@ where
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{blue}{y} \in \Omega_\eta}\{ \langle \nabla_\eta f(\mathbf{\eta}_k), \color{blue}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{blue}{\mathbf{y}},\mathbf{\eta}_k) \}
-\end{aligned}\tag{7}\label{7}
+\end{aligned}\tag{4}\label{4}
 $$</code></p>
 
-<p>Recall that in
-<a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
-we show that natural-gradient descent can be viewed as an unconstrained proximal-gradient method, where we use the
-second-order Taylor expansion of <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k) = \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code>, where the KL divergence is also a f-divergence.</p>
+<p>Clearly,  <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> and  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>  gives distinct updates since the KL divergence is not symmetric.</p>
 
-<div class="notice--success">
-  <p>Note:</p>
+<h2 id="adaptive-step-size-selection">Adaptive Step-size Selection</h2>
+<p>Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, the standard natural-gradient descent is still valid when the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is small enough.</p>
 
-  <p>The KL divergence is the only divergence that is both a f-divergence and a Bregman divergence.</p>
-</div>
-
-<p>We could also obtain proximal natural-gradient descent without the Taylor expansion as below since the KL divergence is not symmetric.</p>
-
-<p><code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta f(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \underbrace{ \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{blue}{\mathbf{y}})]}_{ = \mathrm{B}_{A_\eta}(\mathbf{\eta}_k,\color{blue}{\mathbf{y}})}  \} 
-\end{aligned}\tag{8}\label{8}
-$$</code></p>
-
-<p>These methods could be very difficult to solve since <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> can be an arbitrary open subset in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.
-Moreover, in classical settings, a Bregman divergence is often defined in a closed set instead of an
-open constrained subset.</p>
-
-<h2 id="using-an-adaptive-step-size">Using an Adaptive Step-size</h2>
-
-<p>When the step-size <code class="language-plaintext highlighter-rouge">$\alpha$</code> is small enough, the connection between natural-gradient descent and mirror desecent could
-still hold.</p>
-
-<p>Therefore, one idea is to use an adaptive step-size to satisfy the parameter constraint at each iteration.
+<p>One idea is to use an adaptive step-size for natural-gradient descent without a projection.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \eta_k - \alpha_k \nabla_m \ell(\mathbf{m}_k)
-\end{aligned}\tag{9}\label{9}
-$$</code> where 
-<code class="language-plaintext highlighter-rouge">$\nabla_m \ell(\mathbf{m}_k) =  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)$</code> and the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is selected  so that
+\eta_{k+1} \leftarrow \eta_k - \alpha_k \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k)
+\end{aligned}\tag{5}\label{5}
+$$</code> where  the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is selected  so that
 <code class="language-plaintext highlighter-rouge">$\eta_{k+1} \in \Omega_\eta$</code>.</p>
 
-<p>Since <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, this update is valid when the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is small enough.</p>
-
-<p>However, for a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, this approach can be inefficient due to the selection precedure and will often select an extremally small step-size
-<code class="language-plaintext highlighter-rouge">$\alpha_k$</code>,
-which greatly slows down the progression of the method.</p>
+<p>However, for a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, this approach results in a slow progression of the method.
+The step-size selection precedure has to check the constraint at each iteration and could select an extremely small step-size
+<code class="language-plaintext highlighter-rouge">$\alpha_k$</code>.</p>
 
 <h2 id="riemannian-gradient-descent">Riemannian Gradient Descent</h2>
 
 <p>An alternative approach is to use Riemannian gradient descent as we discussed in 
 <a href="/posts/2021/11/Geomopt04/#riemannian-gradient-descent-and-its-non-linear-invariance">Part IV</a>, which is a generalization of natural-gradient descent. 
-Note that this approach cannot be derived from mirror descent.</p>
+Note that this approach is completely different from mirror descent.</p>
 
 <p>To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) geodesic, which
 induces a retraction map.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \eta_{k+1} \leftarrow \mathrm{Ret}_{\eta_k} (- \alpha  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta f(\eta_k) )  
-\end{aligned}\tag{10}\label{10}
+\end{aligned}\tag{6}\label{6}
 $$</code></p>
 
 <p>As mentioned in 
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-inexact-riemannian-gradient-descent">Part IV</a>,
-we have to carefully select a retraction map to handle the parameter constraint.</p>
-
-<p>For a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_m$</code>, it can be difficult to come out an efficient retraction map to satisfy
+we have to carefully select a retraction map to handle the parameter constraint.
+For a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, it can be difficult to come out an efficient retraction map to satisfy
 the constraint.</p>
+
+<h1 id="efficient-riemannian-gradient-descent-for-multivariate-gaussians">Efficient Riemannian Gradient Descent for Multivariate Gaussians</h1>
+
+<h2 id="natural-gradient-descent-as-a-newtons-update">Natural Gradient Descent as a Newton’s update</h2>
+
+<h2 id="riemannian-retraction-map">Riemannian Retraction Map</h2>
 
         
       </section>
