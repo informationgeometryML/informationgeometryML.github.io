@@ -262,8 +262,7 @@ $$</code></p>
 
 <h2 id="proximal-gradient-descent">Proximal Gradient Descent</h2>
 
-<p>We could also obtain proximal natural-gradient descent without the Taylor expansion.
-Recall that the KL divergence is also a Bregman divergence <code class="language-plaintext highlighter-rouge">$\mathrm{B}_{A_\eta}(\cdot,\cdot)$</code> equipped with the log-partition function <code class="language-plaintext highlighter-rouge">$A_\eta$</code>.</p>
+<p>We could also obtain proximal gradient descent by using a f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)$</code> without the Taylor expansion.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -271,7 +270,7 @@ Recall that the KL divergence is also a Bregman divergence <code class="language
 \end{aligned}\tag{2}\label{2}
 $$</code></p>
 
-<p>When the f-divergence is choosen to be the KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)= \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code>, we have more  nice results.</p>
+<p>We have the following additional  nice results, when the f-divergence is choosen to be  <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)= \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code>.</p>
 
 <ul>
   <li>
