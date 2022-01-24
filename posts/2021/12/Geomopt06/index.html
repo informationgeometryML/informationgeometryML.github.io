@@ -283,8 +283,7 @@ second-order Taylor approximation   at
 \begin{aligned}
 \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
 \end{aligned}
-$$</code> 
-  This establishes the connection between NGD and proximal gradient descent.</p>
+$$</code></p>
   </li>
   <li>
     <p>The <strong>reverse</strong> KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\color{red} {\mathbf{y}} ) || p(\mathbf{w}|\eta_k)]=\mathrm{B}_{A_\eta}(\color{red}{\mathbf{y}},\eta_k)$</code> is a Bregman divergence.
@@ -293,8 +292,7 @@ The second-order Taylor approximation  of the reverse KL divergence at <code cla
 \begin{aligned}
 \mathrm{KL} [p(\mathbf{w}|\color{red}{\mathbf{y}}) || p(\mathbf{w}|\eta_k)] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
 \end{aligned}
-$$</code> 
-  This establishes the connection between NGD and mirror descent.</p>
+$$</code></p>
   </li>
 </ul>
 
