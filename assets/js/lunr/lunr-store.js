@@ -60,7 +60,7 @@ var store = [{
         "url": "/posts/2021/12/Geomopt05/",
         "teaser":null},{
         "title": "Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods",
-        "excerpt":"Warning: working in Progress (incomplete) Handling Parameter Constraints Recall that in Part IV, we discuss the many faces of NGD in unconstrained cases. These methods could also be exteneded in constrained cases to handle the parameter constraint. By using a natural parameterization $\\eta$ with parameter constraint $\\Omega_\\eta$, consider the following...","categories": [],
+        "excerpt":"Warning: working in Progress (incomplete) Goal In this blog post, we discuss about how to handle parameter constraints of exponential family. Handling Parameter Constraints Recall that in Part IV, we discuss the many faces of NGD in unconstrained cases. These methods could also be exteneded in constrained cases to handle...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold","Exponential Family"],
         "url": "/posts/2021/12/Geomopt06/",
         "teaser":null},{
