@@ -347,7 +347,7 @@ using this class of parametrizations.</p>
 
 <ul>
   <li>
-    <p>It is an intrinstic parametrization as we discussed in
+    <p>It is an intrinsic parametrization as we discussed in
  <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations-for-parametric-families">Part I</a>.</p>
   </li>
   <li>
@@ -368,7 +368,7 @@ Note that the linearity in the inner product <code class="language-plaintext hig
 <div class="notice--success">
   <p><strong>Claim</strong>:</p>
 
-  <p>A regular, minimal, and natural parametrization is intrinstic.</p>
+  <p>A regular, minimal, and natural parametrization is intrinsic.</p>
 </div>
 
 <div class="notice--info">
@@ -378,7 +378,7 @@ Note that the linearity in the inner product <code class="language-plaintext hig
       <blockquote>
         <p>Proof by contradiction:</p>
 
-        <p>Recall that a parametrization is intrinstic if 
+        <p>Recall that a parametrization is intrinsic if 
 <code class="language-plaintext highlighter-rouge">$K$</code> partial derivatives 
 <code class="language-plaintext highlighter-rouge">$ \{ \partial_{\eta_i} \log p(\mathbf{w}|\eta) \} $</code>  are linearly independent.
 Since the parameter space is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> and the log-partition function <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)$</code> is differentiable,  these partial derivatives are well-defined and can be computed as
@@ -388,7 +388,7 @@ Since the parameter space is open in <code class="language-plaintext highlighter
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{e}_i$</code> is an one-hot/unit array which has zero in all entries except the $i$-th entry.</p>
 
-        <p>Suppose a regular, minimal, and natural parametrization is not intrinstic.
+        <p>Suppose a regular, minimal, and natural parametrization is not intrinsic.
 These partial derivatives must be linearly dependent.
 Thus, there exist a set of non-zero constant <code class="language-plaintext highlighter-rouge">$c_i$</code> such that
 <code class="language-plaintext highlighter-rouge">$\sum_i c_i \partial_{\eta_i} \log p(\mathbf{w}|\eta)= 0 $</code>, where the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code>.
@@ -448,7 +448,7 @@ p({w}|\mathbf{\eta})
 $$</code> where  <code class="language-plaintext highlighter-rouge">$\eta$</code> is a $(d+\frac{d(d+1)}{2})$-dim array.
 It can be shown that $\Omega_\eta$ is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K=d+\frac{d(d+1)}{2}$</code>.</p>
 
-        <p>As we discussed in <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Part II</a>,  <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\Sigma^{-1})$</code> is an intrinstic parameterization while <code class="language-plaintext highlighter-rouge">$\mathrm{vec}(\Sigma^{-1})$</code> is not.</p>
+        <p>As we discussed in <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Part II</a>,  <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\Sigma^{-1})$</code> is an intrinsic parameterization while <code class="language-plaintext highlighter-rouge">$\mathrm{vec}(\Sigma^{-1})$</code> is not.</p>
       </blockquote>
     </fieldset>
 </details>
