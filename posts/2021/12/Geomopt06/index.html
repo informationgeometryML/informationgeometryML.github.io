@@ -313,9 +313,7 @@ $$</code></p>
 <div class="notice--danger">
   <p><strong>Warning</strong>:</p>
 
-  <ul>
-    <li>Without the Taylor approximation,  <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> and  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>  gives distinct updates even when the KL divergence is used.</li>
-  </ul>
+  <p>Without the Taylor approximation,  <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> and  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>  gives distinct updates even when the KL divergence is used.</p>
 </div>
 
 <h2 id="adaptive-step-size-selection">Adaptive Step-size Selection</h2>
@@ -339,7 +337,7 @@ The step-size selection precedure has to check the constraint at each iteration 
 <a href="/posts/2021/11/Geomopt04/#riemannian-gradient-descent-and-its-non-linear-invariance">Part IV</a>, which is a generalization of natural-gradient descent. 
 Note that this approach is completely different from mirror descent.</p>
 
-<p>To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) geodesic, which
+<p>To avoid solving the geodeisc ODE, we could use an approximation of the geodesic, which
 induces a retraction map.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-23T18:11:07-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-23T18:13:51-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h1 id=&quot;handling-parameter-constraints&quot;&gt;Handling Parameter Constraints&lt;/h1&gt;
 &lt;hr /&gt;
@@ -121,9 +121,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;div class=&quot;notice--danger&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:&lt;/p&gt;
 
-  &lt;ul&gt;
-    &lt;li&gt;Without the Taylor approximation,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;  gives distinct updates even when the KL divergence is used.&lt;/li&gt;
-  &lt;/ul&gt;
+  &lt;p&gt;Without the Taylor approximation,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt;  gives distinct updates even when the KL divergence is used.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;adaptive-step-size-selection&quot;&gt;Adaptive Step-size Selection&lt;/h2&gt;
@@ -147,7 +145,7 @@ The step-size selection precedure has to check the constraint at each iteration 
 &lt;a href=&quot;/posts/2021/11/Geomopt04/#riemannian-gradient-descent-and-its-non-linear-invariance&quot;&gt;Part IV&lt;/a&gt;, which is a generalization of natural-gradient descent. 
 Note that this approach is completely different from mirror descent.&lt;/p&gt;
 
-&lt;p&gt;To avoid solving the geodeisc ODE to get the manifold exponential map, we could use an (inexact) geodesic, which
+&lt;p&gt;To avoid solving the geodeisc ODE, we could use an approximation of the geodesic, which
 induces a retraction map.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
