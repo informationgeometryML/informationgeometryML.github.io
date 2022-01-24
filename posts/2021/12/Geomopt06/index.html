@@ -270,20 +270,20 @@ $$</code></p>
 \end{aligned}\tag{2}\label{2}
 $$</code></p>
 
-<p>We have the following additional  nice results, when the f-divergence is choosen to be  <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)= \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code>.</p>
+<p>We have the following additional results, when the f-divergence is choosen to be a KL divergence.</p>
 
 <ul>
   <li>
     <p>The KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})]=\mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k)$</code> is a f-divergence. The
-second-order Taylor expansion  at 
+second-order Taylor approximation   at 
  <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> is <code class="language-plaintext highlighter-rouge">$\frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)$</code>.
-This builds the connection between NGD and proximal gradient descent.</p>
+This establishes the connection between NGD and proximal gradient descent.</p>
   </li>
   <li>
     <p>The <strong>reverse</strong> KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\color{red} {\mathbf{y}} ) || p(\mathbf{w}|\eta_k)]=\mathrm{B}_{A_\eta}(\color{red}{\mathbf{y}},\eta_k)$</code> is a Bregman divergence in this case.
 The
-second-order Taylor expansion of the reverse KL divergence at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> gives the same approximation as <code class="language-plaintext highlighter-rouge">$\frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)$</code>.
-This builds the connection between NGD and mirror descent.</p>
+second-order Taylor approximation  of the reverse KL divergence at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> gives the same approximation as <code class="language-plaintext highlighter-rouge">$\frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)$</code>.
+This establishes the connection between NGD and mirror descent.</p>
   </li>
 </ul>
 
@@ -303,7 +303,7 @@ $$</code>
 where 
 <code class="language-plaintext highlighter-rouge">$\nabla_m \ell_m(\mathbf{m}_k) = \nabla_m \ell_\eta( \underbrace{ \eta(\mathbf{m}_k)}_{=\eta_k} )=  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)$</code>.</p>
 
-<p>We could also perform the constrained mirror descent in the natural parameter space as
+<p>We could also perform  mirror descent in the natural parameter space as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{blue}{y} \in \Omega_\eta}\{ \langle \nabla_\eta \ell_\eta(\mathbf{\eta}_k), \color{blue}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{blue}{\mathbf{y}},\mathbf{\eta}_k) \}
