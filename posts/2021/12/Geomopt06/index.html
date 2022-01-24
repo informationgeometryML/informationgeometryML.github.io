@@ -204,14 +204,14 @@
 <p>By using a natural parameterization <code class="language-plaintext highlighter-rouge">$\eta$</code> with parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, consider the following problem
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\min_{\eta \in \Omega_\eta} \ell_\eta(\mathbf{\eta}) = E_{p(w|\eta)} [h(w)]
+\min_{\eta \in \Omega_\eta} \ell_\eta(\mathbf{\eta}) = E_{p(w|\eta)} [h(w) + \log p(w|\eta)]
 \end{aligned}
 $$</code></p>
 
 <p>We could solve the following reparameterized problem by using the expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\min_{m \in \Omega_m} \ell_m(\mathbf{m}) = E_{p(w| \eta(m) )} [h(w)] = \ell_\eta(\eta(\mathbf{m}))
+\min_{m \in \Omega_m} \ell_m(\mathbf{m}) = E_{p(w| \eta(m) )} [h(w) + \log p(w|\eta(\mathbf{m}))] = \ell_\eta(\eta(\mathbf{m}))
 \end{aligned}
 $$</code></p>
 
