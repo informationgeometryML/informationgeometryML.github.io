@@ -302,6 +302,13 @@ $$</code>
   <p><strong>Note</strong>:</p>
 
   <p>The KL divergence is the only divergence <a class="citation" href="#amari2016information">[1]</a> that is both a  f-divergence and a Bregman divergence.</p>
+
+  <p>We have the following identity for the KL divergence.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k) = \mathrm{B}_{A_\eta}(\eta_k,\color{red}{\mathbf{y}}) =  \mathrm{B}_{A^*_\eta}(\color{red}{\mathbf{x}},\mathbf{m}_k)
+\end{aligned}
+$$</code>  where <code class="language-plaintext highlighter-rouge">$\mathbf{y}$</code> is a natural parameter and <code class="language-plaintext highlighter-rouge">$\mathbf{x}$</code> is the corresponding expetation parameter.</p>
 </div>
 
 <h2 id="mirror-descent">Mirror Descent</h2>
