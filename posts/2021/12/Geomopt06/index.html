@@ -304,7 +304,9 @@ $$</code></p>
   <p>We have the following identity for the KL divergence.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
+\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})] = 
 \mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k) = \mathrm{B}_{A_\eta}(\eta_k,\color{red}{\mathbf{y}}) =  \mathrm{B}_{A^*_\eta}(\color{red}{\mathbf{x}},\mathbf{m}_k)
+= \mathrm{KL} [p(\mathbf{w}|\mathbf{m}_k) || p(\mathbf{w}|\color{red}{\mathbf{x}})] 
 \end{aligned}
 $$</code>  where <code class="language-plaintext highlighter-rouge">$\mathbf{y}$</code> is a natural parameter and <code class="language-plaintext highlighter-rouge">$\mathbf{x}$</code> is the corresponding expectation parameter.</p>
 </div>
