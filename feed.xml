@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-23T21:49:09-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-23T21:51:44-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -116,7 +116,7 @@ $$&lt;/code&gt;
 \begin{aligned}
 \mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k) = \mathrm{B}_{A_\eta}(\eta_k,\color{red}{\mathbf{y}}) =  \mathrm{B}_{A^*_\eta}(\color{red}{\mathbf{x}},\mathbf{m}_k)
 \end{aligned}
-$$&lt;/code&gt;  where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{y}$&lt;/code&gt; is a natural parameter and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}$&lt;/code&gt; is the corresponding expetation parameter.&lt;/p&gt;
+$$&lt;/code&gt;  where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{y}$&lt;/code&gt; is a natural parameter and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}$&lt;/code&gt; is the corresponding expectation parameter.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;mirror-descent&quot;&gt;Mirror Descent&lt;/h2&gt;
@@ -139,7 +139,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;div class=&quot;notice--danger&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:&lt;/p&gt;
 
-  &lt;p&gt;Without the Taylor approximation,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; are distinct updates even when the KL divergence is used.&lt;/p&gt;
+  &lt;p&gt;Without the Taylor approximation,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; are distinct updates since the KL divergence is not symmetric.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;h2 id=&quot;adaptive-step-size-selection&quot;&gt;Adaptive Step-size Selection&lt;/h2&gt;
