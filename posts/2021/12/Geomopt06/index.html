@@ -254,12 +254,11 @@ $$</code></p>
 Recall that in
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
 we show that natural-gradient descent can be viewed as an  proximal-gradient method, where we use the
-second-order Taylor  approximation of any f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code> such as the KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)= \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code>.</p>
+second-order Taylor  approximation of any f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code>:</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} \leftarrow
-\arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
+\mathrm{D}_f(\mathbf{y},\eta_k) \approx \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
 \end{aligned}
 $$</code></p>
 
@@ -279,13 +278,23 @@ $$</code></p>
   <li>
     <p>The KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})]=\mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k)$</code> is a f-divergence. The
 second-order Taylor approximation   at 
- <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> is <code class="language-plaintext highlighter-rouge">$\frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)$</code>.
-This establishes the connection between NGD and proximal gradient descent.</p>
+ <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
+\end{aligned}
+$$</code> 
+  This establishes the connection between NGD and proximal gradient descent.</p>
   </li>
   <li>
     <p>The <strong>reverse</strong> KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\color{red} {\mathbf{y}} ) || p(\mathbf{w}|\eta_k)]=\mathrm{B}_{A_\eta}(\color{red}{\mathbf{y}},\eta_k)$</code> is a Bregman divergence.
-The second-order Taylor approximation  of the reverse KL divergence at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> gives the same approximation: <code class="language-plaintext highlighter-rouge">$\frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)$</code>.
-This establishes the connection between NGD and mirror descent.</p>
+The second-order Taylor approximation  of the reverse KL divergence at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> gives the same approximation:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{KL} [p(\mathbf{w}|\color{red}{\mathbf{y}}) || p(\mathbf{w}|\eta_k)] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
+\end{aligned}
+$$</code> 
+  This establishes the connection between NGD and mirror descent.</p>
   </li>
 </ul>
 
