@@ -240,13 +240,13 @@ for the projection with the FIM <code class="language-plaintext highlighter-roug
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} &amp; \leftarrow  \arg\min_{ \color{blue} {y} \in \Omega_\eta} \| \color{blue} {\mathbf{y}} - \eta_k + \alpha
-\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k) \|^2_{ \color{red}{ \mathbf{F}_\eta(\eta_k)} }\\
+\eta_{k+1} &amp; \leftarrow  \arg\min_{ \color{red} {y} \in \Omega_\eta} \| \color{red} {\mathbf{y}} - \eta_k + \alpha
+\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k) \|^2_{ \color{green}{ \mathbf{F}_\eta(\eta_k)} }\\
 &amp;= \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
 \big]^T \mathbf{F}_{\eta}(\eta_k) \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
 \big]\\
 &amp;= \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta \ell_\eta(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T \ell_\eta(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta \ell_\eta(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
-&amp;= \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
+&amp;= \arg\min_{\color{red}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{red}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
 \end{aligned}\tag{1}\label{1}
 $$</code></p>
 
@@ -268,7 +268,7 @@ $$</code></p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{\color{blue}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{blue}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \mathrm{D}_f(\mathbf{y},\eta_k)  \} 
+\eta_{k+1} \leftarrow \arg\min_{\color{red}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{red}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \mathrm{D}_f(\color{red}{ \mathbf{y}},\eta_k)  \} 
 \end{aligned}\tag{2}\label{2}
 $$</code></p>
 
@@ -313,7 +313,7 @@ $$</code>  where <code class="language-plaintext highlighter-rouge">$\mathbf{y}$
 <p>Mirror descent in the expectation space remains the same as in <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-mirror-descent">Part V</a>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{blue} {x} \in \Omega_m}\{ \langle \nabla_m \ell_m(\mathbf{m}_k), \color{blue}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{blue}{\mathbf{x}},\mathbf{m}_k) \}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{red} {x} \in \Omega_m}\{ \langle \nabla_m \ell_m(\mathbf{m}_k), \color{red}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{red}{\mathbf{x}},\mathbf{m}_k) \}
 \end{aligned}\tag{3}\label{3}
 $$</code>
 where 
@@ -322,7 +322,7 @@ where
 <p>We could also perform  mirror descent in the natural parameter space as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{blue}{y} \in \Omega_\eta}\{ \langle \nabla_\eta \ell_\eta(\mathbf{\eta}_k), \color{blue}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{blue}{\mathbf{y}},\mathbf{\eta}_k) \}
+\mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{red}{y} \in \Omega_\eta}\{ \langle \nabla_\eta \ell_\eta(\mathbf{\eta}_k), \color{red}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{red}{\mathbf{y}},\mathbf{\eta}_k) \}
 \end{aligned}\tag{4}\label{4}
 $$</code></p>
 
