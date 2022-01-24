@@ -240,13 +240,13 @@ for the projection with the FIM <code class="language-plaintext highlighter-roug
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} &amp; \leftarrow  \arg\min_{ \color{red} {y} \in \Omega_\eta} \| \color{red} {\mathbf{y}} - \eta_k + \alpha
+&amp; \eta_{k+1}  \leftarrow  \arg\min_{ \color{red} {y} \in \Omega_\eta} \| \color{red} {\mathbf{y}} - \eta_k + \alpha
 \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k) \|^2_{ \color{green}{ \mathbf{F}_\eta(\eta_k)} }\\
-&amp;= \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
+=&amp; \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
 \big]^T \mathbf{F}_{\eta}(\eta_k) \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
 \big]\\
-&amp;= \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta \ell_\eta(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T \ell_\eta(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta \ell_\eta(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
-&amp;= \arg\min_{\color{red}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{red}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
+=&amp; \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta \ell_\eta(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T \ell_\eta(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta \ell_\eta(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
+=&amp; \arg\min_{\color{red}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{red}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
 \end{aligned}\tag{1}\label{1}
 $$</code></p>
 

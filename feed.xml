@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-24T08:50:33-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-24T08:59:14-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -48,13 +48,13 @@ for the projection with the FIM &lt;code class=&quot;language-plaintext highligh
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\eta_{k+1} &amp;amp; \leftarrow  \arg\min_{ \color{red} {y} \in \Omega_\eta} \| \color{red} {\mathbf{y}} - \eta_k + \alpha
+&amp;amp; \eta_{k+1}  \leftarrow  \arg\min_{ \color{red} {y} \in \Omega_\eta} \| \color{red} {\mathbf{y}} - \eta_k + \alpha
 \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k) \|^2_{ \color{green}{ \mathbf{F}_\eta(\eta_k)} }\\
-&amp;amp;= \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
+=&amp;amp; \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
 \big]^T \mathbf{F}_{\eta}(\eta_k) \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
 \big]\\
-&amp;amp;= \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta \ell_\eta(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T \ell_\eta(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta \ell_\eta(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
-&amp;amp;= \arg\min_{\color{red}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{red}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
+=&amp;amp; \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta \ell_\eta(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T \ell_\eta(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta \ell_\eta(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
+=&amp;amp; \arg\min_{\color{red}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{red}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
 \end{aligned}\tag{1}\label{1}
 $$&lt;/code&gt;&lt;/p&gt;
 
