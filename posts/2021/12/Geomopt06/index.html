@@ -251,7 +251,7 @@ $$</code></p>
 Recall that in
 <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
 we show that natural-gradient descent can be viewed as an  proximal-gradient method, where we use the
-second-order Taylor expansion of any f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code> such as the KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)= \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code>.</p>
+second-order Taylor  approximation of any f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code> such as the KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)= \mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\mathbf{y})]$</code>.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -262,7 +262,7 @@ $$</code></p>
 
 <h2 id="proximal-gradient-descent">Proximal Gradient Descent</h2>
 
-<p>We could also obtain proximal gradient descent by using a f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)$</code> without the Taylor expansion.</p>
+<p>We could also obtain proximal gradient descent by using a f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)$</code> without the Taylor approximation.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -313,7 +313,7 @@ $$</code></p>
 <div class="notice--danger">
   <p><strong>Warning</strong>:</p>
 
-  <p>Without the Taylor approximation,  <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> and  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>  gives distinct updates even when the KL divergence is used.</p>
+  <p>Without the Taylor approximation,  <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> and  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> are distinct updates even when the KL divergence is used.</p>
 </div>
 
 <h2 id="adaptive-step-size-selection">Adaptive Step-size Selection</h2>
