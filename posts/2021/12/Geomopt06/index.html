@@ -290,7 +290,7 @@ This establishes the connection between NGD and mirror descent.</p>
 <div class="notice--success">
   <p><strong>Note</strong>:</p>
 
-  <p>The KL divergence is the only divergence that is both a  f-divergence and a Bregman divergence.</p>
+  <p>The KL divergence is the only divergence <a class="citation" href="#amari2016information">[1]</a> that is both a  f-divergence and a Bregman divergence.</p>
 </div>
 
 <h2 id="mirror-descent">Mirror Descent</h2>
@@ -351,11 +351,12 @@ we have to carefully select a retraction map to handle the parameter constraint.
 For a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, it can be difficult to come out an efficient retraction map to satisfy
 the constraint.</p>
 
-<p>For positive-definite constraints in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, please see <a class="citation" href="#lin2020handling">[1]</a> as an example to derive efficient Riemannian gradient updates.</p>
+<p>For positive-definite constraints in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, please see <a class="citation" href="#lin2020handling">[2]</a> as an example to derive efficient Riemannian gradient updates.</p>
 
 <hr />
 <h1 id="references">References</h1>
-<p class="bibliography"><p><span id="lin2020handling">[1] W. Lin, M. Schmidt, &amp; M. E. Khan, "Handling the positive-definite constraint in the bayesian learning rule," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 6116–6126.</span></p></p>
+<p class="bibliography"><p><span id="amari2016information">[1] S.-ichi Amari, <i>Information geometry and its applications</i> (Springer, 2016).</span></p>
+<p><span id="lin2020handling">[2] W. Lin, M. Schmidt, &amp; M. E. Khan, "Handling the positive-definite constraint in the bayesian learning rule," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 6116–6126.</span></p></p>
 
 
         
