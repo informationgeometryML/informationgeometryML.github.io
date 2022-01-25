@@ -235,7 +235,7 @@ equivalent in exponential family cases even when <code class="language-plaintext
 <h2 id="projected-natural-gradient-descent">Projected Natural Gradient Descent</h2>
 <p>A straightforward approach from natural-gradient descent is the projected natural-gradient descent, where we  use 
 the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta_k)$</code> evaluted at <code class="language-plaintext highlighter-rouge">$\eta_k$</code> as a projection metric and use the <a href="/posts/2021/10/Geomopt02/
-#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> to measure the distance for the projection</p>
+#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> to measure the distance for the projection.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -327,8 +327,8 @@ where
 \end{aligned}\tag{4}\label{4}
 $$</code></p>
 
-<div class="notice--danger">
-  <p><strong>Warning</strong>:</p>
+<div class="notice--success">
+  <p><strong>Note</strong>:</p>
 
   <p>Without the Taylor approximation,  <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> and  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> are distinct updates since the KL divergence is not symmetric.</p>
 </div>
