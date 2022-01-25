@@ -201,14 +201,14 @@
 <p>Recall that  in Part IV, we discuss 
 <a href="/posts/2021/11/Geomopt04/#many-faces-of-natural-gradient-descent">the many faces of NGD</a> in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.</p>
 
-<p>By using a natural parameterization <code class="language-plaintext highlighter-rouge">$\eta$</code> with parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, consider the following problem
+<p>Given a natural parameterization <code class="language-plaintext highlighter-rouge">$\eta$</code> with parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, consider the following problem
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \min_{\eta \in \Omega_\eta} \ell_\eta(\mathbf{\eta}) = E_{p(w|\eta)} [h(w) + \log p(w|\eta)]
 \end{aligned}
 $$</code></p>
 
-<p>We could solve the following reparameterized problem by using the expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.
+<p>We could also consider the reparameterized problem by using the expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \min_{m \in \Omega_m} \ell_m(\mathbf{m}) = E_{p(w| \eta(m) )} [h(w) + \log p(w|\eta(\mathbf{m}))] = \ell_\eta(\eta(\mathbf{m}))
@@ -220,8 +220,8 @@ $$</code></p>
 
   <ul>
     <li>
-      <p>Recall that when <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained, updates in <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> and <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code> are
-equivalent in exponential family cases as long as <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained.</p>
+      <p>Recall that updates in <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> and <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code> are
+equivalent in exponential family cases even when <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained as long as <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained.</p>
     </li>
     <li>
       <p>When <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained, updates in  <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>, <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>, and <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> are <strong>distinct</strong> methods.</p>
