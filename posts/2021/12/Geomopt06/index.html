@@ -275,7 +275,7 @@ $$</code></p>
 
 <ul>
   <li>
-    <p>The KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})]=\mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k)$</code> is a f-divergence. The
+    <p>The KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})]=\mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k)=\mathrm{B}_{A_\eta}(\eta_k,\color{red}{\mathbf{y}})$</code> is a f-divergence and a Bregman divergence. The
 second-order Taylor approximation   at 
  <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> is
 <code class="language-plaintext highlighter-rouge">$$
@@ -285,8 +285,7 @@ second-order Taylor approximation   at
 $$</code></p>
   </li>
   <li>
-    <p>The <strong>reverse</strong> KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\color{red} {\mathbf{y}} ) || p(\mathbf{w}|\eta_k)]=\mathrm{B}_{A_\eta}(\color{red}{\mathbf{y}},\eta_k)$</code> is a Bregman divergence.
-The second-order Taylor approximation  of the reverse KL divergence at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> gives the same approximation:
+    <p>The second-order Taylor approximation  of the <strong>reverse</strong> KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\color{red} {\mathbf{y}} ) || p(\mathbf{w}|\eta_k)]$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> gives the same approximation:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathrm{KL} [p(\mathbf{w}|\color{red}{\mathbf{y}}) || p(\mathbf{w}|\eta_k)] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
