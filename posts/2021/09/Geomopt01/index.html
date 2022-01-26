@@ -251,7 +251,8 @@ _{ \text{ constant w.r.t. } \tau }
 $$</code>
 Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution, and the least-square loss is the finite-sample approximation of the expectation. The normal distribution is denoted by <code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | x^T\tau,1) $</code> with mean <code class="language-plaintext highlighter-rouge">$ x^T\tau $</code> and variance <code class="language-plaintext highlighter-rouge">$ 1 $</code>.</p>
 
-  <p>Algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[6]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>.  These algorithms can be generalized to neural network cases <a class="citation" href="#martens2020new">[6]</a> from a frequentist viewpoint.</p>
+  <p>Algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[6]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>. These algorithms are derived from a frequentist perspective.
+We can also generalize this approach to neural network cases <a class="citation" href="#martens2020new">[6]</a>.</p>
 </blockquote>
 
 <blockquote>
@@ -265,7 +266,9 @@ Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathc
 $$</code>
 where <code class="language-plaintext highlighter-rouge">$ \mathrm{KL} [ q(z) ||  p(z) ] :=  E_{ {q(z)} } [ \log \big(\frac{q(z)}{p(z)}\big) ]$</code> is the Kullback–Leibler divergence.</p>
 
-  <p>The <strong>natural-gradient variational inference</strong> <a class="citation" href="#khan2017conjugate">[7]</a> is an algorithm that speeds up the inference by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$q(z|\tau)$</code> induced by the Fisher-Rao metric. This approach can be generalized to neural network cases <a class="citation" href="#lin2021tractable">[2]</a> <a class="citation" href="#osawa2019practical">[8]</a>  from a Bayesian viewpoint.</p>
+  <p>The <strong>natural-gradient variational inference</strong> <a class="citation" href="#khan2017conjugate">[7]</a> is an algorithm that speeds up the inference by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$q(z|\tau)$</code> induced by the Fisher-Rao metric.
+This approach is derived from a Bayesian  perspective.
+We can  generalize to this idea  to neural network cases <a class="citation" href="#lin2021tractable">[2]</a> <a class="citation" href="#osawa2019practical">[8]</a>.</p>
 </blockquote>
 
 <blockquote>
@@ -383,8 +386,9 @@ Clearly, a point $ (0,1) $ highlighted in green is in the circle, where we consi
 
   <p>This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$. Moreover, its inverse map $f^{-1}$ is <strong>not</strong> continous at point $(0,1) \in  \mathcal{S}^1$.</p>
 
-  <p>This smoothness requirement of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The requirement gives us a way to generate new intrinsic parameterizations. In other words, the Jacobian matrix is non-singular if the requirement is satisfied. Thus, we can safely use the chain rule and inverse function theorem.</p>
 </blockquote>
+
+<p>As shown in Parametrization 2, this smoothness requirement of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The smoothness of a map and the inverse map togeher gives us a way to generate new intrinsic parameterizations. In other words, the Jacobian matrix is non-singular if the requirement is satisfied. Thus, we can safely use the chain rule and inverse function theorem.</p>
 
 <blockquote>
   <p>Parametrization 3 (Non-intrinsic parameterization):</p>
