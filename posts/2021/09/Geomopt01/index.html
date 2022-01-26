@@ -232,9 +232,7 @@
 For all such cases, we can exploit the underlying geometric structure, induced by the Fisher-Rao metric, which is the topic of this blog.</p>
 
 <p>Below, we give some common examples from machine learning, where probability distributions naturally arise.
-In these cases, we can exploit the structure to design efficient learning algorithms. More applications of this
-geometric structure 
-can be found at <a class="citation" href="#duan2020ngboost">[4]</a> and <a class="citation" href="#le2007topmoumoute">[5]</a>.</p>
+In these cases, we can exploit the structure to design efficient learning algorithms.</p>
 
 <blockquote>
   <p>Least Square (Empirical Risk Minimization):</p>
@@ -251,8 +249,8 @@ _{ \text{ constant w.r.t. } \tau }
 $$</code>
 Here <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution, and the least-square loss is the finite-sample approximation of the expectation. The normal distribution is denoted by <code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | x^T\tau,1) $</code> with mean <code class="language-plaintext highlighter-rouge">$ x^T\tau $</code> and variance <code class="language-plaintext highlighter-rouge">$ 1 $</code>.</p>
 
-  <p>Algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[6]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>. These algorithms are derived from a frequentist perspective.
-We can also generalize this approach to neural network cases <a class="citation" href="#martens2020new">[6]</a>.</p>
+  <p>Algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[4]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>. These algorithms are derived from a frequentist perspective.
+We can also generalize this approach to neural network cases <a class="citation" href="#martens2020new">[4]</a>.</p>
 </blockquote>
 
 <blockquote>
@@ -266,9 +264,9 @@ We can also generalize this approach to neural network cases <a class="citation"
 $$</code>
 where <code class="language-plaintext highlighter-rouge">$ \mathrm{KL} [ q(z) ||  p(z) ] :=  E_{ {q(z)} } [ \log \big(\frac{q(z)}{p(z)}\big) ]$</code> is the Kullback–Leibler divergence.</p>
 
-  <p>The <strong>natural-gradient variational inference</strong> <a class="citation" href="#khan2017conjugate">[7]</a> is an algorithm that speeds up the inference by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$q(z|\tau)$</code> induced by the Fisher-Rao metric.
+  <p>The <strong>natural-gradient variational inference</strong> <a class="citation" href="#khan2017conjugate">[5]</a> is an algorithm that speeds up the inference by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$q(z|\tau)$</code> induced by the Fisher-Rao metric.
 This approach is derived from a Bayesian  perspective.
-We can  generalize to this idea  to neural network cases <a class="citation" href="#lin2021tractable">[2]</a> <a class="citation" href="#osawa2019practical">[8]</a>.</p>
+We can  generalize  this idea  to neural network cases <a class="citation" href="#lin2021tractable">[2]</a> <a class="citation" href="#osawa2019practical">[6]</a>.</p>
 </blockquote>
 
 <blockquote>
@@ -280,12 +278,15 @@ We can  generalize to this idea  to neural network cases <a class="citation" hre
 \min_{\tau}  E_{ \color{red}  {\pi(a | \tau)} } [ h(a)  ]
 \end{aligned} \tag{3}\label{3}
 $$</code>
-The <strong>natural evolution strategies</strong> <a class="citation" href="#wierstra2014natural">[9]</a> is an algorithm that speeds up the search process by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$\pi(a|\tau)$</code>.
-In the context of reinforcement learning,  <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code> is known as the policy distribution to generate actions and the natural evolution strategies is known as the <strong>natural policy gradient</strong> method <a class="citation" href="#kakade2001natural">[10]</a>.</p>
+The <strong>natural evolution strategies</strong> <a class="citation" href="#wierstra2014natural">[7]</a> is an algorithm that speeds up the search process by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$\pi(a|\tau)$</code>.
+In the context of reinforcement learning,  <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code> is known as the policy distribution to generate actions and the natural evolution strategies is known as the <strong>natural policy gradient</strong> method <a class="citation" href="#kakade2001natural">[8]</a>.</p>
 </blockquote>
 
 <p>In these examples, we can express the objective function in terms of an expectation under a parametric family highlighted in red. 
-By doing so, we can exploit the geometric structure of a parametric family denoted by <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> induced by the Fisher-Rao metric.</p>
+By doing so, we can exploit the geometric structure of a parametric family denoted by <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> induced by the Fisher-Rao metric.
+More applications of this
+geometric structure 
+can be found at <a class="citation" href="#le2007topmoumoute">[9]</a> and <a class="citation" href="#duan2020ngboost">[10]</a>.</p>
 
 <table>
   <thead>
@@ -317,11 +318,11 @@ By doing so, we can exploit the geometric structure of a parametric family denot
 <div class="notice--success">
   <p><strong>Note</strong>:</p>
 
-  <p>In general, we may have to compute or estimate the inverse of the FIM. However, in many useful machine learning applications, algorithms such as <a class="citation" href="#lin2021tractable">[2]</a> <a class="citation" href="#le2007topmoumoute">[5]</a> <a class="citation" href="#martens2020new">[6]</a> <a class="citation" href="#khan2017conjugate">[7]</a> <a class="citation" href="#osawa2019practical">[8]</a>  <a class="citation" href="#wierstra2014natural">[9]</a>  <a class="citation" href="#kakade2001natural">[10]</a> can be efficiently implemented without
+  <p>In general, we may have to compute or estimate the inverse of the FIM. However, in many useful machine learning applications, algorithms such as <a class="citation" href="#lin2021tractable">[2]</a>  <a class="citation" href="#martens2020new">[4]</a> <a class="citation" href="#khan2017conjugate">[5]</a> <a class="citation" href="#osawa2019practical">[6]</a>  <a class="citation" href="#wierstra2014natural">[7]</a>  <a class="citation" href="#kakade2001natural">[8]</a>  <a class="citation" href="#le2007topmoumoute">[9]</a> can be efficiently implemented without
 explicitly computing the inverse of the FIM.</p>
 
   <p>See 
-<a href="/posts/2021/12/Geomopt05/#efficient-ngd-for-multivariate-gaussian">Part V</a> and 
+<a href="/posts/2021/12/Geomopt05/#efficient-ngd-for-multivariate-gaussians">Part V</a> and 
 <a href="/posts/2021/07/ICML/">our ICML work</a> 
 as examples.</p>
 </div>
@@ -716,13 +717,13 @@ $$</code></p>
 <p class="bibliography"><p><span id="amari1998natural">[1] S.-I. Amari, "Natural gradient works efficiently in learning," <i>Neural computation</i> <b>10</b>:251–276 (1998).</span></p>
 <p><span id="lin2021tractable">[2] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Tractable structured natural gradient descent using local parameterizations," <i>International Conference on Machine Learning (ICML)</i> (2021).</span></p>
 <p><span id="liang2019fisher">[3] T. Liang, T. Poggio, A. Rakhlin, &amp; J. Stokes, "Fisher-rao metric, geometry, and complexity of neural networks," <i>The 22nd International Conference on Artificial Intelligence and Statistics</i> (PMLR, 2019), pp. 888–896.</span></p>
-<p><span id="duan2020ngboost">[4] T. Duan, A. Anand, D. Y. Ding, K. K. Thai, S. Basu, A. Ng, &amp; A. Schuler, "Ngboost: Natural gradient boosting for probabilistic prediction," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 2690–2700.</span></p>
-<p><span id="le2007topmoumoute">[5] N. Le Roux, P.-A. Manzagol, &amp; Y. Bengio, "Topmoumoute Online Natural Gradient Algorithm.," <i>NIPS</i> (Citeseer, 2007), pp. 849–856.</span></p>
-<p><span id="martens2020new">[6] J. Martens, "New Insights and Perspectives on the Natural Gradient Method," <i>Journal of Machine Learning Research</i> <b>21</b>:1–76 (2020).</span></p>
-<p><span id="khan2017conjugate">[7] M. Khan &amp; W. Lin, "Conjugate-computation variational inference: Converting variational inference in non-conjugate models to inferences in conjugate models," <i>Artificial Intelligence and Statistics</i> (PMLR, 2017), pp. 878–887.</span></p>
-<p><span id="osawa2019practical">[8] K. Osawa, S. Swaroop, A. Jain, R. Eschenhagen, R. E. Turner, R. Yokota, &amp; M. E. Khan, "Practical deep learning with Bayesian principles," <i>Proceedings of the 33rd International Conference on Neural Information Processing Systems</i> (2019), pp. 4287–4299.</span></p>
-<p><span id="wierstra2014natural">[9] D. Wierstra, T. Schaul, T. Glasmachers, Y. Sun, J. Peters, &amp; J. Schmidhuber, "Natural evolution strategies," <i>The Journal of Machine Learning Research</i> <b>15</b>:949–980 (2014).</span></p>
-<p><span id="kakade2001natural">[10] S. M. Kakade, "A natural policy gradient," <i>Advances in neural information processing systems</i> <b>14</b> (2001).</span></p>
+<p><span id="martens2020new">[4] J. Martens, "New Insights and Perspectives on the Natural Gradient Method," <i>Journal of Machine Learning Research</i> <b>21</b>:1–76 (2020).</span></p>
+<p><span id="khan2017conjugate">[5] M. Khan &amp; W. Lin, "Conjugate-computation variational inference: Converting variational inference in non-conjugate models to inferences in conjugate models," <i>Artificial Intelligence and Statistics</i> (PMLR, 2017), pp. 878–887.</span></p>
+<p><span id="osawa2019practical">[6] K. Osawa, S. Swaroop, A. Jain, R. Eschenhagen, R. E. Turner, R. Yokota, &amp; M. E. Khan, "Practical deep learning with Bayesian principles," <i>Proceedings of the 33rd International Conference on Neural Information Processing Systems</i> (2019), pp. 4287–4299.</span></p>
+<p><span id="wierstra2014natural">[7] D. Wierstra, T. Schaul, T. Glasmachers, Y. Sun, J. Peters, &amp; J. Schmidhuber, "Natural evolution strategies," <i>The Journal of Machine Learning Research</i> <b>15</b>:949–980 (2014).</span></p>
+<p><span id="kakade2001natural">[8] S. M. Kakade, "A natural policy gradient," <i>Advances in neural information processing systems</i> <b>14</b> (2001).</span></p>
+<p><span id="le2007topmoumoute">[9] N. Le Roux, P.-A. Manzagol, &amp; Y. Bengio, "Topmoumoute Online Natural Gradient Algorithm.," <i>NIPS</i> (Citeseer, 2007), pp. 849–856.</span></p>
+<p><span id="duan2020ngboost">[10] T. Duan, A. Anand, D. Y. Ding, K. K. Thai, S. Basu, A. Ng, &amp; A. Schuler, "Ngboost: Natural gradient boosting for probabilistic prediction," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 2690–2700.</span></p>
 <p><span id="tu2011introduction">[11] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p>
 <p><span id="amari2016information">[12] S.-ichi Amari, <i>Information geometry and its applications</i> (Springer, 2016).</span></p>
 <p><span id="casella2002statistical">[13] G. Casella &amp; R. L. Berger, <i>Statistical inference</i> (2002).</span></p>
