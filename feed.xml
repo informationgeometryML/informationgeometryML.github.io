@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-26T12:29:48-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-27T09:32:00-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -2650,7 +2650,7 @@ In these cases, we can exploit the structure to design efficient learning algori
 &lt;blockquote&gt;
   &lt;p&gt;Least Square (Empirical Risk Minimization):&lt;/p&gt;
 
-  &lt;p&gt;Given N input-output pairs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(x_i,y_i)$&lt;/code&gt;,  the least-square loss can be viewed as an expectation under a probability distribution.
+  &lt;p&gt;Given N input-output pairs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(x_i,y_i)$&lt;/code&gt;,  the least-square loss can be viewed as an expectation w.r.t. a probability distribution.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \min_{\tau}  \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2 + \frac{1}{2}\log(2\pi) 
@@ -2695,7 +2695,7 @@ The &lt;strong&gt;natural evolution strategies&lt;/strong&gt; &lt;a class=&quot;
 In the context of reinforcement learning,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi(a | \tau ) $&lt;/code&gt; is known as the policy distribution to generate actions and the natural evolution strategies is known as the &lt;strong&gt;natural policy gradient&lt;/strong&gt; method &lt;a class=&quot;citation&quot; href=&quot;#kakade2001natural&quot;&gt;[8]&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;In these examples, we can express the objective function in terms of an expectation under a parametric family highlighted in red. 
+&lt;p&gt;In these examples, we can express the objective function in terms of an expectation w.r.t. a parametric family highlighted in red. 
 By doing so, we can exploit the geometric structure of a parametric family denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; induced by the Fisher-Rao metric.
 More applications of this
 geometric structure 
@@ -2787,7 +2787,7 @@ Clearly, a point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;
 
   &lt;p&gt;This parametrization is called an &lt;strong&gt;intrinsic&lt;/strong&gt; parameterization.&lt;/p&gt;
 
-  &lt;p&gt;We can similarly define a (local) parametrization at each point of the circle. In fact, we can use  finite (local) parameterizations to represent the circle as shown below.&lt;/p&gt;
+  &lt;p&gt;We can similarly define a (local) parametrization at each point of the circle. In fact, we can use  finite (local) parameterizations to represent the whole circle as shown below.&lt;/p&gt;
 
   &lt;p&gt;&lt;img src=&quot;/img/charts.png&quot; title=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -2827,7 +2827,7 @@ We say a parametrization is &lt;strong&gt;intrinsic&lt;/strong&gt; if the follow
 &lt;div class=&quot;notice--success&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Regularity Condition&lt;/strong&gt;:&lt;/p&gt;
 
-  &lt;p&gt;The set of partial derivatives 
+  &lt;p&gt;The following partial derivatives 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \partial_{\tau_i} \log p(w|\tau) \} $&lt;/code&gt;  should be linearly independent.&lt;/p&gt;
 
   &lt;p&gt;In other words, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sum_i c_i \partial_{\tau_i} \log p(w|\tau)= 0 $&lt;/code&gt; holds only when constant &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_i$&lt;/code&gt; is zero and the value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_i$&lt;/code&gt; does not depent on  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$w$&lt;/code&gt;.&lt;/p&gt;
