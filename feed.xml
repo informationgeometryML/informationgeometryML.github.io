@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-27T09:32:00-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-27T12:56:21-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -3032,11 +3032,11 @@ $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;/blockquote&gt;
 
-&lt;h1 id=&quot;dimensionality-of-a-manifold&quot;&gt;Dimensionality of a manifold&lt;/h1&gt;
+&lt;h1 id=&quot;dimension-of-a-manifold&quot;&gt;Dimension of a manifold&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
 Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[11]&lt;/a&gt;.
-This also gives us a tool to help identify non-manifold cases.
+This also gives us a tool to  identify non-manifold cases.
 We now illustrate this by examples.&lt;/p&gt;
 
 &lt;table&gt;
@@ -3064,17 +3064,17 @@ We now illustrate this by examples.&lt;/p&gt;
 &lt;p&gt;As we shown in &lt;a href=&quot;#intrinsic-parameterizations&quot;&gt;the previous section&lt;/a&gt;, a unit circle is a 1-dimensional manifold.  We can similarly show that an open unit ball is a 2-dimensional manifold.&lt;/p&gt;
 
 &lt;p&gt;However, a closed
-unit ball is NOT a manifold since its interior is  an open unit ball and its boundary is a unit circle.
+unit ball is NOT a manifold since its interior is an open unit ball and its boundary is a unit circle.
 The  circle and the open unit ball do not have the same dimensionality.&lt;/p&gt;
 
 &lt;p&gt;For statistical  manifolds, 
- consider the following  manifolds. We will discuss more about them in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;.&lt;/p&gt;
+ consider the following examples. We will discuss more about them in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
       &lt;th style=&quot;text-align: center&quot;&gt;1-dim Gaussian with zero mean&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;$d$-dimensional Gaussian with zero mean&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;$d$-dim Gaussian with zero mean&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -3096,7 +3096,7 @@ The map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mat
 
 &lt;div class=&quot;notice--info&quot;&gt;
   &lt;details&gt;
-&lt;summary&gt;Illustration of these maps (click to expand)&lt;/summary&gt;
+&lt;summary&gt;Illustration of these two maps (click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
       &lt;blockquote&gt;
         &lt;p&gt;Consider the following symmetric 2-by-2 matrix&lt;/p&gt;
