@@ -279,14 +279,14 @@ The next step is to generalize the concept of directional derivatives in a manif
 <p>Recall that a manifold should be locally like a vector space under <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations"><strong>intrinsic</strong> parameterization</a> <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}$</code>.
 Using this parameterization, consider an optimization problem $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$, where the parameter space $\Omega_\tau$ is determined by the parameterization and the manifold. Recall that we have a local vector space structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> if we parametrize the manifold with an intrinsic parameterization.</p>
 
-<p>Therefore, we can similarly define a directional derivative at <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> along Riemannian vector<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> $\mathbf{v}$ as <code class="language-plaintext highlighter-rouge">$\lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t}$</code>, where $t$ is a scalar real number. The main point is that <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}$</code> stays in the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> thanks to the <strong>local vector space</strong> structure.</p>
+<p>Therefore, we can similarly define a directional derivative<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> at <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> along Riemannian vector<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> $\mathbf{v}$ as <code class="language-plaintext highlighter-rouge">$\lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t}$</code>, where $t$ is a scalar real number. The main point is that <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}$</code> stays in the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> thanks to the <strong>local vector space</strong> structure.</p>
 
 <p>Recall that we allow a <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">small perturbation</a> <code class="language-plaintext highlighter-rouge">$E$</code> around <code class="language-plaintext highlighter-rouge">$\tau_0$</code> contained in  parameter space  <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> (i.e., <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>) since  <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}$</code> is an intrinsic parameterization.
 Therefore, when $|t|$ is small enough, <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} $</code> stays in the parameter space and <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau}_0+t\mathbf{v})$</code> is well-defined.
 Note that we only require <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$</code> when $|t|$ is small enough. When $|t|$ is small enough, this is possible since a line segment <code class="language-plaintext highlighter-rouge">$ \mathbf{\tau}_0+t\mathbf{v} \in E$</code> and <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>.
  Technically, this is because  $\Omega_\tau$ is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
 
-<p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> as in the Euclidean case thanks to the <strong>local vector space</strong> structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
+<p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the <strong>local vector space</strong> structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
 <code class="language-plaintext highlighter-rouge">$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v}. \end{aligned}$$</code></p>
 
 <div class="notice--success">
@@ -632,14 +632,17 @@ We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-
 <p><span id="tu2011introduction">[2] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p></p>
 
 <h2 id="footnotes">Footnotes:</h2>
+<p>a coordinate representation of the covariant derivative remains the same as in Euclidean cases. Note that the standard
+coordinate derivative of a scalar field agrees with the 
+coordinate representation of the covariant derivative of the scalar field.</p>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector). <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wiki/Covariant_derivative">covariant derivative</a>. Given a scalar field/function on a manifold, <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wiki/Covariant_derivative">covariant derivative</a>. Given  a scalar field/function on a manifold, the standard (Euclidean) coordinate derivative is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector) induced by the covariant derivative. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector) <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>
