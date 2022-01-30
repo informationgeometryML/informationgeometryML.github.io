@@ -286,7 +286,7 @@ Therefore, when $|t|$ is small enough, <code class="language-plaintext highlight
 Note that we only require <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$</code> when $|t|$ is small enough. When $|t|$ is small enough, this is possible since a line segment <code class="language-plaintext highlighter-rouge">$ \mathbf{\tau}_0+t\mathbf{v} \in E$</code> and <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>.
  Technically, this is because  $\Omega_\tau$ is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
 
-<p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the <strong>local vector space</strong> structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
+<p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> as in the Euclidean case thanks to the <strong>local vector space</strong> structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
 <code class="language-plaintext highlighter-rouge">$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v}. \end{aligned}$$</code></p>
 
 <div class="notice--success">
@@ -769,6 +769,14 @@ plt.show()
 <p class="bibliography"><p><span id="absil2009optimization">[1] P.-A. Absil, R. Mahony, &amp; R. Sepulchre, <i>Optimization algorithms on matrix manifolds</i> (Princeton University Press, 2009).</span></p>
 <p><span id="tu2011introduction">[2] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p></p>
 
+<h2 id="footnotes">Footnotes:</h2>
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wiki/Covariant_derivative">covariant derivative</a>. For a scalar field/function on a manifold, the standard (Euclidean) coordinate derivative is a parametric representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a covector) induced by the covariant derivative. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
         
       </section>
