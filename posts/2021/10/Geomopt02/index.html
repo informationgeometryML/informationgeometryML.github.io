@@ -279,14 +279,14 @@ The next step is to generalize the concept of directional derivatives in a manif
 <p>Recall that a manifold should be locally like a vector space under <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations"><strong>intrinsic</strong> parameterization</a> <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}$</code>.
 Using this parameterization, consider an optimization problem $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$, where the parameter space $\Omega_\tau$ is determined by the parameterization and the manifold. Recall that we have a local vector space structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> if we parametrize the manifold with an intrinsic parameterization.</p>
 
-<p>Therefore, we can similarly define a directional derivative at <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> along Riemannian vector $\mathbf{v}$ as <code class="language-plaintext highlighter-rouge">$\lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t}$</code>, where $t$ is a scalar real number. The main point is that <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}$</code> stays in the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> thanks to the <strong>local vector space</strong> structure.</p>
+<p>Therefore, we can similarly define a directional derivative at <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> along Riemannian vector<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> $\mathbf{v}$ as <code class="language-plaintext highlighter-rouge">$\lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t}$</code>, where $t$ is a scalar real number. The main point is that <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}$</code> stays in the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> thanks to the <strong>local vector space</strong> structure.</p>
 
 <p>Recall that we allow a <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">small perturbation</a> <code class="language-plaintext highlighter-rouge">$E$</code> around <code class="language-plaintext highlighter-rouge">$\tau_0$</code> contained in  parameter space  <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> (i.e., <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>) since  <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}$</code> is an intrinsic parameterization.
 Therefore, when $|t|$ is small enough, <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} $</code> stays in the parameter space and <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau}_0+t\mathbf{v})$</code> is well-defined.
 Note that we only require <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$</code> when $|t|$ is small enough. When $|t|$ is small enough, this is possible since a line segment <code class="language-plaintext highlighter-rouge">$ \mathbf{\tau}_0+t\mathbf{v} \in E$</code> and <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>.
  Technically, this is because  $\Omega_\tau$ is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
 
-<p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> as in the Euclidean case thanks to the <strong>local vector space</strong> structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
+<p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> as in the Euclidean case thanks to the <strong>local vector space</strong> structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
 <code class="language-plaintext highlighter-rouge">$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v}. \end{aligned}$$</code></p>
 
 <div class="notice--success">
@@ -626,154 +626,20 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 <p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that a parameter space is a parametric representation of a  set of <strong>points</strong> in a manifold.
 We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-of-spaces">Part IV</a></p>
 
-<!--# Notebook-->
-<!--
-```python
-%matplotlib inline
-from jax.config import config; config.update("jax_enable_x64", True)
-import jax.numpy as jnp
-from jax import grad, jit, value_and_grad
-import numpy as np
-from matplotlib import pyplot as plt
-from matplotlib import ticker, colors
-```
-
-```python
-@jit
-def loss_lik(mu,v):
-    b1 = 0.5; b2 = 0.01;
-    a1 = 2.0; a2 = 5.0;
-    ls = b1*(mu**2+v-2.0*a1*mu+a1**2)+b2*((mu**3+3.0*mu*v)-3.0*a2*(mu**2+v)+3.0*(a2**2)*mu-a2**3)+4.0/v
-    return ls
-
-@jit
-def loss_pre(params):
-    (mu,s) = params
-    return loss_lik(mu,1.0/s) + jnp.log(s)/2
-
-loss_f_pre = jit(value_and_grad(loss_pre))
-```
-
-```python
-def gd(init_params, loss_fun, step_size, num_iters):
-    J_history = np.zeros(num_iters+1)
-    mu_hist, s_hist = np.zeros(num_iters+1), np.zeros(num_iters+1) #For plotting  
-    
-    cur_params = init_params
-    for i in range(num_iters):
-        
-        (val,g) = loss_fun(cur_params) #Euclidean gradient
-        mu_hist[i] = cur_params[0]
-        s_hist[i] = cur_params[1] 
-        J_history[i] = val
-        
-        cur_params  = cur_params - step_size* g #GD
-
-    (val,_) = loss_fun(cur_params)
-    J_history[num_iters] = val
-    mu_hist[num_iters] = cur_params[0]
-    s_hist[num_iters] = cur_params[1] 
-
-    return J_history, mu_hist, s_hist
-```
-
-```python
-def ngd_pre(init_params, loss_fun, step_size, num_iters):
-    J_history = np.zeros(num_iters+1)
-    mu_hist, s_hist = np.zeros(num_iters+1), np.zeros(num_iters+1) #For plotting  
-    
-    cur_params = init_params
-    for i in range(num_iters):
-        (mu,s)=cur_params
-        (val,(g_mu,g_s)) = loss_fun(cur_params)
-        ng = jnp.array( [g_mu/s, 2.0*(s**2)*g_s ] ) #Natural gradient
-
-        mu_hist[i] = cur_params[0]
-        s_hist[i] = cur_params[1] 
-        J_history[i] = val
-        
-        cur_params  = cur_params - step_size* ng     #NGD
- 
-    (val,_) = loss_fun(cur_params)
-    J_history[num_iters] = val
-    mu_hist[num_iters] = cur_params[0]
-    s_hist[num_iters] = cur_params[1] 
-
-    return J_history, mu_hist, s_hist
-```
-
-```python
-#Setup of meshgrid of theta values
-mu_list, s_list = np.meshgrid(np.linspace(-10,10,200),np.logspace(-1,0.2,800))
-
-#Computing the cost function for each theta combination
-zs = np.array(  [loss_pre( jnp.array([mu,s]) ) 
-                     for mu,s in zip(np.ravel(mu_list), np.ravel(s_list)) ] )
-Z = zs.reshape(mu_list.shape)
-mu_0 = -8.0
-s_0 = 1.0
-max_num_iters = 200
-```
-
-```python
-init_params = jnp.array([mu_0,s_0])
-gd_pre_history, mu_gd_pre_hist, s_gd_pre_hist = gd(init_params, loss_f_pre, step_size = 1e-2, 
-                                                   num_iters=max_num_iters)
-anglesx_gd_pre = np.array(mu_gd_pre_hist)[1:] - np.array(mu_gd_pre_hist)[:-1]
-anglesy_gd_pre = np.array(s_gd_pre_hist)[1:] - np.array(s_gd_pre_hist)[:-1]
-```
-
-```python
-init_params = jnp.array([mu_0,s_0])
-ngd_pre_history, mu_ngd_pre_hist, s_ngd_pre_hist = ngd_pre(init_params, loss_f_pre, step_size = 1e-2, 
-                                                           num_iters=max_num_iters)
-anglesx_ngd_pre = np.array(mu_ngd_pre_hist)[1:] - np.array(mu_ngd_pre_hist)[:-1]
-anglesy_ngd_pre = np.array(s_ngd_pre_hist)[1:] - np.array(s_ngd_pre_hist)[:-1]
-```
-
-```python
-fig = plt.figure(figsize = (16,8))
-ax = fig.add_subplot(1, 2, 1)
-
-ax.contour(mu_list, s_list, Z, 50, cmap = 'jet')
-
-ax.quiver(mu_gd_pre_hist[:-1], s_gd_pre_hist[:-1], anglesx_gd_pre, anglesy_gd_pre, 
-          label='GD $(\mu,s)$', scale_units = 'xy', angles = 'xy', scale = 1, color = 'g', alpha = .9)
-
-ax.quiver(mu_ngd_pre_hist[:-1], s_ngd_pre_hist[:-1], anglesx_ngd_pre, anglesy_ngd_pre, 
-          label='NGD $(\mu,s)$', scale_units = 'xy', angles = 'xy', scale = 1, color = 'r', alpha = .9)
-
-ax.set_xlabel('$\mu$', fontsize=18)
-ax.set_ylabel('$s$', fontsize=18)
-ax.legend(loc='upper right', fontsize=18)
-
-ax = fig.add_subplot(1, 2, 2)
-ax.plot(np.array(list(range(0, max_num_iters+1))),gd_pre_history,label='GD $(\mu,s)$',color='g')
-ax.plot(np.array(list(range(0, max_num_iters+1))),ngd_pre_history,label='NGD $(\mu,s)$',color='r')
-ax.legend(loc='upper right', fontsize=18)
-ax.set_xlabel('# of iters', fontsize=18)
-ax.set_ylabel('loss', fontsize=18)
-
-
-
-plt.tight_layout()
-plt.savefig('gd_vs_ngd.png')
-plt.show()
-```
-
-![png](/img/nb_gd_vs_ngd/nb_gd_vs_ngd_7_0.png){: .center-image }
--->
-
 <hr />
 <h1 id="references">References</h1>
 <p class="bibliography"><p><span id="absil2009optimization">[1] P.-A. Absil, R. Mahony, &amp; R. Sepulchre, <i>Optimization algorithms on matrix manifolds</i> (Princeton University Press, 2009).</span></p>
 <p><span id="tu2011introduction">[2] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p></p>
 
 <h2 id="footnotes">Footnotes:</h2>
+
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wiki/Covariant_derivative">covariant derivative</a>. For a scalar field/function on a manifold, the standard (Euclidean) coordinate derivative is a parametric representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a covector) induced by the covariant derivative. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector). <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wiki/Covariant_derivative">covariant derivative</a>. Given  a scalar field/function on a manifold, the standard (Euclidean) coordinate derivative is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector) induced by the covariant derivative. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
     </li>
   </ol>
 </div>

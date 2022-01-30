@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-29T16:12:38-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-01-29T20:48:27-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -2120,14 +2120,14 @@ The next step is to generalize the concept of directional derivatives in a manif
 &lt;p&gt;Recall that a manifold should be locally like a vector space under &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;&lt;strong&gt;intrinsic&lt;/strong&gt; parameterization&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}$&lt;/code&gt;.
 Using this parameterization, consider an optimization problem $\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$, where the parameter space $\Omega_\tau$ is determined by the parameterization and the manifold. Recall that we have a local vector space structure in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; if we parametrize the manifold with an intrinsic parameterization.&lt;/p&gt;
 
-&lt;p&gt;Therefore, we can similarly define a directional derivative at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; along Riemannian vector $\mathbf{v}$ as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t}$&lt;/code&gt;, where $t$ is a scalar real number. The main point is that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v}$&lt;/code&gt; stays in the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; thanks to the &lt;strong&gt;local vector space&lt;/strong&gt; structure.&lt;/p&gt;
+&lt;p&gt;Therefore, we can similarly define a directional derivative at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; along Riemannian vector&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; $\mathbf{v}$ as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t}$&lt;/code&gt;, where $t$ is a scalar real number. The main point is that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v}$&lt;/code&gt; stays in the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; thanks to the &lt;strong&gt;local vector space&lt;/strong&gt; structure.&lt;/p&gt;
 
 &lt;p&gt;Recall that we allow a &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;small perturbation&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$E$&lt;/code&gt; around &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; contained in  parameter space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$E \subset \Omega_\tau$&lt;/code&gt;) since  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}$&lt;/code&gt; is an intrinsic parameterization.
 Therefore, when $|t|$ is small enough, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} $&lt;/code&gt; stays in the parameter space and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau}_0+t\mathbf{v})$&lt;/code&gt; is well-defined.
 Note that we only require &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$&lt;/code&gt; when $|t|$ is small enough. When $|t|$ is small enough, this is possible since a line segment &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{\tau}_0+t\mathbf{v} \in E$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$E \subset \Omega_\tau$&lt;/code&gt;.
  Technically, this is because  $\Omega_\tau$ is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Under &lt;strong&gt;intrinsic&lt;/strong&gt; parameterization $\mathbf{\tau}$, the directional derivative remains the same&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; as in the Euclidean case thanks to the &lt;strong&gt;local vector space&lt;/strong&gt; structure in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;.
+&lt;p&gt;Under &lt;strong&gt;intrinsic&lt;/strong&gt; parameterization $\mathbf{\tau}$, the directional derivative remains the same&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; as in the Euclidean case thanks to the &lt;strong&gt;local vector space&lt;/strong&gt; structure in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v}. \end{aligned}$$&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class=&quot;notice--success&quot;&gt;
@@ -2467,154 +2467,20 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 &lt;p&gt;The key takeway is that a vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;. Recall that a parameter space is a parametric representation of a  set of &lt;strong&gt;points&lt;/strong&gt; in a manifold.
 We will discuss more about this in &lt;a href=&quot;/posts/2021/11/Geomopt04/#two-kinds-of-spaces&quot;&gt;Part IV&lt;/a&gt;&lt;/p&gt;
 
-&lt;!--# Notebook--&gt;
-&lt;!--
-```python
-%matplotlib inline
-from jax.config import config; config.update(&quot;jax_enable_x64&quot;, True)
-import jax.numpy as jnp
-from jax import grad, jit, value_and_grad
-import numpy as np
-from matplotlib import pyplot as plt
-from matplotlib import ticker, colors
-```
-
-```python
-@jit
-def loss_lik(mu,v):
-    b1 = 0.5; b2 = 0.01;
-    a1 = 2.0; a2 = 5.0;
-    ls = b1*(mu**2+v-2.0*a1*mu+a1**2)+b2*((mu**3+3.0*mu*v)-3.0*a2*(mu**2+v)+3.0*(a2**2)*mu-a2**3)+4.0/v
-    return ls
-
-@jit
-def loss_pre(params):
-    (mu,s) = params
-    return loss_lik(mu,1.0/s) + jnp.log(s)/2
-
-loss_f_pre = jit(value_and_grad(loss_pre))
-```
-
-```python
-def gd(init_params, loss_fun, step_size, num_iters):
-    J_history = np.zeros(num_iters+1)
-    mu_hist, s_hist = np.zeros(num_iters+1), np.zeros(num_iters+1) #For plotting  
-    
-    cur_params = init_params
-    for i in range(num_iters):
-        
-        (val,g) = loss_fun(cur_params) #Euclidean gradient
-        mu_hist[i] = cur_params[0]
-        s_hist[i] = cur_params[1] 
-        J_history[i] = val
-        
-        cur_params  = cur_params - step_size* g #GD
-
-    (val,_) = loss_fun(cur_params)
-    J_history[num_iters] = val
-    mu_hist[num_iters] = cur_params[0]
-    s_hist[num_iters] = cur_params[1] 
-
-    return J_history, mu_hist, s_hist
-```
-
-```python
-def ngd_pre(init_params, loss_fun, step_size, num_iters):
-    J_history = np.zeros(num_iters+1)
-    mu_hist, s_hist = np.zeros(num_iters+1), np.zeros(num_iters+1) #For plotting  
-    
-    cur_params = init_params
-    for i in range(num_iters):
-        (mu,s)=cur_params
-        (val,(g_mu,g_s)) = loss_fun(cur_params)
-        ng = jnp.array( [g_mu/s, 2.0*(s**2)*g_s ] ) #Natural gradient
-
-        mu_hist[i] = cur_params[0]
-        s_hist[i] = cur_params[1] 
-        J_history[i] = val
-        
-        cur_params  = cur_params - step_size* ng     #NGD
- 
-    (val,_) = loss_fun(cur_params)
-    J_history[num_iters] = val
-    mu_hist[num_iters] = cur_params[0]
-    s_hist[num_iters] = cur_params[1] 
-
-    return J_history, mu_hist, s_hist
-```
-
-```python
-#Setup of meshgrid of theta values
-mu_list, s_list = np.meshgrid(np.linspace(-10,10,200),np.logspace(-1,0.2,800))
-
-#Computing the cost function for each theta combination
-zs = np.array(  [loss_pre( jnp.array([mu,s]) ) 
-                     for mu,s in zip(np.ravel(mu_list), np.ravel(s_list)) ] )
-Z = zs.reshape(mu_list.shape)
-mu_0 = -8.0
-s_0 = 1.0
-max_num_iters = 200
-```
-
-```python
-init_params = jnp.array([mu_0,s_0])
-gd_pre_history, mu_gd_pre_hist, s_gd_pre_hist = gd(init_params, loss_f_pre, step_size = 1e-2, 
-                                                   num_iters=max_num_iters)
-anglesx_gd_pre = np.array(mu_gd_pre_hist)[1:] - np.array(mu_gd_pre_hist)[:-1]
-anglesy_gd_pre = np.array(s_gd_pre_hist)[1:] - np.array(s_gd_pre_hist)[:-1]
-```
-
-```python
-init_params = jnp.array([mu_0,s_0])
-ngd_pre_history, mu_ngd_pre_hist, s_ngd_pre_hist = ngd_pre(init_params, loss_f_pre, step_size = 1e-2, 
-                                                           num_iters=max_num_iters)
-anglesx_ngd_pre = np.array(mu_ngd_pre_hist)[1:] - np.array(mu_ngd_pre_hist)[:-1]
-anglesy_ngd_pre = np.array(s_ngd_pre_hist)[1:] - np.array(s_ngd_pre_hist)[:-1]
-```
-
-```python
-fig = plt.figure(figsize = (16,8))
-ax = fig.add_subplot(1, 2, 1)
-
-ax.contour(mu_list, s_list, Z, 50, cmap = 'jet')
-
-ax.quiver(mu_gd_pre_hist[:-1], s_gd_pre_hist[:-1], anglesx_gd_pre, anglesy_gd_pre, 
-          label='GD $(\mu,s)$', scale_units = 'xy', angles = 'xy', scale = 1, color = 'g', alpha = .9)
-
-ax.quiver(mu_ngd_pre_hist[:-1], s_ngd_pre_hist[:-1], anglesx_ngd_pre, anglesy_ngd_pre, 
-          label='NGD $(\mu,s)$', scale_units = 'xy', angles = 'xy', scale = 1, color = 'r', alpha = .9)
-
-ax.set_xlabel('$\mu$', fontsize=18)
-ax.set_ylabel('$s$', fontsize=18)
-ax.legend(loc='upper right', fontsize=18)
-
-ax = fig.add_subplot(1, 2, 2)
-ax.plot(np.array(list(range(0, max_num_iters+1))),gd_pre_history,label='GD $(\mu,s)$',color='g')
-ax.plot(np.array(list(range(0, max_num_iters+1))),ngd_pre_history,label='NGD $(\mu,s)$',color='r')
-ax.legend(loc='upper right', fontsize=18)
-ax.set_xlabel('# of iters', fontsize=18)
-ax.set_ylabel('loss', fontsize=18)
-
-
-
-plt.tight_layout()
-plt.savefig('gd_vs_ngd.png')
-plt.show()
-```
-
-![png](/img/nb_gd_vs_ngd/nb_gd_vs_ngd_7_0.png){: .center-image }
---&gt;
-
 &lt;hr /&gt;
 &lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
 &lt;p class=&quot;bibliography&quot;&gt;&lt;p&gt;&lt;span id=&quot;absil2009optimization&quot;&gt;[1] P.-A. Absil, R. Mahony, &amp;amp; R. Sepulchre, &lt;i&gt;Optimization algorithms on matrix manifolds&lt;/i&gt; (Princeton University Press, 2009).&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;tu2011introduction&quot;&gt;[2] L. W. Tu, &quot;An introduction to manifolds. Second,&quot; &lt;i&gt;New York, US: Springer&lt;/i&gt; (2011).&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;footnotes&quot;&gt;Footnotes:&lt;/h2&gt;
+
 &lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;For simplicity, we avoid defining a (coordinate-free) &lt;a href=&quot;https://en.wikipedia.org/wiki/Covariant_derivative&quot;&gt;covariant derivative&lt;/a&gt;. For a scalar field/function on a manifold, the standard (Euclidean) coordinate derivative is a parametric representation of a &lt;a href=&quot;https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors&quot;&gt;covariant vector&lt;/a&gt; (A.K.A. a covector) induced by the covariant derivative. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;A Riemannian gradient is a coordinate representation of a &lt;a href=&quot;https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors&quot;&gt;contravariant vector&lt;/a&gt; (A.K.A. a Riemannian vector). &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;For simplicity, we avoid defining a (coordinate-free) &lt;a href=&quot;https://en.wikipedia.org/wiki/Covariant_derivative&quot;&gt;covariant derivative&lt;/a&gt;. Given  a scalar field/function on a manifold, the standard (Euclidean) coordinate derivative is a coordinate representation of a &lt;a href=&quot;https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors&quot;&gt;covariant vector&lt;/a&gt; (A.K.A. a Riemannian covector) induced by the covariant derivative. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. The main propose of this post is to show how to define and compute natural-gradients. The space of natural-gradients evaluated at the same point is called a tangent space at that point.</summary></entry><entry><title type="html">Part I: Smooth Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Smooth Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
