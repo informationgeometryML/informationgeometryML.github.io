@@ -507,7 +507,7 @@ $$</code>
 where $K$ is the number of entries of parameter array $\tau$ and 
 <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $</code> is a column vector.</p>
 
-<p>The matrix form is also known as the <strong>Fisher information matrix</strong> (FIM). Obviously, the FIM depends on the choice of parameterizations. In many cases,  we could also compute the FIM as
+<p>The matrix form is also known as the <strong>Fisher information matrix</strong> (FIM). Obviously, the form of the FIM depends on the choice of parameterizations. In many cases,  we could also compute the FIM as
 <code class="language-plaintext highlighter-rouge">$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$</code>.</p>
 
 <p>The regularity condition guarantees that the FIM is non-singular if the matrix exists.
