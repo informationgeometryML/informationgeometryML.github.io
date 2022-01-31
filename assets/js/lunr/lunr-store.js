@@ -35,7 +35,7 @@ var store = [{
         "url": "/posts/2021/07/ICML/",
         "teaser":null},{
         "title": "Part I: Smooth Manifolds with the Fisher-Rao Metric",
-        "excerpt":"Goal This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM). The purpose is to show that The FIM plays an essential role in statistics and machine learning For a parametric distribution family, it induces a Riemannian geometric-structureThe discussion here is informal and focuses...","categories": [],
+        "excerpt":"Goal This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM) under a parametrization. The purpose is to show that The FIM plays an essential role in statistics and machine learning For a parametric distribution family, the FIM induces a Riemannian geometric-structureThe discussion here...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/09/Geomopt01/",
         "teaser":null},{
