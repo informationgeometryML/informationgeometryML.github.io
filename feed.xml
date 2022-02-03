@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-01T11:58:41-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-02T23:01:28-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -3058,12 +3058,12 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;Structures play an essential role in&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Preconditioners for gradient-free, adaptive-gradient, and second-order methods&lt;/li&gt;
-  &lt;li&gt;Covariance matrices in variational Gaussian approximation&lt;/li&gt;
+  &lt;li&gt;Covariance matrices in variational Gaussian approximation &lt;a class=&quot;citation&quot; href=&quot;#opper2009variational&quot;&gt;[2]&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Natural-gradient descent on structured parameter spaces is computationally challenging.&lt;/p&gt;
 
-&lt;p&gt;Existing works in NGD&lt;/p&gt;
+&lt;p&gt;Limitations of existing NGD methods:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Limited structures due to the complicated Fisher information matrix (FIM)&lt;/li&gt;
   &lt;li&gt;Ad-hoc approximations for handling the singular FIM and cost reductions&lt;/li&gt;
@@ -3091,9 +3091,9 @@ $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;Our NGD method&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;generalizes the exponential natural evolutionary strategy &lt;a class=&quot;citation&quot; href=&quot;#glasmachers2010exponential&quot;&gt;[2]&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;generalizes the exponential natural evolutionary strategy &lt;a class=&quot;citation&quot; href=&quot;#glasmachers2010exponential&quot;&gt;[3]&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;recovers existing  Newton-like algorithms&lt;/li&gt;
-  &lt;li&gt;yields new structured 2nd-order methods and adaptive-gradient methods with group-structural invariance &lt;a class=&quot;citation&quot; href=&quot;#lin2021structured&quot;&gt;[3]&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;yields new structured 2nd-order methods and adaptive-gradient methods with group-structural invariance &lt;a class=&quot;citation&quot; href=&quot;#lin2021structured&quot;&gt;[4]&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;gives new NGD updates to learn structured covariances of Gaussian, Wishart and their mixtures&lt;/li&gt;
   &lt;li&gt;is a systemic approach to incorporate a range of structures&lt;/li&gt;
 &lt;/ul&gt;
@@ -3124,7 +3124,8 @@ where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathb
 \textrm{GD: } &amp;amp;\tau_{t+1} \leftarrow \tau_t - \alpha \nabla_{\tau_t} \mathcal{L}(\tau) \\
 \textrm{Standard NGD: } &amp;amp; \tau_{t+1} \leftarrow \tau_t - \beta\,\, \big[ \mathbf{F}_{\tau} (\tau_t) \big]^{-1} \nabla_{\tau_t} \mathcal{L}(\tau)
 \end{aligned} 
-$$&lt;/code&gt;&lt;/p&gt;
+$$&lt;/code&gt;
+where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_{\tau} (\tau_t)$&lt;/code&gt; is the FIM of distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\tau)$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau=\tau_t$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;Advantages of NGD:&lt;/p&gt;
 &lt;ul&gt;
@@ -3235,7 +3236,7 @@ $$&lt;/code&gt;&lt;/p&gt;
   &lt;ul&gt;
     &lt;li&gt;keep natural-gradient computation tractable&lt;/li&gt;
     &lt;li&gt;maintain numerical stability&lt;/li&gt;
-    &lt;li&gt;have lower iteration cost compared to  the map in &lt;a class=&quot;citation&quot; href=&quot;#glasmachers2010exponential&quot;&gt;[2]&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;have lower iteration cost compared to  the map in &lt;a class=&quot;citation&quot; href=&quot;#glasmachers2010exponential&quot;&gt;[3]&lt;/a&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/div&gt;
 
@@ -3257,7 +3258,7 @@ where &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;tractable&lt;/strong
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\mu$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\Sigma}$&lt;/code&gt; are Euclidean gradients of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; computed via Stein’s lemma &lt;a class=&quot;citation&quot; href=&quot;#lin2019stein&quot;&gt;[4]&lt;/a&gt; :
+&lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\mu$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_{\Sigma}$&lt;/code&gt; are Euclidean gradients of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; computed via Stein’s lemma &lt;a class=&quot;citation&quot; href=&quot;#lin2019stein&quot;&gt;[5]&lt;/a&gt; :
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{g}_\mu = \nabla_{\mu}\mathcal{L}(\tau) = E_{q}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] }, \,\,\,\,\,
@@ -3275,7 +3276,7 @@ $$&lt;/code&gt;&lt;/p&gt;
  \end{aligned}
 $$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;dense&lt;/strong&gt;&lt;/span&gt; matrix in matrix group &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{GL}^{p\times p}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{G}_t := E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) ] } -\gamma \mathbf{S}_t$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;The second-order term shown in red is used for the positive-definite constraint &lt;a class=&quot;citation&quot; href=&quot;#lin2020handling&quot;&gt;[5]&lt;/a&gt; known as a retraction in Riemannian gradient descent (RGD).  The higher-order term &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(\beta^3)$&lt;/code&gt; will be used for structured precision in the next section.&lt;/p&gt;
+&lt;p&gt;The second-order term shown in red is used for the positive-definite constraint &lt;a class=&quot;citation&quot; href=&quot;#lin2020handling&quot;&gt;[6]&lt;/a&gt; known as a retraction in Riemannian gradient descent (RGD).  The higher-order term &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(\beta^3)$&lt;/code&gt; will be used for structured precision in the next section.&lt;/p&gt;
 
 &lt;p&gt;Well-known structures in matrix $\mathbf{B}$ are illustrated in the following figure.&lt;/p&gt;
 
@@ -3557,7 +3558,8 @@ _1$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&q
 &lt;hr /&gt;
 &lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
 &lt;p class=&quot;bibliography&quot;&gt;&lt;p&gt;&lt;span id=&quot;lin2021tractable&quot;&gt;[1] W. Lin, F. Nielsen, M. E. Khan, &amp;amp; M. Schmidt, &quot;Tractable structured natural gradient descent using local parameterizations,&quot; &lt;i&gt;International Conference on Machine Learning (ICML)&lt;/i&gt; (2021).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;glasmachers2010exponential&quot;&gt;[2] T. Glasmachers, T. Schaul, S. Yi, D. Wierstra, &amp;amp; J. Schmidhuber, &quot;Exponential natural evolution strategies,&quot; &lt;i&gt;Proceedings of the 12th annual conference on Genetic and evolutionary computation&lt;/i&gt; (2010), pp. 393–400.&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;lin2021structured&quot;&gt;[3] W. Lin, F. Nielsen, M. E. Khan, &amp;amp; M. Schmidt, &quot;Structured second-order methods via natural gradient descent,&quot; &lt;i&gt;arXiv preprint arXiv:2107.10884&lt;/i&gt; (2021).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;lin2019stein&quot;&gt;[4] W. Lin, M. E. Khan, &amp;amp; M. Schmidt, &quot;Stein’s Lemma for the Reparameterization Trick with Exponential Family Mixtures,&quot; &lt;i&gt;arXiv preprint arXiv:1910.13398&lt;/i&gt; (2019).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;lin2020handling&quot;&gt;[5] W. Lin, M. Schmidt, &amp;amp; M. E. Khan, &quot;Handling the positive-definite constraint in the bayesian learning rule,&quot; &lt;i&gt;International Conference on Machine Learning&lt;/i&gt; (PMLR, 2020), pp. 6116–6126.&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Matrix Lie Groups" /><category term="Exponential Family" /><summary type="html">More about this work [1]: (Youtube) talk, ICML paper, workshop paper, poster</summary></entry></feed>
+&lt;p&gt;&lt;span id=&quot;opper2009variational&quot;&gt;[2] M. Opper &amp;amp; C. Archambeau, &quot;The variational Gaussian approximation revisited,&quot; &lt;i&gt;Neural computation&lt;/i&gt; &lt;b&gt;21&lt;/b&gt;:786–792 (2009).&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;glasmachers2010exponential&quot;&gt;[3] T. Glasmachers, T. Schaul, S. Yi, D. Wierstra, &amp;amp; J. Schmidhuber, &quot;Exponential natural evolution strategies,&quot; &lt;i&gt;Proceedings of the 12th annual conference on Genetic and evolutionary computation&lt;/i&gt; (2010), pp. 393–400.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;lin2021structured&quot;&gt;[4] W. Lin, F. Nielsen, M. E. Khan, &amp;amp; M. Schmidt, &quot;Structured second-order methods via natural gradient descent,&quot; &lt;i&gt;arXiv preprint arXiv:2107.10884&lt;/i&gt; (2021).&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;lin2019stein&quot;&gt;[5] W. Lin, M. E. Khan, &amp;amp; M. Schmidt, &quot;Stein’s Lemma for the Reparameterization Trick with Exponential Family Mixtures,&quot; &lt;i&gt;arXiv preprint arXiv:1910.13398&lt;/i&gt; (2019).&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;lin2020handling&quot;&gt;[6] W. Lin, M. Schmidt, &amp;amp; M. E. Khan, &quot;Handling the positive-definite constraint in the bayesian learning rule,&quot; &lt;i&gt;International Conference on Machine Learning&lt;/i&gt; (PMLR, 2020), pp. 6116–6126.&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Matrix Lie Groups" /><category term="Exponential Family" /><summary type="html">More about this work [1]: (Youtube) talk, ICML paper, workshop paper, poster</summary></entry></feed>
