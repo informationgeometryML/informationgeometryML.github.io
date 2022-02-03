@@ -1,6 +1,7 @@
 ## About This Website
 
-Blog posts on computational aspects of differential, geometric, and algebraic structures (i.e., probability distributions and matrices). Many posts are related to **information geometry** and **manifold optimization**.
+Blog posts on computational aspects of differential, geometric, and algebraic structures (i.e., probability distributions and matrices). Many posts are related to **information geometry** and **manifold optimization** with their applications to numerical optimization and approximate inference.
+
 
 For generalized natural-gradient methods, please see 
 * Structured natural gradient descent: [talk](https://www.youtube.com/watch?v=vEY1ZxDJX8o&t=11s), [paper](https://arxiv.org/abs/2102.07405), [blog]({{ site.baseurl }}{% post_url 2021-07-05-GeomProj01 %})
