@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-03T14:10:36-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-03T14:15:53-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -3255,7 +3255,7 @@ where &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;tractable&lt;/strong
 \begin{aligned}
     \hat{\mathbf{g}}_{\eta_0}^{(t)} =
  \Big(  \begin{array}{c} \hat{\mathbf{g}}_{\delta_0}^{(t)}\\ \mathrm{vec}(  \hat{\mathbf{g}}_{M_0}^{(t)})\end{array}   \Big)
-= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp;amp; 0 \\ 0 &amp;amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of the exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] &amp;amp;&amp;amp; \text{( tractable: easy to inverse the FIM ) }
+= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp;amp; 0 \\ 0 &amp;amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of the exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] &amp;amp;&amp;amp; (\text{tractable: easy to inverse the FIM at  } \eta_0)
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
@@ -3451,7 +3451,7 @@ $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&
 \mathbf{B}_{t+1}  &amp;amp; \leftarrow   \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)
  \end{aligned}
 $$&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;obtains an update to solve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; with group-structural invariance:
+  &lt;li&gt;obtains an update to solve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt; with group-structural invariance &lt;a class=&quot;citation&quot; href=&quot;#lin2021structured&quot;&gt;[4]&lt;/a&gt;:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
  \mu_{t+1} &amp;amp;  \leftarrow  \mu_t - \beta \mathbf{S}_{t}^{-1} \nabla_{\mu_t} \ell( \mu), \\ 
@@ -3471,7 +3471,9 @@ $$&lt;/code&gt; where $\Sigma=\mathbf{S}^{-1}$ is the covariance.&lt;/li&gt;
   &lt;details&gt;
 	&lt;summary&gt;Group-structural invariance: (Click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-      &lt;p&gt;Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$&lt;/code&gt;,  the update in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; is invariant under any (group) transform &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$&lt;/code&gt; of  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt;  such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$&lt;/code&gt;.&lt;/p&gt;
+
+      &lt;p&gt;Recall that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$&lt;/code&gt;. 
+The update in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{7}$&lt;/code&gt; is invariant under any (group) transform &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$&lt;/code&gt; of  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{5}$&lt;/code&gt;  such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$&lt;/code&gt;.&lt;/p&gt;
     &lt;/fieldset&gt;
 &lt;/details&gt;
 &lt;/div&gt;
@@ -3510,7 +3512,7 @@ $$&lt;/code&gt; where $\Sigma=\mathbf{S}^{-1}$ is the covariance.&lt;/li&gt;
 consider a  Gaussian family
        &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(\mathbf{w}|\mu,\mathbf{S})$&lt;/code&gt; with a Kronecker product structure, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau=(\mu,\mathbf{S})$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;Our method gives adaptive-gradient updates with group-structural invariance by
+&lt;p&gt;Our method gives adaptive-gradient updates with group-structural invariance  by
  approximating &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_{\mu_t}^2 \ell( \mu)$&lt;/code&gt;  in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{8}$&lt;/code&gt; using the Gauss-Newton.&lt;/p&gt;
 
 &lt;p&gt;The Kronecker product (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}=\mathbf{B}_1 \otimes \mathbf{B}_2$&lt;/code&gt;) of two sparse structured groups (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}

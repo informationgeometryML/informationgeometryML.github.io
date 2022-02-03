@@ -399,7 +399,7 @@ where <span style="color:red"><strong>tractable</strong></span> natural-gradient
 \begin{aligned}
     \hat{\mathbf{g}}_{\eta_0}^{(t)} =
  \Big(  \begin{array}{c} \hat{\mathbf{g}}_{\delta_0}^{(t)}\\ \mathrm{vec}(  \hat{\mathbf{g}}_{M_0}^{(t)})\end{array}   \Big)
-= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of the exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] &amp;&amp; \text{( tractable: easy to inverse the FIM ) }
+= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of the exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] &amp;&amp; (\text{tractable: easy to inverse the FIM at  } \eta_0)
 \end{aligned}
 $$</code></p>
 
@@ -595,7 +595,7 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{B} \
 \mathbf{B}_{t+1}  &amp; \leftarrow   \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)
  \end{aligned}
 $$</code></li>
-  <li>obtains an update to solve <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> with group-structural invariance:
+  <li>obtains an update to solve <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code> with group-structural invariance <a class="citation" href="#lin2021structured">[4]</a>:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
  \mu_{t+1} &amp;  \leftarrow  \mu_t - \beta \mathbf{S}_{t}^{-1} \nabla_{\mu_t} \ell( \mu), \\ 
@@ -615,7 +615,9 @@ $$</code> where $\Sigma=\mathbf{S}^{-1}$ is the covariance.</li>
   <details>
 	<summary>Group-structural invariance: (Click to expand)</summary>
 <fieldset class="field-set">
-      <p>Since <code class="language-plaintext highlighter-rouge">$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$</code>,  the update in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is invariant under any (group) transform <code class="language-plaintext highlighter-rouge">$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$</code> of  <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>  such as <code class="language-plaintext highlighter-rouge">$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$</code>.</p>
+
+      <p>Recall that <code class="language-plaintext highlighter-rouge">$\mathbf{B} \in {\cal{B}_{\text{up}}}(k)$</code>. 
+The update in <code class="language-plaintext highlighter-rouge">$\eqref{7}$</code> is invariant under any (group) transform <code class="language-plaintext highlighter-rouge">$\mathbf{R}^T \in  {\cal{B}_{\text{up}}}(k)$</code> of  <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>  such as <code class="language-plaintext highlighter-rouge">$\min_{y \in \mathcal{R}^p}  \ell(\mathbf{R} \, \mathbf{y})$</code>.</p>
     </fieldset>
 </details>
 </div>
@@ -654,7 +656,7 @@ $$</code> where $\Sigma=\mathbf{S}^{-1}$ is the covariance.</li>
 consider a  Gaussian family
        <code class="language-plaintext highlighter-rouge">$q(\mathbf{w}|\mu,\mathbf{S})$</code> with a Kronecker product structure, where <code class="language-plaintext highlighter-rouge">$\tau=(\mu,\mathbf{S})$</code>.</p>
 
-<p>Our method gives adaptive-gradient updates with group-structural invariance by
+<p>Our method gives adaptive-gradient updates with group-structural invariance  by
  approximating <code class="language-plaintext highlighter-rouge">$\nabla_{\mu_t}^2 \ell( \mu)$</code>  in <code class="language-plaintext highlighter-rouge">$\eqref{8}$</code> using the Gauss-Newton.</p>
 
 <p>The Kronecker product (<code class="language-plaintext highlighter-rouge">$\mathbf{B}=\mathbf{B}_1 \otimes \mathbf{B}_2$</code>) of two sparse structured groups (<code class="language-plaintext highlighter-rouge">$\mathbf{B}
