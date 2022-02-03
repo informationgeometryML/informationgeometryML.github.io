@@ -7,7 +7,7 @@ For generalized natural-gradient methods, please see
 * Riemannian gradient descent: [talk](https://www.youtube.com/watch?v=nu1hT-LExFg), [paper](https://arxiv.org/abs/2002.10060)
 
 
-For an introduction to natural-gradient methods, see the [blog]({{ site.baseurl }}{% post_url 2021-09-06-Geomopt01 %}).
+For an introduction to natural-gradient methods, see this [blog]({{ site.baseurl }}{% post_url 2021-09-06-Geomopt01 %}).
 
 ## News
 
