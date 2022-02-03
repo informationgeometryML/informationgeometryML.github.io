@@ -491,10 +491,10 @@ a <span style="color:red">block upper-triangular</span> sub-group of <code class
 {\cal{B}_{\text{up}}}(k)  := \Big\{ 
 \begin{bmatrix}
 \mathbf{B}_A &amp;  \mathbf{B}_B  \\
- \mathbf{0} &amp; \mathbf{B}_D
-      \end{bmatrix} \Big| &amp; \mathbf{B}_A \in \mathrm{GL}^{k \times k},\,
- \mathbf{B}_D  \in{\cal D}^{(p-k) \times (p-k)}_{++}  \Big\},\,\,
- \end{aligned}
+\mathbf{0} &amp; \mathbf{B}_D
+     \end{bmatrix} \Big| &amp; \mathbf{B}_A \in \mathrm{GL}^{k \times k},\,
+\mathbf{B}_D  \in{\cal D}^{(p-k) \times (p-k)}_{++}  \Big\},\,\,
+\end{aligned}
 $$</code></p>
 
   <p>When <code class="language-plaintext highlighter-rouge">$k=0$</code>, the space <code class="language-plaintext highlighter-rouge">${\cal{B}_{\text{up}}}(0) = {\cal D}^{p \times p}_{++}$</code> becomes  the diagonal case.
@@ -507,19 +507,19 @@ When <code class="language-plaintext highlighter-rouge">$k=p$</code>, <code clas
 {\cal{M}_{\text{up}}}(k):  = \Big\{ 
 \begin{bmatrix}
 \mathbf{M}_A &amp;  \mathbf{M}_B  \\
- \mathbf{0} &amp; \mathbf{M}_D
-      \end{bmatrix} \Big| &amp;  \mathbf{M}_A \in{\cal S}^{k \times k}, \,
- \mathbf{M}_D  \in{\cal D}^{(p-k) \times (p-k)} \Big\}
- \end{aligned}
+\mathbf{0} &amp; \mathbf{M}_D
+     \end{bmatrix} \Big| &amp;  \mathbf{M}_A \in{\cal S}^{k \times k}, \,
+\mathbf{M}_D  \in{\cal D}^{(p-k) \times (p-k)} \Big\}
+\end{aligned}
 $$</code></p>
 
   <p>The global, auxiliary, and local parameterizations :
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-       \tau &amp;= \Big\{\mu \in \mathcal{R}^p,  \mathbf{S}=\mathbf{B} \mathbf{B}^T \in \mathcal{S}_{++}^{p\times p} | \mathbf{B} \in {\cal{B}_{\text{up}}}(k) \Big\}, \\
-        \lambda &amp; = \Big\{ \mu \in \mathcal{R}^p,  \mathbf{B} \in {\cal{B}_{\text{up}}}(k) \Big\},\\
-        \eta &amp;= \Big\{ \delta\in \mathcal{R}^p,  \mathbf{M} \in {\cal{M}_{\text{up}}}(k)   \Big\}.
- \end{aligned}
+      \tau &amp;= \Big\{\mu \in \mathcal{R}^p,  \mathbf{S}=\mathbf{B} \mathbf{B}^T \in \mathcal{S}_{++}^{p\times p} | \mathbf{B} \in {\cal{B}_{\text{up}}}(k) \Big\}, \\
+       \lambda &amp; = \Big\{ \mu \in \mathcal{R}^p,  \mathbf{B} \in {\cal{B}_{\text{up}}}(k) \Big\},\\
+       \eta &amp;= \Big\{ \delta\in \mathcal{R}^p,  \mathbf{M} \in {\cal{M}_{\text{up}}}(k)   \Big\}.
+\end{aligned}
 $$</code></p>
 
   <p>Maps <code class="language-plaintext highlighter-rouge">$\psi$</code> and <code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> are defined in  <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>.
@@ -529,24 +529,27 @@ Our NGD update in the auxiliary space is shown below, where we assume $\eta_0=\m
       <legend class="leg-title"><span style="color:red">Structure-preserving update in $\lambda$ space</span></legend>
       <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-  \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} = \lambda_{t+1} = 
-  \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big)
-  =\Big\{ \begin{array}{c}  \mu_t - \beta \mathbf{B}_{t}^{-T} \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ 
+ \Big\{ \begin{array}{c} \mu_{t+1} \\ \mathbf{B}_{t+1} \end{array} \Big\} = \lambda_{t+1} = 
+ \phi_{\lambda_t} \big( \eta_0-\beta \hat{\mathbf{g}}_{\eta_0}^{(t)} \big)
+ =\Big\{ \begin{array}{c}  \mu_t - \beta \mathbf{B}_{t}^{-T} \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ 
 \mathbf{B}_t  \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \kappa_{\text{up}}\big( 2 \mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \Big)  \end{array} \Big\}   
- \end{aligned}
+\end{aligned}
 $$</code></p>
     </fieldset>
   </div>
   <p>where <code class="language-plaintext highlighter-rouge">$\odot$</code> is the elementwise product ,
 <code class="language-plaintext highlighter-rouge">$\kappa_{\text{up}}(\mathbf{X}) \in {\cal{M}_{\text{up}}}(k)$</code> extracts non-zero entries of <code class="language-plaintext highlighter-rouge">${\cal{M}_{\text{up}}}(k)$</code> from <code class="language-plaintext highlighter-rouge">$\mathbf{X}$</code>, and
 <code class="language-plaintext highlighter-rouge">$ \mathbf{C}_{\text{up}} = 
- \begin{bmatrix}
+\begin{bmatrix}
 \frac{1}{2} \mathbb{1} &amp;  \mathbb{1}   \\
- \mathbf{0} &amp; \frac{1}{2} \mathbf{I}_D
-      \end{bmatrix}  \in {\cal{M}_{\text{up}}}(k)$</code>.</p>
+\mathbf{0} &amp; \frac{1}{2} \mathbf{I}_D
+     \end{bmatrix}  \in {\cal{M}_{\text{up}}}(k)$</code>.</p>
 
   <p>Note that <code class="language-plaintext highlighter-rouge">$ \mathbf{B}_{t+1} \in {\cal{B}_{\text{up}}}(k)$</code> thanks to the property of <code class="language-plaintext highlighter-rouge">$\cal{M}_{\text{up}}(k)$</code>:
 <code class="language-plaintext highlighter-rouge">$\mathbf{h}\big(\mathbf{M}\big) \in {\cal{B}_{\text{up}}}(k) $</code> for any <code class="language-plaintext highlighter-rouge">$\mathbf{M} \in \cal{M}_{\text{up}}(k)$</code>.</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$\mathbf{B}$</code> also induces a low-rank-plus-diagonal structure in the covariance
+matrix <code class="language-plaintext highlighter-rouge">$\Sigma=\mathbf{S}^{-1}$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{S}=\mathbf{B}\mathbf{B}^T$</code>. See <a class="citation" href="#lin2021tractable">[1]</a>  for the detail.</p>
 </blockquote>
 
 <div class="notice--success">
