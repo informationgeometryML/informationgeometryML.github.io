@@ -393,13 +393,13 @@ $$</code></p>
   =\Big\{ \begin{array}{c}  \mu_t - \beta \mathbf{B}_{t}^{-T} \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathbf{B}_t  \mathbf{h}\big(\beta \mathbf{B}_t^{-1}\mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T} \big) \end{array} \Big\} 
  \end{aligned}
 $$</code>
-where <span style="color:red"><strong>tractable</strong></span> natural-gradient  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code>  at <code class="language-plaintext highlighter-rouge">$\eta_0=\{\delta_0, \mathbf{M}_0\}$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t=\{\mu_t,\mathbf{B}_t\}$</code>:</p>
+where <span style="color:red"><strong>tractable</strong></span> natural-gradient  <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code>  at <code class="language-plaintext highlighter-rouge">$\eta_0=\{\delta_0, \mathbf{M}_0\}$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t=\{\mu_t,\mathbf{B}_t\}$</code> is</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
     \hat{\mathbf{g}}_{\eta_0}^{(t)} =
  \Big(  \begin{array}{c} \hat{\mathbf{g}}_{\delta_0}^{(t)}\\ \mathrm{vec}(  \hat{\mathbf{g}}_{M_0}^{(t)})\end{array}   \Big)
-= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] &amp;&amp; \text{( tractable: easy to inverse the FIM ) }
+= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of the exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] &amp;&amp; \text{( tractable: easy to inverse the FIM ) }
 \end{aligned}
 $$</code></p>
 
@@ -442,7 +442,6 @@ $$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong>
   </tbody>
 </table>
 
-<hr />
 <h1 id="gaussian-example-with-flexiable-structured-precision">Gaussian Example with Flexiable Structured Precision</h1>
 
 <p>More flexiable and sparse (group) structures in matrix $\mathbf{B}$:</p>
@@ -480,7 +479,7 @@ $$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong>
   </tbody>
 </table>
 
-<p>A structured Gaussian example:</p>
+<h2 id="a-structured-gaussian-example">A structured Gaussian example:</h2>
 
 <blockquote>
   <p>Auxiliary  parameter $\mathbf{B}$ lives in  a structured space (matrix Lie group):  <code class="language-plaintext highlighter-rouge">${\cal{B}_{\text{up}}}(k)$</code>,
