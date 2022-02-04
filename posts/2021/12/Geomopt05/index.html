@@ -530,7 +530,7 @@ $$</code></p>
 natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> and the expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>, which implies that map <code class="language-plaintext highlighter-rouge">$\mathbf{m}(\cdot)$</code> is injective.</p>
 
 <p>Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, we can show that
-the expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is also open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the <a href="https://en.wikipedia.org/wiki/Invariance_of_domain">invariance of domain</a>.</p>
+the expectation parameter space <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is also open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the <a href="https://en.wikipedia.org/wiki/Invariance_of_domain">invariance of domain</a><sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</p>
 
 <h2 id="natural-gradient-computation">Natural-gradient Computation</h2>
 <p>Note that the FIM of the exponential family under parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code> is
@@ -669,8 +669,7 @@ $$</code></p>
 Recall that by the
 Legendre transformation, we have <code class="language-plaintext highlighter-rouge">$\mathbf{m}=\nabla_\eta A_\eta(\eta)$</code>, where <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> has been defined <a href="#expectation-parameter-space">here</a>.
 Note that we assume natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> is minimal. In other words,  <code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is
-positive-definite and <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)$</code> is strictly convex in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, which means the
-Legendre transformation is hyperregular/diffeomorphic.</p>
+positive-definite and <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)$</code> is strictly convex in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>.</p>
 
 <p>We define <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{x}):=+\infty$</code> when <code class="language-plaintext highlighter-rouge">$\mathbf{x} \not \in \Omega_\eta$</code>.
 The convex conjugate  of the log-partition function <code class="language-plaintext highlighter-rouge">$A_\eta$</code> is defined as
@@ -889,6 +888,15 @@ _\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)$</code>.</p>
 <p><span id="wainwright2008graphical">[2] M. J. Wainwright &amp; M. I. Jordan, <i>Graphical models, exponential families, and variational inference</i> (Now Publishers Inc, 2008).</span></p>
 <p><span id="khan2017conjugate">[3] M. Khan &amp; W. Lin, "Conjugate-computation variational inference: Converting variational inference in non-conjugate models to inferences in conjugate models," <i>Artificial Intelligence and Statistics</i> (PMLR, 2017), pp. 878–887.</span></p></p>
 
+<h2 id="footnotes">Footnotes:</h2>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Indeed, this Legendre transformation is diffeomorphic since we assume the natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> is minimal and therefore, <code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
 
         
       </section>
