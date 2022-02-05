@@ -299,6 +299,8 @@ $$</code></li>
 <hr />
 <h1 id="ngd-using-local-parameterizations">NGD using Local Parameterizations</h1>
 
+<p>Our method performs NGD updates in local parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> while maintaining structures via matrix groups in auxiliary parameter <code class="language-plaintext highlighter-rouge">$\lambda$</code>. This decoupling enables a <span style="color:red">tractable</span> update that exploits the structures in auxiliary parameter spaces.</p>
+
 <table>
   <tbody>
     <tr>
@@ -308,16 +310,12 @@ $$</code></li>
   </tbody>
 </table>
 
-<p>Our method performs NGD updates in local parameter spaces while maintaining structures via matrix groups in auxiliary parameters. This decoupling enables a tractable update that exploits the structures in auxiliary parameter spaces.</p>
-
 <p>We consider the following three kinds of parameterizations.</p>
 <ul>
   <li>Global (original) parameterization <code class="language-plaintext highlighter-rouge">$\tau$</code> for <code class="language-plaintext highlighter-rouge">$q(w|\tau)$</code></li>
   <li>New auxiliary parameterization <code class="language-plaintext highlighter-rouge">$\lambda$</code>  with a surjective map: <code class="language-plaintext highlighter-rouge">$\tau= \psi(\lambda)$</code></li>
   <li>Local parameterization <code class="language-plaintext highlighter-rouge">$\eta$</code> for <code class="language-plaintext highlighter-rouge">$\lambda$</code> at a current value <code class="language-plaintext highlighter-rouge">$\lambda_t$</code> with a local map:
-<code class="language-plaintext highlighter-rouge">$\lambda = \phi_{\lambda_t} (\eta)$</code>, where<br />
-<code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> is
-<span style="color:red"> tight </span> at <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$, and  we assume <code class="language-plaintext highlighter-rouge">$\eta_0 =\mathbf{0}$</code> to be a relative origin.</li>
+<code class="language-plaintext highlighter-rouge">$\lambda = \phi_{\lambda_t} (\eta)$</code>,<br /> where  <code class="language-plaintext highlighter-rouge">$\phi_{\lambda_t}$</code> is <span style="color:red"> tight </span> at <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$, and  we assume <code class="language-plaintext highlighter-rouge">$\eta_0 =\mathbf{0}$</code> to be a relative origin.</li>
 </ul>
 
 <div class="notice--success">
@@ -339,7 +337,10 @@ $$</code></p>
          \,\, \big[ \nabla_{\eta_0} \big[ \psi \circ \phi_{\lambda_t} (\eta) \big]
         \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
 \end{aligned} 
-$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\eta}(\eta_0)$</code>  is the (exact) FIM for  <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to  <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>.</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\eta}(\eta_0)$</code>  is the (exact) FIM for  <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to  <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>. 
+Our method allows us to choose map <code class="language-plaintext highlighter-rouge">$\psi \circ \phi_{\lambda_t}$</code> so that
+the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_{\eta}(\eta_0)$</code> is easy to inverse at <code class="language-plaintext highlighter-rouge">$\eta_0$</code>, which enables tractable natural-gradient
+computation.</p>
 
 <hr />
 <h1 id="gaussian-example-with-full-precision">Gaussian Example with Full Precision</h1>
@@ -381,7 +382,7 @@ $$</code></p>
   <ul>
     <li>keep natural-gradient computation tractable</li>
     <li>maintain numerical stability</li>
-    <li>have much lower iteration cost compared to the matrix exponential map suggested in <a class="citation" href="#glasmachers2010exponential">[3]</a></li>
+    <li>enable lower iteration cost compared to the matrix exponential map suggested in <a class="citation" href="#glasmachers2010exponential">[3]</a></li>
   </ul>
 </div>
 
@@ -412,7 +413,7 @@ $$</code></p>
  \end{aligned} \tag{4}\label{4}
 $$</code></p>
 
-<p>Our update on <code class="language-plaintext highlighter-rouge">$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$</code> and $\mu_{t+1}$ is like update of <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> as
+<p>Our update on <code class="language-plaintext highlighter-rouge">$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$</code> and <code class="language-plaintext highlighter-rouge">$\mu_{t+1}$</code> is like update of <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 &amp; \mu_{t+1}   = \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] } \\

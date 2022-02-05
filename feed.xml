@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-04T10:17:52-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-05T15:28:45-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -1045,7 +1045,7 @@ $$&lt;/code&gt; where the geodesic is uniquely determined by the initial conditi
 &lt;p&gt;For a &lt;a href=&quot;https://en.wikipedia.org/wiki/Geodesic_manifold&quot;&gt;geodesically complete&lt;/a&gt; manifold, the domain of the geodesic is the whole space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_{\tau}
 =\mathcal{R}$&lt;/code&gt;. We will only consider this case in this post.&lt;/p&gt;
 
-&lt;p&gt;To avoid writing down the differential equations of a geodesic&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; (i.e., &lt;a href=&quot;https://en.wikipedia.org/wiki/Levi-Civita_connection#Christoffel_symbols&quot;&gt;Christoffel symbols&lt;/a&gt; or &lt;a href=&quot;https://en.wikipedia.org/wiki/Connection_form#Example:_the_Levi-Civita_connection&quot;&gt;connection 1-form&lt;/a&gt;), 
+&lt;p&gt;To avoid writing down the differential equations of a geodesic&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; (i.e., &lt;a href=&quot;https://en.wikipedia.org/wiki/Levi-Civita_connection#Christoffel_symbols&quot;&gt;Christoffel symbols&lt;/a&gt; or &lt;a href=&quot;https://en.wikipedia.org/wiki/Connection_form#Example:_the_Levi-Civita_connection&quot;&gt;connection 1-form in a section&lt;/a&gt;), 
 researchers refer to it as the manifold exponential map.
 Given an intrinsic parametrization $\tau$,
 the  map at point $\tau_0$  is defined as
@@ -3171,6 +3171,8 @@ $$&lt;/code&gt;&lt;/li&gt;
 &lt;hr /&gt;
 &lt;h1 id=&quot;ngd-using-local-parameterizations&quot;&gt;NGD using Local Parameterizations&lt;/h1&gt;
 
+&lt;p&gt;Our method performs NGD updates in local parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; while maintaining structures via matrix groups in auxiliary parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt;. This decoupling enables a &lt;span style=&quot;color:red&quot;&gt;tractable&lt;/span&gt; update that exploits the structures in auxiliary parameter spaces.&lt;/p&gt;
+
 &lt;table&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
@@ -3180,16 +3182,12 @@ $$&lt;/code&gt;&lt;/li&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;Our method performs NGD updates in local parameter spaces while maintaining structures via matrix groups in auxiliary parameters. This decoupling enables a tractable update that exploits the structures in auxiliary parameter spaces.&lt;/p&gt;
-
 &lt;p&gt;We consider the following three kinds of parameterizations.&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Global (original) parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(w|\tau)$&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;New auxiliary parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt;  with a surjective map: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau= \psi(\lambda)$&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;Local parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt; at a current value &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt; with a local map:
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda = \phi_{\lambda_t} (\eta)$&lt;/code&gt;, where&lt;br /&gt;
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; is
-&lt;span style=&quot;color:red&quot;&gt; tight &lt;/span&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$, and  we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0 =\mathbf{0}$&lt;/code&gt; to be a relative origin.&lt;/li&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda = \phi_{\lambda_t} (\eta)$&lt;/code&gt;,&lt;br /&gt; where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; is &lt;span style=&quot;color:red&quot;&gt; tight &lt;/span&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;: $\lambda_t \equiv \phi_{\lambda_t} (\eta_0)$, and  we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0 =\mathbf{0}$&lt;/code&gt; to be a relative origin.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;div class=&quot;notice--success&quot;&gt;
@@ -3211,7 +3209,10 @@ $$&lt;/code&gt;&lt;/p&gt;
          \,\, \big[ \nabla_{\eta_0} \big[ \psi \circ \phi_{\lambda_t} (\eta) \big]
         \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
 \end{aligned} 
-$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_{\eta}(\eta_0)$&lt;/code&gt;  is the (exact) FIM for  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt; tied to  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;.&lt;/p&gt;
+$$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_{\eta}(\eta_0)$&lt;/code&gt;  is the (exact) FIM for  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt; tied to  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;. 
+Our method allows us to choose map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi \circ \phi_{\lambda_t}$&lt;/code&gt; so that
+the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_{\eta}(\eta_0)$&lt;/code&gt; is easy to inverse at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt;, which enables tractable natural-gradient
+computation.&lt;/p&gt;
 
 &lt;hr /&gt;
 &lt;h1 id=&quot;gaussian-example-with-full-precision&quot;&gt;Gaussian Example with Full Precision&lt;/h1&gt;
@@ -3253,7 +3254,7 @@ $$&lt;/code&gt;&lt;/p&gt;
   &lt;ul&gt;
     &lt;li&gt;keep natural-gradient computation tractable&lt;/li&gt;
     &lt;li&gt;maintain numerical stability&lt;/li&gt;
-    &lt;li&gt;have much lower iteration cost compared to the matrix exponential map suggested in &lt;a class=&quot;citation&quot; href=&quot;#glasmachers2010exponential&quot;&gt;[3]&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;enable lower iteration cost compared to the matrix exponential map suggested in &lt;a class=&quot;citation&quot; href=&quot;#glasmachers2010exponential&quot;&gt;[3]&lt;/a&gt;&lt;/li&gt;
   &lt;/ul&gt;
 &lt;/div&gt;
 
@@ -3284,7 +3285,7 @@ $$&lt;/code&gt;&lt;/p&gt;
  \end{aligned} \tag{4}\label{4}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Our update on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$&lt;/code&gt; and $\mu_{t+1}$ is like update of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; as
+&lt;p&gt;Our update on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}_{t+1}=\mathbf{B}_{t+1}\mathbf{B}_{t+1}^T$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu_{t+1}$&lt;/code&gt; is like update of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 &amp;amp; \mu_{t+1}   = \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] } \\
