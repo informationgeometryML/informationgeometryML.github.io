@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-06T12:21:26-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-06T15:26:28-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -3296,14 +3296,14 @@ $$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;
 
 &lt;p&gt;The second-order term shown in red is used for the positive-definite constraint &lt;a class=&quot;citation&quot; href=&quot;#lin2020handling&quot;&gt;[6]&lt;/a&gt; known as a retraction in Riemannian gradient descent (RGD).  The higher-order term &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$O(\beta^3)$&lt;/code&gt; will be used for structured precision matrices in the next section.&lt;/p&gt;
 
-&lt;p&gt;Well-known structures in matrix $\mathbf{B}$ are illustrated in the following figure.&lt;/p&gt;
+&lt;p&gt;Well-known (group) structures in matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}$&lt;/code&gt; are illustrated in the following figure.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Dense&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Cholesky&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Diagonal&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Dense (invertible)&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Triangular (Cholesky)&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Diagonal (invertible)&lt;/th&gt;
     &lt;/tr&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
@@ -3317,7 +3317,7 @@ $$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;
 
 &lt;h1 id=&quot;gaussian-example-with-flexiable-structured-precision&quot;&gt;Gaussian Example with Flexiable Structured Precision&lt;/h1&gt;
 
-&lt;p&gt;More flexiable and sparse (group) structures in matrix $\mathbf{B}$:&lt;/p&gt;
+&lt;p&gt;More flexiable and sparse (group) structures in matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}$&lt;/code&gt;:&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -3352,7 +3352,7 @@ $$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h2 id=&quot;a-structured-gaussian-example&quot;&gt;A structured Gaussian example:&lt;/h2&gt;
+&lt;h2 id=&quot;a-structured-gaussian-example&quot;&gt;A Structured Gaussian Example:&lt;/h2&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Auxiliary  parameter $\mathbf{B}$ lives in  a structured space (matrix Lie group):  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\cal{B}_{\text{up}}}(k)$&lt;/code&gt;,

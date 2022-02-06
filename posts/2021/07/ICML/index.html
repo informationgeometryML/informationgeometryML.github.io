@@ -424,14 +424,14 @@ $$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong>
 
 <p>The second-order term shown in red is used for the positive-definite constraint <a class="citation" href="#lin2020handling">[6]</a> known as a retraction in Riemannian gradient descent (RGD).  The higher-order term <code class="language-plaintext highlighter-rouge">$O(\beta^3)$</code> will be used for structured precision matrices in the next section.</p>
 
-<p>Well-known structures in matrix $\mathbf{B}$ are illustrated in the following figure.</p>
+<p>Well-known (group) structures in matrix <code class="language-plaintext highlighter-rouge">$\mathbf{B}$</code> are illustrated in the following figure.</p>
 
 <table>
   <thead>
     <tr>
-      <th style="text-align: center">Dense</th>
-      <th style="text-align: center">Cholesky</th>
-      <th style="text-align: center">Diagonal</th>
+      <th style="text-align: center">Dense (invertible)</th>
+      <th style="text-align: center">Triangular (Cholesky)</th>
+      <th style="text-align: center">Diagonal (invertible)</th>
     </tr>
   </thead>
   <tbody>
@@ -445,7 +445,7 @@ $$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong>
 
 <h1 id="gaussian-example-with-flexiable-structured-precision">Gaussian Example with Flexiable Structured Precision</h1>
 
-<p>More flexiable and sparse (group) structures in matrix $\mathbf{B}$:</p>
+<p>More flexiable and sparse (group) structures in matrix <code class="language-plaintext highlighter-rouge">$\mathbf{B}$</code>:</p>
 
 <table>
   <thead>
@@ -480,7 +480,7 @@ $$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong>
   </tbody>
 </table>
 
-<h2 id="a-structured-gaussian-example">A structured Gaussian example:</h2>
+<h2 id="a-structured-gaussian-example">A Structured Gaussian Example:</h2>
 
 <blockquote>
   <p>Auxiliary  parameter $\mathbf{B}$ lives in  a structured space (matrix Lie group):  <code class="language-plaintext highlighter-rouge">${\cal{B}_{\text{up}}}(k)$</code>,
