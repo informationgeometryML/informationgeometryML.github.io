@@ -225,6 +225,7 @@ plugins:
   - jekyll-feed
   - jemoji
   - jekyll-scholar
+  - jekyll-spaceship
 
 scholar:
   style: custom
@@ -233,6 +234,14 @@ scholar:
   bibliography_item_tag: p
   bibtex_filters:
     - latex
+
+
+jekyll-spaceship:
+  # default enabled processors
+  processors:
+    - table-processor
+
+
 
 # mimic GitHub Pages with --safe
 whitelist:
