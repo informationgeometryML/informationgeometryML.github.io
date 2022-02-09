@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-09T10:36:10-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-09T10:38:31-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -3604,7 +3604,7 @@ _1$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&q
 
 &lt;p&gt;Our NGD&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;can use structured Gaussian mixtures as flexiable variational distributions: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(\mathbf{w}|\tau)=\frac{1}{K}\sum_{k=1}^{K}q(\mathbf{w}|\mu_k,\mathbf{S}_k)$&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;can use structured Gaussian mixtures as flexiable variational distributions: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(\mathbf{w}|\tau)=\frac{1}{C}\sum_{c=1}^{C}q(\mathbf{w}|\mu_c,\mathbf{S}_c)$&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;gives efficient stochastic natural-gradient variational methods beyond mean-field/diagonal covariance&lt;/li&gt;
 &lt;/ul&gt;
 
@@ -3626,7 +3626,7 @@ _1$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&q
         &lt;/thead&gt;
         &lt;tbody&gt;
           &lt;tr&gt;
-            &lt;td style=&quot;text-align: center&quot;&gt;:  &amp;lt;font size=&quot;4&quot;&amp;gt; Comparison between our approximation and the ground-truth &amp;lt;/font&amp;gt; :|&lt;/td&gt;
+            &lt;td style=&quot;text-align: center&quot;&gt;:  &amp;lt;font size=&quot;4&quot;&amp;gt; Comparison between our approximation (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=5$&lt;/code&gt;) and the ground-truth &amp;lt;/font&amp;gt; :|&lt;/td&gt;
             &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
           &lt;/tr&gt;
         &lt;/tbody&gt;
