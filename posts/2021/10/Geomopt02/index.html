@@ -1,12 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
   Minimal Mistakes Jekyll Theme 4.12.0 by Michael Rose
   Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
--->
-<html lang="en" class="no-js">
+--><html lang="en" class="no-js">
   <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part II: Natural-Gradients Evaluated at one Point - Information Geometry in Machine Learning</title>
@@ -110,7 +110,7 @@
     }
   });
 </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 <!-- end custom head snippets -->
@@ -132,17 +132,17 @@
           
             
             <li class="masthead__menu-item">
-              <a href="/" >Home</a>
+              <a href="/">Home</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/news/" >News</a>
+              <a href="/news/">News</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/year-archive/" >Blog Posts</a>
+              <a href="/year-archive/">Blog Posts</a>
             </li>
           
         </ul>
@@ -197,10 +197,10 @@ The space of natural-gradients evaluated at the same point is called a tangent s
 
 <p>We will give an informal introduction with a focus on high level of ideas.</p>
 
-<p><img src="/img/gd_vs_ngd.png" width="1000" /></p>
+<p><img src="/img/gd_vs_ngd.png" width="1000"></p>
 
 <h1 id="euclidean-steepest-direction-and-directional-derivative">Euclidean steepest direction and directional derivative</h1>
-<hr />
+<hr>
 <p>Before we discuss natural-gradients, we first revisit Euclidean gradients.</p>
 
 <p>We will show a (normalized) Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we extend the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a (normalized) natural-gradient.</p>
@@ -223,7 +223,7 @@ $$</code></p>
 <p>It is easy to see that the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$</code>, which is the (Euclidean) steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
 
 <h1 id="distance-induced-by-the-fisher-rao-metric">Distance induced by the Fisher-Rao metric</h1>
-<hr />
+<hr>
 
 <p>To generalize  the steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> in a Riemannian manifold, we want to formulate a similar optimization problem like Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> in the manifold case.
 To do so, we have to define the length of a vector in manifold cases. In <a href="/posts/2021/11/Geomopt03/#standard-euclidean-gradients-are-not-invariant">Part III</a>, we will show that the (standard) length does not perseve under a parameter transformation while the length induced by the Fisher-Rao metric does.</p>
@@ -245,7 +245,7 @@ d(\mathbf{v},\mathbf{w}) := \|\mathbf{v}-\mathbf{w}\|_F
 $$</code>
 where vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{w}$</code> live in the same (vector) space at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
 
-<p><img src="/img/tmanifold.png" width="300" /></p>
+<p><img src="/img/tmanifold.png" width="300"></p>
 
 <div class="notice--success">
   <p><strong>Note</strong>:</p>
@@ -272,7 +272,7 @@ vector in this post.</p>
 </div>
 
 <h1 id="directional-derivatives-in-a-manifold">Directional derivatives in a manifold</h1>
-<hr />
+<hr>
 <p>As we shown before, the objective function in Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is a directional derivative in Euclidean cases.
 The next step is to generalize the concept of directional derivatives in a manifold.</p>
 
@@ -302,7 +302,7 @@ Note that we only require <code class="language-plaintext highlighter-rouge">$\m
 
 </div>
 
-<p><img src="/img/sphere.png" width="500" /></p>
+<p><img src="/img/sphere.png" width="500"></p>
 
 <p>The following example illustrates directional derivatives in manifold cases.</p>
 
@@ -317,7 +317,7 @@ Note that we only require <code class="language-plaintext highlighter-rouge">$\m
         <p>The line segment from <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> to <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} $</code>  is shown in blue, which is the parameter representation of the yellow curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> in the manifold.
 We will show later that Riemannian gradient vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> under this parametrization at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> is the <strong>parameter representation</strong> of the tangent vector of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> at point <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code>.</p>
 
-        <p><img src="/img/sphere_simple.png" width="500" /></p>
+        <p><img src="/img/sphere_simple.png" width="500"></p>
 
         <div class="notice--danger">
           <p><strong>Warning</strong>:
@@ -338,7 +338,7 @@ Curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> ofte
 
         <p>We use <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">parameterization 3</a> for unit circle <code class="language-plaintext highlighter-rouge">$\mathcal{S}^1$</code>, where the red line segment passes through <code class="language-plaintext highlighter-rouge">$\tau_0=(0,1) \in \mathcal{S}^1 $</code>.</p>
 
-        <p><img src="/img/tangent_non.png" alt="Figure 1" /></p>
+        <p><img src="/img/tangent_non.png" alt="Figure 1"></p>
 
         <p>Any  point <code class="language-plaintext highlighter-rouge">$\tau_0 + t\mathbf{v}$</code> in the line segment leaves the manifold when <code class="language-plaintext highlighter-rouge">$t\neq 0$</code>.  Thus, <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau}_0+t\mathbf{v})$</code> is not well-defined.
 The main reason is that <code class="language-plaintext highlighter-rouge">$\tau$</code> is not an intrinsic parameterization.</p>
@@ -348,7 +348,7 @@ The main reason is that <code class="language-plaintext highlighter-rouge">$\tau
 </div>
 
 <h1 id="riemannian-steepest-direction">Riemannian steepest direction</h1>
-<hr />
+<hr>
 <p>Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
 Now, we can introduce the Riemannian steepest direction <a class="citation" href="#absil2009optimization">[1]</a> . We will use this to define/compute natrual-gradients.</p>
 
@@ -503,7 +503,7 @@ details.)</p>
 </div>
 
 <h1 id="riemannian-gradients-as-tangent-vectors-optional">Riemannian gradients as tangent vectors (optional)</h1>
-<hr />
+<hr>
 <p>In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
 Now, we will disucss abstract Riemannian vectors without a parametrization <a class="citation" href="#tu2011introduction">[2]</a>. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in <a href="/posts/2021/11/Geomopt03/#parameter-transform-and-invariance">Part III</a>.  In physics, this invariance means that a law of physics should be independent of the choice of (reference) coordinate systems.</p>
 
@@ -529,20 +529,23 @@ Under parametrization $\mathbf{\tau}$, we have the following parametric represen
     </tr>
     <tr>
       <td style="text-align: left">Intrinsic parameter space</td>
-      <td style="text-align: center">red space <code class="language-plaintext highlighter-rouge">$\Omega_\tau:=\{ (\tau_x,\tau_y)| \tau_x^2 + \tau_y^2 &lt;1 \}$</code></td>
+      <td style="text-align: center">red space <code class="language-plaintext highlighter-rouge">$\Omega_\tau:=\{ (\tau_x,\tau_y)| \tau_x^2 + \tau_y^2 &lt;1 \}$</code>
+</td>
     </tr>
     <tr>
       <td style="text-align: left">Tangent space at $\mathbf{x_0}$</td>
-      <td style="text-align: center">green space  <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code></td>
+      <td style="text-align: center">green space  <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>
+</td>
     </tr>
     <tr>
       <td style="text-align: left">Yellow curve from $\mathbf{x_0}$ to $\mathbf{x_1}$</td>
-      <td style="text-align: center">blue line segment from <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> to <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}(\tau_0)$</code></td>
+      <td style="text-align: center">blue line segment from <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> to <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}(\tau_0)$</code>
+</td>
     </tr>
   </tbody>
 </table>
 
-<p><img src="/img/sphere.png" width="500" /></p>
+<p><img src="/img/sphere.png" width="500"></p>
 
 <p>Note that  <code class="language-plaintext highlighter-rouge">$\tau_0$</code> is a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is  a Riemannian gradient, which is a representation of the tangent vector of curve <code class="language-plaintext highlighter-rouge">$\gamma$</code> at point $\mathbf{x}_0$.</p>
 
@@ -562,15 +565,19 @@ Be aware of the differences shown in the table.</p>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> (vector/natural-gradient) space</td>
-      <td style="text-align: center">tangent vector space at <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code></td>
+      <td style="text-align: left">
+<code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> (vector/natural-gradient) space</td>
+      <td style="text-align: center">tangent vector space at <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code>
+</td>
       <td style="text-align: center">real scalar product, vector addition</td>
       <td>defined</td>
     </tr>
     <tr>
-      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> (point/parameter) space</td>
+      <td style="text-align: left">
+<code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> (point/parameter) space</td>
       <td style="text-align: center">top half of the manifold</td>
-      <td style="text-align: center"><span style="color:red"> <strong>local</strong> </span> scalar product, <span style="color:red"><strong>local</strong> </span> vector addition</td>
+      <td style="text-align: center">
+<span style="color:red"> <strong>local</strong> </span> scalar product, <span style="color:red"><strong>local</strong> </span> vector addition</td>
       <td>undefined</td>
     </tr>
   </tbody>
@@ -626,20 +633,21 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 <p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that a parameter space is a parametric representation of a  set of <strong>points</strong> in a manifold.
 We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-of-spaces">Part IV</a>.</p>
 
-<hr />
+<hr>
 <h1 id="references">References</h1>
-<p class="bibliography"><p><span id="absil2009optimization">[1] P.-A. Absil, R. Mahony, &amp; R. Sepulchre, <i>Optimization algorithms on matrix manifolds</i> (Princeton University Press, 2009).</span></p>
-<p><span id="tu2011introduction">[2] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p></p>
+<p class="bibliography"></p>
+<p><span id="absil2009optimization">[1] P.-A. Absil, R. Mahony, &amp; R. Sepulchre, <i>Optimization algorithms on matrix manifolds</i> (Princeton University Press, 2009).</span></p>
+<p><span id="tu2011introduction">[2] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p>
 
 <h2 id="footnotes">Footnotes:</h2>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wikiCovariant_derivative">covariant derivative</a>, which induces parallel transport. Given a smooth scalar field/function on a manifold, a coordinate representation of the covariant derivative remains the same as the Euclidean case. Note that the standard coordinate derivative  is identical to  the coordinate representation of the covariant derivative when it comes to a scalar field. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wikiCovariant_derivative">covariant derivative</a>, which induces parallel transport. Given a smooth scalar field/function on a manifold, a coordinate representation of the covariant derivative remains the same as the Euclidean case. Note that the standard coordinate derivative  is identical to  the coordinate representation of the covariant derivative when it comes to a scalar field. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector). We will discuss their transformation rules in <a href="/posts/2021/11/Geomopt03/">Part III</a>. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector). We will discuss their transformation rules in <a href="/posts/2021/11/Geomopt03/">Part III</a>. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
@@ -699,13 +707,7 @@ We will discuss more about this in <a href="/posts/2021/11/Geomopt04/#two-kinds-
 
      
 
-  <script src="https://utteranc.es/client.js"
-    repo=informationgeometryML/informationgeometryML.github.io
-    issue-term=url
-    label=blog-comments
-    theme=github-light
-    crossorigin= "anonymous"
-    async>
+  <script src="https://utteranc.es/client.js" repo="informationgeometryML/informationgeometryML.github.io" issue-term="url" label="blog-comments" theme="github-light" crossorigin="anonymous" async>
   </script>
 
 
@@ -880,7 +882,7 @@ We will also discuss why the Euclidean steepest direction is NOT i...</p>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">© 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
@@ -912,4 +914,3 @@ We will also discuss why the Euclidean steepest direction is NOT i...</p>
 
   </body>
 </html>
-

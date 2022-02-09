@@ -1,12 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
   Minimal Mistakes Jekyll Theme 4.12.0 by Michael Rose
   Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
--->
-<html lang="en" class="no-js">
+--><html lang="en" class="no-js">
   <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part I: Smooth Manifolds with the Fisher-Rao Metric - Information Geometry in Machine Learning</title>
@@ -110,7 +110,7 @@
     }
   });
 </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 <!-- end custom head snippets -->
@@ -132,17 +132,17 @@
           
             
             <li class="masthead__menu-item">
-              <a href="/" >Home</a>
+              <a href="/">Home</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/news/" >News</a>
+              <a href="/news/">News</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/year-archive/" >Blog Posts</a>
+              <a href="/year-archive/">Blog Posts</a>
             </li>
           
         </ul>
@@ -204,7 +204,8 @@
 <summary>Click to see how to cite this blog post</summary>
 <fieldset class="field-set">
 
-      <div class="language-latex highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@misc<span class="p">{</span>lin2021blog01,
+      <div class="language-latex highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>@misc<span class="p">{</span>lin2021blog01,
   title = <span class="p">{</span>Smooth Manifolds with the Fisher-Rao Metric<span class="p">}</span>,
   author = <span class="p">{</span>Lin, Wu and Nielsen, Frank and Khan, Mohammad Emtiyaz and Schmidt, Mark<span class="p">}</span>,
   url = <span class="p">{</span>https://informationgeometryml.github.io/posts/2021/09/Geomopt01/<span class="p">}</span>, 
@@ -218,14 +219,17 @@
 </div>
 
 <h1 id="motivation">Motivation</h1>
-<hr />
+<hr>
 <p>Let’s start with some motivation: why should we care about geometric structures of probability distributions?</p>
 
 <p>The answer is that by exploiting geometric structures, we could</p>
 <ul>
-  <li>design efficient and simple algorithms for machine learning <a class="citation" href="#amari1998natural">[1]</a></li>
-  <li>design methods whose performance is robust and less sensitive to re-parametrization <a class="citation" href="#lin2021tractable">[2]</a></li>
-  <li>understand models and algorithms through the lens of differential geometry, information geometry, and invariant theory <a class="citation" href="#liang2019fisher">[3]</a></li>
+  <li>design efficient and simple algorithms for machine learning <a class="citation" href="#amari1998natural">[1]</a>
+</li>
+  <li>design methods whose performance is robust and less sensitive to re-parametrization <a class="citation" href="#lin2021tractable">[2]</a>
+</li>
+  <li>understand models and algorithms through the lens of differential geometry, information geometry, and invariant theory <a class="citation" href="#liang2019fisher">[3]</a>
+</li>
 </ul>
 
 <p>Probability distributions form the backbone of majority of machine-learning approaches, for example, any approach that uses probabilistic modeling is built upon such distributions. 
@@ -292,14 +296,16 @@ can be found at <a class="citation" href="#le2007topmoumoute">[9]</a> and <a cla
   <thead>
     <tr>
       <th style="text-align: left">Example       </th>
-      <th style="text-align: center"><code class="language-plaintext highlighter-rouge">$w$</code>        </th>
+      <th style="text-align: center">
+<code class="language-plaintext highlighter-rouge">$w$</code>        </th>
       <th style="text-align: right"><code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td style="text-align: left">Least Square</td>
-      <td style="text-align: center">observation <code class="language-plaintext highlighter-rouge">$(x,y)$</code></td>
+      <td style="text-align: center">observation <code class="language-plaintext highlighter-rouge">$(x,y)$</code>
+</td>
       <td style="text-align: right"><code class="language-plaintext highlighter-rouge">$p(x,y|\tau)$</code></td>
     </tr>
     <tr>
@@ -332,10 +338,10 @@ For example, let’s consider a 1-dimensional Gaussian family.
 The following figure illustrates four distributions in a Gaussian family denoted by
 <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code>, where <code class="language-plaintext highlighter-rouge">$ p(w | \tau ): = \mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>  and <code class="language-plaintext highlighter-rouge">$\tau :=(\mu,\sigma) $</code>.</p>
 
-<p><img src="/img/gauss1d.png" alt="Figure 2" title="Source:Wikipedia" /></p>
+<p><img src="/img/gauss1d.png" alt="Figure 2" title="Source:Wikipedia"></p>
 
 <h1 id="intrinsic-parameterizations">Intrinsic Parameterizations</h1>
-<hr />
+<hr>
 <p>We start by discussing parameterizations for a distribution family. As we will see, a proper parameterization plays an important role in defining the FIM.
 We can not use an arbitrary differentiable parameterization to represent a geometric structure.
 This structure is also known as a manifold structure <a class="citation" href="#tu2011introduction">[11]</a>. A (smooth) manifold should be locally like a “flat” vector space. For example, consider the (curved) Earth surface. It looks like a (locally) flat space to us.</p>
@@ -361,7 +367,7 @@ As we will see later that every intrinsic parametrization of a manifold has the 
 <p>To illustrate this, let’s consider a unit circle in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> as shown in the Figure.
 Clearly, a point <code class="language-plaintext highlighter-rouge">$ (0,1) $</code> highlighted in green is in the circle, where we consider its center as the origin.</p>
 
-<p><img src="/img/circle.png" title="Source:Wikipedia" width="300" /></p>
+<p><img src="/img/circle.png" title="Source:Wikipedia" width="300"></p>
 
 <blockquote>
   <p>Parametrization 1 (Intrinsic parameterization):</p>
@@ -371,13 +377,13 @@ Clearly, a point <code class="language-plaintext highlighter-rouge">$ (0,1) $</c
 
   <p>The manifold is (locally) “flat” since we can always find a small <strong>1-dimensional</strong> perturbation $E$ in the <strong>1-dimensional</strong> parameter space  <code class="language-plaintext highlighter-rouge">$\Omega_t=\{t|-h&lt;t&lt;h \} $</code>.</p>
 
-  <p><img src="/img/1d-perturbation.png" title="Fig" width="300" /></p>
+  <p><img src="/img/1d-perturbation.png" title="Fig" width="300"></p>
 
   <p>This parametrization is called an <strong>intrinsic</strong> parameterization.</p>
 
   <p>We can similarly define a (local) parametrization at each point of the circle. In fact, we can use  finite (local) parameterizations to represent the whole circle as shown below.</p>
 
-  <p><img src="/img/charts.png" title="Source:Wikipedia" width="200" /></p>
+  <p><img src="/img/charts.png" title="Source:Wikipedia" width="200"></p>
 </blockquote>
 
 <blockquote>
@@ -402,11 +408,11 @@ In fact, there does not exist a (single) <strong>global</strong> and intrinsic p
 
   <p>The reason is that we cannot find a small <strong>2-dimensional</strong> perturbation $E$ in the <strong>2-dimensional</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_{\tau}=\{(x,y)|x^2+y^2=1 \} $</code> due to the constraint $x^2+y^2=1$. In other words, $\Omega_\tau$ is not open in $\mathcal{R}^2$.</p>
 
-  <p><img src="/img/2d-perturbation.png" title="Fig" width="300" /></p>
+  <p><img src="/img/2d-perturbation.png" title="Fig" width="300"></p>
 </blockquote>
 
 <h1 id="intrinsic-parameterizations-for-parametric-families">Intrinsic Parameterizations for Parametric families</h1>
-<hr />
+<hr>
 <p>Now, we discuss how to choose a parameterization given a parametric family so that we can exploit the geometric structure <a class="citation" href="#amari2016information">[12]</a> induced by the Fisher-Rao metric.</p>
 
 <p>Given a parametric distribution family <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> indexed by its parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> should be smooth w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> by considering <code class="language-plaintext highlighter-rouge">$ w $</code> to be fixed.
@@ -484,7 +490,7 @@ The main reason is that the parameter space is not open in $\mathcal{R}^2$.</p>
 </blockquote>
 
 <h1 id="fisher-rao-metric">Fisher-Rao Metric</h1>
-<hr />
+<hr>
 <p>As we can see from the <a href="#motivation">previous section</a>, we can use the Fisher-Rao metric to design fast and efficient algorithms.
 In statistics, this metric is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.
 These statistical principles  <a class="citation" href="#casella2002statistical">[13]</a> <a class="citation" href="#jaynes1957information">[14]</a> play essential roles in training and estimating machine learning models.
@@ -528,7 +534,7 @@ In <a href="/posts/2021/11/Geomopt03/#Pparameter-transform-and-invariance">Part 
 we will show the FIM is also positive definite under this new intrinsic parameterization.</p>
 
 <h1 id="caveats-of-the-fisher-matrix-computation">Caveats of the Fisher matrix computation</h1>
-<hr />
+<hr>
 <p>There are some caveats when it comes to the Fisher matrix computation. In particular, the regularity condition should be satisfied.
 It is possible to define the FIM under a non-intrinsic parameterization. However, the FIM often is singular or ill-defined under a non-intrinsic  parameterization as shown below.</p>
 
@@ -621,7 +627,7 @@ $$</code></p>
 </blockquote>
 
 <h1 id="dimension-of-a-manifold">Dimension of a manifold</h1>
-<hr />
+<hr>
 <p>We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
 Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#tu2011introduction">[11]</a>.
 This also gives us a tool to  identify non-manifold cases.
@@ -637,9 +643,9 @@ We now illustrate this by examples.</p>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center"><img src="/img/circle-org.png" alt="Source:Wikipedia" width="200" /></td>
-      <td style="text-align: center"><img src="/img/open-ball.png" alt="Source:Wikipedia" width="200" /></td>
-      <td style="text-align: center"><img src="/img/closed-ball.png" alt="Source:Wikipedia" width="200" /></td>
+      <td style="text-align: center"><img src="/img/circle-org.png" alt="Source:Wikipedia" width="200"></td>
+      <td style="text-align: center"><img src="/img/open-ball.png" alt="Source:Wikipedia" width="200"></td>
+      <td style="text-align: center"><img src="/img/closed-ball.png" alt="Source:Wikipedia" width="200"></td>
     </tr>
     <tr>
       <td style="text-align: center">1-dim manifold</td>
@@ -667,12 +673,16 @@ The  circle and the open unit ball do not have the same dimensionality.</p>
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |0,s^{-1}) \Big|  s&gt;0 \}$</code> with precision <code class="language-plaintext highlighter-rouge">$s$</code> <br /> under intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau = s $</code></td>
-      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathrm{MatH}(\tau) = \mathbf{S}   \succ \mathbf{0} \}$</code> with precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>  <br /> under intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{S})$</code>.</td>
+      <td style="text-align: center">
+<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |0,s^{-1}) \Big|  s&gt;0 \}$</code> with precision <code class="language-plaintext highlighter-rouge">$s$</code> <br> under intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau = s $</code>
+</td>
+      <td style="text-align: center">
+<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathrm{MatH}(\tau) = \mathbf{S}   \succ \mathbf{0} \}$</code> with precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>  <br> under intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{S})$</code>.</td>
     </tr>
     <tr>
       <td style="text-align: center">1-dim statistical manifold</td>
-      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\frac{d(d+1)}{2}$</code>-dim statistical  manifold</td>
+      <td style="text-align: center">
+<code class="language-plaintext highlighter-rouge">$\frac{d(d+1)}{2}$</code>-dim statistical  manifold</td>
     </tr>
   </tbody>
 </table>
@@ -715,9 +725,10 @@ $$</code></p>
 </details>
 </div>
 
-<hr />
+<hr>
 <h1 id="references">References</h1>
-<p class="bibliography"><p><span id="amari1998natural">[1] S.-I. Amari, "Natural gradient works efficiently in learning," <i>Neural computation</i> <b>10</b>:251–276 (1998).</span></p>
+<p class="bibliography"></p>
+<p><span id="amari1998natural">[1] S.-I. Amari, "Natural gradient works efficiently in learning," <i>Neural computation</i> <b>10</b>:251–276 (1998).</span></p>
 <p><span id="lin2021tractable">[2] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Tractable structured natural gradient descent using local parameterizations," <i>International Conference on Machine Learning (ICML)</i> (2021).</span></p>
 <p><span id="liang2019fisher">[3] T. Liang, T. Poggio, A. Rakhlin, &amp; J. Stokes, "Fisher-rao metric, geometry, and complexity of neural networks," <i>The 22nd International Conference on Artificial Intelligence and Statistics</i> (PMLR, 2019), pp. 888–896.</span></p>
 <p><span id="martens2020new">[4] J. Martens, "New Insights and Perspectives on the Natural Gradient Method," <i>Journal of Machine Learning Research</i> <b>21</b>:1–76 (2020).</span></p>
@@ -731,17 +742,17 @@ $$</code></p>
 <p><span id="amari2016information">[12] S.-ichi Amari, <i>Information geometry and its applications</i> (Springer, 2016).</span></p>
 <p><span id="casella2002statistical">[13] G. Casella &amp; R. L. Berger, <i>Statistical inference</i> (2002).</span></p>
 <p><span id="jaynes1957information">[14] E. T. Jaynes, "Information theory and statistical mechanics," <i>Physical review</i> <b>106</b>:620 (1957).</span></p>
-<p><span id="lee2018introduction">[15] J. M. Lee, <i>Introduction to Riemannian manifolds</i> (Springer, 2018).</span></p></p>
+<p><span id="lee2018introduction">[15] J. M. Lee, <i>Introduction to Riemannian manifolds</i> (Springer, 2018).</span></p>
 
 <h2 id="footnotes">Footnotes:</h2>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>In differential geometry, an intrinsic parametrization is known as a coordinate chart. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>In differential geometry, an intrinsic parametrization is known as a coordinate chart. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>In differential geometry, the smoothness requirement is known as a diffeomorphism. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>In differential geometry, the smoothness requirement is known as a diffeomorphism. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
@@ -801,13 +812,7 @@ $$</code></p>
 
      
 
-  <script src="https://utteranc.es/client.js"
-    repo=informationgeometryML/informationgeometryML.github.io
-    issue-term=url
-    label=blog-comments
-    theme=github-light
-    crossorigin= "anonymous"
-    async>
+  <script src="https://utteranc.es/client.js" repo="informationgeometryML/informationgeometryML.github.io" issue-term="url" label="blog-comments" theme="github-light" crossorigin="anonymous" async>
   </script>
 
 
@@ -982,7 +987,7 @@ We will also discuss why the Euclidean steepest direction is NOT i...</p>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">© 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
@@ -1014,4 +1019,3 @@ We will also discuss why the Euclidean steepest direction is NOT i...</p>
 
   </body>
 </html>
-

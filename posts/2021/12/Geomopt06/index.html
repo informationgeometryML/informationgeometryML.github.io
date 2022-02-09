@@ -1,12 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
   Minimal Mistakes Jekyll Theme 4.12.0 by Michael Rose
   Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
--->
-<html lang="en" class="no-js">
+--><html lang="en" class="no-js">
   <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods - Information Geometry in Machine Learning</title>
@@ -110,7 +110,7 @@
     }
   });
 </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 <!-- end custom head snippets -->
@@ -132,17 +132,17 @@
           
             
             <li class="masthead__menu-item">
-              <a href="/" >Home</a>
+              <a href="/">Home</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/news/" >News</a>
+              <a href="/news/">News</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/year-archive/" >Blog Posts</a>
+              <a href="/year-archive/">Blog Posts</a>
             </li>
           
         </ul>
@@ -196,7 +196,7 @@
 <p>In this blog post, we discuss about how to handle parameter constraints of exponential family.</p>
 
 <h1 id="handling-parameter-constraints">Handling Parameter Constraints</h1>
-<hr />
+<hr>
 
 <p>Recall that  in Part IV, we discuss 
 <a href="/posts/2021/11/Geomopt04/#many-faces-of-natural-gradient-descent">the many faces of NGD</a> in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.</p>
@@ -234,8 +234,7 @@ equivalent in exponential family cases even when <code class="language-plaintext
 
 <h2 id="projected-natural-gradient-descent">Projected Natural Gradient Descent</h2>
 <p>A straightforward approach from natural-gradient descent is the projected natural-gradient descent, where we  use 
-the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta_k)$</code> evaluted at <code class="language-plaintext highlighter-rouge">$\eta_k$</code> as a projection metric and use the <a href="/posts/2021/10/Geomopt02/
-#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> to measure the distance for the projection.</p>
+the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta_k)$</code> evaluted at <code class="language-plaintext highlighter-rouge">$\eta_k$</code> as a projection metric and use the <a href="/posts/2021/10/Geomopt02/%0A#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> to measure the distance for the projection.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -370,10 +369,11 @@ the constraint.</p>
 
 <p>For positive-definite constraints in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, please see <a class="citation" href="#lin2020handling">[2]</a> as an example to derive efficient Riemannian gradient updates.</p>
 
-<hr />
+<hr>
 <h1 id="references">References</h1>
-<p class="bibliography"><p><span id="amari2016information">[1] S.-ichi Amari, <i>Information geometry and its applications</i> (Springer, 2016).</span></p>
-<p><span id="lin2020handling">[2] W. Lin, M. Schmidt, &amp; M. E. Khan, "Handling the positive-definite constraint in the bayesian learning rule," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 6116–6126.</span></p></p>
+<p class="bibliography"></p>
+<p><span id="amari2016information">[1] S.-ichi Amari, <i>Information geometry and its applications</i> (Springer, 2016).</span></p>
+<p><span id="lin2020handling">[2] W. Lin, M. Schmidt, &amp; M. E. Khan, "Handling the positive-definite constraint in the bayesian learning rule," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 6116–6126.</span></p>
 
 
         
@@ -435,13 +435,7 @@ the constraint.</p>
 
      
 
-  <script src="https://utteranc.es/client.js"
-    repo=informationgeometryML/informationgeometryML.github.io
-    issue-term=url
-    label=blog-comments
-    theme=github-light
-    crossorigin= "anonymous"
-    async>
+  <script src="https://utteranc.es/client.js" repo="informationgeometryML/informationgeometryML.github.io" issue-term="url" label="blog-comments" theme="github-light" crossorigin="anonymous" async>
   </script>
 
 
@@ -615,7 +609,7 @@ The main propose...</p>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">© 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
@@ -647,4 +641,3 @@ The main propose...</p>
 
   </body>
 </html>
-

@@ -1,12 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
   Minimal Mistakes Jekyll Theme 4.12.0 by Michael Rose
   Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
--->
-<html lang="en" class="no-js">
+--><html lang="en" class="no-js">
   <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part IV: Natural and Riemannian  Gradient Descent - Information Geometry in Machine Learning</title>
@@ -110,7 +110,7 @@
     }
   });
 </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 <!-- end custom head snippets -->
@@ -132,17 +132,17 @@
           
             
             <li class="masthead__menu-item">
-              <a href="/" >Home</a>
+              <a href="/">Home</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/news/" >News</a>
+              <a href="/news/">News</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/year-archive/" >Blog Posts</a>
+              <a href="/year-archive/">Blog Posts</a>
             </li>
           
         </ul>
@@ -199,7 +199,7 @@ We also discuss some invariance property of natural-gradient descent, Riemannian
 <p>We will give an informal introduction with a focus on high level of ideas.</p>
 
 <h1 id="two-kinds-of-spaces">Two kinds of Spaces</h1>
-<hr />
+<hr>
 <p>We will discuss (Riemannian) gradient spaces and parameter spaces for gradient-based updates.</p>
 
 <p>As we disucssed in <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, the parameter space $\Omega_\tau$ and the tangent space denoted by <code class="language-plaintext highlighter-rouge">$T\mathcal{M}_{\tau_0}$</code> at point $\tau_0$ are two distinct spaces. 
@@ -210,10 +210,10 @@ the domain and the distance.
 Mathematically
 speaking,  a (Riemannian) gradient space is much simpler and nicer than a  parameter space.</p>
 
-<p><img src="/img/sphere.png" width="500" /></p>
+<p><img src="/img/sphere.png" width="500"></p>
 
 <h1 id="natural-gradient-descent-in-an-intrinsic-parameter-space">Natural-gradient Descent in an Intrinsic Parameter Space</h1>
-<hr />
+<hr>
 
 <p>Using intrinsic parametrization $\tau$, we can perform a natural-gradient update known as natural-gradient descent (NGD) <a class="citation" href="#amari1998natural">[1]</a> when we use the Fisher-Rao metric.</p>
 
@@ -247,7 +247,7 @@ descent in practice.</p>
 <fieldset class="field-set">
       <blockquote>
 
-        <p>Consider a univariate Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,v) \Big| \mu \in \mathcal{R}, v&gt;0 \}$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code>, variance <code class="language-plaintext highlighter-rouge">$v$</code>, and intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau = (\mu,v) $</code>. <br /></p>
+        <p>Consider a univariate Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,v) \Big| \mu \in \mathcal{R}, v&gt;0 \}$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code>, variance <code class="language-plaintext highlighter-rouge">$v$</code>, and intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau = (\mu,v) $</code>. <br></p>
 
         <p>We have to properly select the step-size $\alpha$ for natural-gradient descent in  <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> due to the positivity constraint in $\sigma$.</p>
 
@@ -258,7 +258,7 @@ descent in practice.</p>
 </div>
 
 <h1 id="natural-gradient-descent-is-linearly-invariant">Natural-gradient Descent is Linearly Invariant</h1>
-<hr />
+<hr>
 
 <p>Recall that in <a href="/posts/2021/11/Geomopt03/#parameter-transform-and-invariance">Part III</a>, we have shown that natural gradients are invariant under any intrinsic parameter transformation.
 The parameter transformation can be non-linear.</p>
@@ -318,7 +318,7 @@ It is easy to show that <code class="language-plaintext highlighter-rouge">$\tau
 Therefore, updates in <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code> and <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> are equivalent.</p>
 
 <h1 id="riemannian-gradient-descent-and-its-non-linear-invariance">Riemannian Gradient Descent and its (Non-linear) Invariance</h1>
-<hr />
+<hr>
 <p>Now we discuss a gradient-based method that is invariant to any intrinsic parameter transformation.</p>
 
 <p>As mentioned before, a manifold in general does not have a vector-space structure. 
@@ -385,7 +385,7 @@ $$</code></p>
 <p>Although Riemannian gradient descent is nice, the exponential map or the geodesic often has high computational cost and does not admit a closed-form expression.</p>
 
 <h1 id="many-faces-of-natural-gradient-descent">Many faces of Natural-gradient Descent</h1>
-<hr />
+<hr>
 <h2 id="natural-gradient-descent-as-inexact-riemannian-gradient-descent">Natural-gradient Descent as Inexact Riemannian Gradient Descent</h2>
 
 <p>Natural-gradient descent can be derived from a first-order (linear) approximation of the geodesic, which implies that natural-gradient descent is indeed an inexact Riemannian gradient update.
@@ -440,7 +440,7 @@ In the <a href="#riemannian-gradient-descent-and-its-non-linear-invariance">prev
 Note that a f-divergence can be defined in a more general setting.</p>
 
 <h3 id="csiszar-f-divergence">Csiszar f-divergence</h3>
-<hr />
+<hr>
 
 <p>Let <code class="language-plaintext highlighter-rouge">$f:(0,+\infty)\mapsto \mathcal{R}$</code> be a  smooth scalar function satisfying all the following conditions.</p>
 <ul>
@@ -456,7 +456,7 @@ Note that a f-divergence can be defined in a more general setting.</p>
 \end{aligned}
 $$</code>
 Thanks to Jensen’s inequality,
-a f-divergence is always non-negative as<br />
+a f-divergence is always non-negative as<br>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathrm{D}_f(\mathbf{y},\tau_k) \geq  f( \int \frac{p(w|\mathbf{y})}{p(w|\tau_k)} p(w|\tau_k) dw )  = f(\int p(w|\mathbf{y})dw) =f(1) =0 .
@@ -466,7 +466,7 @@ $$</code></p>
 <p>The KL divergence is a f-divergence where $f(t)=-\log(t)$.</p>
 
 <h3 id="proximal-gradient-descent">Proximal-gradient descent</h3>
-<hr />
+<hr>
 <p>Given such a “distance” <code class="language-plaintext highlighter-rouge">$\mathrm{D}(\mathbf{y},\tau_k)$</code>, we could perform an unconstrained proximal-gradient update as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -598,7 +598,7 @@ Under a particular parametrization,  natural-gradient descent also can be viewed
 </div>
 
 <h1 id="natural-gradient-descent-in-non-intrinsic-parameter-spaces">Natural-gradient Descent in Non-intrinsic Parameter Spaces</h1>
-<hr />
+<hr>
 <p>As mentioned in <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">Part I</a>, an intrinsic parametrization creates a nice parameter space (e.g., a local vector space structure) and guarantees a non-singular FIM.
 We now discuss issues when it comes to  natural-gradient descent over non-intrinsic parametrizations including overparameterization.</p>
 
@@ -666,7 +666,7 @@ Moreover, damping introduces an additional tuning hyper-parameter and destories 
 </ol>
 
 <h1 id="euclidean-gradient-descent-is-not-linearly-invariant">Euclidean Gradient Descent is NOT (Linearly) Invariant</h1>
-<hr />
+<hr>
 <p>For simplicity, consider an unconstrained optimization problem.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -718,7 +718,7 @@ updates in <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>
 Therefore,  Euclidean gradient descent is not invariant.</p>
 
 <h1 id="newtons-method-is-linearly-invariant">Newton’s Method is Linearly Invariant</h1>
-<hr />
+<hr>
 <p>For simplicity, consider an unconstrained convex optimization problem.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -834,20 +834,21 @@ $$</code></p>
 under this kind of parametrization is called a Hessian metric.
 However, a non-linear reparametrization will lead to a non-natural parametrization.</p>
 
-<hr />
+<hr>
 <h1 id="references">References</h1>
-<p class="bibliography"><p><span id="amari1998natural">[1] S.-I. Amari, "Natural gradient works efficiently in learning," <i>Neural computation</i> <b>10</b>:251–276 (1998).</span></p>
+<p class="bibliography"></p>
+<p><span id="amari1998natural">[1] S.-I. Amari, "Natural gradient works efficiently in learning," <i>Neural computation</i> <b>10</b>:251–276 (1998).</span></p>
 <p><span id="atkinson1981rao">[2] C. Atkinson &amp; A. F. S. Mitchell, "Rao’s distance measure," <i>Sankhyā: The Indian Journal of Statistics, Series A</i> 345–365 (1981).</span></p>
 <p><span id="khan2016faster">[3] M. E. Khan, R. Babanezhad, W. Lin, M. Schmidt, &amp; M. Sugiyama, "Faster stochastic variational inference using Proximal-Gradient methods with general divergence functions," <i>Proceedings of the Thirty-Second Conference on Uncertainty in Artificial Intelligence</i> (2016), pp. 319–328.</span></p>
 <p><span id="kunstner2019limitations">[4] F. Kunstner, P. Hennig, &amp; L. Balles, "Limitations of the empirical Fisher approximation for natural gradient descent," <i>Advances in Neural Information Processing Systems</i> <b>32</b>:4156–4167 (2019).</span></p>
-<p><span id="shima2007geometry">[5] H. Shima, <i>The geometry of Hessian structures</i> (World Scientific, 2007).</span></p></p>
+<p><span id="shima2007geometry">[5] H. Shima, <i>The geometry of Hessian structures</i> (World Scientific, 2007).</span></p>
 
 <h2 id="footnotes">Footnotes:</h2>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>In Riemannian geometry, a geodesic is induced by the Levi-Civita connection. This connection is known as the metric compatiable parallel transport. Christoffel symbols are used to represent the connection in a coordinate/parametrization system. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>In Riemannian geometry, a geodesic is induced by the Levi-Civita connection. This connection is known as the metric compatiable parallel transport. Christoffel symbols are used to represent the connection in a coordinate/parametrization system. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
@@ -907,13 +908,7 @@ However, a non-linear reparametrization will lead to a non-natural parametrizati
 
      
 
-  <script src="https://utteranc.es/client.js"
-    repo=informationgeometryML/informationgeometryML.github.io
-    issue-term=url
-    label=blog-comments
-    theme=github-light
-    crossorigin= "anonymous"
-    async>
+  <script src="https://utteranc.es/client.js" repo="informationgeometryML/informationgeometryML.github.io" issue-term="url" label="blog-comments" theme="github-light" crossorigin="anonymous" async>
   </script>
 
 
@@ -1088,7 +1083,7 @@ The main propose...</p>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">© 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
@@ -1120,4 +1115,3 @@ The main propose...</p>
 
   </body>
 </html>
-

@@ -1,12 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
   Minimal Mistakes Jekyll Theme 4.12.0 by Michael Rose
   Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
--->
-<html lang="en" class="no-js">
+--><html lang="en" class="no-js">
   <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part V: Efficient Natural-gradient Methods for Exponential Family - Information Geometry in Machine Learning</title>
@@ -110,7 +110,7 @@
     }
   });
 </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 <!-- end custom head snippets -->
@@ -132,17 +132,17 @@
           
             
             <li class="masthead__menu-item">
-              <a href="/" >Home</a>
+              <a href="/">Home</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/news/" >News</a>
+              <a href="/news/">News</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/year-archive/" >Blog Posts</a>
+              <a href="/year-archive/">Blog Posts</a>
             </li>
           
         </ul>
@@ -198,7 +198,7 @@
 <p>We will give an informal introduction with a focus on high level of ideas.</p>
 
 <h1 id="exponential-family">Exponential Family</h1>
-<hr />
+<hr>
 
 <p>An exponential family takes the following (canonical) form as
 <code class="language-plaintext highlighter-rouge">$$
@@ -301,7 +301,7 @@ p({w}|\mathbf{\eta})
 &amp;=\underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{ \log \frac{\pi}{1-\pi}}_{\eta} , \underbrace{ \mathcal{I}(w=0)}_{T_\eta(w) } \rangle - \log \frac{1}{1-\pi} )
 \end{aligned}
 $$</code>
-Since <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta)}{1+ \exp(\eta) } $</code> , we have <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) =  \log \frac{1}{1-\pi} = \log(1+\exp(\eta))$</code>. <br />
+Since <code class="language-plaintext highlighter-rouge">$\pi = \frac{\exp(\eta)}{1+ \exp(\eta) } $</code> , we have <code class="language-plaintext highlighter-rouge">$A_\eta(\mathbf{\eta}) =  \log \frac{1}{1-\pi} = \log(1+\exp(\eta))$</code>. <br>
 We easily to verify that parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta= \{ \eta | \eta \in \mathcal{R} \}$</code> is open in $\mathcal{R}$.</p>
           </blockquote>
         </fieldset>
@@ -882,17 +882,18 @@ $$</code> which is exactly natural gradient
 descent in <strong>natural</strong> parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\eta=\mathcal{R}^K$</code> since by <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, we have <code class="language-plaintext highlighter-rouge">$\nabla_m \ell_m(\mathbf{m}_k) = \nabla_m \ell_\eta( \eta_k)= \mathbf{F}
 _\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)$</code>.</p>
 
-<hr />
+<hr>
 <h1 id="references">References</h1>
-<p class="bibliography"><p><span id="johansen1979introduction">[1] S. Johansen, <i>Introduction to the theory of regular exponential families</i> (Institute of Mathematical Statistics, University of Copenhagen, 1979).</span></p>
+<p class="bibliography"></p>
+<p><span id="johansen1979introduction">[1] S. Johansen, <i>Introduction to the theory of regular exponential families</i> (Institute of Mathematical Statistics, University of Copenhagen, 1979).</span></p>
 <p><span id="wainwright2008graphical">[2] M. J. Wainwright &amp; M. I. Jordan, <i>Graphical models, exponential families, and variational inference</i> (Now Publishers Inc, 2008).</span></p>
-<p><span id="khan2017conjugate">[3] M. Khan &amp; W. Lin, "Conjugate-computation variational inference: Converting variational inference in non-conjugate models to inferences in conjugate models," <i>Artificial Intelligence and Statistics</i> (PMLR, 2017), pp. 878–887.</span></p></p>
+<p><span id="khan2017conjugate">[3] M. Khan &amp; W. Lin, "Conjugate-computation variational inference: Converting variational inference in non-conjugate models to inferences in conjugate models," <i>Artificial Intelligence and Statistics</i> (PMLR, 2017), pp. 878–887.</span></p>
 
 <h2 id="footnotes">Footnotes:</h2>
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>When the natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> is minimal, this Legendre transformation is diffeomorphic since <code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in its domain. In other words, the expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code> is also intrinsic when the natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> is minimal. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>When the natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> is minimal, this Legendre transformation is diffeomorphic since <code class="language-plaintext highlighter-rouge">$\nabla_\eta^2 A_\eta(\eta)$</code> is positive-definite in its domain. In other words, the expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code> is also intrinsic when the natural parameter <code class="language-plaintext highlighter-rouge">$\eta$</code> is minimal. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
@@ -956,13 +957,7 @@ _\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)$</code>.</p>
 
      
 
-  <script src="https://utteranc.es/client.js"
-    repo=informationgeometryML/informationgeometryML.github.io
-    issue-term=url
-    label=blog-comments
-    theme=github-light
-    crossorigin= "anonymous"
-    async>
+  <script src="https://utteranc.es/client.js" repo="informationgeometryML/informationgeometryML.github.io" issue-term="url" label="blog-comments" theme="github-light" crossorigin="anonymous" async>
   </script>
 
 
@@ -1137,7 +1132,7 @@ The main propose...</p>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">© 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
@@ -1169,4 +1164,3 @@ The main propose...</p>
 
   </body>
 </html>
-

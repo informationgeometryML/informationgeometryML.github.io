@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-08T15:44:17-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-09T10:23:37-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -2436,7 +2436,7 @@ Be aware of the differences shown in the table.&lt;/p&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; (point/parameter) space&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;top half of the manifold&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;span style=&quot;color:red&quot;&gt; &lt;strong&gt;local&lt;/strong&gt; &lt;/span&gt; scalar product, &lt;span style=&quot;color:red&quot;&gt;&lt;strong&gt;local&lt;/strong&gt; &lt;/span&gt; vector addition&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;span style=&quot;color:red&quot;&amp;gt; **local** &amp;lt;/span&amp;gt; scalar product, &amp;lt;span style=&quot;color:red&quot;&amp;gt;**local** &amp;lt;/span&amp;gt; vector addition&lt;/td&gt;
       &lt;td&gt;undefined&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
@@ -2955,9 +2955,9 @@ We now illustrate this by examples.&lt;/p&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/circle-org.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/open-ball.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/closed-ball.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/circle-org.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot;/&amp;gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/open-ball.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot;/&amp;gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/closed-ball.png&quot; alt=&quot;Source:Wikipedia&quot; width=&quot;200&quot;/&amp;gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;1-dim manifold&lt;/td&gt;
@@ -3073,8 +3073,8 @@ $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;Structures play an essential role in&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Preconditioners for gradient-free, first-order, and second-order methods&lt;/li&gt;
-  &lt;li&gt;Covariance matrices in variational Gaussian approximation &lt;a class=&quot;citation&quot; href=&quot;#opper2009variational&quot;&gt;[2]&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Preconditioners of gradient-free, first-order, and second-order methods&lt;/li&gt;
+  &lt;li&gt;Covariance matrices of variational Gaussian approximation &lt;a class=&quot;citation&quot; href=&quot;#opper2009variational&quot;&gt;[2]&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;Natural-gradient descent on structured parameter spaces is computationally challenging.&lt;/p&gt;
@@ -3095,8 +3095,8 @@ $$&lt;/code&gt;&lt;/p&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-fig02.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-fig04.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-fig02.png&quot;  width=&quot;465&quot;/&amp;gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-fig04.png&quot;  width=&quot;495&quot;/&amp;gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -3157,7 +3157,7 @@ $$&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;converges faster than GD&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/icml2021-fig01.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/icml2021-fig01.png&quot; width=&quot;400&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Challenges of standard NGD:&lt;/p&gt;
 &lt;ul&gt;
@@ -3176,7 +3176,7 @@ $$&lt;/code&gt;&lt;/li&gt;
 &lt;table&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&lt;img src=&quot;/img/icml2021-fig03.png&quot; width=&quot;500&quot; /&gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;img src=&quot;/img/icml2021-fig03.png&quot;  width=&quot;500&quot;/&amp;gt;&lt;/td&gt;
       &lt;td&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; space has a local vector-space structure, &lt;br /&gt; standard NGD in $\tau$ space is a speical case of our NGD,  &lt;br /&gt; where we choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi$&lt;/code&gt; to be the identity map and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; to be a linear map.&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
@@ -3205,7 +3205,7 @@ $$&lt;/code&gt;&lt;/p&gt;
  the natural-gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\eta_0}^{(t)}$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_0$&lt;/code&gt; tied to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda_t$&lt;/code&gt;, which is computed by the chain rule,
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned} 
-        \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;amp;=  \color{green} {\mathbf{F}_{\eta}(\eta_0)^{-1} } 
+        \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;amp;=  \color{green}{\mathbf{F}_{\eta}(\eta_0)^{-1} } 
          \,\, \big[ \nabla_{\eta_0} \big[ \psi \circ \phi_{\lambda_t} (\eta) \big]
         \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
 \end{aligned} 
@@ -3308,9 +3308,9 @@ $$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-full.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-tri.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-diag.png&quot; width=&quot;250&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-group-full.png&quot;  width=&quot;250&quot;/&amp;gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-group-tri.png&quot;  width=&quot;250&quot;&amp;gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-group-diag.png&quot;  width=&quot;250&quot;/&amp;gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -3322,8 +3322,8 @@ $$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;
 &lt;table&gt;
   &lt;thead&gt;
     &lt;tr&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Block lower triangular&lt;/th&gt;
-      &lt;th style=&quot;text-align: center&quot;&gt;Block upper triangular&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Block lower&lt;br /&gt; triangular&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;Block upper&lt;br /&gt; triangular&lt;/th&gt;
       &lt;th style=&quot;text-align: center&quot;&gt;Hierarchical&lt;br /&gt; (Heisenberg)&lt;/th&gt;
       &lt;th style=&quot;text-align: center&quot;&gt;Kronecker product&lt;/th&gt;
       &lt;th style=&quot;text-align: center&quot;&gt;Triangular-Toeplitz&lt;/th&gt;
@@ -3332,12 +3332,12 @@ $$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-low.png&quot; width=&quot;220&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-up.png&quot; width=&quot;220&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-hie.png&quot; width=&quot;220&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-kro.png&quot; width=&quot;220&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-tri-Toep.png&quot; width=&quot;220&quot; /&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;img src=&quot;/img/icml2021-group-sparse.png&quot; width=&quot;220&quot; /&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-group-low.png&quot;  width=&quot;220&quot;/&amp;gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-group-up.png&quot;  width=&quot;220&quot;/&amp;gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-group-hie.png&quot;  width=&quot;220&quot;/&amp;gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-group-kro.png&quot;  width=&quot;220&quot;/&amp;gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-group-tri-Toep.png&quot;  width=&quot;220&quot;/&amp;gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-group-sparse.png&quot;  width=&quot;220&quot;/&amp;gt;&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
   &lt;tbody&gt;
@@ -3517,9 +3517,26 @@ The update in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt
   &lt;details&gt;
 	&lt;summary&gt;Classical non-convex optimization: (Click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-      &lt;p&gt;200-dim non-separable non-convex functions:&lt;/p&gt;
 
-      &lt;p&gt;&lt;img src=&quot;/img/icml2021-rbfun.png&quot; width=&quot;500&quot; /&gt; |  &lt;img src=&quot;/img/icml2021-dpfun.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+      &lt;table&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th style=&quot;text-align: center&quot;&gt;: &amp;lt;font size=&quot;4&quot;&amp;gt; 200-dim non-separable non-convex functions :|&lt;/th&gt;
+            &lt;th style=&quot;text-align: left&quot;&gt; &lt;/th&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-rbfun.png&quot;  width=&quot;90%&quot;/&amp;gt;&lt;/th&gt;
+            &lt;th style=&quot;text-align: left&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-dpfun.png&quot;  width=&quot;90%&quot;/&amp;gt;&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;text-align: center&quot;&gt;: &amp;lt;font size=&quot;3&quot;&amp;gt; Performance of our method with group structures (lower-trinagular, upper-trinagular, Heisenberg upper-triangular, Heisenberg lower-triangular), Adam, and BFGS &amp;lt;/font&amp;gt; :|&lt;/td&gt;
+            &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+
     &lt;/fieldset&gt;
 &lt;/details&gt;
 &lt;/div&gt;
@@ -3559,9 +3576,26 @@ _1$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&q
   &lt;details&gt;
 	&lt;summary&gt;Image classification problems: (Click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-      &lt;p&gt;Kronecker product of lower-triangular groups for a CNN&lt;/p&gt;
 
-      &lt;p&gt;&lt;img src=&quot;/img/icml2021-stl10.png&quot; width=&quot;500&quot; /&gt; |  &lt;img src=&quot;/img/icml2021-cifar10.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+      &lt;table&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th style=&quot;text-align: center&quot;&gt;: &amp;lt;font size=&quot;4&quot;&amp;gt; Kronecker product of lower-triangular groups for a CNN &amp;lt;/font&amp;gt; :|&lt;/th&gt;
+            &lt;th style=&quot;text-align: left&quot;&gt; &lt;/th&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-stl10.png&quot;  width=&quot;90%&quot;/&amp;gt;&lt;/th&gt;
+            &lt;th style=&quot;text-align: left&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-cifar10.png&quot;  width=&quot;90%&quot;/&amp;gt;&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;text-align: center&quot;&gt;: &amp;lt;font size=&quot;4&quot;&amp;gt; Comparison between our method with Kronecker product groups and Adam &amp;lt;/font&amp;gt; :|&lt;/td&gt;
+            &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+
     &lt;/fieldset&gt;
 &lt;/details&gt;
 &lt;/div&gt;
@@ -3578,9 +3612,26 @@ _1$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&q
   &lt;details&gt;
 	&lt;summary&gt;Approximating 80-dim multimodal distributions: (Click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-      &lt;p&gt;First 8 marginal distributions of our approximation (mixture with a block upper-triangular group, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$k=5$&lt;/code&gt;)&lt;/p&gt;
 
-      &lt;p&gt;&lt;img src=&quot;/img/icml2021-tmm80d-01.png&quot; width=&quot;500&quot; /&gt; |  &lt;img src=&quot;/img/icml2021-tmm80d-02.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+      &lt;table&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th style=&quot;text-align: center&quot;&gt;: &amp;lt;font size=&quot;4&quot;&amp;gt; First 8 marginal distributions of our structured Gaussian mixture approximation with a block upper-triangular structure &amp;lt;/font&amp;gt; :|&lt;/th&gt;
+            &lt;th style=&quot;text-align: left&quot;&gt; &lt;/th&gt;
+          &lt;/tr&gt;
+          &lt;tr&gt;
+            &lt;th style=&quot;text-align: center&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-tmm80d-01.png&quot;  width=&quot;90%&quot;/&amp;gt;&lt;/th&gt;
+            &lt;th style=&quot;text-align: left&quot;&gt;&amp;lt;img src=&quot;/img/icml2021-tmm80d-02.png&quot;  width=&quot;90%&quot;/&amp;gt;&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          &lt;tr&gt;
+            &lt;td style=&quot;text-align: center&quot;&gt;:  &amp;lt;font size=&quot;4&quot;&amp;gt; Comparison between our approximation and the ground-truth &amp;lt;/font&amp;gt; :|&lt;/td&gt;
+            &lt;td style=&quot;text-align: left&quot;&gt; &lt;/td&gt;
+          &lt;/tr&gt;
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+
     &lt;/fieldset&gt;
 &lt;/details&gt;
 &lt;/div&gt;

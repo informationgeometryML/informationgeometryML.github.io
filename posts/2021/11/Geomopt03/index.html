@@ -1,12 +1,12 @@
-<!doctype html>
+<!DOCTYPE html>
 <!--
   Minimal Mistakes Jekyll Theme 4.12.0 by Michael Rose
   Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
--->
-<html lang="en" class="no-js">
+--><html lang="en" class="no-js">
   <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part III: Invariance of Natural-Gradients - Information Geometry in Machine Learning</title>
@@ -110,7 +110,7 @@
     }
   });
 </script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
 
 
 <!-- end custom head snippets -->
@@ -132,17 +132,17 @@
           
             
             <li class="masthead__menu-item">
-              <a href="/" >Home</a>
+              <a href="/">Home</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/news/" >News</a>
+              <a href="/news/">News</a>
             </li>
           
             
             <li class="masthead__menu-item">
-              <a href="/year-archive/" >Blog Posts</a>
+              <a href="/year-archive/">Blog Posts</a>
             </li>
           
         </ul>
@@ -197,7 +197,7 @@ We will also discuss why the Euclidean steepest direction is NOT invariant.</p>
 <p>We will give an informal introduction with a focus on high level of ideas.</p>
 
 <h1 id="parameter-transformation-and-invariance">Parameter Transformation and Invariance</h1>
-<hr />
+<hr>
 <p>In <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, we have shown that a Riemannian gradient is a parametric representation of the tangent direction of a curve in a  manifold.
 Since a curve and its tangent direction are geometric obejects, they should be invariant to the choice of parametrization.
 In other words, geometric properties should be persevered in any valid coordinate system. This is a coordinate-free argument.</p>
@@ -386,15 +386,18 @@ Given an intrinsic parametrization $\tau$ containing the point, we consider the 
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">point <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code></td>
+      <td style="text-align: left">point <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code>
+</td>
       <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\tau_0$</code></td>
     </tr>
     <tr>
-      <td style="text-align: left">curve  <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code></td>
+      <td style="text-align: left">curve  <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code>
+</td>
       <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$\gamma_\tau(t) $</code></td>
     </tr>
     <tr>
-      <td style="text-align: left">function  <code class="language-plaintext highlighter-rouge">$h(x_0)$</code></td>
+      <td style="text-align: left">function  <code class="language-plaintext highlighter-rouge">$h(x_0)$</code>
+</td>
       <td style="text-align: center"><code class="language-plaintext highlighter-rouge">$h_\tau(\tau_0) $</code></td>
     </tr>
   </tbody>
@@ -442,15 +445,18 @@ Notice that <code class="language-plaintext highlighter-rouge">$\nabla h_\lambda
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">Euclidean gradient <code class="language-plaintext highlighter-rouge">$(g_\tau)_i$</code></td>
+      <td style="text-align: left">Euclidean gradient <code class="language-plaintext highlighter-rouge">$(g_\tau)_i$</code>
+</td>
       <td style="text-align: center">$i$-th entry  under parametrization $\tau$</td>
     </tr>
     <tr>
-      <td style="text-align: left">Riemannian gradient <code class="language-plaintext highlighter-rouge">$(\hat{g}_\tau)^j$</code></td>
+      <td style="text-align: left">Riemannian gradient <code class="language-plaintext highlighter-rouge">$(\hat{g}_\tau)^j$</code>
+</td>
       <td style="text-align: center">$j$-th entry under parametrization $\tau$</td>
     </tr>
     <tr>
-      <td style="text-align: left">Parameter <code class="language-plaintext highlighter-rouge">$\tau^j$</code></td>
+      <td style="text-align: left">Parameter <code class="language-plaintext highlighter-rouge">$\tau^j$</code>
+</td>
       <td style="text-align: center">$j$-th parameter under parametrization   $\tau$</td>
     </tr>
   </tbody>
@@ -612,7 +618,7 @@ $$</code></p>
 $$</code></p>
 
 <h1 id="riemannian-steepest-direction-is-invariant">Riemannian Steepest Direction is Invariant</h1>
-<hr />
+<hr>
 <p>Now, we can show that the optimal solution of <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Riemannian steepest direction</a> considered in Part II  under parametrization $\tau$ and $\lambda$ are equivalent since both the length and the directional derivative remain the same.</p>
 
 <p>Denote Euclidean gradients as <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\lambda:= \nabla  f_\lambda(\mathbf{\lambda}_0) $</code> and  <code class="language-plaintext highlighter-rouge">$\mathbf{g}_\tau:= \nabla  f_\tau(\mathbf{\tau}_0)  = \nabla  f_\lambda(\mathbf{\lambda}(\tau_0)) $</code>, which follows the parameter transformation rule in  <code class="language-plaintext highlighter-rouge">$\eqref{6}$</code>.</p>
@@ -652,8 +658,8 @@ In other words, the Riemannian steepest direction (which is indeed  a normalized
 <p>As we will discuss in <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-is-linearly-invariant">Part IV</a>, this invariance property implies that natural-gradient descent is linearly invariant.</p>
 
 <h1 id="euclidean-steepest-direction-is-not-invariant">Euclidean Steepest Direction is NOT Invariant</h1>
-<hr />
-<p>Recall that we have shown that a Euclidean gradient is the optimal solution of  <a href="/posts/2021/10/Geomopt02/#euclidean-steepest-direction-and directional-derivative">Euclidean steepest direction</a> in Part II.</p>
+<hr>
+<p>Recall that we have shown that a Euclidean gradient is the optimal solution of  <a href="/posts/2021/10/Geomopt02/#euclidean-steepest-direction-and%20directional-derivative">Euclidean steepest direction</a> in Part II.</p>
 
 <p>We can show that the (standard) length of a Euclidean gradient is NOT invariant under a parameter transformation due to the Jacobian matrix (i.e., <code class="language-plaintext highlighter-rouge">$\| \mathbf{g}_\tau \| \neq \| \mathbf{g}_\lambda \|$</code>). This is a reason why we use the <a href="/posts/2021/10/Geomopt02/#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> to define the length of a gradient vector.</p>
 
@@ -684,20 +690,21 @@ $$</code></p>
 <p>In summary, the Euclidean steepest direction (which is a normalized Euclidean gradient) is NOT transformed according to the transformation rule for a Euclidean gradient.
 Moreover, Euclidean gradient descent is not invariant under a parameter transformation. We will cover more about this in <a href="/posts/2021/11/Geomopt04/">Part IV</a></p>
 
-<hr />
+<hr>
 <h1 id="references">References</h1>
-<p class="bibliography"><p><span id="lin2021tractable">[1] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Tractable structured natural gradient descent using local parameterizations," <i>International Conference on Machine Learning (ICML)</i> (2021).</span></p>
-<p><span id="salimbeni2018natural">[2] H. Salimbeni, S. Eleftheriadis, &amp; J. Hensman, "Natural gradients in practice: Non-conjugate variational inference in Gaussian process models," <i>International Conference on Artificial Intelligence and Statistics</i> (PMLR, 2018), pp. 689–697.</span></p></p>
+<p class="bibliography"></p>
+<p><span id="lin2021tractable">[1] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Tractable structured natural gradient descent using local parameterizations," <i>International Conference on Machine Learning (ICML)</i> (2021).</span></p>
+<p><span id="salimbeni2018natural">[2] H. Salimbeni, S. Eleftheriadis, &amp; J. Hensman, "Natural gradients in practice: Non-conjugate variational inference in Gaussian process models," <i>International Conference on Artificial Intelligence and Statistics</i> (PMLR, 2018), pp. 689–697.</span></p>
 
 <h2 id="footnotes">Footnotes:</h2>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>In differential geometry, a Euclidean gradient is also known as a coordinate representation of a cotangent vector. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>In differential geometry, a Euclidean gradient is also known as a coordinate representation of a cotangent vector. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>We assume readers are familar with the transformation rule for Euclidean gradients. In differential geometry, this transformation rule can also be shown by using an abstract coordinate map. We avoid defining this map for simplicity. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+      <p>We assume readers are familar with the transformation rule for Euclidean gradients. In differential geometry, this transformation rule can also be shown by using an abstract coordinate map. We avoid defining this map for simplicity. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
@@ -757,13 +764,7 @@ Moreover, Euclidean gradient descent is not invariant under a parameter transfor
 
      
 
-  <script src="https://utteranc.es/client.js"
-    repo=informationgeometryML/informationgeometryML.github.io
-    issue-term=url
-    label=blog-comments
-    theme=github-light
-    crossorigin= "anonymous"
-    async>
+  <script src="https://utteranc.es/client.js" repo="informationgeometryML/informationgeometryML.github.io" issue-term="url" label="blog-comments" theme="github-light" crossorigin="anonymous" async>
   </script>
 
 
@@ -938,7 +939,7 @@ The main propose...</p>
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">© 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
@@ -970,4 +971,3 @@ The main propose...</p>
 
   </body>
 </html>
-
