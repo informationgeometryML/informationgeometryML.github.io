@@ -30,7 +30,7 @@ var store = [{
         "url": "/news/workshop_icml2021/",
         "teaser":null},{
         "title": "Structured Natural Gradient Descent (ICML 2021)",
-        "excerpt":"More about this work [1]: (Youtube) talk, extended paper, short paper,poster Introduction Motivation Many problems in optimization, inference, and search can be solved via natural-gradient descent (NGD) Structures play an essential role in Preconditioners of gradient-free, first-order, and second-order methods Covariance matrices of variational Gaussian approximation [2]Natural-gradient descent on structured...","categories": [],
+        "excerpt":"More about this work [1]: (Youtube) talk, extended paper, short paper,poster Introduction Motivation Many problems in optimization, search, and inference can be solved via natural-gradient descent (NGD) Structures play an essential role in Preconditioners of first-order and second-order optimization, gradient-free search. Covariance matrices of variational Gaussian inference [2]Natural-gradient descent on...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Matrix Lie Groups","Exponential Family"],
         "url": "/posts/2021/07/ICML/",
         "teaser":null},{
