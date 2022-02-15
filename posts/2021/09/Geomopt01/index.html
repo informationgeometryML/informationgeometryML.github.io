@@ -424,7 +424,7 @@ Below is a formal condition.</p>
   <p><strong>Regularity Condition</strong>:</p>
 
   <p>The following continuous partial derivatives 
-<code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w|\tau) \} $</code>  should be linearly independent.</p>
+<code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w|\tau) \} $</code>  should be linearly independent for almost all <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 
   <p>In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i \partial_{\tau_i} \log p(w|\tau)= 0 $</code> holds only when constant <code class="language-plaintext highlighter-rouge">$c_i$</code> is zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 </div>
@@ -453,7 +453,8 @@ $$</code></p>
 \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
 \end{aligned}
 $$</code>
-For this point, the regularity condition will be <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code>. For this to be true for all $w$, we necessarily need to have <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies  linear independence.</p>
+For this point, the regularity condition will be <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code>.
+Clearly, when $w=0$, they are linear dependent. However, for almost all $w$, we necessarily need to have <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies linear independence.</p>
 
   <p>A formal proof can be built to show that this holds for any <code class="language-plaintext highlighter-rouge">$\mu \in \mathcal{R}$</code> and <code class="language-plaintext highlighter-rouge">$\sigma &gt;0$</code>.</p>
 </blockquote>
