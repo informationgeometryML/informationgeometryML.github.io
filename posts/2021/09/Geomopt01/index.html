@@ -431,7 +431,9 @@ Below is a formal condition.</p>
   <p>In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i \partial_{\tau_i} \log p(w|\tau)= 0 $</code> holds only when constant <code class="language-plaintext highlighter-rouge">$c_i$</code> is zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 </div>
 
-<p>Note that this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the definition of the partial derivatives, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>. So an intrinsic parameterization is still necessary, just that the requirement is not explicit and hidden within the condition.
+<p>Note that this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the definition of the partial derivatives, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
+These partial derivatives implies the smooth condition and the linear independence implies the uniqueness condition. 
+In other words, an intrinsic parameterization is still necessary, just that the requirements are not explicit and hidden within the regularity condition.
 We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-computation">here</a>.</p>
 
 <p>The following examples illustrates the regularity condition.</p>
