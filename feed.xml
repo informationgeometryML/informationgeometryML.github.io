@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-15T08:21:13-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-15T10:46:59-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -2649,7 +2649,7 @@ The following figure illustrates four distributions in the Gaussian family denot
 &lt;h1 id=&quot;intrinsic-parameterizations&quot;&gt;Intrinsic Parameterizations&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;We start by discussing a special type of parameterizations, we call intrinsic parameterizations of distributions which are useful to obtain non-singular FIMs.
-An arbitrary parameterization may not always be appropriate for a smooth manifold &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[11]&lt;/a&gt;. The requirement is that the parameterization should be such that the manifold is locally a &lt;em&gt;flat&lt;/em&gt; vector space, for example, how the curved Earth surface looks flat to us, locally.
+An arbitrary parameterization may not always be appropriate for a smooth manifold &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[11]&lt;/a&gt;. The requirement is that the parameterization should be such that the manifold is locally like a &lt;em&gt;flat&lt;/em&gt; vector space, for example, how the curved Earth surface looks flat to us, locally.
 We will refer to such flat vector space as a &lt;em&gt;local&lt;/em&gt; vector-space structure (denote it by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt;).&lt;/p&gt;
 
 &lt;div class=&quot;notice--success&quot;&gt;
@@ -2658,9 +2658,22 @@ We will refer to such flat vector space as a &lt;em&gt;local&lt;/em&gt; vector-s
   &lt;p&gt;It supports local &lt;strong&gt;vector additions&lt;/strong&gt;,  local &lt;strong&gt;real scalar products&lt;/strong&gt;, and their algebraic laws (i.e., the distributive law). (see &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; for the details.)&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Intuitively, with such a local vector-space structure, we ensure that a small, local perturbation at each point in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt; stays within the parameter space of $\tau$ (denoted by $\Omega_\tau$). Technically, this requires $\Omega_\tau$ to be an &lt;strong&gt;open&lt;/strong&gt; set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of a parameter array.
-We refer to the parametrizations that satisfy this condition as an intrinsic parameterization &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, which as we will see will lead to non-singular FIMs of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt;-by-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt;&lt;sup id=&quot;fnref:1:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.
-Non-singularity is crucial for algorithms such as natural-gradient descent, as we will see in &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space&quot;&gt;Part IV&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;We refer to the parametrizations that satisfy the following conditions as an intrinsic parameterization &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, which as we will see will lead to non-singular FIMs of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt;-by-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt;&lt;sup id=&quot;fnref:1:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.
+Both openness and non-singularity is crucial for algorithms such as natural-gradient descent, as we will see in &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space&quot;&gt;Part IV&lt;/a&gt;.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Intuitively, with such a local vector-space structure, we ensure that a small, local perturbation at each point in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt; stays within the parameter space of $\tau$ (denoted by $\Omega_\tau$). Technically, this requires $\Omega_\tau$ to be an &lt;strong&gt;open&lt;/strong&gt; set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of a parameter array.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Moreover, we require that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt;  &lt;strong&gt;uniquely&lt;/strong&gt; and &lt;strong&gt;smoothly&lt;/strong&gt; represents a sub-set of points in a manifold.
+The second condition may be abstract since a manifold can be abstractly defined.
+This condition becomes more clearly when we have two distinct intrinsic parameterizations such as $\tau$ and $\eta$ to represent the same sub-set in the manifold.
+We require that there exists a &lt;strong&gt;bi-jective&lt;/strong&gt; map from $\tau$ to $\eta$ such that the map and its
+inverse map are both &lt;strong&gt;smooth&lt;/strong&gt;. The smoothness of the inverse map is essential since these two parameterizations can be arbitrary. In other words, the condition should not depend on the order
+when we speicify these two parametrizations.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;p&gt;We will now give a simple example of intrinsic parameterization on a unit circle in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^2$&lt;/code&gt; at the point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ (0,1) $&lt;/code&gt; highlighted in green.&lt;/p&gt;
 
@@ -2670,7 +2683,7 @@ Non-singularity is crucial for algorithms such as natural-gradient descent, as w
   &lt;p&gt;Parameterization 1 (an intrinsic parameterization):&lt;/p&gt;
 
   &lt;p&gt;A (local) parametrization at $ (0,1) $ highlighted in red for the circle is
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (t,\sqrt{1-t^2}) | -h&amp;lt;t&amp;lt;h \} $&lt;/code&gt;, where $h=0.1$. We use &lt;strong&gt;one&lt;/strong&gt; (scalar) parameter in this parametrization. The manifold is (locally) “flat” since we can always find a small &lt;strong&gt;1-dimensional&lt;/strong&gt; perturbation $E$ in the &lt;strong&gt;1-dimensional&lt;/strong&gt; parameter space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_t=\{t|-h&amp;lt;t&amp;lt;h \} $&lt;/code&gt;. Therefore this is an intrinsic parameterization.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (t,\sqrt{1-t^2}) | -h&amp;lt;t&amp;lt;h \} $&lt;/code&gt;, where $h=0.1$. We use &lt;strong&gt;one&lt;/strong&gt; (scalar) parameter in this parametrization. The manifold is (locally) “flat” since we can always find a small &lt;strong&gt;1-dimensional&lt;/strong&gt; perturbation $E$ in the &lt;strong&gt;1-dimensional&lt;/strong&gt; parameter space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_t=\{t|-h&amp;lt;t&amp;lt;h \} $&lt;/code&gt;. Therefore, this is an intrinsic parameterization.&lt;/p&gt;
 
   &lt;p&gt;&lt;img src=&quot;/img/1d-perturbation.png&quot; title=&quot;Fig&quot; width=&quot;300&quot; /&gt;&lt;/p&gt;
 
@@ -2680,7 +2693,7 @@ Non-singularity is crucial for algorithms such as natural-gradient descent, as w
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Parameterization 2 (a non-intrinsic parameterization):&lt;/p&gt;
+  &lt;p&gt;Parameterization 2 (non-smooth):&lt;/p&gt;
 
   &lt;p&gt;Let’s define a map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f : [0,2\pi) \rightarrow \mathcal{S}^1 $&lt;/code&gt; such that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\theta) = (\sin \theta, \cos \theta ) $&lt;/code&gt;, where we use $\mathcal{S}^1$ to denote the circle.&lt;/p&gt;
 
@@ -2690,10 +2703,10 @@ Non-singularity is crucial for algorithms such as natural-gradient descent, as w
 In fact, there does not exist a (single) &lt;strong&gt;global&lt;/strong&gt; and intrinsic parametrization to represent the circle.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;As shown in Parametrization 2, continuity (or smoothness&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;) of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). Without such smoothness, the parameterization is not instrinsic, but smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such case, the Jacobian matrix (to change between the parameterizations) is non-singular, and we can use the chain rule and inverse function theorem to jump between different parameterization.&lt;/p&gt;
+&lt;p&gt;As shown in Parametrization 2, continuity (or smoothness&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;) of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). Without such smoothness, the parameterization is not instrinsic, but smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such case, the Jacobian matrix (to change between the parameterizations) is non-singular, and we can use the chain rule and inverse function theorem to jump between different intrinsic parameterizations.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Parametrization 3 (another non-intrinsic parameterization):&lt;/p&gt;
+  &lt;p&gt;Parametrization 3 (non-open):&lt;/p&gt;
 
   &lt;p&gt;The circle does &lt;strong&gt;not&lt;/strong&gt; look like a flat space under the following parametrization
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (x,y) | x^2+y^2=1, x,y \in \mathcal{R} \} $&lt;/code&gt;. The number of entries in this parameter array is 2.&lt;/p&gt;
@@ -2701,6 +2714,15 @@ In fact, there does not exist a (single) &lt;strong&gt;global&lt;/strong&gt; and
   &lt;p&gt;The reason is that we cannot find a small &lt;strong&gt;2-dimensional&lt;/strong&gt; perturbation $E$ in the &lt;strong&gt;2-dimensional&lt;/strong&gt; parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_{\tau}=\{(x,y)|x^2+y^2=1 \} $&lt;/code&gt; due to the constraint $x^2+y^2=1$. In other words, $\Omega_\tau$ is not open in $\mathcal{R}^2$.&lt;/p&gt;
 
   &lt;p&gt;&lt;img src=&quot;/img/2d-perturbation.png&quot; title=&quot;Fig&quot; width=&quot;300&quot; /&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Parametrization 4 (non-unique):&lt;/p&gt;
+
+  &lt;p&gt;Let’s consider the following non-intrinsic parametrization $\tau$ of the circle: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (\frac{x}{\sqrt{x^2+y^2}}, \frac{y}{\sqrt{x^2+y^2}}) | x^2+y^2 \neq 0, x,y \in \mathcal{R}  \}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau=(x,y)$&lt;/code&gt;. The parameter space $\Omega_\tau$ is open in $\mathcal{R}^2$.&lt;/p&gt;
+
+  &lt;p&gt;The reason is that we do not uniquely represent a point in the circle. It is obivous to see that  $\tau$ and $\alpha \tau$ both represent the same point in the circle when scalar $\alpha&amp;gt;0$.&lt;/p&gt;
+
 &lt;/blockquote&gt;
 
 &lt;h1 id=&quot;intrinsic-parameterizations-for-parametric-families&quot;&gt;Intrinsic Parameterizations for Parametric families&lt;/h1&gt;
