@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-15T11:46:48-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-15T11:56:41-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -2598,7 +2598,7 @@ In the context of reinforcement learning,  &lt;code class=&quot;language-plainte
 
 &lt;p&gt;In all of the examples above, the objective function is expressed in terms of an expectation w.r.t. a distribution in red, parameterized with the parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \tau $&lt;/code&gt;. 
 The geometric structure of a distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; for the quantity &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ w $&lt;/code&gt; can be exploited to improve the learning algorithms. The table below summarizes the three examples. 
-More applications of similar nature are discussed in &lt;a class=&quot;citation&quot; href=&quot;#le2007topmoumoute&quot;&gt;[9]&lt;/a&gt;, &lt;a class=&quot;citation&quot; href=&quot;#girolami2011riemann&quot;&gt;[10]&lt;/a&gt;, and &lt;a class=&quot;citation&quot; href=&quot;#duan2020ngboost&quot;&gt;[11]&lt;/a&gt;.&lt;/p&gt;
+More applications of similar nature are discussed in &lt;a class=&quot;citation&quot; href=&quot;#le2007topmoumoute&quot;&gt;[9]&lt;/a&gt; and &lt;a class=&quot;citation&quot; href=&quot;#duan2020ngboost&quot;&gt;[10]&lt;/a&gt;.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -2647,7 +2647,7 @@ The following figure illustrates four distributions in the Gaussian family denot
 &lt;h1 id=&quot;intrinsic-parameterizations&quot;&gt;Intrinsic Parameterizations&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;We start by discussing a special type of parameterizations, we call intrinsic parameterizations of distributions which are useful to obtain non-singular FIMs.
-An arbitrary parameterization may not always be appropriate for a smooth manifold &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[12]&lt;/a&gt;. The requirement is that the parameterization should be such that the manifold is locally like a &lt;em&gt;flat&lt;/em&gt; vector space, for example, how the curved Earth surface looks flat to us, locally.
+An arbitrary parameterization may not always be appropriate for a smooth manifold &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[11]&lt;/a&gt;. The requirement is that the parameterization should be such that the manifold is locally like a &lt;em&gt;flat&lt;/em&gt; vector space, for example, how the curved Earth surface looks flat to us, locally.
 We will refer to such flat vector space as a &lt;em&gt;local&lt;/em&gt; vector-space structure (denote it by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt;).&lt;/p&gt;
 
 &lt;div class=&quot;notice--success&quot;&gt;
@@ -2817,7 +2817,7 @@ where $K$ is the number of entries of parameter array $\tau$ and
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$&lt;/code&gt;.
 The regularity condition guarantees that the FIM is non-singular if the matrix exists, that is, the expectation in the definition exists.&lt;/p&gt;
 
-&lt;p&gt;In what follows, we will assume the metric to be well-defined, which makes the Fisher-Rao metric a valid Riemannian metric &lt;a class=&quot;citation&quot; href=&quot;#lee2018introduction&quot;&gt;[13]&lt;/a&gt; since the corresponding FIM is positive definite everywhere in its intrinsic parameter space.&lt;/p&gt;
+&lt;p&gt;In what follows, we will assume the metric to be well-defined, which makes the Fisher-Rao metric a valid Riemannian metric &lt;a class=&quot;citation&quot; href=&quot;#lee2018introduction&quot;&gt;[12]&lt;/a&gt; since the corresponding FIM is positive definite everywhere in its intrinsic parameter space.&lt;/p&gt;
 
 &lt;p&gt;Finally, recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
 If this smoothness requirement is satisfied, we can obtain a new intrinsic parameterization via the transformation.
@@ -2920,7 +2920,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;h1 id=&quot;dimension-of-a-manifold&quot;&gt;Dimension of a manifold&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
-Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[12]&lt;/a&gt;.
+Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[11]&lt;/a&gt;.
 This also gives us a tool to  identify non-manifold cases.
 We now illustrate this by examples.&lt;/p&gt;
 
@@ -3023,10 +3023,9 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;wierstra2014natural&quot;&gt;[7] D. Wierstra, T. Schaul, T. Glasmachers, Y. Sun, J. Peters, &amp;amp; J. Schmidhuber, &quot;Natural evolution strategies,&quot; &lt;i&gt;The Journal of Machine Learning Research&lt;/i&gt; &lt;b&gt;15&lt;/b&gt;:949–980 (2014).&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;kakade2001natural&quot;&gt;[8] S. M. Kakade, &quot;A natural policy gradient,&quot; &lt;i&gt;Advances in neural information processing systems&lt;/i&gt; &lt;b&gt;14&lt;/b&gt; (2001).&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;le2007topmoumoute&quot;&gt;[9] N. Le Roux, P.-A. Manzagol, &amp;amp; Y. Bengio, &quot;Topmoumoute Online Natural Gradient Algorithm.,&quot; &lt;i&gt;NIPS&lt;/i&gt; (Citeseer, 2007), pp. 849–856.&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;girolami2011riemann&quot;&gt;[10] M. Girolami &amp;amp; B. Calderhead, &quot;Riemann manifold langevin and hamiltonian monte carlo methods,&quot; &lt;i&gt;Journal of the Royal Statistical Society: Series B (Statistical Methodology)&lt;/i&gt; &lt;b&gt;73&lt;/b&gt;:123–214 (2011).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;duan2020ngboost&quot;&gt;[11] T. Duan, A. Anand, D. Y. Ding, K. K. Thai, S. Basu, A. Ng, &amp;amp; A. Schuler, &quot;Ngboost: Natural gradient boosting for probabilistic prediction,&quot; &lt;i&gt;International Conference on Machine Learning&lt;/i&gt; (PMLR, 2020), pp. 2690–2700.&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;tu2011introduction&quot;&gt;[12] L. W. Tu, &quot;An introduction to manifolds. Second,&quot; &lt;i&gt;New York, US: Springer&lt;/i&gt; (2011).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;lee2018introduction&quot;&gt;[13] J. M. Lee, &lt;i&gt;Introduction to Riemannian manifolds&lt;/i&gt; (Springer, 2018).&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;duan2020ngboost&quot;&gt;[10] T. Duan, A. Anand, D. Y. Ding, K. K. Thai, S. Basu, A. Ng, &amp;amp; A. Schuler, &quot;Ngboost: Natural gradient boosting for probabilistic prediction,&quot; &lt;i&gt;International Conference on Machine Learning&lt;/i&gt; (PMLR, 2020), pp. 2690–2700.&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;tu2011introduction&quot;&gt;[11] L. W. Tu, &quot;An introduction to manifolds. Second,&quot; &lt;i&gt;New York, US: Springer&lt;/i&gt; (2011).&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;lee2018introduction&quot;&gt;[12] J. M. Lee, &lt;i&gt;Introduction to Riemannian manifolds&lt;/i&gt; (Springer, 2018).&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;footnotes&quot;&gt;Footnotes:&lt;/h2&gt;
 
