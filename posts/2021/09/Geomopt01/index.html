@@ -286,7 +286,7 @@ In the context of reinforcement learning,  <code class="language-plaintext highl
 
 <p>In all of the examples above, the objective function is expressed in terms of an expectation w.r.t. a distribution in red, parameterized with the parameter <code class="language-plaintext highlighter-rouge">$ \tau $</code>. 
 The geometric structure of a distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> for the quantity <code class="language-plaintext highlighter-rouge">$ w $</code> can be exploited to improve the learning algorithms. The table below summarizes the three examples. 
-More applications of similar nature are discussed in <a class="citation" href="#le2007topmoumoute">[9]</a> and <a class="citation" href="#duan2020ngboost">[10]</a>.</p>
+More applications of similar nature are discussed in <a class="citation" href="#le2007topmoumoute">[9]</a>, <a class="citation" href="#girolami2011riemann">[10]</a> and <a class="citation" href="#duan2020ngboost">[11]</a>.</p>
 
 <table>
   <thead>
@@ -337,7 +337,7 @@ The following figure illustrates four distributions in the Gaussian family denot
 <h1 id="intrinsic-parameterizations">Intrinsic Parameterizations</h1>
 <hr>
 <p>We start by discussing a special type of parameterizations, we call intrinsic parameterizations of distributions which are useful to obtain non-singular FIMs.
-An arbitrary parameterization may not always be appropriate for a smooth manifold <a class="citation" href="#tu2011introduction">[11]</a>. The requirement is that the parameterization should be such that the manifold is locally like a <em>flat</em> vector space, for example, how the curved Earth surface looks flat to us, locally.
+An arbitrary parameterization may not always be appropriate for a smooth manifold <a class="citation" href="#tu2011introduction">[12]</a>. The requirement is that the parameterization should be such that the manifold is locally like a <em>flat</em> vector space, for example, how the curved Earth surface looks flat to us, locally.
 We will refer to such flat vector space as a <em>local</em> vector-space structure (denote it by <code class="language-plaintext highlighter-rouge">$ E $</code>).</p>
 
 <div class="notice--success">
@@ -507,7 +507,7 @@ where $K$ is the number of entries of parameter array $\tau$ and
 <code class="language-plaintext highlighter-rouge">$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$</code>.
 The regularity condition guarantees that the FIM is non-singular if the matrix exists, that is, the expectation in the definition exists.</p>
 
-<p>In what follows, we will assume the metric to be well-defined, which makes the Fisher-Rao metric a valid Riemannian metric <a class="citation" href="#lee2018introduction">[12]</a> since the corresponding FIM is positive definite everywhere in its intrinsic parameter space.</p>
+<p>In what follows, we will assume the metric to be well-defined, which makes the Fisher-Rao metric a valid Riemannian metric <a class="citation" href="#lee2018introduction">[13]</a> since the corresponding FIM is positive definite everywhere in its intrinsic parameter space.</p>
 
 <p>Finally, recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
 If this smoothness requirement is satisfied, we can obtain a new intrinsic parameterization via the transformation.
@@ -610,7 +610,7 @@ $$</code></p>
 <h1 id="dimension-of-a-manifold">Dimension of a manifold</h1>
 <hr>
 <p>We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
-Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#tu2011introduction">[11]</a>.
+Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#tu2011introduction">[12]</a>.
 This also gives us a tool to  identify non-manifold cases.
 We now illustrate this by examples.</p>
 
@@ -718,9 +718,10 @@ $$</code></p>
 <p><span id="wierstra2014natural">[7] D. Wierstra, T. Schaul, T. Glasmachers, Y. Sun, J. Peters, &amp; J. Schmidhuber, "Natural evolution strategies," <i>The Journal of Machine Learning Research</i> <b>15</b>:949–980 (2014).</span></p>
 <p><span id="kakade2001natural">[8] S. M. Kakade, "A natural policy gradient," <i>Advances in neural information processing systems</i> <b>14</b> (2001).</span></p>
 <p><span id="le2007topmoumoute">[9] N. Le Roux, P.-A. Manzagol, &amp; Y. Bengio, "Topmoumoute Online Natural Gradient Algorithm.," <i>NIPS</i> (Citeseer, 2007), pp. 849–856.</span></p>
-<p><span id="duan2020ngboost">[10] T. Duan, A. Anand, D. Y. Ding, K. K. Thai, S. Basu, A. Ng, &amp; A. Schuler, "Ngboost: Natural gradient boosting for probabilistic prediction," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 2690–2700.</span></p>
-<p><span id="tu2011introduction">[11] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p>
-<p><span id="lee2018introduction">[12] J. M. Lee, <i>Introduction to Riemannian manifolds</i> (Springer, 2018).</span></p>
+<p><span id="girolami2011riemann">[10] M. Girolami &amp; B. Calderhead, "Riemann manifold langevin and hamiltonian monte carlo methods," <i>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</i> <b>73</b>:123–214 (2011).</span></p>
+<p><span id="duan2020ngboost">[11] T. Duan, A. Anand, D. Y. Ding, K. K. Thai, S. Basu, A. Ng, &amp; A. Schuler, "Ngboost: Natural gradient boosting for probabilistic prediction," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 2690–2700.</span></p>
+<p><span id="tu2011introduction">[12] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p>
+<p><span id="lee2018introduction">[13] J. M. Lee, <i>Introduction to Riemannian manifolds</i> (Springer, 2018).</span></p>
 
 <h2 id="footnotes">Footnotes:</h2>
 
