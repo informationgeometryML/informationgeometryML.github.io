@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-13T00:57:04-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-15T03:12:35-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -2509,10 +2509,10 @@ We will discuss more about this in &lt;a href=&quot;/posts/2021/11/Geomopt04/#tw
     &lt;/li&gt;
   &lt;/ol&gt;
 &lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post should help readers to understand natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. The main propose of this post is to show how to define and compute natural-gradients. The space of natural-gradients evaluated at the same point is called a tangent space at that point.</summary></entry><entry><title type="html">Part I: Smooth Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Smooth Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
-&lt;p&gt;This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM) under a parametrization. The purpose is to show that&lt;/p&gt;
+&lt;p&gt;This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts useful to ensure non-singular FIMs&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;The FIM plays an essential role in statistics and machine learning&lt;/li&gt;
-  &lt;li&gt;For a parametric distribution family, the FIM induces a &lt;strong&gt;Riemannian&lt;/strong&gt; geometric-structure&lt;/li&gt;
+  &lt;li&gt;Regularity conditions and intrinsic parameterization of a distribution&lt;/li&gt;
+  &lt;li&gt;Dimensionality of a smooth manifold&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;The discussion here is informal and focuses on more on intuitions, rather than rigor.&lt;/p&gt;
@@ -2537,74 +2537,70 @@ We will discuss more about this in &lt;a href=&quot;/posts/2021/11/Geomopt04/#tw
 
 &lt;h1 id=&quot;motivation&quot;&gt;Motivation&lt;/h1&gt;
 &lt;hr /&gt;
-&lt;p&gt;Let’s start with some motivation: why should we care about geometric structures of probability distributions?&lt;/p&gt;
+&lt;p&gt;The goal of this blog is introduce the geometric structures associated with probability distribution. Let’s start with some motivation: why should we care about such geometric structures?&lt;/p&gt;
 
-&lt;p&gt;The answer is that by exploiting geometric structures, we could&lt;/p&gt;
+&lt;p&gt;The answer is that by exploiting geometric structures, we can&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;design efficient and simple algorithms for machine learning &lt;a class=&quot;citation&quot; href=&quot;#amari1998natural&quot;&gt;[1]&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;design methods whose performance is robust and less sensitive to re-parametrization &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[2]&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;understand models and algorithms through the lens of differential geometry, information geometry, and invariant theory &lt;a class=&quot;citation&quot; href=&quot;#liang2019fisher&quot;&gt;[3]&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;design efficient and simple algorithms &lt;a class=&quot;citation&quot; href=&quot;#amari1998natural&quot;&gt;[1]&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;design robust methods that are less sensitive to re-parametrization &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[2]&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;understand the behavior of models/algorithms using tools from differential geometry, information geometry, and invariant theory &lt;a class=&quot;citation&quot; href=&quot;#liang2019fisher&quot;&gt;[3]&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Probability distributions form the backbone of majority of machine-learning approaches, for example, any approach that uses probabilistic modeling is built upon such distributions. 
-For all such cases, we can exploit the underlying geometric structure, induced by the Fisher-Rao metric, which is the topic of this blog.&lt;/p&gt;
+&lt;p&gt;This is true for a majority of machine learning methods, all of which make use of probability distributions of various kinds.&lt;/p&gt;
 
-&lt;p&gt;Below, we give some common examples from machine learning, where probability distributions naturally arise.
-In these cases, we can exploit the structure to design efficient learning algorithms.&lt;/p&gt;
+&lt;p&gt;Below, we give some common examples from the literature. A reader familiar with such examples can skip this part.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Least Square (Empirical Risk Minimization):&lt;/p&gt;
+  &lt;p&gt;&lt;strong&gt;Least Squares&lt;/strong&gt; (frequestist estimation):&lt;/p&gt;
 
-  &lt;p&gt;Given N input-output pairs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(x_i,y_i)$&lt;/code&gt;,  the least-square loss can be viewed as an expectation w.r.t. a probability distribution.
+  &lt;p&gt;Given N input-output pairs &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(x_i,y_i)$&lt;/code&gt;,  the least-square loss can be viewed as a finite-sample approximation of the expectation w.r.t. a probability distribution (data generating distribution),
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\min_{\tau}  \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2 + \frac{1}{2}\log(2\pi) 
- &amp;amp;= - \frac{1}{n}  \sum_{i=1}^{n}  \log \mathcal{N}(y_i | x_i^T\tau,1) \\
-&amp;amp; \approx \int [ -\log p(x,y | \tau) + \log p(x) ]  d p(x,y | \tau) \\
-&amp;amp; =  E_{ \color{red}  { p(x,y | \tau) } } [ - \log  p(x,y | \tau)    ] + \underbrace{ E_{  p(x)  } [  \log  p(x)    ]}
-_{ \text{ constant w.r.t. } \tau }
+\min_{\tau}  \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2 
+ &amp;amp;= - \frac{1}{n}  \sum_{i=1}^{n}  \log \mathcal{N}(y_i | x_i^T\tau,1) + \text{constant}\\
+&amp;amp; \approx  E_{ \color{red}  { p(x,y | \tau) } } [ - \log  p(x,y | \tau) ]
 \end{aligned} \tag{1}\label{1}
 $$&lt;/code&gt;
-Here &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $&lt;/code&gt; is assumed to be the data-generating distribution, and the least-square loss is the finite-sample approximation of the expectation. The normal distribution is denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{N} (y | x^T\tau,1) $&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ x^T\tau $&lt;/code&gt; and variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ 1 $&lt;/code&gt;.&lt;/p&gt;
+where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $&lt;/code&gt; is assumed to be the data-generating distribution. (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{N} (y | m, v) $&lt;/code&gt; denotes a normal distribution over &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ y $&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ m $&lt;/code&gt; and variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ v $&lt;/code&gt;).&lt;/p&gt;
 
-  &lt;p&gt;Algorithms such as  &lt;a href=&quot;https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring&quot;&gt;&lt;strong&gt;Fisher scoring&lt;/strong&gt;&lt;/a&gt;  and &lt;strong&gt;(emprical) natural-gradient descent&lt;/strong&gt; &lt;a class=&quot;citation&quot; href=&quot;#martens2020new&quot;&gt;[4]&lt;/a&gt; are commonly used methods that exploit the geometric structure of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(x,y | \tau)$&lt;/code&gt;. These algorithms are derived from a frequentist perspective.
-We can also generalize this approach to neural network cases &lt;a class=&quot;citation&quot; href=&quot;#martens2020new&quot;&gt;[4]&lt;/a&gt;.&lt;/p&gt;
+  &lt;p&gt;Well-known algorithms such as  &lt;a href=&quot;https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring&quot;&gt;&lt;strong&gt;Fisher scoring&lt;/strong&gt;&lt;/a&gt;  and &lt;strong&gt;(emprical) natural-gradient descent&lt;/strong&gt; &lt;a class=&quot;citation&quot; href=&quot;#martens2020new&quot;&gt;[4]&lt;/a&gt; are commonly used methods that exploit the geometric structure of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(x,y | \tau)$&lt;/code&gt;. These are examples of algorithms derived from a frequentist perspective, which can also be generalized to neural network &lt;a class=&quot;citation&quot; href=&quot;#martens2020new&quot;&gt;[4]&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Variational Inference:&lt;/p&gt;
+  &lt;p&gt;&lt;strong&gt;Variational Inference&lt;/strong&gt; (Bayesian estimation):&lt;/p&gt;
 
   &lt;p&gt;Given a prior &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(z) $&lt;/code&gt; and a likelihood &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(\mathcal{D} | z ) $&lt;/code&gt; over a latent vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$z$&lt;/code&gt; and known data &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{D} $&lt;/code&gt;, we can approximate the exact posterior &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p( z | \mathcal{D} ) =\frac{p(z,\mathcal{D})}{p(\mathcal{D})} $&lt;/code&gt; by optimizing a variational objective with respect to  an approximated distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ q(z | \tau) $&lt;/code&gt;:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\min_{\tau} \mathrm{KL} [ { q(z | \tau) || p( z | \mathcal{D} ) }   ] = E_{ \color{red}  {q(z | \tau)} } [ \log q(z | \tau) - \log p( z , \mathcal{D} )    ]  + \underbrace{\log p(\mathcal{D} )}_{ \text{ constant w.r.t. } \tau } 
+\min_{\tau} \mathrm{KL} [ { q(z | \tau) || p( z | \mathcal{D} ) }   ] = E_{ \color{red}  {q(z | \tau)} } [ \log q(z | \tau) - \log p( z , \mathcal{D} )    ]  + \text{constant} 
 \end{aligned} \tag{2}\label{2}
 $$&lt;/code&gt;
 where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathrm{KL} [ q(z) ||  p(z) ] :=  E_{ {q(z)} } [ \log \big(\frac{q(z)}{p(z)}\big) ]$&lt;/code&gt; is the Kullback–Leibler divergence.&lt;/p&gt;
 
   &lt;p&gt;The &lt;strong&gt;natural-gradient variational inference&lt;/strong&gt; &lt;a class=&quot;citation&quot; href=&quot;#khan2017conjugate&quot;&gt;[5]&lt;/a&gt; is an algorithm that speeds up the inference by exploiting the geometry of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(z|\tau)$&lt;/code&gt; induced by the Fisher-Rao metric.
-This approach is derived from a Bayesian  perspective.
-We can  generalize  this idea  to neural network cases &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[2]&lt;/a&gt; &lt;a class=&quot;citation&quot; href=&quot;#osawa2019practical&quot;&gt;[6]&lt;/a&gt;.&lt;/p&gt;
+This approach is derived from a Bayesian  perspective, and can also be generalized to neural network cases &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[2]&lt;/a&gt; &lt;a class=&quot;citation&quot; href=&quot;#osawa2019practical&quot;&gt;[6]&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Evolution Strategies (Gradient-free Search):&lt;/p&gt;
+  &lt;p&gt;&lt;strong&gt;Evolution Strategies&lt;/strong&gt; (Global optimization):&lt;/p&gt;
 
-  &lt;p&gt;In gradient-free optimization, we often use a search distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi(a | \tau ) $&lt;/code&gt; to find the optimal solution of an objective funtion &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h(a)$&lt;/code&gt; by solving the following problem:
+  &lt;p&gt;Global optimization methods often use a search distribution, denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi(a | \tau ) $&lt;/code&gt;, to find the global maximum of an objective &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h(a)$&lt;/code&gt; by solving a problem of the following form:
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \min_{\tau}  E_{ \color{red}  {\pi(a | \tau)} } [ h(a)  ]
 \end{aligned} \tag{3}\label{3}
 $$&lt;/code&gt;
-The &lt;strong&gt;natural evolution strategies&lt;/strong&gt; &lt;a class=&quot;citation&quot; href=&quot;#wierstra2014natural&quot;&gt;[7]&lt;/a&gt; is an algorithm that speeds up the search process by exploiting the geometry of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi(a|\tau)$&lt;/code&gt;.
+Samples from the search distribution are evaluated through a “fitness” function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ h(a) $&lt;/code&gt;, and guide the optimization towards better optima.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The &lt;strong&gt;natural evolution strategies&lt;/strong&gt; &lt;a class=&quot;citation&quot; href=&quot;#wierstra2014natural&quot;&gt;[7]&lt;/a&gt; is an algorithm that speeds up the search process by exploiting the geometry of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\pi(a|\tau)$&lt;/code&gt;.
 In the context of reinforcement learning,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi(a | \tau ) $&lt;/code&gt; is known as the policy distribution to generate actions and the natural evolution strategies is known as the &lt;strong&gt;natural policy gradient&lt;/strong&gt; method &lt;a class=&quot;citation&quot; href=&quot;#kakade2001natural&quot;&gt;[8]&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;In these examples, we can express the objective function in terms of an expectation w.r.t. a parametric family highlighted in red. 
-By doing so, we can exploit the geometric structure of a parametric family denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; induced by the Fisher-Rao metric.
-More applications of this
-geometric structure 
-can be found at &lt;a class=&quot;citation&quot; href=&quot;#le2007topmoumoute&quot;&gt;[9]&lt;/a&gt; and &lt;a class=&quot;citation&quot; href=&quot;#duan2020ngboost&quot;&gt;[10]&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;In all of the examples above, the objective function is expressed in terms of an expectation w.r.t. a distribution in red, parameterized with the parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \tau $&lt;/code&gt;. 
+The geometric structure of a distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; for the quantity &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ w $&lt;/code&gt; can be exploited to improve the learning algorithms. The table below summarizes the three examples. 
+More applications of similar nature are discussed in &lt;a class=&quot;citation&quot; href=&quot;#le2007topmoumoute&quot;&gt;[9]&lt;/a&gt; and &lt;a class=&quot;citation&quot; href=&quot;#duan2020ngboost&quot;&gt;[10]&lt;/a&gt;.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
@@ -2617,8 +2613,8 @@ can be found at &lt;a class=&quot;citation&quot; href=&quot;#le2007topmoumoute&q
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;Least Square&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;observation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(x,y)$&lt;/code&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(x,y|\tau)$&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;observation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$y$&lt;/code&gt;&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(y|x,\tau)$&lt;/code&gt;&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: left&quot;&gt;Variational Inference&lt;/td&gt;
@@ -2639,15 +2635,13 @@ can be found at &lt;a class=&quot;citation&quot; href=&quot;#le2007topmoumoute&q
   &lt;p&gt;In general, we may have to compute or estimate the inverse of the FIM. However, in many useful machine learning applications, algorithms such as &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[2]&lt;/a&gt;  &lt;a class=&quot;citation&quot; href=&quot;#martens2020new&quot;&gt;[4]&lt;/a&gt; &lt;a class=&quot;citation&quot; href=&quot;#khan2017conjugate&quot;&gt;[5]&lt;/a&gt; &lt;a class=&quot;citation&quot; href=&quot;#osawa2019practical&quot;&gt;[6]&lt;/a&gt;  &lt;a class=&quot;citation&quot; href=&quot;#wierstra2014natural&quot;&gt;[7]&lt;/a&gt;  &lt;a class=&quot;citation&quot; href=&quot;#kakade2001natural&quot;&gt;[8]&lt;/a&gt;  &lt;a class=&quot;citation&quot; href=&quot;#le2007topmoumoute&quot;&gt;[9]&lt;/a&gt; can be efficiently implemented without
 explicitly computing the inverse of the FIM.&lt;/p&gt;
 
-  &lt;p&gt;See 
+  &lt;p&gt;We discuss this in other posts; see&lt;br /&gt;
 &lt;a href=&quot;/posts/2021/12/Geomopt05/#efficient-ngd-for-multivariate-gaussians&quot;&gt;Part V&lt;/a&gt; and 
-&lt;a href=&quot;/posts/2021/07/ICML/&quot;&gt;our ICML work&lt;/a&gt; 
-as examples.&lt;/p&gt;
+&lt;a href=&quot;/posts/2021/07/ICML/&quot;&gt;our ICML work&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;p&gt;We will mainly focus on the geometric structure of (finite-dimensional) parametric families.
-For example, let’s consider a 1-dimensional Gaussian family.
-The following figure illustrates four distributions in a Gaussian family denoted by
+&lt;p&gt;In the rest of the post, we will mainly focus on the geometric structure of (finite-dimensional) parametric families, for example, a 1-dimensional Gaussian family.
+The following figure illustrates four distributions in the Gaussian family denoted by
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w | \tau ): = \mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $&lt;/code&gt;  and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau :=(\mu,\sigma) $&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/gauss1d.png&quot; alt=&quot;Figure 2&quot; title=&quot;Source:Wikipedia&quot; /&gt;&lt;/p&gt;
@@ -3062,7 +3056,7 @@ $$&lt;/code&gt;&lt;/p&gt;
       &lt;p&gt;In differential geometry, the smoothness requirement is known as a diffeomorphism. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on the Fisher-Rao metric, also known as the Fisher information matrix (FIM) under a parametrization. The purpose is to show that The FIM plays an essential role in statistics and machine learning For a parametric distribution family, the FIM induces a Riemannian geometric-structure</summary></entry><entry><title type="html">Structured Natural Gradient Descent (ICML 2021)</title><link href="/posts/2021/07/ICML/" rel="alternate" type="text/html" title="Structured Natural Gradient Descent (ICML 2021)" /><published>2021-07-05T00:00:00-07:00</published><updated>2021-07-05T00:00:00-07:00</updated><id>/posts/2021/07/GeomProj01</id><content type="html" xml:base="/posts/2021/07/ICML/">&lt;p&gt;More about this work &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[1]&lt;/a&gt;: &lt;a href=&quot;https://www.youtube.com/watch?v=vEY1ZxDJX8o&amp;amp;t=11s&quot;&gt;(Youtube) talk&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2102.07405&quot;&gt;extended paper&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2107.10884&quot;&gt;short paper&lt;/a&gt;,
+&lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts useful to ensure non-singular FIMs Regularity conditions and intrinsic parameterization of a distribution Dimensionality of a smooth manifold</summary></entry><entry><title type="html">Structured Natural Gradient Descent (ICML 2021)</title><link href="/posts/2021/07/ICML/" rel="alternate" type="text/html" title="Structured Natural Gradient Descent (ICML 2021)" /><published>2021-07-05T00:00:00-07:00</published><updated>2021-07-05T00:00:00-07:00</updated><id>/posts/2021/07/GeomProj01</id><content type="html" xml:base="/posts/2021/07/ICML/">&lt;p&gt;More about this work &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[1]&lt;/a&gt;: &lt;a href=&quot;https://www.youtube.com/watch?v=vEY1ZxDJX8o&amp;amp;t=11s&quot;&gt;(Youtube) talk&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2102.07405&quot;&gt;extended paper&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2107.10884&quot;&gt;short paper&lt;/a&gt;,
 &lt;a href=&quot;/img/poster.pdf&quot;&gt;poster&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
