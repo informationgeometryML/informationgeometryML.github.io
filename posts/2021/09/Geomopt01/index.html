@@ -277,16 +277,14 @@ This approach is derived from a Bayesian  perspective, and can also be generaliz
 \end{aligned} \tag{3}\label{3}
 $$</code>
 Samples from the search distribution are evaluated through a “fitness” function <code class="language-plaintext highlighter-rouge">$ h(a) $</code>, and guide the optimization towards better optima.</p>
-</blockquote>
 
-<blockquote>
   <p>The <strong>natural evolution strategies</strong> <a class="citation" href="#wierstra2014natural">[7]</a> is an algorithm that speeds up the search process by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$\pi(a|\tau)$</code>.
 In the context of reinforcement learning,  <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code> is known as the policy distribution to generate actions and the natural evolution strategies is known as the <strong>natural policy gradient</strong> method <a class="citation" href="#kakade2001natural">[8]</a>.</p>
 </blockquote>
 
 <p>In all of the examples above, the objective function is expressed in terms of an expectation w.r.t. a distribution in red, parameterized with the parameter <code class="language-plaintext highlighter-rouge">$ \tau $</code>. 
 The geometric structure of a distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> for the quantity <code class="language-plaintext highlighter-rouge">$ w $</code> can be exploited to improve the learning algorithms. The table below summarizes the three examples. 
-More applications of similar nature are discussed in <a class="citation" href="#le2007topmoumoute">[9]</a>, <a class="citation" href="#girolami2011riemann">[10]</a> and <a class="citation" href="#duan2020ngboost">[11]</a>.</p>
+More applications of similar nature are discussed in <a class="citation" href="#le2007topmoumoute">[9]</a>, <a class="citation" href="#girolami2011riemann">[10]</a>, and <a class="citation" href="#duan2020ngboost">[11]</a>.</p>
 
 <table>
   <thead>
