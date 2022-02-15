@@ -359,7 +359,8 @@ The second condition may be abstract since a manifold can be abstractly defined.
 This condition becomes more clearly when we have two distinct intrinsic parameterizations such as $\tau$ and $\eta$ to represent the same sub-set in the manifold.
 We require that there exists a <strong>bi-jective</strong> map from $\tau$ to $\eta$ such that the map and its
 inverse map are both <strong>smooth</strong>. The smoothness of the inverse map is essential since these two parameterizations can be arbitrary. In other words, the condition should not depend on the order
-when we speicify these two parametrizations.</p>
+when we speicify these two parametrizations. The uniqueness implies the FIM is non-singular at a point while the smoothness (and the openness) implies that the
+FIM is non-singular in the whole parameter space.</p>
   </li>
 </ul>
 
@@ -383,7 +384,7 @@ when we speicify these two parametrizations.</p>
 <p>Now, we discuss invalid cases, where not all conditions are satisified.</p>
 
 <blockquote>
-  <p>Parameterization 2 (non-smooth):</p>
+  <p>Parameterization 2 (non-smoothness):</p>
 
   <p>Let’s define a map <code class="language-plaintext highlighter-rouge">$f : [0,2\pi) \rightarrow \mathcal{S}^1 $</code> such that <code class="language-plaintext highlighter-rouge">$f(\theta) = (\sin \theta, \cos \theta ) $</code>, where we use $\mathcal{S}^1$ to denote the circle.</p>
 
@@ -396,7 +397,7 @@ In fact, there does not exist a (single) <strong>global</strong> and intrinsic p
 <p>As shown in Parametrization 2, continuity (or smoothness<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>) of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). Without such smoothness, the parameterization is not instrinsic, but smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such case, the Jacobian matrix (to change between the parameterizations) is non-singular, and we can use the chain rule and inverse function theorem to jump between different intrinsic parameterizations.</p>
 
 <blockquote>
-  <p>Parametrization 3 (non-open):</p>
+  <p>Parametrization 3 (non-openness):</p>
 
   <p>The circle does <strong>not</strong> look like a flat space under the following parametrization
 <code class="language-plaintext highlighter-rouge">$\{ (x,y) | x^2+y^2=1, x,y \in \mathcal{R} \} $</code>. The number of entries in this parameter array is 2.</p>
@@ -407,7 +408,7 @@ In fact, there does not exist a (single) <strong>global</strong> and intrinsic p
 </blockquote>
 
 <blockquote>
-  <p>Parametrization 4 (non-unique):</p>
+  <p>Parametrization 4 (non-uniqueness):</p>
 
   <p>Let’s consider the following non-intrinsic parametrization $\tau$ of the circle: <code class="language-plaintext highlighter-rouge">$\{ (\frac{x}{\sqrt{x^2+y^2}}, \frac{y}{\sqrt{x^2+y^2}}) | x^2+y^2 \neq 0, x,y \in \mathcal{R}  \}$</code>, where <code class="language-plaintext highlighter-rouge">$\tau=(x,y)$</code>. The parameter space $\Omega_\tau$ is open in $\mathcal{R}^2$.</p>
 
@@ -432,7 +433,7 @@ Below is a formal condition.</p>
 </div>
 
 <p>Note that this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the definition of the partial derivatives, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
-Recall that an intrinsic parameterization must satisfy the conditions in openness, smooth, and uniquenss.
+Recall that an intrinsic parameterization must satisfy the conditions in openness, smoothness, and uniqueness.
 These partial derivatives implies the smooth condition and the linear independence implies the uniqueness condition. 
 In other words, an intrinsic parameterization is still necessary, just that the requirements are not explicit and hidden within the regularity condition.
 We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-computation">here</a>.</p>

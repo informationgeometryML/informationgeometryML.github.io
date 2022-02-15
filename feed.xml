@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-15T10:57:54-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-15T11:08:10-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -2671,7 +2671,8 @@ The second condition may be abstract since a manifold can be abstractly defined.
 This condition becomes more clearly when we have two distinct intrinsic parameterizations such as $\tau$ and $\eta$ to represent the same sub-set in the manifold.
 We require that there exists a &lt;strong&gt;bi-jective&lt;/strong&gt; map from $\tau$ to $\eta$ such that the map and its
 inverse map are both &lt;strong&gt;smooth&lt;/strong&gt;. The smoothness of the inverse map is essential since these two parameterizations can be arbitrary. In other words, the condition should not depend on the order
-when we speicify these two parametrizations.&lt;/p&gt;
+when we speicify these two parametrizations. The uniqueness implies the FIM is non-singular at a point while the smoothness (and the openness) implies that the
+FIM is non-singular in the whole parameter space.&lt;/p&gt;
   &lt;/li&gt;
 &lt;/ul&gt;
 
@@ -2695,7 +2696,7 @@ when we speicify these two parametrizations.&lt;/p&gt;
 &lt;p&gt;Now, we discuss invalid cases, where not all conditions are satisified.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Parameterization 2 (non-smooth):&lt;/p&gt;
+  &lt;p&gt;Parameterization 2 (non-smoothness):&lt;/p&gt;
 
   &lt;p&gt;Let’s define a map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f : [0,2\pi) \rightarrow \mathcal{S}^1 $&lt;/code&gt; such that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\theta) = (\sin \theta, \cos \theta ) $&lt;/code&gt;, where we use $\mathcal{S}^1$ to denote the circle.&lt;/p&gt;
 
@@ -2708,7 +2709,7 @@ In fact, there does not exist a (single) &lt;strong&gt;global&lt;/strong&gt; and
 &lt;p&gt;As shown in Parametrization 2, continuity (or smoothness&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;) of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). Without such smoothness, the parameterization is not instrinsic, but smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such case, the Jacobian matrix (to change between the parameterizations) is non-singular, and we can use the chain rule and inverse function theorem to jump between different intrinsic parameterizations.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Parametrization 3 (non-open):&lt;/p&gt;
+  &lt;p&gt;Parametrization 3 (non-openness):&lt;/p&gt;
 
   &lt;p&gt;The circle does &lt;strong&gt;not&lt;/strong&gt; look like a flat space under the following parametrization
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (x,y) | x^2+y^2=1, x,y \in \mathcal{R} \} $&lt;/code&gt;. The number of entries in this parameter array is 2.&lt;/p&gt;
@@ -2719,7 +2720,7 @@ In fact, there does not exist a (single) &lt;strong&gt;global&lt;/strong&gt; and
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Parametrization 4 (non-unique):&lt;/p&gt;
+  &lt;p&gt;Parametrization 4 (non-uniqueness):&lt;/p&gt;
 
   &lt;p&gt;Let’s consider the following non-intrinsic parametrization $\tau$ of the circle: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (\frac{x}{\sqrt{x^2+y^2}}, \frac{y}{\sqrt{x^2+y^2}}) | x^2+y^2 \neq 0, x,y \in \mathcal{R}  \}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau=(x,y)$&lt;/code&gt;. The parameter space $\Omega_\tau$ is open in $\mathcal{R}^2$.&lt;/p&gt;
 
@@ -2744,7 +2745,7 @@ Below is a formal condition.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Note that this regularity condition implicitly assumes that the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt; due to the definition of the partial derivatives, where K is the number of entries in parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.
-Recall that an intrinsic parameterization must satisfy the conditions in openness, smooth, and uniquenss.
+Recall that an intrinsic parameterization must satisfy the conditions in openness, smoothness, and uniqueness.
 These partial derivatives implies the smooth condition and the linear independence implies the uniqueness condition. 
 In other words, an intrinsic parameterization is still necessary, just that the requirements are not explicit and hidden within the regularity condition.
 We will discuss more about this at &lt;a href=&quot;#caveats-of-the-fisher-matrix-computation&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
