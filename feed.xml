@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-15T03:12:35-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-15T08:21:13-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -2648,12 +2648,9 @@ The following figure illustrates four distributions in the Gaussian family denot
 
 &lt;h1 id=&quot;intrinsic-parameterizations&quot;&gt;Intrinsic Parameterizations&lt;/h1&gt;
 &lt;hr /&gt;
-&lt;p&gt;We start by discussing parameterizations for a distribution family. As we will see, a proper parameterization plays an important role in defining the FIM.
-We can not use an arbitrary differentiable parameterization to represent a geometric structure.
-This structure is also known as a manifold structure &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[11]&lt;/a&gt;. A (smooth) manifold should be locally like a “flat” vector space. For example, consider the (curved) Earth surface. It looks like a (locally) flat space to us.&lt;/p&gt;
-
-&lt;p&gt;We require that a manifold should be locally like a vector space denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt; under a proper  parameterization. Informally, we refer to 
-such structure as a local vector-space structure.&lt;/p&gt;
+&lt;p&gt;We start by discussing a special type of parameterizations, we call intrinsic parameterizations of distributions which are useful to obtain non-singular FIMs.
+An arbitrary parameterization may not always be appropriate for a smooth manifold &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[11]&lt;/a&gt;. The requirement is that the parameterization should be such that the manifold is locally a &lt;em&gt;flat&lt;/em&gt; vector space, for example, how the curved Earth surface looks flat to us, locally.
+We will refer to such flat vector space as a &lt;em&gt;local&lt;/em&gt; vector-space structure (denote it by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt;).&lt;/p&gt;
 
 &lt;div class=&quot;notice--success&quot;&gt;
   &lt;p&gt;Local &lt;strong&gt;vector-space structure&lt;/strong&gt;:&lt;/p&gt;
@@ -2661,31 +2658,21 @@ such structure as a local vector-space structure.&lt;/p&gt;
   &lt;p&gt;It supports local &lt;strong&gt;vector additions&lt;/strong&gt;,  local &lt;strong&gt;real scalar products&lt;/strong&gt;, and their algebraic laws (i.e., the distributive law). (see &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; for the details.)&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Intuitively, this vector-space structure means that a local (small) perturbation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt; at each point should stay in the parameter space.
-Technically, the parameter space denoted by $\Omega_\tau$ should be an &lt;strong&gt;open&lt;/strong&gt; set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of a parameter array.
-As we will see soon, the FIM is a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt;-by-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; matrix.&lt;/p&gt;
+&lt;p&gt;Intuitively, with such a local vector-space structure, we ensure that a small, local perturbation at each point in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt; stays within the parameter space of $\tau$ (denoted by $\Omega_\tau$). Technically, this requires $\Omega_\tau$ to be an &lt;strong&gt;open&lt;/strong&gt; set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of a parameter array.
+We refer to the parametrizations that satisfy this condition as an intrinsic parameterization &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, which as we will see will lead to non-singular FIMs of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt;-by-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt;&lt;sup id=&quot;fnref:1:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.
+Non-singularity is crucial for algorithms such as natural-gradient descent, as we will see in &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space&quot;&gt;Part IV&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;We refer to this kind of parametrizations as an intrinsic parameterization&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.
-The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined (finite).
-These properties will play a key role in &lt;a href=&quot;/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space&quot;&gt;Part IV&lt;/a&gt; for natural-gradient descent.
-As we will see later that every intrinsic parametrization of a manifold has the same degrees of freedom.&lt;/p&gt;
-
-&lt;p&gt;To illustrate this, let’s consider a unit circle in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^2$&lt;/code&gt; as shown in the Figure.
-Clearly, a point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ (0,1) $&lt;/code&gt; highlighted in green is in the circle, where we consider its center as the origin.&lt;/p&gt;
+&lt;p&gt;We will now give a simple example of intrinsic parameterization on a unit circle in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^2$&lt;/code&gt; at the point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ (0,1) $&lt;/code&gt; highlighted in green.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/circle.png&quot; title=&quot;Source:Wikipedia&quot; width=&quot;300&quot; /&gt;&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Parametrization 1 (Intrinsic parameterization):&lt;/p&gt;
+  &lt;p&gt;Parameterization 1 (an intrinsic parameterization):&lt;/p&gt;
 
   &lt;p&gt;A (local) parametrization at $ (0,1) $ highlighted in red for the circle is
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (t,\sqrt{1-t^2}) | -h&amp;lt;t&amp;lt;h \} $&lt;/code&gt;, where $h=0.1$. We use &lt;strong&gt;one&lt;/strong&gt; (scalar) parameter in this parametrization.&lt;/p&gt;
-
-  &lt;p&gt;The manifold is (locally) “flat” since we can always find a small &lt;strong&gt;1-dimensional&lt;/strong&gt; perturbation $E$ in the &lt;strong&gt;1-dimensional&lt;/strong&gt; parameter space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_t=\{t|-h&amp;lt;t&amp;lt;h \} $&lt;/code&gt;.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (t,\sqrt{1-t^2}) | -h&amp;lt;t&amp;lt;h \} $&lt;/code&gt;, where $h=0.1$. We use &lt;strong&gt;one&lt;/strong&gt; (scalar) parameter in this parametrization. The manifold is (locally) “flat” since we can always find a small &lt;strong&gt;1-dimensional&lt;/strong&gt; perturbation $E$ in the &lt;strong&gt;1-dimensional&lt;/strong&gt; parameter space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_t=\{t|-h&amp;lt;t&amp;lt;h \} $&lt;/code&gt;. Therefore this is an intrinsic parameterization.&lt;/p&gt;
 
   &lt;p&gt;&lt;img src=&quot;/img/1d-perturbation.png&quot; title=&quot;Fig&quot; width=&quot;300&quot; /&gt;&lt;/p&gt;
-
-  &lt;p&gt;This parametrization is called an &lt;strong&gt;intrinsic&lt;/strong&gt; parameterization.&lt;/p&gt;
 
   &lt;p&gt;We can similarly define a (local) parametrization at each point of the circle. In fact, we can use  finite (local) parameterizations to represent the whole circle as shown below.&lt;/p&gt;
 
@@ -2693,21 +2680,20 @@ Clearly, a point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Parametrization 2 (Non-intrinsic parameterization):&lt;/p&gt;
+  &lt;p&gt;Parameterization 2 (a non-intrinsic parameterization):&lt;/p&gt;
 
   &lt;p&gt;Let’s define a map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f : [0,2\pi) \rightarrow \mathcal{S}^1 $&lt;/code&gt; such that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\theta) = (\sin \theta, \cos \theta ) $&lt;/code&gt;, where we use $\mathcal{S}^1$ to denote the circle.&lt;/p&gt;
 
   &lt;p&gt;A (global) parametrization of the circle is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ f(\theta) | \theta \in [0,2\pi)  \}$&lt;/code&gt;, where we use one (scalar) parameter.&lt;/p&gt;
 
-  &lt;p&gt;This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$. Moreover, its inverse map $f^{-1}$ is &lt;strong&gt;not&lt;/strong&gt; continous at point $(0,1) \in  \mathcal{S}^1$.
-This parametrization is not intrinsic.
+  &lt;p&gt;This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$, and its inverse map $f^{-1}$ is &lt;strong&gt;not&lt;/strong&gt; continous at point $(0,1) \in  \mathcal{S}^1$. Therefore, this parametrization is not intrinsic.
 In fact, there does not exist a (single) &lt;strong&gt;global&lt;/strong&gt; and intrinsic parametrization to represent the circle.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;As shown in Parametrization 2, this smoothness requirement of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The smoothness&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt; of a map and the inverse map togeher gives us a way to generate new intrinsic parameterizations. In other words, the Jacobian matrix is non-singular if the requirement is satisfied. Thus, we can safely use the chain rule and inverse function theorem.&lt;/p&gt;
+&lt;p&gt;As shown in Parametrization 2, continuity (or smoothness&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;) of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). Without such smoothness, the parameterization is not instrinsic, but smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such case, the Jacobian matrix (to change between the parameterizations) is non-singular, and we can use the chain rule and inverse function theorem to jump between different parameterization.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Parametrization 3 (Non-intrinsic parameterization):&lt;/p&gt;
+  &lt;p&gt;Parametrization 3 (another non-intrinsic parameterization):&lt;/p&gt;
 
   &lt;p&gt;The circle does &lt;strong&gt;not&lt;/strong&gt; look like a flat space under the following parametrization
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ (x,y) | x^2+y^2=1, x,y \in \mathcal{R} \} $&lt;/code&gt;. The number of entries in this parameter array is 2.&lt;/p&gt;
@@ -2719,10 +2705,10 @@ In fact, there does not exist a (single) &lt;strong&gt;global&lt;/strong&gt; and
 
 &lt;h1 id=&quot;intrinsic-parameterizations-for-parametric-families&quot;&gt;Intrinsic Parameterizations for Parametric families&lt;/h1&gt;
 &lt;hr /&gt;
-&lt;p&gt;Now, we discuss how to choose a parameterization given a parametric family so that we can exploit the geometric structure &lt;a class=&quot;citation&quot; href=&quot;#amari2016information&quot;&gt;[12]&lt;/a&gt; induced by the Fisher-Rao metric.&lt;/p&gt;
+&lt;p&gt;The examples in the previous section clearly show the importance of parameterization, and that it should be chosen such that the parameter space is an open set. Now, we discuss how to choose such a parameterization for a given parametric family.&lt;/p&gt;
 
-&lt;p&gt;Given a parametric distribution family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; indexed by its parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; should be smooth w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \tau $&lt;/code&gt; by considering &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ w $&lt;/code&gt; to be fixed.
-We say a parametrization is &lt;strong&gt;intrinsic&lt;/strong&gt; if the following condition for parameter (array) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau $&lt;/code&gt; holds:&lt;/p&gt;
+&lt;p&gt;Roughly speaking, a parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \tau $&lt;/code&gt; for a family of distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; is intrinsic if the distribution &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(w|\tau) $&lt;/code&gt; is smooth w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \tau $&lt;/code&gt; for all fixed &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ w $&lt;/code&gt;.
+Below is a formal condition.&lt;/p&gt;
 
 &lt;div class=&quot;notice--success&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Regularity Condition&lt;/strong&gt;:&lt;/p&gt;
@@ -2733,37 +2719,38 @@ We say a parametrization is &lt;strong&gt;intrinsic&lt;/strong&gt; if the follow
   &lt;p&gt;In other words, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sum_i c_i \partial_{\tau_i} \log p(w|\tau)= 0 $&lt;/code&gt; holds only when constant &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_i$&lt;/code&gt; is zero and the value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_i$&lt;/code&gt; does not depent on  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$w$&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Note that this regularity condition implicitly assumes that the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt; due to the definition of the partial derivatives, where K is the number of entries in parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.
+&lt;p&gt;Note that this regularity condition implicitly assumes that the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt; due to the definition of the partial derivatives, where K is the number of entries in parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;. So an intrinsic parameterization is still necessary, just that the requirement is not explicit and hidden within the condition.
 We will discuss more about this at &lt;a href=&quot;#caveats-of-the-fisher-matrix-computation&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;We will use the following examples to illustrate this condition.&lt;/p&gt;
+&lt;p&gt;The following examples illustrates the regularity condition.&lt;/p&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Example 1 (Intrinsic parameterization):&lt;/p&gt;
+  &lt;p&gt;Example 1 (regularity condition for an intrinsic parameterization):&lt;/p&gt;
 
-  &lt;p&gt;We will show that the regularity condition holds. Consider a 1-dimensional Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu$&lt;/code&gt;, variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sigma$&lt;/code&gt;, and parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;.
-The partial derivatives are
+  &lt;p&gt;We will write the regularity condition at a point for an intrinsic parameterization. Consider a 1-dimensional Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu$&lt;/code&gt;, variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sigma$&lt;/code&gt;, and parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;.
+The partial derivatives are the following,
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
+  &lt;p&gt;Consider the partial derivatives at a point $(\mu=0, \sigma=1)$,&lt;/p&gt;
+
   &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
 \end{aligned}
 $$&lt;/code&gt;
-If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$&lt;/code&gt; holds for any $w$, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_1=c_2=0$&lt;/code&gt;, which implies  linear independence.&lt;/p&gt;
+For this point, the regularity condition will be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$&lt;/code&gt;. For this to be true for all $w$, we necessarily need to have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_1=c_2=0$&lt;/code&gt;, which implies  linear independence.&lt;/p&gt;
 
-  &lt;p&gt;Similarly, we can show that for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu \in \mathcal{R}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sigma &amp;gt;0$&lt;/code&gt;, 
-the partial derivatives are linearly independent.&lt;/p&gt;
+  &lt;p&gt;A formal proof can be built to show that this holds for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu \in \mathcal{R}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sigma &amp;gt;0$&lt;/code&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
-  &lt;p&gt;Example 2 (Non-intrinsic parameterization):&lt;/p&gt;
+  &lt;p&gt;Example 2 (regularity condition for a non-intrinsic parameterization):&lt;/p&gt;
 
-  &lt;p&gt;We will show that the regularity condition fails. Consider a Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1) $&lt;/code&gt;, where function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{I}(\cdot) $&lt;/code&gt; is the indicator function.
+  &lt;p&gt;By using a counterexample, we will show that the regularity condition fails for a non-intrinsic parameterization. Consider a Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1) $&lt;/code&gt;, where function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{I}(\cdot) $&lt;/code&gt; is the indicator function.
 The partial derivatives are&lt;/p&gt;
 
   &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -2776,41 +2763,25 @@ $$&lt;/code&gt;
 \partial_{\pi_1} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} 
 \end{aligned}
 $$&lt;/code&gt;
-Note that when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_0 = \pi_0 \neq 0 $&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_1= \pi_1 \neq 0$&lt;/code&gt;, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$&lt;/code&gt;.&lt;/p&gt;
-
-  &lt;p&gt;Therefore, we can show that 
-the partial derivatives are linearly dependent.&lt;/p&gt;
+Note that when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_0 = \pi_0 \neq 0 $&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_1= \pi_1 \neq 0$&lt;/code&gt;, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$&lt;/code&gt;. 
+Therefore, the partial derivatives are linearly dependent.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Example 3 (Non-intrinsic parameterization):&lt;/p&gt;
+&lt;p&gt;In a similar fashion, we will also see (soon) that the regularity condition is also not satisfied for the following parameterization: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;. The main reason is that the parameter space is not open in $\mathcal{R}^2$.&lt;/p&gt;
 
-  &lt;p&gt;We will soon show that the  condition fails for Bernoulli family  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&amp;gt;0, \pi_1&amp;gt;0, \pi_0+\pi_1=1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\pi_0,\pi_1)$&lt;/code&gt;. 
-The main reason is that the parameter space is not open in $\mathcal{R}^2$.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Example 4  (Intrinsic parameterization):&lt;/p&gt;
-
-  &lt;p&gt;We can show that the condition holds for Bernoulli family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&amp;lt;\pi_0&amp;lt;1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \pi_0$&lt;/code&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;On the other hand, the condition holds for the following parameterization: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&amp;lt;\pi_0&amp;lt;1  \}$&lt;/code&gt; with parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \pi_0$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h1 id=&quot;fisher-rao-metric&quot;&gt;Fisher-Rao Metric&lt;/h1&gt;
 &lt;hr /&gt;
-&lt;p&gt;As we can see from the &lt;a href=&quot;#motivation&quot;&gt;previous section&lt;/a&gt;, we can use the Fisher-Rao metric to design fast and efficient algorithms.
-In statistics, this metric is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.
-These statistical principles  &lt;a class=&quot;citation&quot; href=&quot;#casella2002statistical&quot;&gt;[13]&lt;/a&gt; &lt;a class=&quot;citation&quot; href=&quot;#jaynes1957information&quot;&gt;[14]&lt;/a&gt; play essential roles in training and estimating machine learning models.
-Moreover, the Fisher-Rao metric has been theorically and emprically used in machine learning and statistics.&lt;/p&gt;
 
-&lt;p&gt;Given an intrinsic parameterization, we can define the Fisher-Rao metric under this parameterization as:
+&lt;p&gt;Given an intrinsic parameterization, the Fisher-Rao metric is defined as follows,
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log p(w|\tau) \Big) ].
 \end{aligned}
-$$&lt;/code&gt;
-Note that the metric could be ill-defined since the expectation may not exist.&lt;/p&gt;
+$$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Given a parameterization,  we can express the metric in a matrix form as&lt;/p&gt;
+&lt;p&gt;We can also express the metric in a matrix form as&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -2818,23 +2789,13 @@ Note that the metric could be ill-defined since the expectation may not exist.&l
 \end{aligned}
 $$&lt;/code&gt;
 where $K$ is the number of entries of parameter array $\tau$ and 
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $&lt;/code&gt; is a column vector.&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $&lt;/code&gt; is a column vector. The matrix form is also known as the &lt;strong&gt;Fisher information matrix&lt;/strong&gt; (FIM). Obviously, the form of the FIM depends on the choice of parameterizations. In many cases,  we could also compute the FIM as
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$&lt;/code&gt;.
+The regularity condition guarantees that the FIM is non-singular if the matrix exists, that is, the expectation in the definition exists.&lt;/p&gt;
 
-&lt;p&gt;The matrix form is also known as the &lt;strong&gt;Fisher information matrix&lt;/strong&gt; (FIM). Obviously, the form of the FIM depends on the choice of parameterizations. In many cases,  we could also compute the FIM as
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;In what follows, we will assume the metric to be well-defined, which makes the Fisher-Rao metric a valid Riemannian metric &lt;a class=&quot;citation&quot; href=&quot;#lee2018introduction&quot;&gt;[12]&lt;/a&gt; since the corresponding FIM is positive definite everywhere in its intrinsic parameter space.&lt;/p&gt;
 
-&lt;p&gt;The regularity condition guarantees that the FIM is non-singular if the matrix exists.
-The condition is also related to the model identification in maximum likelihood estimation.&lt;/p&gt;
-
-&lt;p&gt;In the following discussion, we will assume the metric is well-defined.
-In such cases, the Fisher-Rao metric is a valid Riemannian metric &lt;a class=&quot;citation&quot; href=&quot;#lee2018introduction&quot;&gt;[15]&lt;/a&gt; since the corresponding FIM is positive definite everywhere in an &lt;strong&gt;intrinsic&lt;/strong&gt; parameter space.&lt;/p&gt;
-
-&lt;div class=&quot;notice--danger&quot;&gt;
-  &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:
-An arbitrary Riemannian metric often is NOT useful for applications in machine learning and statistics.&lt;/p&gt;
-&lt;/div&gt;
-
-&lt;p&gt;Recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
+&lt;p&gt;Finally, recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
 If this smoothness requirement is satisfied, we can obtain a new intrinsic parameterization via the transformation.
 In &lt;a href=&quot;/posts/2021/11/Geomopt03/#Pparameter-transform-and-invariance&quot;&gt;Part III&lt;/a&gt;,
 we will show the FIM is also positive definite under this new intrinsic parameterization.&lt;/p&gt;
@@ -3040,17 +3001,14 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;le2007topmoumoute&quot;&gt;[9] N. Le Roux, P.-A. Manzagol, &amp;amp; Y. Bengio, &quot;Topmoumoute Online Natural Gradient Algorithm.,&quot; &lt;i&gt;NIPS&lt;/i&gt; (Citeseer, 2007), pp. 849–856.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;duan2020ngboost&quot;&gt;[10] T. Duan, A. Anand, D. Y. Ding, K. K. Thai, S. Basu, A. Ng, &amp;amp; A. Schuler, &quot;Ngboost: Natural gradient boosting for probabilistic prediction,&quot; &lt;i&gt;International Conference on Machine Learning&lt;/i&gt; (PMLR, 2020), pp. 2690–2700.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;tu2011introduction&quot;&gt;[11] L. W. Tu, &quot;An introduction to manifolds. Second,&quot; &lt;i&gt;New York, US: Springer&lt;/i&gt; (2011).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;amari2016information&quot;&gt;[12] S.-ichi Amari, &lt;i&gt;Information geometry and its applications&lt;/i&gt; (Springer, 2016).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;casella2002statistical&quot;&gt;[13] G. Casella &amp;amp; R. L. Berger, &lt;i&gt;Statistical inference&lt;/i&gt; (2002).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;jaynes1957information&quot;&gt;[14] E. T. Jaynes, &quot;Information theory and statistical mechanics,&quot; &lt;i&gt;Physical review&lt;/i&gt; &lt;b&gt;106&lt;/b&gt;:620 (1957).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;lee2018introduction&quot;&gt;[15] J. M. Lee, &lt;i&gt;Introduction to Riemannian manifolds&lt;/i&gt; (Springer, 2018).&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span id=&quot;lee2018introduction&quot;&gt;[12] J. M. Lee, &lt;i&gt;Introduction to Riemannian manifolds&lt;/i&gt; (Springer, 2018).&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;footnotes&quot;&gt;Footnotes:&lt;/h2&gt;
 
 &lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
   &lt;ol&gt;
     &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;In differential geometry, an intrinsic parametrization is known as a coordinate chart. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+      &lt;p&gt;In differential geometry, an intrinsic parametrization is known as a coordinate chart. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt; &lt;a href=&quot;#fnref:1:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;sup&gt;2&lt;/sup&gt;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
     &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
       &lt;p&gt;In differential geometry, the smoothness requirement is known as a diffeomorphism. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;

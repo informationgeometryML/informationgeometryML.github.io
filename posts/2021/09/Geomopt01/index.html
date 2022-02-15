@@ -182,7 +182,7 @@
 
 
 
-  18 minute read
+  17 minute read
 </p>
           
         </header>
@@ -336,12 +336,9 @@ The following figure illustrates four distributions in the Gaussian family denot
 
 <h1 id="intrinsic-parameterizations">Intrinsic Parameterizations</h1>
 <hr>
-<p>We start by discussing parameterizations for a distribution family. As we will see, a proper parameterization plays an important role in defining the FIM.
-We can not use an arbitrary differentiable parameterization to represent a geometric structure.
-This structure is also known as a manifold structure <a class="citation" href="#tu2011introduction">[11]</a>. A (smooth) manifold should be locally like a “flat” vector space. For example, consider the (curved) Earth surface. It looks like a (locally) flat space to us.</p>
-
-<p>We require that a manifold should be locally like a vector space denoted by <code class="language-plaintext highlighter-rouge">$ E $</code> under a proper  parameterization. Informally, we refer to 
-such structure as a local vector-space structure.</p>
+<p>We start by discussing a special type of parameterizations, we call intrinsic parameterizations of distributions which are useful to obtain non-singular FIMs.
+An arbitrary parameterization may not always be appropriate for a smooth manifold <a class="citation" href="#tu2011introduction">[11]</a>. The requirement is that the parameterization should be such that the manifold is locally a <em>flat</em> vector space, for example, how the curved Earth surface looks flat to us, locally.
+We will refer to such flat vector space as a <em>local</em> vector-space structure (denote it by <code class="language-plaintext highlighter-rouge">$ E $</code>).</p>
 
 <div class="notice--success">
   <p>Local <strong>vector-space structure</strong>:</p>
@@ -349,31 +346,21 @@ such structure as a local vector-space structure.</p>
   <p>It supports local <strong>vector additions</strong>,  local <strong>real scalar products</strong>, and their algebraic laws (i.e., the distributive law). (see <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a> for the details.)</p>
 </div>
 
-<p>Intuitively, this vector-space structure means that a local (small) perturbation <code class="language-plaintext highlighter-rouge">$ E $</code> at each point should stay in the parameter space.
-Technically, the parameter space denoted by $\Omega_\tau$ should be an <strong>open</strong> set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array.
-As we will see soon, the FIM is a <code class="language-plaintext highlighter-rouge">$K$</code>-by-<code class="language-plaintext highlighter-rouge">$K$</code> matrix.</p>
+<p>Intuitively, with such a local vector-space structure, we ensure that a small, local perturbation at each point in <code class="language-plaintext highlighter-rouge">$ E $</code> stays within the parameter space of $\tau$ (denoted by $\Omega_\tau$). Technically, this requires $\Omega_\tau$ to be an <strong>open</strong> set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array.
+We refer to the parametrizations that satisfy this condition as an intrinsic parameterization <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, which as we will see will lead to non-singular FIMs of <code class="language-plaintext highlighter-rouge">$K$</code>-by-<code class="language-plaintext highlighter-rouge">$K$</code><sup id="fnref:1:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.
+Non-singularity is crucial for algorithms such as natural-gradient descent, as we will see in <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space">Part IV</a>.</p>
 
-<p>We refer to this kind of parametrizations as an intrinsic parameterization<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.
-The main reason of using an intrinsic parameterization is (1) the topology of a parameter space is nice. (2) The (exact) FIM is non-singular and well-defined (finite).
-These properties will play a key role in <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space">Part IV</a> for natural-gradient descent.
-As we will see later that every intrinsic parametrization of a manifold has the same degrees of freedom.</p>
-
-<p>To illustrate this, let’s consider a unit circle in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> as shown in the Figure.
-Clearly, a point <code class="language-plaintext highlighter-rouge">$ (0,1) $</code> highlighted in green is in the circle, where we consider its center as the origin.</p>
+<p>We will now give a simple example of intrinsic parameterization on a unit circle in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> at the point <code class="language-plaintext highlighter-rouge">$ (0,1) $</code> highlighted in green.</p>
 
 <p><img src="/img/circle.png" title="Source:Wikipedia" width="300"></p>
 
 <blockquote>
-  <p>Parametrization 1 (Intrinsic parameterization):</p>
+  <p>Parameterization 1 (an intrinsic parameterization):</p>
 
   <p>A (local) parametrization at $ (0,1) $ highlighted in red for the circle is
-<code class="language-plaintext highlighter-rouge">$\{ (t,\sqrt{1-t^2}) | -h&lt;t&lt;h \} $</code>, where $h=0.1$. We use <strong>one</strong> (scalar) parameter in this parametrization.</p>
-
-  <p>The manifold is (locally) “flat” since we can always find a small <strong>1-dimensional</strong> perturbation $E$ in the <strong>1-dimensional</strong> parameter space  <code class="language-plaintext highlighter-rouge">$\Omega_t=\{t|-h&lt;t&lt;h \} $</code>.</p>
+<code class="language-plaintext highlighter-rouge">$\{ (t,\sqrt{1-t^2}) | -h&lt;t&lt;h \} $</code>, where $h=0.1$. We use <strong>one</strong> (scalar) parameter in this parametrization. The manifold is (locally) “flat” since we can always find a small <strong>1-dimensional</strong> perturbation $E$ in the <strong>1-dimensional</strong> parameter space  <code class="language-plaintext highlighter-rouge">$\Omega_t=\{t|-h&lt;t&lt;h \} $</code>. Therefore this is an intrinsic parameterization.</p>
 
   <p><img src="/img/1d-perturbation.png" title="Fig" width="300"></p>
-
-  <p>This parametrization is called an <strong>intrinsic</strong> parameterization.</p>
 
   <p>We can similarly define a (local) parametrization at each point of the circle. In fact, we can use  finite (local) parameterizations to represent the whole circle as shown below.</p>
 
@@ -381,21 +368,20 @@ Clearly, a point <code class="language-plaintext highlighter-rouge">$ (0,1) $</c
 </blockquote>
 
 <blockquote>
-  <p>Parametrization 2 (Non-intrinsic parameterization):</p>
+  <p>Parameterization 2 (a non-intrinsic parameterization):</p>
 
   <p>Let’s define a map <code class="language-plaintext highlighter-rouge">$f : [0,2\pi) \rightarrow \mathcal{S}^1 $</code> such that <code class="language-plaintext highlighter-rouge">$f(\theta) = (\sin \theta, \cos \theta ) $</code>, where we use $\mathcal{S}^1$ to denote the circle.</p>
 
   <p>A (global) parametrization of the circle is <code class="language-plaintext highlighter-rouge">$\{ f(\theta) | \theta \in [0,2\pi)  \}$</code>, where we use one (scalar) parameter.</p>
 
-  <p>This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$. Moreover, its inverse map $f^{-1}$ is <strong>not</strong> continous at point $(0,1) \in  \mathcal{S}^1$.
-This parametrization is not intrinsic.
+  <p>This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$, and its inverse map $f^{-1}$ is <strong>not</strong> continous at point $(0,1) \in  \mathcal{S}^1$. Therefore, this parametrization is not intrinsic.
 In fact, there does not exist a (single) <strong>global</strong> and intrinsic parametrization to represent the circle.</p>
 </blockquote>
 
-<p>As shown in Parametrization 2, this smoothness requirement of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The smoothness<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> of a map and the inverse map togeher gives us a way to generate new intrinsic parameterizations. In other words, the Jacobian matrix is non-singular if the requirement is satisfied. Thus, we can safely use the chain rule and inverse function theorem.</p>
+<p>As shown in Parametrization 2, continuity (or smoothness<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>) of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). Without such smoothness, the parameterization is not instrinsic, but smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such case, the Jacobian matrix (to change between the parameterizations) is non-singular, and we can use the chain rule and inverse function theorem to jump between different parameterization.</p>
 
 <blockquote>
-  <p>Parametrization 3 (Non-intrinsic parameterization):</p>
+  <p>Parametrization 3 (another non-intrinsic parameterization):</p>
 
   <p>The circle does <strong>not</strong> look like a flat space under the following parametrization
 <code class="language-plaintext highlighter-rouge">$\{ (x,y) | x^2+y^2=1, x,y \in \mathcal{R} \} $</code>. The number of entries in this parameter array is 2.</p>
@@ -407,10 +393,10 @@ In fact, there does not exist a (single) <strong>global</strong> and intrinsic p
 
 <h1 id="intrinsic-parameterizations-for-parametric-families">Intrinsic Parameterizations for Parametric families</h1>
 <hr>
-<p>Now, we discuss how to choose a parameterization given a parametric family so that we can exploit the geometric structure <a class="citation" href="#amari2016information">[12]</a> induced by the Fisher-Rao metric.</p>
+<p>The examples in the previous section clearly show the importance of parameterization, and that it should be chosen such that the parameter space is an open set. Now, we discuss how to choose such a parameterization for a given parametric family.</p>
 
-<p>Given a parametric distribution family <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> indexed by its parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> should be smooth w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> by considering <code class="language-plaintext highlighter-rouge">$ w $</code> to be fixed.
-We say a parametrization is <strong>intrinsic</strong> if the following condition for parameter (array) <code class="language-plaintext highlighter-rouge">$\tau $</code> holds:</p>
+<p>Roughly speaking, a parameterization <code class="language-plaintext highlighter-rouge">$ \tau $</code> for a family of distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> is intrinsic if the distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> is smooth w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> for all fixed <code class="language-plaintext highlighter-rouge">$ w $</code>.
+Below is a formal condition.</p>
 
 <div class="notice--success">
   <p><strong>Regularity Condition</strong>:</p>
@@ -421,37 +407,38 @@ We say a parametrization is <strong>intrinsic</strong> if the following conditio
   <p>In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i \partial_{\tau_i} \log p(w|\tau)= 0 $</code> holds only when constant <code class="language-plaintext highlighter-rouge">$c_i$</code> is zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 </div>
 
-<p>Note that this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the definition of the partial derivatives, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
+<p>Note that this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the definition of the partial derivatives, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>. So an intrinsic parameterization is still necessary, just that the requirement is not explicit and hidden within the condition.
 We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-computation">here</a>.</p>
 
-<p>We will use the following examples to illustrate this condition.</p>
+<p>The following examples illustrates the regularity condition.</p>
 
 <blockquote>
-  <p>Example 1 (Intrinsic parameterization):</p>
+  <p>Example 1 (regularity condition for an intrinsic parameterization):</p>
 
-  <p>We will show that the regularity condition holds. Consider a 1-dimensional Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code>, variance <code class="language-plaintext highlighter-rouge">$\sigma$</code>, and parametrization <code class="language-plaintext highlighter-rouge">$\tau = (\mu,\sigma) $</code>.
-The partial derivatives are
+  <p>We will write the regularity condition at a point for an intrinsic parameterization. Consider a 1-dimensional Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code>, variance <code class="language-plaintext highlighter-rouge">$\sigma$</code>, and parametrization <code class="language-plaintext highlighter-rouge">$\tau = (\mu,\sigma) $</code>.
+The partial derivatives are the following,
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
 \end{aligned}
 $$</code></p>
 
+  <p>Consider the partial derivatives at a point $(\mu=0, \sigma=1)$,</p>
+
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
 \end{aligned}
 $$</code>
-If <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code> holds for any $w$, we have <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies  linear independence.</p>
+For this point, the regularity condition will be <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code>. For this to be true for all $w$, we necessarily need to have <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies  linear independence.</p>
 
-  <p>Similarly, we can show that for any <code class="language-plaintext highlighter-rouge">$\mu \in \mathcal{R}$</code> and <code class="language-plaintext highlighter-rouge">$\sigma &gt;0$</code>, 
-the partial derivatives are linearly independent.</p>
+  <p>A formal proof can be built to show that this holds for any <code class="language-plaintext highlighter-rouge">$\mu \in \mathcal{R}$</code> and <code class="language-plaintext highlighter-rouge">$\sigma &gt;0$</code>.</p>
 </blockquote>
 
 <blockquote>
-  <p>Example 2 (Non-intrinsic parameterization):</p>
+  <p>Example 2 (regularity condition for a non-intrinsic parameterization):</p>
 
-  <p>We will show that the regularity condition fails. Consider a Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1) $</code>, where function <code class="language-plaintext highlighter-rouge">$ \mathcal{I}(\cdot) $</code> is the indicator function.
+  <p>By using a counterexample, we will show that the regularity condition fails for a non-intrinsic parameterization. Consider a Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1) $</code>, where function <code class="language-plaintext highlighter-rouge">$ \mathcal{I}(\cdot) $</code> is the indicator function.
 The partial derivatives are</p>
 
   <p><code class="language-plaintext highlighter-rouge">$$
@@ -464,41 +451,25 @@ $$</code>
 \partial_{\pi_1} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} 
 \end{aligned}
 $$</code>
-Note that when <code class="language-plaintext highlighter-rouge">$c_0 = \pi_0 \neq 0 $</code> and <code class="language-plaintext highlighter-rouge">$c_1= \pi_1 \neq 0$</code>, we have <code class="language-plaintext highlighter-rouge">$c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$</code>.</p>
-
-  <p>Therefore, we can show that 
-the partial derivatives are linearly dependent.</p>
+Note that when <code class="language-plaintext highlighter-rouge">$c_0 = \pi_0 \neq 0 $</code> and <code class="language-plaintext highlighter-rouge">$c_1= \pi_1 \neq 0$</code>, we have <code class="language-plaintext highlighter-rouge">$c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$</code>. 
+Therefore, the partial derivatives are linearly dependent.</p>
 </blockquote>
 
-<blockquote>
-  <p>Example 3 (Non-intrinsic parameterization):</p>
+<p>In a similar fashion, we will also see (soon) that the regularity condition is also not satisfied for the following parameterization: <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. The main reason is that the parameter space is not open in $\mathcal{R}^2$.</p>
 
-  <p>We will soon show that the  condition fails for Bernoulli family  <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. 
-The main reason is that the parameter space is not open in $\mathcal{R}^2$.</p>
-</blockquote>
-
-<blockquote>
-  <p>Example 4  (Intrinsic parameterization):</p>
-
-  <p>We can show that the condition holds for Bernoulli family <code class="language-plaintext highlighter-rouge">$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&lt;\pi_0&lt;1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi_0$</code>.</p>
-</blockquote>
+<p>On the other hand, the condition holds for the following parameterization: <code class="language-plaintext highlighter-rouge">$\{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) (1-\pi_0)  \Big| 0&lt;\pi_0&lt;1  \}$</code> with parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi_0$</code>.</p>
 
 <h1 id="fisher-rao-metric">Fisher-Rao Metric</h1>
 <hr>
-<p>As we can see from the <a href="#motivation">previous section</a>, we can use the Fisher-Rao metric to design fast and efficient algorithms.
-In statistics, this metric is closely related to  maximum likelihood estimation, central limit theorem, and principle of maximum entropy.
-These statistical principles  <a class="citation" href="#casella2002statistical">[13]</a> <a class="citation" href="#jaynes1957information">[14]</a> play essential roles in training and estimating machine learning models.
-Moreover, the Fisher-Rao metric has been theorically and emprically used in machine learning and statistics.</p>
 
-<p>Given an intrinsic parameterization, we can define the Fisher-Rao metric under this parameterization as:
+<p>Given an intrinsic parameterization, the Fisher-Rao metric is defined as follows,
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 F_{ij}(\tau) := E_{p(w|\tau) }  [ \Big( \partial_{\tau_i} \log p(w|\tau ) \Big)  \Big(\partial_{\tau_j} \log p(w|\tau) \Big) ].
 \end{aligned}
-$$</code>
-Note that the metric could be ill-defined since the expectation may not exist.</p>
+$$</code></p>
 
-<p>Given a parameterization,  we can express the metric in a matrix form as</p>
+<p>We can also express the metric in a matrix form as</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
@@ -506,23 +477,13 @@ Note that the metric could be ill-defined since the expectation may not exist.</
 \end{aligned}
 $$</code>
 where $K$ is the number of entries of parameter array $\tau$ and 
-<code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $</code> is a column vector.</p>
+<code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\tau_1} \log p(w|\tau ), \cdots, \partial_{\tau_K} \log p(w|\tau ) ]^T  $</code> is a column vector. The matrix form is also known as the <strong>Fisher information matrix</strong> (FIM). Obviously, the form of the FIM depends on the choice of parameterizations. In many cases,  we could also compute the FIM as
+<code class="language-plaintext highlighter-rouge">$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$</code>.
+The regularity condition guarantees that the FIM is non-singular if the matrix exists, that is, the expectation in the definition exists.</p>
 
-<p>The matrix form is also known as the <strong>Fisher information matrix</strong> (FIM). Obviously, the form of the FIM depends on the choice of parameterizations. In many cases,  we could also compute the FIM as
-<code class="language-plaintext highlighter-rouge">$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$</code>.</p>
+<p>In what follows, we will assume the metric to be well-defined, which makes the Fisher-Rao metric a valid Riemannian metric <a class="citation" href="#lee2018introduction">[12]</a> since the corresponding FIM is positive definite everywhere in its intrinsic parameter space.</p>
 
-<p>The regularity condition guarantees that the FIM is non-singular if the matrix exists.
-The condition is also related to the model identification in maximum likelihood estimation.</p>
-
-<p>In the following discussion, we will assume the metric is well-defined.
-In such cases, the Fisher-Rao metric is a valid Riemannian metric <a class="citation" href="#lee2018introduction">[15]</a> since the corresponding FIM is positive definite everywhere in an <strong>intrinsic</strong> parameter space.</p>
-
-<div class="notice--danger">
-  <p><strong>Warning</strong>:
-An arbitrary Riemannian metric often is NOT useful for applications in machine learning and statistics.</p>
-</div>
-
-<p>Recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
+<p>Finally, recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
 If this smoothness requirement is satisfied, we can obtain a new intrinsic parameterization via the transformation.
 In <a href="/posts/2021/11/Geomopt03/#Pparameter-transform-and-invariance">Part III</a>,
 we will show the FIM is also positive definite under this new intrinsic parameterization.</p>
@@ -733,17 +694,14 @@ $$</code></p>
 <p><span id="le2007topmoumoute">[9] N. Le Roux, P.-A. Manzagol, &amp; Y. Bengio, "Topmoumoute Online Natural Gradient Algorithm.," <i>NIPS</i> (Citeseer, 2007), pp. 849–856.</span></p>
 <p><span id="duan2020ngboost">[10] T. Duan, A. Anand, D. Y. Ding, K. K. Thai, S. Basu, A. Ng, &amp; A. Schuler, "Ngboost: Natural gradient boosting for probabilistic prediction," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 2690–2700.</span></p>
 <p><span id="tu2011introduction">[11] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p>
-<p><span id="amari2016information">[12] S.-ichi Amari, <i>Information geometry and its applications</i> (Springer, 2016).</span></p>
-<p><span id="casella2002statistical">[13] G. Casella &amp; R. L. Berger, <i>Statistical inference</i> (2002).</span></p>
-<p><span id="jaynes1957information">[14] E. T. Jaynes, "Information theory and statistical mechanics," <i>Physical review</i> <b>106</b>:620 (1957).</span></p>
-<p><span id="lee2018introduction">[15] J. M. Lee, <i>Introduction to Riemannian manifolds</i> (Springer, 2018).</span></p>
+<p><span id="lee2018introduction">[12] J. M. Lee, <i>Introduction to Riemannian manifolds</i> (Springer, 2018).</span></p>
 
 <h2 id="footnotes">Footnotes:</h2>
 
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>In differential geometry, an intrinsic parametrization is known as a coordinate chart. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p>In differential geometry, an intrinsic parametrization is known as a coordinate chart. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a> <a href="#fnref:1:1" class="reversefootnote" role="doc-backlink">↩<sup>2</sup></a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
       <p>In differential geometry, the smoothness requirement is known as a diffeomorphism. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
