@@ -409,7 +409,7 @@ In fact, there does not exist a (single) <strong>global</strong> and intrinsic p
 
   <p>Let’s consider the following non-intrinsic parametrization $\tau$ of the circle: <code class="language-plaintext highlighter-rouge">$\{ (\frac{x}{\sqrt{x^2+y^2}}, \frac{y}{\sqrt{x^2+y^2}}) | x^2+y^2 \neq 0, x,y \in \mathcal{R}  \}$</code>, where <code class="language-plaintext highlighter-rouge">$\tau=(x,y)$</code>. The parameter space $\Omega_\tau$ is open in $\mathcal{R}^2$.</p>
 
-  <p>This parametrization is not intrinsic since it does not uniquely represent a point in the circle. It is obvious to see that  $\tau$ and $\alpha \tau$ both represent the same point in the circle when scalar $\alpha&gt;0$.</p>
+  <p>This parametrization is not intrinsic since it does not uniquely represent a point in the circle. It is obvious to see that  $\tau_0$ and $\alpha \tau_0$ both represent the same point in the circle when scalar $\alpha&gt;0$.</p>
 
 </blockquote>
 
@@ -424,7 +424,7 @@ Below is a formal condition.</p>
   <p><strong>Regularity Condition</strong>:</p>
 
   <p>The following continuous partial derivatives 
-<code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w|\tau) \} $</code>  should be linearly independent for (almost) all <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
+<code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w|\tau) \} $</code>  should be linearly independent.</p>
 
   <p>In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i \partial_{\tau_i} \log p(w|\tau)= 0 $</code> holds only when constant <code class="language-plaintext highlighter-rouge">$c_i$</code> is zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 </div>
@@ -454,7 +454,7 @@ $$</code></p>
 \end{aligned}
 $$</code>
 For this point, the regularity condition will be <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code>.
-Clearly, when $w=0$, they are linearly dependent. However, for almost all $w$, we necessarily need to have <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies linear independence.</p>
+For all $w$, we necessarily need to have <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies linear independence.</p>
 
   <p>A formal proof can be built to show that this holds for any <code class="language-plaintext highlighter-rouge">$\mu \in \mathcal{R}$</code> and <code class="language-plaintext highlighter-rouge">$\sigma &gt;0$</code>.</p>
 </blockquote>
