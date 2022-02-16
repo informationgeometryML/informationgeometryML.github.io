@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part I: Smooth Manifolds with the Fisher-Rao Metric - Information Geometry in Machine Learning</title>
-<meta name="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts useful to ensure non-singular FIMs  Regularity conditions and intrinsic parameterization of a distribution  Dimensionality of a smooth manifold">
+<meta name="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, useful to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterization of a distribution  Dimensionality of a smooth manifold">
 
 
 
@@ -21,7 +21,7 @@
 <meta property="og:url" content="/posts/2021/09/Geomopt01/">
 
 
-  <meta property="og:description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts useful to ensure non-singular FIMs  Regularity conditions and intrinsic parameterization of a distribution  Dimensionality of a smooth manifold">
+  <meta property="og:description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, useful to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterization of a distribution  Dimensionality of a smooth manifold">
 
 
 
@@ -167,7 +167,7 @@
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <meta itemprop="headline" content="Part I: Smooth Manifolds with the Fisher-Rao Metric">
-    <meta itemprop="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts useful to ensure non-singular FIMs  Regularity conditions and intrinsic parameterization of a distribution  Dimensionality of a smooth manifold">
+    <meta itemprop="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, useful to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterization of a distribution  Dimensionality of a smooth manifold">
     <meta itemprop="datePublished" content="September 06, 2021">
     
 
@@ -182,7 +182,7 @@
 
 
 
-  18 minute read
+  17 minute read
 </p>
           
         </header>
@@ -191,7 +191,7 @@
       <section class="page__content" itemprop="text">
         
         <h2 id="goal">Goal</h2>
-<p>This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts useful to ensure non-singular FIMs</p>
+<p>This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, useful to ensure non-singular FIMs:</p>
 <ul>
   <li>Regularity conditions and intrinsic parameterization of a distribution</li>
   <li>Dimensionality of a smooth manifold</li>
@@ -220,9 +220,8 @@
 
 <h1 id="motivation">Motivation</h1>
 <hr>
-<p>The goal of this blog is introduce the geometric structures associated with probability distribution. Let’s start with some motivation: why should we care about such geometric structures?</p>
-
-<p>The answer is that by exploiting geometric structures, we can</p>
+<p>The goal of this blog is introduce the geometric structures associated with probability distribution. Why should we care about such geometric structures?
+By exploiting the structures, we can</p>
 <ul>
   <li>design efficient and simple algorithms <a class="citation" href="#amari1998natural">[1]</a>
 </li>
@@ -232,7 +231,7 @@
 </li>
 </ul>
 
-<p>This is true for a majority of machine learning methods, all of which make use of probability distributions of various kinds.</p>
+<p>These benefits are relevant for the majority of machine learning methods, all of which make use of probability distributions of various kinds.</p>
 
 <p>Below, we give some common examples from the literature. A reader familiar with such examples can skip this part.</p>
 
@@ -247,7 +246,7 @@
 &amp; \approx  E_{ \color{red}  { p(x,y | \tau) } } [ - \log  p(x,y | \tau) ]
 \end{aligned} \tag{1}\label{1}
 $$</code>
-where <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution. (<code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | m, v) $</code> denotes a normal distribution over <code class="language-plaintext highlighter-rouge">$ y $</code> with mean <code class="language-plaintext highlighter-rouge">$ m $</code> and variance <code class="language-plaintext highlighter-rouge">$ v $</code>).</p>
+where <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution. Here, <code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | m, v) $</code> denotes a normal distribution over <code class="language-plaintext highlighter-rouge">$ y $</code> with mean <code class="language-plaintext highlighter-rouge">$ m $</code> and variance <code class="language-plaintext highlighter-rouge">$ v $</code>.</p>
 
   <p>Well-known algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[4]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>. These are examples of algorithms derived from a frequentist perspective, which can also be generalized to neural network <a class="citation" href="#martens2020new">[4]</a>.</p>
 </blockquote>
@@ -268,7 +267,7 @@ This approach is derived from a Bayesian  perspective, and can also be generaliz
 </blockquote>
 
 <blockquote>
-  <p><strong>Evolution Strategies</strong> (Global optimization):</p>
+  <p><strong>Evolution Strategies and Policy-Gradient Methods</strong> (Global optimization):</p>
 
   <p>Global optimization methods often use a search distribution, denoted by <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code>, to find the global maximum of an objective <code class="language-plaintext highlighter-rouge">$h(a)$</code> by solving a problem of the following form:
 <code class="language-plaintext highlighter-rouge">$$
@@ -334,8 +333,8 @@ The following figure illustrates four distributions in the Gaussian family denot
 
 <h1 id="intrinsic-parameterizations">Intrinsic Parameterizations</h1>
 <hr>
-<p>We start by discussing a special type of parameterizations, we call intrinsic parameterizations of distributions which are useful to obtain non-singular FIMs.
-An arbitrary parameterization may not always be appropriate for a smooth manifold <a class="citation" href="#tu2011introduction">[11]</a>. The requirement is that the parameterization should be such that the manifold is locally like a <em>flat</em> vector space, for example, how the curved Earth surface looks flat to us, locally.
+<p>We start by discussing a special type of parameterizations, we call intrinsic parameterizations, which are useful to obtain non-singular FIMs.
+An arbitrary parameterization may not always be appropriate for a smooth manifold <a class="citation" href="#tu2011introduction">[11]</a>. Rather, the parameterization should be such that the manifold is locally like a <em>flat</em> vector space, for example, how the curved Earth surface looks flat to us, locally.
 We will refer to such flat vector space as a <em>local</em> vector-space structure (denote it by <code class="language-plaintext highlighter-rouge">$ E $</code>).</p>
 
 <div class="notice--success">
@@ -344,24 +343,21 @@ We will refer to such flat vector space as a <em>local</em> vector-space structu
   <p>It supports local <strong>vector additions</strong>,  local <strong>real scalar products</strong>, and their algebraic laws (i.e., the distributive law). (see <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a> for the details.)</p>
 </div>
 
-<p>We refer to the parametrizations that satisfy the following conditions as an intrinsic parameterization <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, which as we will see will lead to non-singular FIMs of <code class="language-plaintext highlighter-rouge">$K$</code>-by-<code class="language-plaintext highlighter-rouge">$K$</code>.
-Both openness and non-singularity is crucial for algorithms such as natural-gradient descent, as we will see in <a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-in-an-intrinsic-parameter-space">Part IV</a>.</p>
+<p>Intrinsic parameterizations<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> are those that satisfy the following two conditions:</p>
 
 <ul>
   <li>
-    <p>Intuitively, with such a local vector-space structure, we ensure that a small, local perturbation at each point in <code class="language-plaintext highlighter-rouge">$ E $</code> stays within the parameter space of $\tau$ (denoted by $\Omega_\tau$). Technically, this requires $\Omega_\tau$ to be an <strong>open</strong> set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array.</p>
+    <p>We require that the parameter space of $\tau$, denoted by $\Omega_\tau$, be an <strong>open</strong> set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array. Intuitively, this ensures a local vector-space structure throughout the parameter space, which then ensure that a small, local perturbation at all points in <code class="language-plaintext highlighter-rouge">$ E $</code> stay within $\Omega_\tau$.</p>
   </li>
   <li>
-    <p>Moreover, we require that <code class="language-plaintext highlighter-rouge">$ E $</code>  <strong>uniquely</strong> and <strong>smoothly</strong> represents a sub-set of points in a manifold.
-The second condition<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> may be abstract since a manifold can be abstractly defined.
-This condition becomes more clearly when we have two distinct intrinsic parameterizations such as $\tau$ and $\eta$ to represent the same sub-set in the manifold.
-We require that there exists a <strong>bi-jective</strong> map from $\tau$ to $\eta$ such that the map and its
-inverse map are both <strong>smooth</strong>. The smoothness of the inverse map is essential since these two parameterizations can be arbitrary. In other words, the condition should not depend on the order
-when we specify these two parametrizations.</p>
+    <p>We also require that <code class="language-plaintext highlighter-rouge">$ E $</code>  <strong>uniquely</strong> and <strong>smoothly</strong> represents a sub-set of points in a manifold. The condition ensures arbitrary transformations of the parameterizations should still keep the local perturbations within the manifold. 
+We require that there exists <strong>bi-jective</strong> maps among such parameterizations and that their inverse maps are also <strong>smooth</strong>. The second condition<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> can be abstractly defined.</p>
   </li>
 </ul>
 
-<p>We will now give a simple example of intrinsic parameterization on a unit circle in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> at the point <code class="language-plaintext highlighter-rouge">$ (0,1) $</code> highlighted in green.</p>
+<p>Intrinsic parameterizations satisfy the above two conditions, and lead to non-singular FIMs, as we will see soon.</p>
+
+<p>We will now discuss a simple case of a manifold, a unit circle in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code>, and give an example of an intrinsic parameterization and three non-intrinsic ones due to different reasons such as non-smoothness, non-openness, and non-uniqueness.</p>
 
 <p><img src="/img/circle.png" title="Source:Wikipedia" width="300"></p>
 
@@ -381,7 +377,7 @@ when we specify these two parametrizations.</p>
 <p>Now, we discuss invalid cases, where not all conditions are satisified.</p>
 
 <blockquote>
-  <p>Parameterization 2 (non-smoothness):</p>
+  <p>Parameterization 2 (a non-intrinsic parameterization due to non-smoothness):</p>
 
   <p>Let’s define a map <code class="language-plaintext highlighter-rouge">$f : [0,2\pi) \rightarrow \mathcal{S}^1 $</code> such that <code class="language-plaintext highlighter-rouge">$f(\theta) = (\sin \theta, \cos \theta ) $</code>, where we use $\mathcal{S}^1$ to denote the circle.</p>
 
@@ -394,7 +390,7 @@ In fact, there does not exist a (single) <strong>global</strong> and intrinsic p
 <p>Smoothness of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such case, the Jacobian matrix (to change between the parameterizations) is non-singular everywhere, and we can use the chain rule and inverse function theorem to jump between different intrinsic parameterizations.</p>
 
 <blockquote>
-  <p>Parametrization 3 (non-openness):</p>
+  <p>Parametrization 3 (a non-intrinsic parameterization due to non-openness):</p>
 
   <p>The circle does <strong>not</strong> look like a flat space under the following parametrization
 <code class="language-plaintext highlighter-rouge">$\{ (x,y) | x^2+y^2=1, x,y \in \mathcal{R} \} $</code>. The number of entries in this parameter array is 2.</p>
@@ -405,7 +401,7 @@ In fact, there does not exist a (single) <strong>global</strong> and intrinsic p
 </blockquote>
 
 <blockquote>
-  <p>Parametrization 4 (non-uniqueness):</p>
+  <p>Parametrization 4 (a non-intrinsic parameterization due to non-uniqueness):</p>
 
   <p>Let’s consider the following non-intrinsic parametrization $\tau$ of the circle: <code class="language-plaintext highlighter-rouge">$\{ (\frac{x}{\sqrt{x^2+y^2}}, \frac{y}{\sqrt{x^2+y^2}}) | x^2+y^2 \neq 0, x,y \in \mathcal{R}  \}$</code>, where <code class="language-plaintext highlighter-rouge">$\tau=(x,y)$</code>. The parameter space $\Omega_\tau$ is open in $\mathcal{R}^2$.</p>
 
@@ -417,8 +413,8 @@ In fact, there does not exist a (single) <strong>global</strong> and intrinsic p
 <hr>
 <p>The examples in the previous section clearly show the importance of parameterization, and that it should be chosen carefully. Now, we discuss how to choose such a parameterization for a given parametric family.</p>
 
-<p>Roughly speaking, a parameterization <code class="language-plaintext highlighter-rouge">$ \tau $</code> for a family of distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> is intrinsic if the distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> is smooth and unique w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> where <code class="language-plaintext highlighter-rouge">$ w $</code> should be considered to be fixed and arbitrary.
-Below is a formal condition.</p>
+<p>Roughly speaking, a parameterization <code class="language-plaintext highlighter-rouge">$ \tau $</code> for a family of distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> is intrinsic if the distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> is smooth and unique w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> where <code class="language-plaintext highlighter-rouge">$ w $</code> should be considered to be fixed but arbitrary.
+Below is the formal condition.</p>
 
 <div class="notice--success">
   <p><strong>Regularity Condition</strong>:</p>
@@ -429,7 +425,7 @@ Below is a formal condition.</p>
   <p>In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i \partial_{\tau_i} \log p(w|\tau)= 0 $</code> holds only when constant <code class="language-plaintext highlighter-rouge">$c_i$</code> is zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 </div>
 
-<p>Note that this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> due to the definition of the partial derivatives, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
+<p>Note that, due to the definition of the partial derivatives, this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
 In other words, the openness requirement is not explicit and hidden within the regularity condition.
 We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-computation">here</a>.</p>
 
@@ -454,7 +450,7 @@ $$</code></p>
 \end{aligned}
 $$</code>
 For this point, the regularity condition will be <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code>.
-For all $w$, we necessarily need to have <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies linear independence.</p>
+For this to hold for all $w$, it is necessarily that <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies linear independence.</p>
 
   <p>A formal proof can be built to show that this holds for any <code class="language-plaintext highlighter-rouge">$\mu \in \mathcal{R}$</code> and <code class="language-plaintext highlighter-rouge">$\sigma &gt;0$</code>.</p>
 </blockquote>
@@ -506,11 +502,6 @@ where $K$ is the number of entries of parameter array $\tau$ and
 The regularity condition guarantees that the FIM is non-singular if the matrix exists, that is, the expectation in the definition exists.</p>
 
 <p>In what follows, we will assume the metric to be well-defined, which makes the Fisher-Rao metric a valid Riemannian metric <a class="citation" href="#lee2018introduction">[12]</a> since the corresponding FIM is positive definite everywhere in its intrinsic parameter space.</p>
-
-<p>Finally, recall that when we perform a parameter transformation, we require both the transformation map and its inverse map to be smooth.
-If this smoothness requirement is satisfied, we can obtain a new intrinsic parameterization via the transformation.
-In <a href="/posts/2021/11/Geomopt03/#Pparameter-transform-and-invariance">Part III</a>,
-we will show the FIM is also positive definite under this new intrinsic parameterization.</p>
 
 <h1 id="caveats-of-the-fisher-matrix-computation">Caveats of the Fisher matrix computation</h1>
 <hr>
