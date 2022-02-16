@@ -412,16 +412,17 @@ In fact, there does not exist a (single) <strong>global</strong> and intrinsic p
 <hr>
 <p>The examples in the previous section clearly show the importance of parameterization, and that it should be chosen carefully. Now, we discuss how to choose such a parameterization for a given parametric family.</p>
 
-<p>Roughly speaking, a parameterization <code class="language-plaintext highlighter-rouge">$ \tau $</code> for a family of distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> is intrinsic if the distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> is smooth and unique w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> where <code class="language-plaintext highlighter-rouge">$ w $</code> should be considered to be fixed but arbitrary.
+<p>Roughly speaking, a parameterization <code class="language-plaintext highlighter-rouge">$ \tau $</code> for a family of distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> is intrinsic if <code class="language-plaintext highlighter-rouge">$\log
+p(w|\tau) $</code> is smooth and unique w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> in its parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
 Below is the formal condition.</p>
 
 <div class="notice--success">
   <p><strong>Regularity Condition</strong>:</p>
 
-  <p>The following continuous partial derivatives 
-<code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w|\tau) \} $</code>  should be linearly independent.</p>
+  <p>For any <code class="language-plaintext highlighter-rouge">$\tau \in \Omega_\tau$</code>,  the smooth partial derivatives 
+<code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w|\tau) \} $</code>  is a set of linearly independent functions of <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 
-  <p>In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i \partial_{\tau_i} \log p(w|\tau)= 0 $</code> holds only when constant <code class="language-plaintext highlighter-rouge">$c_i$</code> is zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
+  <p>In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i [ \partial_{\tau_i} \log p(w|\tau)] = 0 $</code> holds only when constant <code class="language-plaintext highlighter-rouge">$c_i$</code> is zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 </div>
 
 <p>Note that, due to the definition of the partial derivatives, this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
