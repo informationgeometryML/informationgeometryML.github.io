@@ -528,7 +528,7 @@ Thus, by Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</cod
     <details>
 <summary>Reason: (Click to expand)</summary>
 <fieldset class="field-set">
-        <p>The key reason is the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> is <strong>incorrect</strong>.</p>
+        <p>The key reason is the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. The parameter space is not open in $\mathcal{R}^2$. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> is <strong>incorrect</strong>.</p>
 
         <p>By definition, a Bernoulli distribution is valid only when the constraint holds. 
 Thus, the constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code> must be satisifed when we compute the Fisher matrix since the computation involves computing the expectation w.r.t. this distribution.</p>
@@ -548,6 +548,9 @@ In other words, the above Fisher matrix computation is not correct since <code c
   <p>Example 2  (Singular FIM):</p>
 
   <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with  non-intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1) $</code>.</p>
+
+  <p>Note that a Bernoulli distribution in the family is not uniquely represented by this parametrization. It is obvious to
+see that $\tau_1 = (1,1)$ and $\tau_2=(2,2)$ both represent the same Bernoulli distribution.</p>
 
   <p>The FIM under this  parameterization is singular as shown below.</p>
 
