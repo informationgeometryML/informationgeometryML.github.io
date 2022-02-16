@@ -182,7 +182,7 @@
 
 
 
-  17 minute read
+  18 minute read
 </p>
           
         </header>
@@ -413,14 +413,14 @@ In fact, there does not exist a (single) <strong>global</strong> and intrinsic p
 <p>The examples in the previous section clearly show the importance of parameterization, and that it should be chosen carefully. Now, we discuss how to choose such a parameterization for a given parametric family.</p>
 
 <p>Roughly speaking, a parameterization <code class="language-plaintext highlighter-rouge">$ \tau $</code> for a family of distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> is intrinsic if <code class="language-plaintext highlighter-rouge">$\log
-p(w|\tau) $</code> is smooth and unique w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> in its parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
+p(w|\tau) $</code> is both smooth and unique w.r.t. <code class="language-plaintext highlighter-rouge">$ \tau $</code> in its parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
 Below is the formal condition.</p>
 
 <div class="notice--success">
   <p><strong>Regularity Condition</strong>:</p>
 
-  <p>For any <code class="language-plaintext highlighter-rouge">$\tau \in \Omega_\tau$</code>,  the smooth partial derivatives 
-<code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w|\tau) \} $</code>  is a set of linearly independent functions of <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
+  <p>For any <code class="language-plaintext highlighter-rouge">$\tau \in \Omega_\tau$</code>,  the set of partial derivatives 
+<code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w|\tau) \} $</code> is smooth w.r.t. <code class="language-plaintext highlighter-rouge">$\tau$</code> and is a set of linearly independent functions of <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 
   <p>In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i [ \partial_{\tau_i} \log p(w|\tau)] = 0 $</code> holds only when constant <code class="language-plaintext highlighter-rouge">$c_i$</code> is zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 </div>
@@ -440,7 +440,8 @@ The partial derivatives are the following,
 \begin{aligned}
 \partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
 \end{aligned}
-$$</code></p>
+$$</code> 
+It is easy to see that these partial derivatives are smooth w.r.t. $\tau=(\mu,\sigma)$ in its parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\{(\mu,\sigma)|\mu\in \mathcal{R}, \sigma&gt;0\}$</code>.</p>
 
   <p>Consider the partial derivatives at a point $(\mu=0, \sigma=1)$,</p>
 
