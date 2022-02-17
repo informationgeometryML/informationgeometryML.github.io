@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-16T10:13:45-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part I: Smooth Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Smooth Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-16T23:56:30-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part I: Smooth Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Smooth Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, useful to ensure non-singular FIMs:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Regularity conditions and intrinsic parameterization of a distribution&lt;/li&gt;
@@ -123,8 +123,9 @@ More applications of similar nature are discussed in &lt;a class=&quot;citation&
 explicitly computing the inverse of the FIM.&lt;/p&gt;
 
   &lt;p&gt;We discuss this in other posts; see&lt;br /&gt;
+&lt;!--[Part V]({ post_url 2021-12-14-Geomopt05 }#efficient-ngd-for-multivariate-gaussians)--&gt;
 Part V
-and
+and 
 &lt;a href=&quot;/posts/2021/07/ICML/&quot;&gt;our ICML work&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
@@ -143,8 +144,10 @@ We will refer to such flat vector space as a &lt;em&gt;local&lt;/em&gt; vector-s
 &lt;div class=&quot;notice--success&quot;&gt;
   &lt;p&gt;Local &lt;strong&gt;vector-space structure&lt;/strong&gt;:&lt;/p&gt;
 
-  &lt;p&gt;It supports local &lt;strong&gt;vector additions&lt;/strong&gt;,  local &lt;strong&gt;real scalar products&lt;/strong&gt;, and their algebraic laws (i.e., the distributive law).
-(see Part II for the details.)&lt;/p&gt;
+  &lt;p&gt;It supports local &lt;strong&gt;vector additions&lt;/strong&gt;,  local &lt;strong&gt;real scalar products&lt;/strong&gt;, and their algebraic laws (i.e., the distributive law). (see 
+&lt;!--[Part II]({ post_url 2021-10-04-Geomopt02 }#riemannian-gradients-as-tangent-vectors-optional)--&gt;
+Part II
+for the details.)&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Intrinsic parameterizations&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; are those that satisfy the following two conditions:&lt;/p&gt;
@@ -441,7 +444,8 @@ The  circle and the open unit ball do not have the same dimensionality.&lt;/p&gt
 
 &lt;p&gt;For statistical  manifolds, 
  consider the following examples. We will discuss more about them in 
-Part II.&lt;/p&gt;
+ &lt;!--[Part II]({ post_url 2021-10-04-Geomopt02 }#riemannian-steepest-direction).--&gt;
+ Part II.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;
