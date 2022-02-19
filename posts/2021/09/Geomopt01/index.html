@@ -248,7 +248,7 @@ By exploiting the structures, we can</p>
 $$</code>
 where <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution. Here, <code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | m, v) $</code> denotes a normal distribution over <code class="language-plaintext highlighter-rouge">$ y $</code> with mean <code class="language-plaintext highlighter-rouge">$ m $</code> and variance <code class="language-plaintext highlighter-rouge">$ v $</code>.</p>
 
-  <p>Well-known algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[4]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>. These are examples of algorithms derived from a frequentist perspective, which can also be generalized to neural network <a class="citation" href="#martens2020new">[4]</a>.</p>
+  <p>Well-known algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[4]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>. These are examples of algorithms derived from a frequentist perspective, which can also be generalized to neural networks <a class="citation" href="#martens2020new">[4]</a>.</p>
 </blockquote>
 
 <blockquote>
@@ -263,7 +263,7 @@ $$</code>
 where <code class="language-plaintext highlighter-rouge">$ \mathrm{KL} [ q(z) ||  p(z) ] :=  E_{ {q(z)} } [ \log \big(\frac{q(z)}{p(z)}\big) ]$</code> is the Kullback–Leibler divergence.</p>
 
   <p>The <strong>natural-gradient variational inference</strong> <a class="citation" href="#khan2017conjugate">[5]</a> is an algorithm that speeds up the inference by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$q(z|\tau)$</code> induced by the Fisher-Rao metric.
-This approach is derived from a Bayesian  perspective, and can also be generalized to neural network cases <a class="citation" href="#lin2021tractable">[2]</a> <a class="citation" href="#osawa2019practical">[6]</a>.</p>
+This approach is derived from a Bayesian  perspective, and can also be generalized to neural networks <a class="citation" href="#lin2021tractable">[2]</a>  <a class="citation" href="#osawa2019practical">[6]</a>.</p>
 </blockquote>
 
 <blockquote>
