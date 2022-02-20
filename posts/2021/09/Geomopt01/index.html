@@ -263,7 +263,7 @@ $$</code>
 where <code class="language-plaintext highlighter-rouge">$ \mathrm{KL} [ q(z) ||  p(z) ] :=  E_{ {q(z)} } [ \log \big(\frac{q(z)}{p(z)}\big) ]$</code> is the Kullback–Leibler divergence.</p>
 
   <p>The <strong>natural-gradient variational inference</strong> <a class="citation" href="#khan2017conjugate">[5]</a> is an algorithm that speeds up the inference by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$q(z|\tau)$</code> induced by the Fisher-Rao metric.
-This approach is derived from a Bayesian  perspective, and can also be generalized to neural networks <a class="citation" href="#lin2021tractable">[2]</a>  <a class="citation" href="#osawa2019practical">[6]</a>.</p>
+This approach is derived from a Bayesian  perspective, and can also be generalized to neural networks <a class="citation" href="#lin2021structured">[6]</a> and Bayesian neural networks <a class="citation" href="#osawa2019practical">[7]</a>.</p>
 </blockquote>
 
 <blockquote>
@@ -277,13 +277,13 @@ This approach is derived from a Bayesian  perspective, and can also be generaliz
 $$</code>
 Samples from the search distribution are evaluated through a “fitness” function <code class="language-plaintext highlighter-rouge">$ h(a) $</code>, and guide the optimization towards better optima.</p>
 
-  <p>The <strong>natural evolution strategies</strong> <a class="citation" href="#wierstra2014natural">[7]</a> is an algorithm that speeds up the search process by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$\pi(a|\tau)$</code>.
-In the context of reinforcement learning,  <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code> is known as the policy distribution to generate actions and the natural evolution strategies is known as the <strong>natural policy gradient</strong> method <a class="citation" href="#kakade2001natural">[8]</a>.</p>
+  <p>The <strong>natural evolution strategies</strong> <a class="citation" href="#wierstra2014natural">[8]</a> is an algorithm that speeds up the search process by exploiting the geometry of <code class="language-plaintext highlighter-rouge">$\pi(a|\tau)$</code>.
+In the context of reinforcement learning,  <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code> is known as the policy distribution to generate actions and the natural evolution strategies is known as the <strong>natural policy gradient</strong> method <a class="citation" href="#kakade2001natural">[9]</a>.</p>
 </blockquote>
 
 <p>In all of the examples above, the objective function is expressed in terms of an expectation w.r.t. a distribution in red, parameterized with the parameter <code class="language-plaintext highlighter-rouge">$ \tau $</code>. 
 The geometric structure of a distribution <code class="language-plaintext highlighter-rouge">$ p(w|\tau) $</code> for the quantity <code class="language-plaintext highlighter-rouge">$ w $</code> can be exploited to improve the learning algorithms. The table below summarizes the three examples. 
-More applications of similar nature are discussed in <a class="citation" href="#le2007topmoumoute">[9]</a> and <a class="citation" href="#duan2020ngboost">[10]</a>.</p>
+More applications of similar nature are discussed in <a class="citation" href="#le2007topmoumoute">[10]</a> and <a class="citation" href="#duan2020ngboost">[11]</a>.</p>
 
 <table>
   <thead>
@@ -317,7 +317,7 @@ More applications of similar nature are discussed in <a class="citation" href="#
 <div class="notice--success">
   <p><strong>Note</strong>:</p>
 
-  <p>In general, we may have to compute or estimate the inverse of the FIM. However, in many useful machine learning applications, algorithms such as <a class="citation" href="#lin2021tractable">[2]</a>  <a class="citation" href="#martens2020new">[4]</a> <a class="citation" href="#khan2017conjugate">[5]</a> <a class="citation" href="#osawa2019practical">[6]</a>  <a class="citation" href="#wierstra2014natural">[7]</a>  <a class="citation" href="#kakade2001natural">[8]</a>  <a class="citation" href="#le2007topmoumoute">[9]</a> can be efficiently implemented without
+  <p>In general, we may have to compute or estimate the inverse of the FIM. However, in many useful machine learning applications, algorithms such as <a class="citation" href="#lin2021tractable">[2]</a>  <a class="citation" href="#martens2020new">[4]</a> <a class="citation" href="#khan2017conjugate">[5]</a> <a class="citation" href="#osawa2019practical">[7]</a>  <a class="citation" href="#wierstra2014natural">[8]</a>  <a class="citation" href="#kakade2001natural">[9]</a>  <a class="citation" href="#le2007topmoumoute">[10]</a> can be efficiently implemented without
 explicitly computing the inverse of the FIM.</p>
 
   <p>We discuss this in other posts; see<br>
@@ -336,7 +336,7 @@ The following figure illustrates four distributions in the Gaussian family denot
 <h1 id="intrinsic-parameterizations">Intrinsic Parameterizations</h1>
 <hr>
 <p>We start by discussing a special type of parameterizations, we call intrinsic parameterizations, which are useful to obtain non-singular FIMs.
-An arbitrary parameterization may not always be appropriate for a smooth manifold <a class="citation" href="#tu2011introduction">[11]</a>. Rather, the parameterization should be such that the manifold is locally like a <em>flat</em> vector space, for example, how the curved Earth surface looks flat to us, locally.
+An arbitrary parameterization may not always be appropriate for a smooth manifold <a class="citation" href="#tu2011introduction">[12]</a>. Rather, the parameterization should be such that the manifold is locally like a <em>flat</em> vector space, for example, how the curved Earth surface looks flat to us, locally.
 We will refer to such flat vector space as a <em>local</em> vector-space structure (denote it by <code class="language-plaintext highlighter-rouge">$ E $</code>).</p>
 
 <div class="notice--success">
@@ -507,7 +507,7 @@ where $K$ is the number of entries of parameter array $\tau$ and
 <code class="language-plaintext highlighter-rouge">$ \mathbf{F}(\tau) := - E_{p(w|\tau) }  [  \nabla_{\tau}^2 \log p(w|\tau )  ]$</code>.
 The regularity condition guarantees that the FIM is non-singular if the matrix exists, that is, the expectation in the definition exists.</p>
 
-<p>In what follows, we will assume the metric to be well-defined, which makes the Fisher-Rao metric a valid Riemannian metric <a class="citation" href="#lee2018introduction">[12]</a> since the corresponding FIM is positive definite everywhere in its intrinsic parameter space.</p>
+<p>In what follows, we will assume the metric to be well-defined, which makes the Fisher-Rao metric a valid Riemannian metric <a class="citation" href="#lee2018introduction">[13]</a> since the corresponding FIM is positive definite everywhere in its intrinsic parameter space.</p>
 
 <h1 id="caveats-of-the-fisher-matrix-computation">Caveats of the Fisher matrix computation</h1>
 <hr>
@@ -608,7 +608,7 @@ $$</code></p>
 <h1 id="dimension-of-a-manifold">Dimension of a manifold</h1>
 <hr>
 <p>We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
-Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#tu2011introduction">[11]</a>.
+Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#tu2011introduction">[12]</a>.
 This also gives us a tool to  identify non-manifold cases.
 We now illustrate this by examples.</p>
 
@@ -714,13 +714,14 @@ $$</code></p>
 <p><span id="liang2019fisher">[3] T. Liang, T. Poggio, A. Rakhlin, &amp; J. Stokes, "Fisher-rao metric, geometry, and complexity of neural networks," <i>The 22nd International Conference on Artificial Intelligence and Statistics</i> (PMLR, 2019), pp. 888–896.</span></p>
 <p><span id="martens2020new">[4] J. Martens, "New Insights and Perspectives on the Natural Gradient Method," <i>Journal of Machine Learning Research</i> <b>21</b>:1–76 (2020).</span></p>
 <p><span id="khan2017conjugate">[5] M. Khan &amp; W. Lin, "Conjugate-computation variational inference: Converting variational inference in non-conjugate models to inferences in conjugate models," <i>Artificial Intelligence and Statistics</i> (PMLR, 2017), pp. 878–887.</span></p>
-<p><span id="osawa2019practical">[6] K. Osawa, S. Swaroop, A. Jain, R. Eschenhagen, R. E. Turner, R. Yokota, &amp; M. E. Khan, "Practical deep learning with Bayesian principles," <i>Proceedings of the 33rd International Conference on Neural Information Processing Systems</i> (2019), pp. 4287–4299.</span></p>
-<p><span id="wierstra2014natural">[7] D. Wierstra, T. Schaul, T. Glasmachers, Y. Sun, J. Peters, &amp; J. Schmidhuber, "Natural evolution strategies," <i>The Journal of Machine Learning Research</i> <b>15</b>:949–980 (2014).</span></p>
-<p><span id="kakade2001natural">[8] S. M. Kakade, "A natural policy gradient," <i>Advances in neural information processing systems</i> <b>14</b> (2001).</span></p>
-<p><span id="le2007topmoumoute">[9] N. Le Roux, P.-A. Manzagol, &amp; Y. Bengio, "Topmoumoute Online Natural Gradient Algorithm.," <i>NIPS</i> (Citeseer, 2007), pp. 849–856.</span></p>
-<p><span id="duan2020ngboost">[10] T. Duan, A. Anand, D. Y. Ding, K. K. Thai, S. Basu, A. Ng, &amp; A. Schuler, "Ngboost: Natural gradient boosting for probabilistic prediction," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 2690–2700.</span></p>
-<p><span id="tu2011introduction">[11] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p>
-<p><span id="lee2018introduction">[12] J. M. Lee, <i>Introduction to Riemannian manifolds</i> (Springer, 2018).</span></p>
+<p><span id="lin2021structured">[6] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Structured second-order methods via natural gradient descent," <i>arXiv preprint arXiv:2107.10884</i> (2021).</span></p>
+<p><span id="osawa2019practical">[7] K. Osawa, S. Swaroop, A. Jain, R. Eschenhagen, R. E. Turner, R. Yokota, &amp; M. E. Khan, "Practical deep learning with Bayesian principles," <i>Proceedings of the 33rd International Conference on Neural Information Processing Systems</i> (2019), pp. 4287–4299.</span></p>
+<p><span id="wierstra2014natural">[8] D. Wierstra, T. Schaul, T. Glasmachers, Y. Sun, J. Peters, &amp; J. Schmidhuber, "Natural evolution strategies," <i>The Journal of Machine Learning Research</i> <b>15</b>:949–980 (2014).</span></p>
+<p><span id="kakade2001natural">[9] S. M. Kakade, "A natural policy gradient," <i>Advances in neural information processing systems</i> <b>14</b> (2001).</span></p>
+<p><span id="le2007topmoumoute">[10] N. Le Roux, P.-A. Manzagol, &amp; Y. Bengio, "Topmoumoute Online Natural Gradient Algorithm.," <i>NIPS</i> (Citeseer, 2007), pp. 849–856.</span></p>
+<p><span id="duan2020ngboost">[11] T. Duan, A. Anand, D. Y. Ding, K. K. Thai, S. Basu, A. Ng, &amp; A. Schuler, "Ngboost: Natural gradient boosting for probabilistic prediction," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 2690–2700.</span></p>
+<p><span id="tu2011introduction">[12] L. W. Tu, "An introduction to manifolds. Second," <i>New York, US: Springer</i> (2011).</span></p>
+<p><span id="lee2018introduction">[13] J. M. Lee, <i>Introduction to Riemannian manifolds</i> (Springer, 2018).</span></p>
 
 <h2 id="footnotes">Footnotes:</h2>
 
