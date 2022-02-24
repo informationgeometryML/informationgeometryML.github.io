@@ -340,12 +340,22 @@ $$</code></p>
   <ul>
     <li>Each possible vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (vector) space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> denoted by
 <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)$</code>.</li>
-    <li>
-<code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$</code>.</li>
+    <li><code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$</code></li>
   </ul>
+
 </div>
 
 <p>It is easy to see that the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$</code>, which is the (Euclidean) steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
+
+<div class="notice--danger">
+  <p><strong>Warning</strong>:</p>
+
+  <ul>
+    <li>When manifold <code class="language-plaintext highlighter-rouge">$\mathcal{M}\neq \mathcal{R}^K$</code>,  <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{M}) \neq \mathcal{R}^K$</code>.</li>
+    <li>By choosing an intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau$</code> in its parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>, we will see that
+ <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau) \subset \mathcal{R}^K$</code>.</li>
+  </ul>
+</div>
 
 <h1 id="weighted-norm-induced-by-the-fisher-rao-metric">Weighted norm induced by the Fisher-Rao metric</h1>
 <hr>
@@ -488,7 +498,7 @@ Now, we can introduce the Riemannian steepest direction <a class="citation" href
 <p>Now, we define the Riemannian steepest direction as the optimal solution to the following new optimization problem.  The optimization problem is expressed in terms of a directional derivative along Riemannian vector $\mathbf{v}$, where we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\min_{ \color{red} {\|v\|_{F}^2=1} \\ v \in T_{\tau_0} \Omega } ( \nabla_\tau f(\mathbf{\tau}_0) )^T  \mathbf{v} 
+\min_{ \color{red} {\|v\|_{F}^2=1} \\ v \in T_{\tau_0} (\Omega_\tau) } ( \nabla_\tau f(\mathbf{\tau}_0) )^T  \mathbf{v} 
 \end{aligned} \tag{2}\label{2}
 $$</code></p>
 
@@ -496,12 +506,12 @@ $$</code></p>
   <p>Note:</p>
 
   <ul>
-    <li>Each possible (Riemannian) vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (tangent) vector space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> denoted by <code class="language-plaintext highlighter-rouge">$T_{\tau_0} \Omega$</code>
+    <li>Each possible (Riemannian) vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (tangent) vector space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> denoted by <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code>
 </li>
     <li>
-<code class="language-plaintext highlighter-rouge">$T_{\tau_0} \Omega = \mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of the intrinsic parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</li>
+<code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau) = \mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of the intrinsic parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</li>
     <li>
-<code class="language-plaintext highlighter-rouge">$ \Omega_\tau \subset T_{\tau_0} \Omega $</code> (see the figure)</li>
+<code class="language-plaintext highlighter-rouge">$ \Omega_\tau \subset T_{\tau_0} (\Omega_\tau) $</code> (see the figure)</li>
   </ul>
 </div>
 
@@ -779,7 +789,8 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 <p>We can also define vector additions and real scalar products in a tangent vector space by using tangent directions of curves in the manifold with/without a parameterization.</p>
 
 <p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that a parameter space is a parametric representation of a  set of <strong>points</strong> in a manifold.
-We will discuss more about this in Part IV. <!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces).--></p>
+We will discuss more about this in Part IV. 
+<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces). --></p>
 
 <hr>
 <h1 id="references">References</h1>
@@ -789,13 +800,14 @@ We will discuss more about this in Part IV. <!--[Part IV]({ post_url 2021-11-15-
 
 <h2 id="footnotes">Footnotes:</h2>
 
+<p>&lt;!–<a href="%7B%20post_url%202021-11-02-Geomopt03%20%7D">Part III</a>.</p>
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
       <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wikiCovariant_derivative">covariant derivative</a>, which induces parallel transport. Given a smooth scalar field/function on a manifold, a coordinate representation of the covariant derivative remains the same as the Euclidean case. Note that the standard coordinate derivative  is identical to  the coordinate representation of the covariant derivative when it comes to a scalar field. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector). We will discuss their transformation rules in Part III. <!--[Part III]({ post_url 2021-11-02-Geomopt03 }).--> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector). We will discuss their transformation rules in Part III. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
