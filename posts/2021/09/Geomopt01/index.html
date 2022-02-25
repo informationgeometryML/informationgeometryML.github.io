@@ -441,26 +441,26 @@ We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-comput
 <blockquote>
   <p>Example 1 (regularity condition for an intrinsic parameterization):</p>
 
-  <p>We will write the regularity condition at a point for an intrinsic parameterization. Consider a 1-dimensional Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code>, variance <code class="language-plaintext highlighter-rouge">$\sigma$</code>, and parametrization <code class="language-plaintext highlighter-rouge">$\tau = (\mu,\sigma) $</code>.
+  <p>We will write the regularity condition at a point for an intrinsic parameterization. Consider a 1-dimensional Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,v) \Big| \mu \in \mathcal{R}, v&gt;0 \}$</code> with mean <code class="language-plaintext highlighter-rouge">$\mu$</code>, variance <code class="language-plaintext highlighter-rouge">$v$</code>, and parametrization <code class="language-plaintext highlighter-rouge">$\tau = (\mu,v) $</code>.
 The partial derivatives are the following,
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
+\partial_{\mu} \log \mathcal{N}(w |\mu,v) = \frac{w-\mu}{v}, \,\,\, \partial_{v} \log \mathcal{N}(w |\mu,v) = \frac{ (w-\mu)^2 }{2 v^2} - \frac{1}{2 v} 
 \end{aligned}
 $$</code> 
-It is easy to see that these partial derivatives are smooth w.r.t. $\tau=(\mu,\sigma)$ in its parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\{(\mu,\sigma)|\mu\in \mathcal{R}, \sigma&gt;0\}$</code>.</p>
+It is easy to see that these partial derivatives are smooth w.r.t. $\tau=(\mu,v)$ in its parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\{(\mu,v)|\mu\in \mathcal{R}, v&gt;0\}$</code>.</p>
 
-  <p>Consider the partial derivatives at a point $(\mu=0, \sigma=1)$,</p>
+  <p>Consider the partial derivatives at a point $(\mu=0, v=1)$,</p>
 
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
+\partial_{\mu} \log \mathcal{N}(w |\mu,v) \Big|_{\mu=0,v=1}= w, \,\,\, \partial_{v} \log \mathcal{N}(w |\mu,v) \Big|_{\mu=0,v=1} = \frac{ w^2 -1 }{2}
 \end{aligned}
 $$</code>
 For this point, the regularity condition will be <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code>.
 For this to hold for all $w$, it is necessarily that <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies linear independence.</p>
 
-  <p>A formal proof can be built to show that this holds for any <code class="language-plaintext highlighter-rouge">$\mu \in \mathcal{R}$</code> and <code class="language-plaintext highlighter-rouge">$\sigma &gt;0$</code>.</p>
+  <p>A formal proof can be built to show that this holds for any <code class="language-plaintext highlighter-rouge">$\mu \in \mathcal{R}$</code> and <code class="language-plaintext highlighter-rouge">$v &gt;0$</code>.</p>
 </blockquote>
 
 <blockquote>

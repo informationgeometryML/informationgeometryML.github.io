@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-24T09:54:31-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part I: Smooth Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Smooth Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-02-24T23:56:06-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part I: Smooth Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Smooth Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, useful to ensure non-singular FIMs:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Regularity conditions and intrinsic parameterizations of a distribution&lt;/li&gt;
@@ -243,26 +243,26 @@ We will discuss more about this at &lt;a href=&quot;#caveats-of-the-fisher-matri
 &lt;blockquote&gt;
   &lt;p&gt;Example 1 (regularity condition for an intrinsic parameterization):&lt;/p&gt;
 
-  &lt;p&gt;We will write the regularity condition at a point for an intrinsic parameterization. Consider a 1-dimensional Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&amp;gt;0 \}$&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu$&lt;/code&gt;, variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sigma$&lt;/code&gt;, and parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,\sigma) $&lt;/code&gt;.
+  &lt;p&gt;We will write the regularity condition at a point for an intrinsic parameterization. Consider a 1-dimensional Gaussian family &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |\mu,v) \Big| \mu \in \mathcal{R}, v&amp;gt;0 \}$&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu$&lt;/code&gt;, variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$v$&lt;/code&gt;, and parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = (\mu,v) $&lt;/code&gt;.
 The partial derivatives are the following,
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) = \frac{w-\mu}{\sigma}, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) = \frac{ (w-\mu)^2 }{2 \sigma^2} - \frac{1}{2\sigma} 
+\partial_{\mu} \log \mathcal{N}(w |\mu,v) = \frac{w-\mu}{v}, \,\,\, \partial_{v} \log \mathcal{N}(w |\mu,v) = \frac{ (w-\mu)^2 }{2 v^2} - \frac{1}{2 v} 
 \end{aligned}
 $$&lt;/code&gt; 
-It is easy to see that these partial derivatives are smooth w.r.t. $\tau=(\mu,\sigma)$ in its parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau=\{(\mu,\sigma)|\mu\in \mathcal{R}, \sigma&amp;gt;0\}$&lt;/code&gt;.&lt;/p&gt;
+It is easy to see that these partial derivatives are smooth w.r.t. $\tau=(\mu,v)$ in its parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau=\{(\mu,v)|\mu\in \mathcal{R}, v&amp;gt;0\}$&lt;/code&gt;.&lt;/p&gt;
 
-  &lt;p&gt;Consider the partial derivatives at a point $(\mu=0, \sigma=1)$,&lt;/p&gt;
+  &lt;p&gt;Consider the partial derivatives at a point $(\mu=0, v=1)$,&lt;/p&gt;
 
   &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
-\partial_{\mu} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1}= w, \,\,\, \partial_{\sigma} \log \mathcal{N}(w |\mu,\sigma) \Big|_{\mu=0,\sigma=1} = \frac{ w^2 -1 }{2}  
+\partial_{\mu} \log \mathcal{N}(w |\mu,v) \Big|_{\mu=0,v=1}= w, \,\,\, \partial_{v} \log \mathcal{N}(w |\mu,v) \Big|_{\mu=0,v=1} = \frac{ w^2 -1 }{2}
 \end{aligned}
 $$&lt;/code&gt;
 For this point, the regularity condition will be &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$&lt;/code&gt;.
 For this to hold for all $w$, it is necessarily that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_1=c_2=0$&lt;/code&gt;, which implies linear independence.&lt;/p&gt;
 
-  &lt;p&gt;A formal proof can be built to show that this holds for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu \in \mathcal{R}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sigma &amp;gt;0$&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;A formal proof can be built to show that this holds for any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mu \in \mathcal{R}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$v &amp;gt;0$&lt;/code&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
