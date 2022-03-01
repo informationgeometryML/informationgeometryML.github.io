@@ -319,41 +319,22 @@
 <hr>
 <p>Before we discuss natural-gradients, we first revisit Euclidean gradients.</p>
 
-<p>We will show a normalized Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we generlize the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a normalized natural-gradient.</p>
+<p>We will show a normalized Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we will generalize the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a normalized natural-gradient.</p>
 
 <p>Consider a minimization problem <code class="language-plaintext highlighter-rouge">$\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$</code> over a <strong>vector space</strong> <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.
 Given the smooth scalar function <code class="language-plaintext highlighter-rouge">$f(\cdot)$</code>, we can define the (Euclidean) steepest direction at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> as the optimal solution to another optimization problem,
 where we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.
-We can express the optimization problem in terms of a <strong>directional derivative</strong> along vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code>. The optimal directional derivative, denoted by <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}$</code>,  is the steepest direction.</p>
+We can express the optimization problem in terms of a <strong>directional derivative</strong> along vector <code class="language-plaintext highlighter-rouge">$\mathbf{v} \in T_{\tau_0} (\mathcal{R}^K)$</code>, where
+<code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$</code> is a vector space attached at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.
+The optimal directional derivative, denoted by <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}$</code>,  is the steepest direction.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\min_{\|v\|^2=1 \\ v \in T_{\tau_0} (\mathcal{R}^K) } \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0) )^T \mathbf{v} 
+\min_{\|v\|^2=1   } \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0) )^T \mathbf{v} 
 \end{aligned}\tag{1}\label{1}
 $$</code></p>
 
-<div class="notice--success">
-  <p>Note:</p>
-
-  <ul>
-    <li>Each possible vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (vector) space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> denoted by
-<code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)$</code>.</li>
-    <li><code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$</code></li>
-  </ul>
-
-</div>
-
 <p>It is easy to see that the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$</code>, which is the (Euclidean) steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
-
-<div class="notice--danger">
-  <p><strong>Warning</strong>:</p>
-
-  <ul>
-    <li>When K-dim manifold <code class="language-plaintext highlighter-rouge">$\mathcal{M}\neq \mathcal{R}^K$</code>,  <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{M}) \neq \mathcal{R}^K$</code>.</li>
-    <li>By choosing an intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau$</code> in its parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>, we will see that
- <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau) \subset \mathcal{R}^K$</code>.</li>
-  </ul>
-</div>
 
 <h1 id="weighted-norm-induced-by-the-fisher-rao-metric">Weighted norm induced by the Fisher-Rao metric</h1>
 <hr>
@@ -422,7 +403,7 @@ Using this parameterization, consider an optimization problem $\min_{\tau \in \O
 <p>Recall that we allow a <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">small perturbation</a> <code class="language-plaintext highlighter-rouge">$E$</code> around <code class="language-plaintext highlighter-rouge">$\tau_0$</code> contained in  parameter space  <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> (i.e., <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>) since  <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}$</code> is an intrinsic parameterization.
 Therefore, when $|t|$ is small enough, <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} $</code> stays in the parameter space and <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau}_0+t\mathbf{v})$</code> is well-defined.
 Note that we only require <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$</code> when $|t|$ is small enough. When $|t|$ is small enough, this is possible since a line segment <code class="language-plaintext highlighter-rouge">$ \mathbf{\tau}_0+t\mathbf{v} \in E$</code> and <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>.
- Technically, this is because  $\Omega_\tau$ is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
+Technically, this is because <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
 
 <p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the <strong>local vector space</strong> structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
 <code class="language-plaintext highlighter-rouge">$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v}. \end{aligned}$$</code></p>
@@ -493,24 +474,22 @@ Now, we can introduce the Riemannian steepest direction <a class="citation" href
 <p>By choosing an intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}$</code>, a minimization problem over a manifold  <code class="language-plaintext highlighter-rouge">$\mathcal{M}$</code> can be translated as
 <code class="language-plaintext highlighter-rouge">$\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$</code> over  parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> has a local vector-space structure.</p>
 
-<p>Now, we define the Riemannian steepest direction as the optimal solution to the following new optimization problem.  The optimization problem is expressed in terms of a directional derivative along Riemannian vector $\mathbf{v}$, where we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.
+<p>Assuming <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>,  we define the Riemannian steepest direction as the
+optimal solution to the following new optimization problem.  The optimization problem is expressed in terms of a
+directional derivative along Riemannian vector <code class="language-plaintext highlighter-rouge">$\mathbf{v} \in T_{\tau_0} (\Omega_\tau)$</code>, where <code class="language-plaintext highlighter-rouge">$T_{\tau_0}
+(\Omega_\tau) = \mathcal{R}^K$</code> is a vector space attached at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\min_{ \color{red} {\|v\|_{F}^2=1} \\ v \in T_{\tau_0} (\Omega_\tau) } ( \nabla_\tau f(\mathbf{\tau}_0) )^T  \mathbf{v} 
+\min_{ \color{red} {\|v\|_{F}^2=1} } ( \nabla_\tau f(\mathbf{\tau}_0) )^T  \mathbf{v} 
 \end{aligned} \tag{2}\label{2}
 $$</code></p>
 
-<div class="notice--success">
-  <p>Note:</p>
+<div class="notice--danger">
+  <p><strong>Warning</strong>:</p>
 
-  <ul>
-    <li>Each possible (Riemannian) vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in the same (tangent) vector space at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> denoted by <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code>
-</li>
-    <li>
-<code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau) = \mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of the intrinsic parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</li>
-    <li>
-<code class="language-plaintext highlighter-rouge">$ \Omega_\tau \subset T_{\tau_0} (\Omega_\tau) $</code> (see the figure)</li>
-  </ul>
+  <p>When a K-<a href="/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold">dimensional</a> manifold is not flat such as <code class="language-plaintext highlighter-rouge">$\mathcal{M}\neq \mathcal{R}^K$</code>,
+the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> under intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau$</code> is a subspace of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> such as 
+ <code class="language-plaintext highlighter-rouge">$\Omega_{\tau}  \subset \mathcal{R}^K$</code> while the vector space <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code> is the whole space  <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> (see the following figure as an illustration)</p>
 </div>
 
 <p><img src="/img/sphere.png" width="500"></p>
@@ -779,7 +758,7 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0) =  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$</code> since (Euclidean gradient) <code class="language-plaintext highlighter-rouge">$\nabla h_\tau(\mathbf{\tau}_0)$</code> is an arbitrary vector in $\mathcal{R}^2$ and <code class="language-plaintext highlighter-rouge">$\tau$</code> is a 2-dim parameter array.</p>
 
   <p>In summary, a Riemannian gradient <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0)$</code> can be viewed as a parametric representation of the tangent vector 
- of curve $\gamma(t)$ at $\mathbf{x}_0$ since  <code class="language-plaintext highlighter-rouge">${\gamma}_\tau(t)$</code> is the parametric representation of $\gamma(t)$.</p>
+of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code> since <code class="language-plaintext highlighter-rouge">${\gamma}_\tau(t)$</code> is the parametric representation of <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code>.</p>
 </blockquote>
 
 <h2 id="riemannian-gradient-space-has-a-vector-space-structure">(Riemannian) gradient space has a vector-space structure</h2>
@@ -787,7 +766,7 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 <p>We can also define vector additions and real scalar products in a tangent vector space by using tangent directions of curves in the manifold with/without a parameterization.</p>
 
 <p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that a parameter space is a parametric representation of a  set of <strong>points</strong> in a manifold.
-We will discuss more about this in Part IV. 
+We will discuss more about this in  Part IV. 
 <!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces). --></p>
 
 <hr>
