@@ -292,6 +292,18 @@
   <li>The difference between a parameter space and a gradient/vector space</li>
 </ul>
 
+<p>In machine learning,  a common derivation of natural-gradients is via a Talyor expansion of the KL divergence as we will
+discussed  in 
+<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#proximal-gradient-descent). -->
+Part IV.
+However, such derivation has its limitations:</p>
+<ul>
+  <li>It does not clearly illustrate the difference between a parameter space and a (natural) gradient space.</li>
+  <li>It implicitly assume that  the FIM is non-singular and the parameter space is open.</li>
+</ul>
+
+<p>We will give an alternative derivation of natural-gradients to emphasize the subtlety.</p>
+
 <p>The discussion here is informal and focuses on more on intuitions, rather than rigor.</p>
 
 <div class="notice--info">
@@ -335,6 +347,14 @@ The optimal directional derivative, denoted by <code class="language-plaintext h
 $$</code></p>
 
 <p>It is easy to see that the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{\nabla_\tau f(\mathbf{\tau}_0) }{\|\nabla_\tau f(\mathbf{\tau}_0) \|}$</code>, which is the (Euclidean) steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
+
+<div class="notice--success">
+  <p><strong>Note</strong>:</p>
+
+  <p>In Eucclidean cases, there is no difference between parameter space <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> and gradient space <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$</code> at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
+
+  <p>Later, we will see that there is a key difference between a parameter space and a gradient space in manifold cases.</p>
+</div>
 
 <h1 id="weighted-norm-induced-by-the-fisher-rao-metric">Weighted norm induced by the Fisher-Rao metric</h1>
 <hr>
@@ -487,9 +507,8 @@ $$</code></p>
 <div class="notice--danger">
   <p><strong>Warning</strong>:</p>
 
-  <p>When a K-<a href="/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold">dimensional</a> manifold is not flat such as <code class="language-plaintext highlighter-rouge">$\mathcal{M}\neq \mathcal{R}^K$</code>,
-the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> under intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau$</code> is a subspace of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> such as 
- <code class="language-plaintext highlighter-rouge">$\Omega_{\tau}  \subset \mathcal{R}^K$</code> while the vector space <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code> is the whole space  <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> (see the following figure as an illustration)</p>
+  <p>In K-<a href="/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold">dimensional</a> manifold cases, an intrinsic parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is often a <strong>subspace</strong> of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> while the gradient space  <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code> is the whole space <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> illustrated by the following figure.</p>
+
 </div>
 
 <p><img src="/img/sphere.png" width="500"></p>
@@ -624,7 +643,7 @@ Strictly speaking, a natural gradient/vector w.r.t. <code class="language-plaint
         <p>In the literature, a natural gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is  defined as <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code>, where
 <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is a valid natural gradient w.r.t. intrinsic parameter <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>
 (see<br>
-<!--[Part V]({ post_url 2021-12-14-Geomopt05 }#efficient-ngd-for-multivariate-gaussian)-->
+<!-- [Part V]({ post_url 2021-12-14-Geomopt05 }#efficient-ngd-for-multivariate-gaussian)-->
 Part V
 for the
 details.)</p>
@@ -766,8 +785,9 @@ of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> a
 <p>We can also define vector additions and real scalar products in a tangent vector space by using tangent directions of curves in the manifold with/without a parameterization.</p>
 
 <p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that a parameter space is a parametric representation of a  set of <strong>points</strong> in a manifold.
-We will discuss more about this in  Part IV. 
-<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces). --></p>
+We will discuss more about this in
+<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces).-->
+Part IV.</p>
 
 <hr>
 <h1 id="references">References</h1>
@@ -777,7 +797,7 @@ We will discuss more about this in  Part IV.
 
 <h2 id="footnotes">Footnotes:</h2>
 
-<p>&lt;!–<a href="%7B%20post_url%202021-11-02-Geomopt03%20%7D">Part III</a>.</p>
+<!--[Part III]({ post_url 2021-11-02-Geomopt03 }). -->
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
