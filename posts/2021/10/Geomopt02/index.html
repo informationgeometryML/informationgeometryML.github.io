@@ -292,18 +292,6 @@
   <li>The difference between a parameter space and a gradient/vector space</li>
 </ul>
 
-<p>In machine learning,  a common derivation of natural-gradients is via a Talyor expansion of the KL divergence as we will
-discussed  in 
-<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#proximal-gradient-descent). -->
-Part IV.
-However, such derivation has its limitations:</p>
-<ul>
-  <li>It does not clearly illustrate the difference between a parameter space and a (natural) gradient space.</li>
-  <li>It implicitly assume that  the FIM is non-singular and the parameter space is open.</li>
-</ul>
-
-<p>We will give an alternative derivation of natural-gradients to emphasize the subtlety.</p>
-
 <p>The discussion here is informal and focuses on more on intuitions, rather than rigor.</p>
 
 <div class="notice--info">
@@ -324,6 +312,18 @@ However, such derivation has its limitations:</p>
     </fieldset>
 </details>
 </div>
+
+<h1 id="motivation">Motivation</h1>
+<p>In machine learning, a common derivation of natural-gradients is via a Talyor expansion of the KL divergence as we will
+discuss in Part IV. However, the derivation has the following limitations:
+<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#proximal-gradient-descent).  --></p>
+<ul>
+  <li>It does not clearly illustrate the difference between a parameter space and a (natural) gradient space.</li>
+  <li>It implicitly assumes that the Fisher information matrix (FIM) is non-singular and the parameter space is open.</li>
+</ul>
+
+<p>These limitations become essential when it comes to constrained parameters.
+We will give an alternative derivation of natural-gradients to emphasize the subtlety.</p>
 
 <!--<img src="/img/gd_vs_ngd.png"  width="1000"/>-->
 
@@ -351,7 +351,7 @@ $$</code></p>
 <div class="notice--success">
   <p><strong>Note</strong>:</p>
 
-  <p>In Eucclidean cases, there is no difference between parameter space <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> and gradient space <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$</code> at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
+  <p>In Eucclidean cases, there is no difference between parameter space <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> and (Euclidean) gradient space <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$</code> at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
 
   <p>Later, we will see that there is a key difference between a parameter space and a gradient space in manifold cases.</p>
 </div>
@@ -425,6 +425,8 @@ Therefore, when $|t|$ is small enough, <code class="language-plaintext highlight
 Note that we only require <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$</code> when $|t|$ is small enough. When $|t|$ is small enough, this is possible since a line segment <code class="language-plaintext highlighter-rouge">$ \mathbf{\tau}_0+t\mathbf{v} \in E$</code> and <code class="language-plaintext highlighter-rouge">$E \subset \Omega_\tau$</code>.
 Technically, this is because <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.</p>
 
+<p><img src="/img/sphere_simple.png" width="500"></p>
+
 <p>Under <strong>intrinsic</strong> parameterization $\mathbf{\tau}$, the directional derivative remains the same as in the Euclidean case thanks to the <strong>local vector space</strong> structure in <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
 <code class="language-plaintext highlighter-rouge">$$\begin{aligned} \lim_{t \to 0} \frac{f(\mathbf{\tau}_0+t\mathbf{v}) - f(\mathbf{\tau}_0) }{t} = ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v}. \end{aligned}$$</code></p>
 
@@ -440,8 +442,6 @@ Technically, this is because <code class="language-plaintext highlighter-rouge">
   </ul>
 
 </div>
-
-<p><img src="/img/sphere.png" width="500"></p>
 
 <p>The following example illustrates directional derivatives in manifold cases.</p>
 
@@ -507,7 +507,7 @@ $$</code></p>
 <div class="notice--danger">
   <p><strong>Warning</strong>:</p>
 
-  <p>In K-<a href="/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold">dimensional</a> manifold cases, an intrinsic parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is often a <strong>subspace</strong> of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> while the gradient space  <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code> is the whole space <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> illustrated by the following figure.</p>
+  <p>In K-<a href="/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold">dimensional</a> manifold cases, an intrinsic parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is often a <strong>subspace</strong> of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> while the Riemannian gradient space  <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code> is the whole space <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> illustrated by the following figure.</p>
 
 </div>
 
@@ -643,7 +643,7 @@ Strictly speaking, a natural gradient/vector w.r.t. <code class="language-plaint
         <p>In the literature, a natural gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is  defined as <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code>, where
 <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is a valid natural gradient w.r.t. intrinsic parameter <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>
 (see<br>
-<!-- [Part V]({ post_url 2021-12-14-Geomopt05 }#efficient-ngd-for-multivariate-gaussian)-->
+<!--[Part V]({ post_url 2021-12-14-Geomopt05 }#efficient-ngd-for-multivariate-gaussian)-->
 Part V
 for the
 details.)</p>
@@ -752,11 +752,13 @@ The parametric representation of vector <code class="language-plaintext highligh
 <blockquote>
   <p>Example</p>
 
-  <p>Consider the yellow curve $\gamma(t) = (t v_{x}, t v_{y}, \sqrt{1 - t^2(v_{x}^2 + v_{y}^2) } ) \in \mathcal{M} $ 
+  <p>Consider the yellow curve in the figure $\gamma(t) = (t v_{x}, t v_{y}, \sqrt{1 - t^2(v_{x}^2 + v_{y}^2) } ) \in \mathcal{M} $ 
 and the blue line segment <code class="language-plaintext highlighter-rouge">${\gamma}_{\tau}(t)= (t v_{x} , t v_y  ) \in \Omega_\tau $</code>, where <code class="language-plaintext highlighter-rouge">$|t|$</code> must be small enough.</p>
 
   <p>The parametric  representation of the vector is <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}=(v_x,v_y)$</code>.</p>
 </blockquote>
+
+<p><img src="/img/sphere.png" width="500"></p>
 
 <p>A Riemannian gradient <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0)$</code> can be viewed as a parametric representation of tangent vector  $\mathbf{v}$ as shown below.</p>
 
@@ -785,9 +787,7 @@ of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> a
 <p>We can also define vector additions and real scalar products in a tangent vector space by using tangent directions of curves in the manifold with/without a parameterization.</p>
 
 <p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that a parameter space is a parametric representation of a  set of <strong>points</strong> in a manifold.
-We will discuss more about this in
-<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces).-->
-Part IV.</p>
+We will discuss more about this in <!-- [Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces). --> Part IV.</p>
 
 <hr>
 <h1 id="references">References</h1>
@@ -797,14 +797,13 @@ Part IV.</p>
 
 <h2 id="footnotes">Footnotes:</h2>
 
-<!--[Part III]({ post_url 2021-11-02-Geomopt03 }). -->
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
       <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wikiCovariant_derivative">covariant derivative</a>, which induces parallel transport. Given a smooth scalar field/function on a manifold, a coordinate representation of the covariant derivative remains the same as the Euclidean case. Note that the standard coordinate derivative  is identical to  the coordinate representation of the covariant derivative when it comes to a scalar field. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector). We will discuss their transformation rules in Part III. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector). We will discuss their transformation rules in <!-- [Part III]({ post_url 2021-11-02-Geomopt03 }). -->  Part III. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
