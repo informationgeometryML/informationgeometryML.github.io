@@ -344,15 +344,18 @@ Technically, this is because <code class="language-plaintext highlighter-rouge">
   <p>Note:</p>
   <ul>
     <li>
-      <p><code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}$</code> stays in the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> when scalar <code class="language-plaintext highlighter-rouge">$|t|$</code> is small enough</p>
+      <p><code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}$</code> stays in the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> when scalar <code class="language-plaintext highlighter-rouge">$|t|$</code> is small enough.</p>
     </li>
     <li>
-      <p>vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> stays in a distinct space. This space is called the tangent vector space <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code> at current point <code class="language-plaintext highlighter-rouge">$\tau_0$</code></p>
+      <p>vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> stays in the tangent vector space <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code> at current point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
+    </li>
+    <li>
+      <p>In K-<a href="/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold">dimensional</a> manifold cases,  <code class="language-plaintext highlighter-rouge">$\Omega_\tau \subset T_{\tau_0} (\Omega_\tau)=\mathcal{R}^K$</code> illustrated by the following figure.</p>
     </li>
   </ul>
 </div>
 
-<p><img src="/img/sphere.png" width="800"></p>
+<p><img src="/img/sphere-1.png" width="800"></p>
 
 <p>The following example illustrates directional derivatives in manifold cases.</p>
 
@@ -414,15 +417,6 @@ directional derivative along Riemannian vector <code class="language-plaintext h
 \min_{ \color{red} {\|v\|_{F}^2=1} } ( \nabla_\tau f(\mathbf{\tau}_0) )^T  \mathbf{v} 
 \end{aligned} \tag{2}\label{2}
 $$</code></p>
-
-<div class="notice--danger">
-  <p><strong>Warning</strong>:</p>
-
-  <p>In K-<a href="/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold">dimensional</a> manifold cases, an intrinsic parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is often a <strong>subspace</strong> of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> while the Riemannian gradient space  <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code> is the whole space <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> illustrated by the following figure.</p>
-
-</div>
-
-<p><img src="/img/sphere.png" width="800"></p>
 
 <p>The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
 <code class="language-plaintext highlighter-rouge">$$
