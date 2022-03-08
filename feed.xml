@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-08T09:42:56-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-08T09:47:03-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Rimannian steepest direction&lt;/li&gt;
@@ -225,14 +225,19 @@ directional derivative along Riemannian vector &lt;code class=&quot;language-pla
 \end{aligned} \tag{2}\label{2}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
+&lt;summary&gt;The optimal solution of  Eq. $\eqref{2}$ is $\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$ (click to expand)&lt;/summary&gt;
+&lt;fieldset class=&quot;field-set&quot;&gt;
+
+      &lt;p&gt;The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 L(\mathbf{v},\lambda) =  ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v} + \lambda (\|v\|_{F}^2 - 1) = \mathbf{v}^T \nabla_\tau f(\mathbf{\tau}_0) + \lambda (\mathbf{v}^T \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}  - 1) 
 \end{aligned}
 $$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\mathbf{\tau}_0)$&lt;/code&gt; is the FIM evaluated at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;p&gt;One of the &lt;a href=&quot;https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions&quot;&gt;Karush–Kuhn–Tucker&lt;/a&gt; (KKT) necessary conditions implies that
+      &lt;p&gt;One of the &lt;a href=&quot;https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions&quot;&gt;Karush–Kuhn–Tucker&lt;/a&gt; (KKT) necessary conditions implies that
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{0} = \nabla_{v} L(\mathbf{v}_{\text{opt}},\lambda) = \nabla_\tau f(\mathbf{\tau}_0) + 2 \lambda \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}_{\text{opt}}
@@ -241,14 +246,10 @@ $$&lt;/code&gt;
 Since we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)\neq 0$&lt;/code&gt;, the KKT condition implies that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda \neq 0$&lt;/code&gt;.
 Since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda \neq 0$&lt;/code&gt;, vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}$&lt;/code&gt; should be proportional to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0)$&lt;/code&gt;, where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}^{-1}(\mathbf{\tau}_0)$&lt;/code&gt; is well-defined since the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\mathbf{\tau}_0)$&lt;/code&gt; is positive definite.&lt;/p&gt;
 
-&lt;p&gt;Thus, the optimal solution of Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$&lt;/code&gt;, which gives us the Riemannian steepest direction at current &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;. 
+      &lt;p&gt;Thus, the optimal solution of Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$&lt;/code&gt;, which gives us the Riemannian steepest direction at current &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;. 
 Note that the &lt;strong&gt;Euclidean&lt;/strong&gt; steepest direction &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{euclid}}= -\frac{ \nabla_\tau f(\mathbf{\tau}_0) }{\| \nabla_\tau f(\mathbf{\tau}_0) \|_F}$&lt;/code&gt; is &lt;strong&gt;not&lt;/strong&gt; the optimal solution of  Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{2}$&lt;/code&gt; when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\tau_0) \neq \mathbf{I}$&lt;/code&gt;.
 We will illustrate this by using an example.&lt;/p&gt;
 
-&lt;div class=&quot;notice--info&quot;&gt;
-  &lt;details&gt;
-&lt;summary&gt;Euclidean steepest direction is not the optimal solution of  Eq. $\eqref{2}$ (click to expand)&lt;/summary&gt;
-&lt;fieldset class=&quot;field-set&quot;&gt;
       &lt;blockquote&gt;
 
         &lt;p&gt;Consider &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}(\tau_0)=\begin{bmatrix} 1 &amp;amp; 0 \\ 0 &amp;amp; \frac{1}{2} \end{bmatrix}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)=\begin{bmatrix} 1\\1 \end{bmatrix}$&lt;/code&gt;.

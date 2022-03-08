@@ -418,14 +418,19 @@ directional derivative along Riemannian vector <code class="language-plaintext h
 \end{aligned} \tag{2}\label{2}
 $$</code></p>
 
-<p>The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
+<div class="notice--info">
+  <details>
+<summary>The optimal solution of  Eq. $\eqref{2}$ is $\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$ (click to expand)</summary>
+<fieldset class="field-set">
+
+      <p>The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 L(\mathbf{v},\lambda) =  ( \nabla_\tau f(\mathbf{\tau}_0))^T \mathbf{v} + \lambda (\|v\|_{F}^2 - 1) = \mathbf{v}^T \nabla_\tau f(\mathbf{\tau}_0) + \lambda (\mathbf{v}^T \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}  - 1) 
 \end{aligned}
 $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\mathbf{\tau}_0)$</code> is the FIM evaluated at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code>.</p>
 
-<p>One of the <a href="https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions">Karush–Kuhn–Tucker</a> (KKT) necessary conditions implies that
+      <p>One of the <a href="https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions">Karush–Kuhn–Tucker</a> (KKT) necessary conditions implies that
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{0} = \nabla_{v} L(\mathbf{v}_{\text{opt}},\lambda) = \nabla_\tau f(\mathbf{\tau}_0) + 2 \lambda \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}_{\text{opt}}
@@ -434,14 +439,10 @@ $$</code>
 Since we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)\neq 0$</code>, the KKT condition implies that <code class="language-plaintext highlighter-rouge">$\lambda \neq 0$</code>.
 Since <code class="language-plaintext highlighter-rouge">$\lambda \neq 0$</code>, vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}$</code> should be proportional to <code class="language-plaintext highlighter-rouge">$\mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0)$</code>, where  <code class="language-plaintext highlighter-rouge">$\mathbf{F}^{-1}(\mathbf{\tau}_0)$</code> is well-defined since the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\mathbf{\tau}_0)$</code> is positive definite.</p>
 
-<p>Thus, the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$</code>, which gives us the Riemannian steepest direction at current <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>. 
+      <p>Thus, the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$</code>, which gives us the Riemannian steepest direction at current <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>. 
 Note that the <strong>Euclidean</strong> steepest direction <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{euclid}}= -\frac{ \nabla_\tau f(\mathbf{\tau}_0) }{\| \nabla_\tau f(\mathbf{\tau}_0) \|_F}$</code> is <strong>not</strong> the optimal solution of  Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> when <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\tau_0) \neq \mathbf{I}$</code>.
 We will illustrate this by using an example.</p>
 
-<div class="notice--info">
-  <details>
-<summary>Euclidean steepest direction is not the optimal solution of  Eq. $\eqref{2}$ (click to expand)</summary>
-<fieldset class="field-set">
       <blockquote>
 
         <p>Consider <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\tau_0)=\begin{bmatrix} 1 &amp; 0 \\ 0 &amp; \frac{1}{2} \end{bmatrix}$</code> and <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)=\begin{bmatrix} 1\\1 \end{bmatrix}$</code>.
