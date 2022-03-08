@@ -527,8 +527,10 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\
 \begin{aligned}
 \mathbf{0} = \nabla_{v} L(\mathbf{v}_{\text{opt}},\lambda) = \nabla_\tau f(\mathbf{\tau}_0) + 2 \lambda \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}_{\text{opt}}
 \end{aligned}
-$$</code>
-When $\lambda \neq 0$, vector 	<code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}$</code> should be proportional to <code class="language-plaintext highlighter-rouge">$\mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0)$</code>, where  <code class="language-plaintext highlighter-rouge">$\mathbf{F}^{-1}(\mathbf{\tau}_0)$</code> is well-defined since the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\mathbf{\tau}_0)$</code> is positive definite.</p>
+$$</code></p>
+
+<p>Since we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)\neq 0$</code>, the KKT condition implies that <code class="language-plaintext highlighter-rouge">$\lambda \neq 0$</code>.
+Since <code class="language-plaintext highlighter-rouge">$\lambda \neq 0$</code>, vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}$</code> should be proportional to <code class="language-plaintext highlighter-rouge">$\mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0)$</code>, where  <code class="language-plaintext highlighter-rouge">$\mathbf{F}^{-1}(\mathbf{\tau}_0)$</code> is well-defined since the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\mathbf{\tau}_0)$</code> is positive definite.</p>
 
 <p>We can show that the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$</code>, which gives us the Riemannian steepest direction at current <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.</p>
 
