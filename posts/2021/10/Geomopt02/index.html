@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part II: Derivation of Natural-gradients - Information Geometry in Machine Learning</title>
-<meta name="description" content="Blog website for Information Geometry in ML.">
+<meta name="description" content="Warning: working in Progress (incomplete)">
 
 
 
@@ -20,6 +20,8 @@
 <meta property="og:title" content="Part II: Derivation of Natural-gradients">
 <meta property="og:url" content="/posts/2021/10/Geomopt02/">
 
+
+  <meta property="og:description" content="Warning: working in Progress (incomplete)">
 
 
 
@@ -115,7 +117,7 @@
 
   </head>
 
-  <body class="layout--single">
+  <body class="layout--single mywide">
 
     <!--[if lt IE 9]>
 <div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
@@ -162,113 +164,10 @@
 
 <div id="main" role="main">
   
-  <div class="sidebar sticky">
-  
-
-
-<div itemscope itemtype="http://schema.org/Person">
-
-  
-
-  <div class="author__content">
-    
-      <a href=""><h3 class="author__name" itemprop="name">Wu Lin,<br>Frank Nielsen,<br>Emtiyaz Khan,<br>Mark Schmidt</h3></a>
-    
-    
-      <p class="author__bio" itemprop="description">
-        Blog posts about information geometry in machine learning
-      </p>
-    
-  </div>
-
-  <div class="author__urls-wrapper">
-    <button class="btn btn--inverse">Follow</button>
-    <ul class="author__urls social-icons">
-      
-
-      <!--  -->
-
-      
-
-      
-
-      
-
-      
-        <li>
-          <a href="https://github.com/informationgeometryML" itemprop="sameAs">
-            <i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub
-          </a>
-        </li>
-      
-
-      
-
-      
-        <li>
-          <a href="mailto:informationgeometryML@gmail.com">
-            <meta itemprop="email" content="informationgeometryML@gmail.com">
-            <i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email
-          </a>
-        </li>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      <!--
-  <li>
-    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs">
-      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
-    </a>
-  </li>
--->
-    </ul>
-  </div>
-</div>
-
-  
-  </div>
-
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <meta itemprop="headline" content="Part II: Derivation of Natural-gradients">
-    
+    <meta itemprop="description" content="Warning: working in Progress (incomplete)">
     <meta itemprop="datePublished" content="October 04, 2021">
     
 
@@ -277,6 +176,14 @@
         <header>
           <h1 id="page-title" class="page__title" itemprop="headline">Part II: Derivation of Natural-gradients
 </h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  15 minute read
+</p>
           
         </header>
       
@@ -315,7 +222,9 @@
 
 <h1 id="motivation">Motivation</h1>
 <p>In machine learning, a common derivation of natural-gradients is via a Talyor expansion of the Kullback-Leibler divergence as we will
-discuss in <!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#proximal-gradient-descent).   --> Part IV However, the derivation has the following limitations:</p>
+discuss in
+Part IV However, the derivation has the following limitations:
+<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#proximal-gradient-descent).    --></p>
 <ul>
   <li>It does not clearly illustrate the difference between a parameter space and a (natural) gradient space.</li>
   <li>It implicitly assumes that the Fisher information matrix (FIM) is non-singular and the parameter space is open.</li>
@@ -323,12 +232,13 @@ discuss in <!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#proximal-gradient-des
 
 <p>These limitations become essential when it comes to constrained parameters (i.e., covariance matrix in a Gaussian family).
 Moreover, a natural gradient (in a gradient space) is invariant (will show in 
-Part III) <!--[Part III]({ post_url 2021-11-02-Geomopt03 }#riemannian-steepest-direction-is-invariant) ) -->
+Part III)
+<!--[Part III]({ post_url 2021-11-02-Geomopt03 }#riemannian-steepest-direction-is-invariant) )-->
 while a natural-gradient update (in a parameter space) is only linearly invariant (will discuss in
 Part IV).
-<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#natural-gradient-descent-is-linearly-invariant) ).--></p>
+<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#natural-gradient-descent-is-linearly-invariant)--></p>
 
-<p>We will give an alternative derivation of natural-gradients to emphasize the subtlety.</p>
+<p>We will give an alternative <a href="#riemannian-steepest-direction">derivation</a> of natural-gradients to emphasize the subtlety.</p>
 
 <h1 id="euclidean-steepest-direction-and-directional-derivative">Euclidean steepest direction and directional derivative</h1>
 <hr>
@@ -527,9 +437,8 @@ $$</code> where <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\
 \begin{aligned}
 \mathbf{0} = \nabla_{v} L(\mathbf{v}_{\text{opt}},\lambda) = \nabla_\tau f(\mathbf{\tau}_0) + 2 \lambda \mathbf{F}(\mathbf{\tau}_0) \mathbf{v}_{\text{opt}}
 \end{aligned}
-$$</code></p>
-
-<p>Since we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)\neq 0$</code>, the KKT condition implies that <code class="language-plaintext highlighter-rouge">$\lambda \neq 0$</code>.
+$$</code>
+Since we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)\neq 0$</code>, the KKT condition implies that <code class="language-plaintext highlighter-rouge">$\lambda \neq 0$</code>.
 Since <code class="language-plaintext highlighter-rouge">$\lambda \neq 0$</code>, vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}$</code> should be proportional to <code class="language-plaintext highlighter-rouge">$\mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0)$</code>, where  <code class="language-plaintext highlighter-rouge">$\mathbf{F}^{-1}(\mathbf{\tau}_0)$</code> is well-defined since the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}(\mathbf{\tau}_0)$</code> is positive definite.</p>
 
 <p>Thus, the optimal solution of Eq. <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> is <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}= -\frac{ \mathbf{F}^{-1}(\mathbf{\tau}_0) \nabla_\tau f(\mathbf{\tau}_0) }{\| \mathbf{F}^{-1}(\mathbf{\tau}_0)\nabla_\tau f(\mathbf{\tau}_0) \|_F}$</code>, which gives us the Riemannian steepest direction at current <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>. 
@@ -570,10 +479,13 @@ $$</code></p>
 </details>
 </div>
 
-<p>Given a scalar function <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau})$</code> with an intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, we define its (un-normalized) <strong>Riemannian</strong>  gradient as <code class="language-plaintext highlighter-rouge">$ \mathbf{F}_\tau^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$</code> if its (un-normalized) <strong>Euclidean</strong> gradient is <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau})$</code>.
-We use a learning-rate to control the length of a gradient instead of normalizing its length. 
-Since we use the Fisher-Rao metric <code class="language-plaintext highlighter-rouge">$\mathbf{F}$</code>, the Riemannian gradient is also known as the <strong>natural</strong> gradient.</p>
+<h2 id="definition-of-natural-gradients">Definition of Natural-gradients</h2>
 
+<p>Given a scalar function <code class="language-plaintext highlighter-rouge">$f(\mathbf{\tau})$</code> with an intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau$</code>, we define its (un-normalized) <strong>Riemannian gradient</strong> as <code class="language-plaintext highlighter-rouge">$ \mathbf{F}_\tau^{-1}(\mathbf{\tau}) \nabla_\tau f(\mathbf{\tau})$</code> if its (un-normalized) <strong>Euclidean gradient</strong> is <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau})$</code>.
+We use a learning-rate to control the length of a gradient instead of normalizing its length. 
+Since we use the Fisher-Rao metric <code class="language-plaintext highlighter-rouge">$\mathbf{F}$</code>, the Riemannian gradient is also known as the <strong>natural gradient</strong>.</p>
+
+<p>Now, we give an example to illustrate the definition.</p>
 <blockquote>
   <p>Example: Univariate Gaussian</p>
 
@@ -587,7 +499,7 @@ $$</code>
 where  <code class="language-plaintext highlighter-rouge">$q(w|\tau)= \mathcal{N}(w|\mu,s^{-1})$</code> is a Gaussian family with mean <code class="language-plaintext highlighter-rouge">$\mu$</code>, variance <code class="language-plaintext highlighter-rouge">$s^{-1}$</code>, 
   intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau=(\mu,s)$</code>, and parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau=\{(\mu,s)|\mu \in \mathcal{R},s&gt;0 \}$</code>.</p>
 
-  <p>The Fisher information matrix of Gaussian $q(w|\tau)$ under this parametrization is
+  <p>The FIM of Gaussian $q(w|\tau)$ under this parametrization is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 \mathbf{F}_\tau (\tau)  = -E_{q(w|\tau)} [ \nabla_\tau^2 \log q(w|\tau) ] 
@@ -853,14 +765,111 @@ We will discuss more about this in  Part IV.
         
       </footer>
 
-      
+      <section class="page__share">
+  
+    <h4 class="page__share-title" data-translate="share_on_label">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Part+II%3A+Derivation+of+Natural-gradients%20informationgeometryML.github.io%2Fposts%2F2021%2F10%2FGeomopt02%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=informationgeometryML.github.io%2Fposts%2F2021%2F10%2FGeomopt02%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=informationgeometryML.github.io%2Fposts%2F2021%2F10%2FGeomopt02%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+
+
+
+     
+
+  <script src="https://utteranc.es/client.js" repo="informationgeometryML/informationgeometryML.github.io" issue-term="url" label="blog-comments" theme="github-light" crossorigin="anonymous" async>
+  </script>
+
+
+
+
+
+</section>
+
 
       
+  <nav class="pagination">
+    
+      <a href="/posts/2021/09/Geomopt01/" class="pagination--pager" title="Part I: Smooth Manifolds with the Fisher-Rao Metric
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
     </div>
 
     
   </article>
 
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/09/Geomopt01/" rel="permalink">Part I: Smooth Manifolds with the Fisher-Rao Metric
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  18 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, usef...</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/07/ICML/" rel="permalink">Structured Natural Gradient Descent (ICML 2021)
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  11 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">More about this work [1]: (Youtube) talk, extended paper, short paper,
+poster
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
   
   
 </div>
@@ -897,6 +906,8 @@ We will discuss more about this in  Part IV.
     
   <script src="/assets/js/main.min.js"></script>
   <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
 
 
 
