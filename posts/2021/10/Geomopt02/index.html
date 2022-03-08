@@ -314,19 +314,21 @@
 </div>
 
 <h1 id="motivation">Motivation</h1>
-<p>In machine learning, a common derivation of natural-gradients is via a Talyor expansion of the KL divergence as we will
-discuss in Part IV. However, the derivation has the following limitations:
-<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#proximal-gradient-descent).  --></p>
+<p>In machine learning, a common derivation of natural-gradients is via a Talyor expansion of the Kullback-Leibler divergence as we will
+discuss in <!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#proximal-gradient-descent).   --> Part IV However, the derivation has the following limitations:</p>
 <ul>
   <li>It does not clearly illustrate the difference between a parameter space and a (natural) gradient space.</li>
   <li>It implicitly assumes that the Fisher information matrix (FIM) is non-singular and the parameter space is open.</li>
 </ul>
 
 <p>These limitations become essential when it comes to constrained parameters (i.e., covariance matrix in a Gaussian family).
-Moreover, a natural gradient (in a gradient space) is invariant as shown in Part III while a natural-gradient update (in a parameter space) is only linearly invariant as discussed in Part IV.
-We will give an alternative derivation of natural-gradients to emphasize the subtlety.</p>
+Moreover, a natural gradient (in a gradient space) is invariant (will show in 
+Part III) <!--[Part III]({ post_url 2021-11-02-Geomopt03 }#riemannian-steepest-direction-is-invariant) ) -->
+while a natural-gradient update (in a parameter space) is only linearly invariant (will discuss in
+Part IV).
+<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#natural-gradient-descent-is-linearly-invariant) ).--></p>
 
-<!--<img src="/img/gd_vs_ngd.png"  width="1000"/>-->
+<p>We will give an alternative derivation of natural-gradients to emphasize the subtlety.</p>
 
 <h1 id="euclidean-steepest-direction-and-directional-derivative">Euclidean steepest direction and directional derivative</h1>
 <hr>
@@ -405,8 +407,7 @@ Part IV.</p>
     </li>
     <li>
       <p>We also do NOT define how to compute the distance between a vector at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code> and another vector at a distinct point
-<code class="language-plaintext highlighter-rouge">$\tau_1$</code>, which involves the concept of <a href="https://en.wikipedia.org/wiki/Parallel_transport">parallel transport</a> in a curved space. For simplicity, we do not define how to parallelly transport a
-vector in this post.</p>
+<code class="language-plaintext highlighter-rouge">$\tau_1$</code>, which involves the concept of <a href="https://en.wikipedia.org/wiki/Parallel_transport">parallel transport</a> in a curved space. For simplicity, we aviod defining it since it involves derivatives of the Fisher-Rao metric (as known as the <a href="https://en.wikipedia.org/wiki/Christoffel_symbols#Relationship_to_parallel_transport_and_derivation_of_Christoffel_symbols_in_Riemannian_space">Christoffel symbols</a>).</p>
     </li>
   </ul>
 </div>
@@ -631,15 +632,15 @@ $$</code></p>
 <fieldset class="field-set">
       <blockquote>
 
-        <p>Consider a $d$-dimensional Gaussian family $\mathbf{\tau}$ of the family as <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathbf{S}   \succ \mathbf{0} \}$</code> with zero mean and precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> discussed in <a href="/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold">Part I</a>.</p>
+        <p>Consider a $d$-dimensional Gaussian family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathbf{S}   \succ \mathbf{0} \}$</code> with zero mean and precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> discussed in <a href="/posts/2021/09/Geomopt01/#dimensionality-of-a-manifold">Part I</a>.</p>
 
         <p>Parametrization <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{S})$</code> is intrinsic while
 <code class="language-plaintext highlighter-rouge">$\eta = \mathrm{vec}(\mathbf{S})$</code> is not, where
 map $\mathrm{vech}()$ is the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization map</a> and map <code class="language-plaintext highlighter-rouge">$\mathrm{vec}()$</code> is the standard vectorization map.
 Note that <code class="language-plaintext highlighter-rouge">$\tau$</code> is a <code class="language-plaintext highlighter-rouge">$\frac{d(d+1)}{2}$</code>-dim parameter array while <code class="language-plaintext highlighter-rouge">$\eta$</code> is <code class="language-plaintext highlighter-rouge">$d^2$</code>-dim parameter array,</p>
 
-        <p>In other words, the FIM w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>  is singular if  <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is considered as a matrix parameter with $d^2$ degrees of freedom.
-Strictly speaking, a natural gradient/vector w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is not well-defined.</p>
+        <p>Recall that the FIM w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>  is singular since  <code class="language-plaintext highlighter-rouge">$\eta = \mathrm{vec}(\mathbf{S})</code> is a non-intrinsic parameter with $d^2$ degrees of freedom.
+Strictly speaking, a natural gradient/vector w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is not well-defined since the FIM is singular.</p>
 
         <p>In the literature, a natural gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is  defined as <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code>, where
 <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is a valid natural gradient w.r.t. intrinsic parameter <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>
@@ -788,7 +789,8 @@ of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> a
 <p>We can also define vector additions and real scalar products in a tangent vector space by using tangent directions of curves in the manifold with/without a parameterization.</p>
 
 <p>The key takeway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization $\tau$ to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>. Recall that a parameter space is a parametric representation of a  set of <strong>points</strong> in a manifold.
-We will discuss more about this in <!-- [Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces). --> Part IV.</p>
+We will discuss more about this in  Part IV. 
+<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces). --></p>
 
 <hr>
 <h1 id="references">References</h1>
@@ -798,13 +800,14 @@ We will discuss more about this in <!-- [Part IV]({ post_url 2021-11-15-Geomopt0
 
 <h2 id="footnotes">Footnotes:</h2>
 
+<!--[Part III]({ post_url 2021-11-02-Geomopt03 }). -->
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
       <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wikiCovariant_derivative">covariant derivative</a>, which induces parallel transport. Given a smooth scalar field/function on a manifold, a coordinate representation of the covariant derivative remains the same as the Euclidean case. Note that the standard coordinate derivative  is identical to  the coordinate representation of the covariant derivative when it comes to a scalar field. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector). We will discuss their transformation rules in <!-- [Part III]({ post_url 2021-11-02-Geomopt03 }). -->  Part III. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector). We will discuss their transformation rules in  Part III. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
