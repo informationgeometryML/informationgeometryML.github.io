@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-07T23:25:10-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-08T09:28:19-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Rimannian steepest direction&lt;/li&gt;
@@ -51,11 +51,11 @@ Part IV).
 
 &lt;p&gt;We will show a normalized Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we will generalize the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a normalized natural-gradient.&lt;/p&gt;
 
-&lt;p&gt;Consider a minimization problem &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$&lt;/code&gt; over a &lt;strong&gt;vector space&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;.
+&lt;p&gt;Consider a minimization problem &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$&lt;/code&gt; over a &lt;strong&gt;parameter space&lt;/strong&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;.
 Given the smooth scalar function &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\cdot)$&lt;/code&gt;, we can define the (Euclidean) steepest direction at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; as the optimal solution to another optimization problem,
 where we assume &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$&lt;/code&gt;.
 We can express the optimization problem in terms of a &lt;strong&gt;directional derivative&lt;/strong&gt; along vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v} \in T_{\tau_0} (\mathcal{R}^K)$&lt;/code&gt;, where
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$&lt;/code&gt; is a vector space attached at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$&lt;/code&gt; is a &lt;strong&gt;gradient space&lt;/strong&gt; attached at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt;.
 The optimal directional derivative, denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}_{\text{opt}}$&lt;/code&gt;,  is the steepest direction.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -151,14 +151,15 @@ Technically, this is because &lt;code class=&quot;language-plaintext highlighter
   &lt;p&gt;Note:&lt;/p&gt;
   &lt;ul&gt;
     &lt;li&gt;
-      &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v}$&lt;/code&gt; lives in the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; when scalar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$|t|$&lt;/code&gt; is small enough&lt;/p&gt;
+      &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v}$&lt;/code&gt; stays in the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; when scalar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$|t|$&lt;/code&gt; is small enough&lt;/p&gt;
     &lt;/li&gt;
     &lt;li&gt;
-      &lt;p&gt;vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; lives in a distinct space. This space is called the tangent vector space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^k$&lt;/code&gt; at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;&lt;/p&gt;
+      &lt;p&gt;vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; stays in a distinct space. This space is called the tangent vector space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T_{\tau_0} (\Omega_\tau)$&lt;/code&gt; at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ul&gt;
-
 &lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;800&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The following example illustrates directional derivatives in manifold cases.&lt;/p&gt;
 
@@ -228,7 +229,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;800&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -416,7 +417,7 @@ Under parametrization $\mathbf{\tau}$, we have the following parametric represen
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;800&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Note that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; is a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is  a Riemannian gradient, which is a representation of the tangent vector of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma$&lt;/code&gt; at point $\mathbf{x}_0$.&lt;/p&gt;
 
@@ -471,7 +472,7 @@ and the blue line segment &lt;code class=&quot;language-plaintext highlighter-ro
   &lt;p&gt;The parametric  representation of the vector is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}=(v_x,v_y)$&lt;/code&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/sphere.png&quot; width=&quot;800&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;A Riemannian gradient &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0)$&lt;/code&gt; can be viewed as a parametric representation of tangent vector  $\mathbf{v}$ as shown below.&lt;/p&gt;
 

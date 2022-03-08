@@ -244,11 +244,11 @@ Part IV).
 
 <p>We will show a normalized Euclidean gradient can be viewed as the Euclidean steepest direction. Later, we will generalize the steepest direction in Riemannian cases and show that the Riemannian steepest direction w.r.t. the Fisher-Rao metric is indeed a normalized natural-gradient.</p>
 
-<p>Consider a minimization problem <code class="language-plaintext highlighter-rouge">$\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$</code> over a <strong>vector space</strong> <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.
+<p>Consider a minimization problem <code class="language-plaintext highlighter-rouge">$\min_{\tau \in \mathcal{R}^K } \,\,f(\mathbf{\tau})$</code> over a <strong>parameter space</strong> <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.
 Given the smooth scalar function <code class="language-plaintext highlighter-rouge">$f(\cdot)$</code>, we can define the (Euclidean) steepest direction at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> as the optimal solution to another optimization problem,
 where we assume <code class="language-plaintext highlighter-rouge">$\nabla_\tau f(\mathbf{\tau}_0)  \neq \mathbf{0}$</code>.
 We can express the optimization problem in terms of a <strong>directional derivative</strong> along vector <code class="language-plaintext highlighter-rouge">$\mathbf{v} \in T_{\tau_0} (\mathcal{R}^K)$</code>, where
-<code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$</code> is a vector space attached at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.
+<code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$</code> is a <strong>gradient space</strong> attached at current point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code>.
 The optimal directional derivative, denoted by <code class="language-plaintext highlighter-rouge">$\mathbf{v}_{\text{opt}}$</code>,  is the steepest direction.</p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
@@ -344,14 +344,15 @@ Technically, this is because <code class="language-plaintext highlighter-rouge">
   <p>Note:</p>
   <ul>
     <li>
-      <p><code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}$</code> lives in the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> when scalar <code class="language-plaintext highlighter-rouge">$|t|$</code> is small enough</p>
+      <p><code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v}$</code> stays in the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> when scalar <code class="language-plaintext highlighter-rouge">$|t|$</code> is small enough</p>
     </li>
     <li>
-      <p>vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> lives in a distinct space. This space is called the tangent vector space <code class="language-plaintext highlighter-rouge">$\mathcal{R}^k$</code> at current point <code class="language-plaintext highlighter-rouge">$\tau_0$</code></p>
+      <p>vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> stays in a distinct space. This space is called the tangent vector space <code class="language-plaintext highlighter-rouge">$T_{\tau_0} (\Omega_\tau)$</code> at current point <code class="language-plaintext highlighter-rouge">$\tau_0$</code></p>
     </li>
   </ul>
-
 </div>
+
+<p><img src="/img/sphere.png" width="800"></p>
 
 <p>The following example illustrates directional derivatives in manifold cases.</p>
 
@@ -421,7 +422,7 @@ $$</code></p>
 
 </div>
 
-<p><img src="/img/sphere.png" width="500"></p>
+<p><img src="/img/sphere.png" width="800"></p>
 
 <p>The Lagrangian function of this problem is given below, where $\lambda$ is a Lagrange multiplier. 
 <code class="language-plaintext highlighter-rouge">$$
@@ -612,7 +613,7 @@ Under parametrization $\mathbf{\tau}$, we have the following parametric represen
   </tbody>
 </table>
 
-<p><img src="/img/sphere.png" width="500"></p>
+<p><img src="/img/sphere.png" width="800"></p>
 
 <p>Note that  <code class="language-plaintext highlighter-rouge">$\tau_0$</code> is a parameter array, which is a representation of a point $\mathbf{x}_0$ while $\mathbf{v}(\tau_0)$ is  a Riemannian gradient, which is a representation of the tangent vector of curve <code class="language-plaintext highlighter-rouge">$\gamma$</code> at point $\mathbf{x}_0$.</p>
 
@@ -671,7 +672,7 @@ and the blue line segment <code class="language-plaintext highlighter-rouge">${\
   <p>The parametric  representation of the vector is <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}=(v_x,v_y)$</code>.</p>
 </blockquote>
 
-<p><img src="/img/sphere.png" width="500"></p>
+<p><img src="/img/sphere.png" width="800"></p>
 
 <p>A Riemannian gradient <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0)$</code> can be viewed as a parametric representation of tangent vector  $\mathbf{v}$ as shown below.</p>
 
