@@ -238,7 +238,7 @@ Part IV).
 
 <p>We will give an alternative <a href="#riemannian-steepest-direction">derivation</a> of natural-gradients to emphasize the subtlety.</p>
 
-<h1 id="euclidean-steepest-direction">Euclidean steepest direction</h1>
+<h1 id="euclidean-steepest-direction">Euclidean Steepest Direction</h1>
 <hr>
 <p>Before we discuss natural-gradients, we first revisit Euclidean gradients.</p>
 
@@ -267,7 +267,7 @@ $$</code></p>
   <p>Later, we will see that there is a key difference between a parameter space and a gradient space in manifold cases.</p>
 </div>
 
-<h1 id="weighted-norm-induced-by-the-fisher-rao-metric">Weighted norm induced by the Fisher-Rao metric</h1>
+<h1 id="weighted-norm-induced-by-the-fisher-rao-metric">Weighted Norm Induced by the Fisher-Rao Metric</h1>
 <hr>
 
 <p>Now, we  formulate a similar optimization problem like Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>  in order to generalize the steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> in a Riemannian manifold.
@@ -321,7 +321,7 @@ Part IV.</p>
   </ul>
 </div>
 
-<h1 id="directional-derivatives-in-a-manifold">Directional derivatives in a manifold</h1>
+<h1 id="directional-derivatives-in-a-manifold">Directional Derivatives in a Manifold</h1>
 <hr>
 <p>As we shown before, the objective function in Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is a directional derivative in Euclidean cases.
 The next step is to generalize the concept of directional derivatives in a manifold.</p>
@@ -402,7 +402,7 @@ The main reason is that <code class="language-plaintext highlighter-rouge">$\tau
 </details>
 </div>
 
-<h1 id="riemannian-steepest-direction">Riemannian steepest direction</h1>
+<h1 id="riemannian-steepest-direction">Riemannian Steepest Direction</h1>
 <hr>
 <p>Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
 Now, we can introduce the Riemannian steepest direction <a class="citation" href="#absil2009optimization">[1]</a> . We will use this to define/compute natural-gradients.</p>
@@ -565,7 +565,7 @@ details.)</p>
 </details>
 </div>
 
-<h1 id="riemannian-gradients-as-tangent-vectors-optional">Riemannian gradients as tangent vectors (optional)</h1>
+<h1 id="riemannian-gradients-as-tangent-vectors-optional">Riemannian Gradients as Tangent Vectors (Optional)</h1>
 <hr>
 <p>In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
 Now, we will discuss abstract Riemannian vectors without specifying a parametrization <a class="citation" href="#tu2011introduction">[2]</a>. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in 
@@ -650,7 +650,7 @@ Be aware of the differences shown in the table.</p>
 
 <p>Under <strong>intrinsic</strong> parametrization $\tau$, we have <code class="language-plaintext highlighter-rouge">$\Omega_\tau \subset \mathcal{R}^2$</code>. Thus, we can perform this operation in $\Omega_\tau$ space: <code class="language-plaintext highlighter-rouge">$\tau_0 +t\mathbf{v}(\tau_0) \in \Omega_\tau$</code> when scalar <code class="language-plaintext highlighter-rouge">$|t|$</code> is small enough. Note that we only define the <a href="#weighted-norm-induced-by-the-fisher-rao-metric">distance</a> between two (Riemannian gradient) vectors in the tangent space. The distance between two points in the <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> space is undefined in this post.</p>
 
-<h2 id="parameterization-free-representation-of--vector-mathbfv">Parameterization-free representation of  vector $\mathbf{v}$</h2>
+<h2 id="parameterization-free-representation-of--vector-mathbfv">Parameterization-free Representation of  Vector $\mathbf{v}$</h2>
 
 <p>The tangent vector $\mathbf{v}$ at point $\mathbf{x_0}$  can be viewed as the <strong>tangent direction</strong> of a (1-dimensional) smooth curve $\gamma(t) \in \mathcal{M}$, where <code class="language-plaintext highlighter-rouge">$\gamma(0)=\mathbf{x_0}$</code> and   <code class="language-plaintext highlighter-rouge">$\frac{d {\gamma}(t) }{d t} \Big|_{t=0}=\mathbf{v}$</code> and the support of $\gamma(t)$ denoted by $\mathbf{I}$ is an open interval in  <code class="language-plaintext highlighter-rouge">$\mathcal{R}^1$</code> containing 0. 
 Since a curve $\gamma(t)$ is a geometric object,  its tangent direction is also a geometric object.
@@ -662,7 +662,7 @@ For example, in physics, the concept of parameterization-free representation mea
 parametrization when it comes to computation.
 A key takeaway is that a geometric property (i.e., length of a vector) should be invariant to the choice of valid parametrizations.</p>
 
-<h2 id="parameterization-dependent-representation-of-vector-mathbfv">Parameterization-dependent representation of vector $\mathbf{v}$</h2>
+<h2 id="parameterization-dependent-representation-of-vector-mathbfv">Parameterization-dependent Representation of Vector $\mathbf{v}$</h2>
 
 <p>Given intrinsic parametrization $\tau$, we can define the parametric representation of the curve denoted by ${\gamma}_\tau(t)$, where the domain is <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau \subset \mathcal{R}^1$</code>.
 The parametric representation of vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is defined as <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_{\tau}(t) }{d t} \Big|_{t=0}$</code>, where <code class="language-plaintext highlighter-rouge">${\gamma}_{\tau}(0)=\tau_0$</code>.</p>
@@ -700,7 +700,7 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code> since <code class="language-plaintext highlighter-rouge">${\gamma}_\tau(t)$</code> is the parametric representation of <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code>.</p>
 </blockquote>
 
-<h2 id="riemannian-gradient-space-has-a-vector-space-structure">(Riemannian) gradient space has a vector-space structure</h2>
+<h2 id="riemannian-gradient-space-has-a-vector-space-structure">(Riemannian) Gradient Space has a Vector-space Structure</h2>
 <p>We can similarly define vector additions and real scalar products in a tangent vector space by using the tangent direction of a curve in the manifold with/without a parameterization.</p>
 
 <p>A key takeaway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.

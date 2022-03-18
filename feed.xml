@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-17T23:57:08-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-18T00:03:52-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Rimannian steepest direction (i.e.,  normalized natural gradient)&lt;/li&gt;
@@ -45,7 +45,7 @@ Part IV).
 
 &lt;p&gt;We will give an alternative &lt;a href=&quot;#riemannian-steepest-direction&quot;&gt;derivation&lt;/a&gt; of natural-gradients to emphasize the subtlety.&lt;/p&gt;
 
-&lt;h1 id=&quot;euclidean-steepest-direction&quot;&gt;Euclidean steepest direction&lt;/h1&gt;
+&lt;h1 id=&quot;euclidean-steepest-direction&quot;&gt;Euclidean Steepest Direction&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;Before we discuss natural-gradients, we first revisit Euclidean gradients.&lt;/p&gt;
 
@@ -74,7 +74,7 @@ $$&lt;/code&gt;&lt;/p&gt;
   &lt;p&gt;Later, we will see that there is a key difference between a parameter space and a gradient space in manifold cases.&lt;/p&gt;
 &lt;/div&gt;
 
-&lt;h1 id=&quot;weighted-norm-induced-by-the-fisher-rao-metric&quot;&gt;Weighted norm induced by the Fisher-Rao metric&lt;/h1&gt;
+&lt;h1 id=&quot;weighted-norm-induced-by-the-fisher-rao-metric&quot;&gt;Weighted Norm Induced by the Fisher-Rao Metric&lt;/h1&gt;
 &lt;hr /&gt;
 
 &lt;p&gt;Now, we  formulate a similar optimization problem like Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt;  in order to generalize the steepest direction at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; in a Riemannian manifold.
@@ -128,7 +128,7 @@ Part IV.&lt;/p&gt;
   &lt;/ul&gt;
 &lt;/div&gt;
 
-&lt;h1 id=&quot;directional-derivatives-in-a-manifold&quot;&gt;Directional derivatives in a manifold&lt;/h1&gt;
+&lt;h1 id=&quot;directional-derivatives-in-a-manifold&quot;&gt;Directional Derivatives in a Manifold&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;As we shown before, the objective function in Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is a directional derivative in Euclidean cases.
 The next step is to generalize the concept of directional derivatives in a manifold.&lt;/p&gt;
@@ -209,7 +209,7 @@ The main reason is that &lt;code class=&quot;language-plaintext highlighter-roug
 &lt;/details&gt;
 &lt;/div&gt;
 
-&lt;h1 id=&quot;riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/h1&gt;
+&lt;h1 id=&quot;riemannian-steepest-direction&quot;&gt;Riemannian Steepest Direction&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
 Now, we can introduce the Riemannian steepest direction &lt;a class=&quot;citation&quot; href=&quot;#absil2009optimization&quot;&gt;[1]&lt;/a&gt; . We will use this to define/compute natural-gradients.&lt;/p&gt;
@@ -372,7 +372,7 @@ details.)&lt;/p&gt;
 &lt;/details&gt;
 &lt;/div&gt;
 
-&lt;h1 id=&quot;riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Riemannian gradients as tangent vectors (optional)&lt;/h1&gt;
+&lt;h1 id=&quot;riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Riemannian Gradients as Tangent Vectors (Optional)&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
 Now, we will discuss abstract Riemannian vectors without specifying a parametrization &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[2]&lt;/a&gt;. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in 
@@ -450,7 +450,7 @@ Be aware of the differences shown in the table.&lt;/p&gt;
 
 &lt;p&gt;Under &lt;strong&gt;intrinsic&lt;/strong&gt; parametrization $\tau$, we have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau \subset \mathcal{R}^2$&lt;/code&gt;. Thus, we can perform this operation in $\Omega_\tau$ space: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0 +t\mathbf{v}(\tau_0) \in \Omega_\tau$&lt;/code&gt; when scalar &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$|t|$&lt;/code&gt; is small enough. Note that we only define the &lt;a href=&quot;#weighted-norm-induced-by-the-fisher-rao-metric&quot;&gt;distance&lt;/a&gt; between two (Riemannian gradient) vectors in the tangent space. The distance between two points in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; space is undefined in this post.&lt;/p&gt;
 
-&lt;h2 id=&quot;parameterization-free-representation-of--vector-mathbfv&quot;&gt;Parameterization-free representation of  vector $\mathbf{v}$&lt;/h2&gt;
+&lt;h2 id=&quot;parameterization-free-representation-of--vector-mathbfv&quot;&gt;Parameterization-free Representation of  Vector $\mathbf{v}$&lt;/h2&gt;
 
 &lt;p&gt;The tangent vector $\mathbf{v}$ at point $\mathbf{x_0}$  can be viewed as the &lt;strong&gt;tangent direction&lt;/strong&gt; of a (1-dimensional) smooth curve $\gamma(t) \in \mathcal{M}$, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(0)=\mathbf{x_0}$&lt;/code&gt; and   &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d {\gamma}(t) }{d t} \Big|_{t=0}=\mathbf{v}$&lt;/code&gt; and the support of $\gamma(t)$ denoted by $\mathbf{I}$ is an open interval in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^1$&lt;/code&gt; containing 0. 
 Since a curve $\gamma(t)$ is a geometric object,  its tangent direction is also a geometric object.
@@ -462,7 +462,7 @@ For example, in physics, the concept of parameterization-free representation mea
 parametrization when it comes to computation.
 A key takeaway is that a geometric property (i.e., length of a vector) should be invariant to the choice of valid parametrizations.&lt;/p&gt;
 
-&lt;h2 id=&quot;parameterization-dependent-representation-of-vector-mathbfv&quot;&gt;Parameterization-dependent representation of vector $\mathbf{v}$&lt;/h2&gt;
+&lt;h2 id=&quot;parameterization-dependent-representation-of-vector-mathbfv&quot;&gt;Parameterization-dependent Representation of Vector $\mathbf{v}$&lt;/h2&gt;
 
 &lt;p&gt;Given intrinsic parametrization $\tau$, we can define the parametric representation of the curve denoted by ${\gamma}_\tau(t)$, where the domain is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau \subset \mathcal{R}^1$&lt;/code&gt;.
 The parametric representation of vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_{\tau}(t) }{d t} \Big|_{t=0}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_{\tau}(0)=\tau_0$&lt;/code&gt;.&lt;/p&gt;
@@ -500,7 +500,7 @@ Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function
 of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt; since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;${\gamma}_\tau(t)$&lt;/code&gt; is the parametric representation of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;h2 id=&quot;riemannian-gradient-space-has-a-vector-space-structure&quot;&gt;(Riemannian) gradient space has a vector-space structure&lt;/h2&gt;
+&lt;h2 id=&quot;riemannian-gradient-space-has-a-vector-space-structure&quot;&gt;(Riemannian) Gradient Space has a Vector-space Structure&lt;/h2&gt;
 &lt;p&gt;We can similarly define vector additions and real scalar products in a tangent vector space by using the tangent direction of a curve in the manifold with/without a parameterization.&lt;/p&gt;
 
 &lt;p&gt;A key takeaway is that a vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;.
