@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-17T23:42:32-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-17T23:57:08-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Rimannian steepest direction (i.e.,  normalized natural gradient)&lt;/li&gt;
   &lt;li&gt;The difference between a parameter space and a gradient/vector space&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The discussion here is informal and focuses on more on intuitions, rather than rigor.&lt;/p&gt;
+&lt;p&gt;The discussion here is informal and focuses more on intuitions, rather than rigor.&lt;/p&gt;
 
 &lt;div class=&quot;notice--info&quot;&gt;
   &lt;details&gt;
@@ -69,7 +69,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 &lt;div class=&quot;notice--success&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;:&lt;/p&gt;
 
-  &lt;p&gt;In Eucclidean cases, there is no difference between parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt; and (Euclidean) gradient space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$&lt;/code&gt; at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;In Euclidean cases, there is no difference between parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt; and (Euclidean) gradient space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T_{\tau_0} (\mathcal{R}^K)=\mathcal{R}^K$&lt;/code&gt; at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;Later, we will see that there is a key difference between a parameter space and a gradient space in manifold cases.&lt;/p&gt;
 &lt;/div&gt;
@@ -84,14 +84,14 @@ Part III,
 we will show that the (standard) length does not preserve under a parameter transformation while the length induced by the Fisher-Rao metric does.
 Thanks to the Fisher-Rao metric,  we will further show that a natural-gradient is invariant under parameter transformations.&lt;/p&gt;
 
-&lt;p&gt;As mentioned at &lt;a href=&quot;/posts/2021/09/Geomopt01/#fisher-rao-metric&quot;&gt;Part I&lt;/a&gt;, the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}$&lt;/code&gt; is positive definite everywhere in an intrinsic parameter space. We can use the FIM to define the length/norm of a vector (e.g., a Riemannian gradient) $\mathbf{v}$ at a point in a manifold via a weighted inner product. We use an intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; to represent this point. Note that the FIM is evaluted at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.
+&lt;p&gt;As mentioned at &lt;a href=&quot;/posts/2021/09/Geomopt01/#fisher-rao-metric&quot;&gt;Part I&lt;/a&gt;, the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}$&lt;/code&gt; is positive definite everywhere in an intrinsic parameter space. We can use the FIM to define the length/norm of a vector (e.g., a Riemannian gradient) $\mathbf{v}$ at a point in a manifold via a weighted inner product. We use an intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; to represent this point. Note that the FIM is evaluated at current point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \|\mathbf{v}\|_F := \sqrt{\mathbf{v}^T \mathbf{F}(\tau_0) \mathbf{v}}
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;The positive-definiteness of the FIM is essential since we do not want a non-zero vector has a zero length.&lt;/p&gt;
+&lt;p&gt;The positive-definiteness of the FIM is essential since we do not want a non-zero vector to have a zero length.&lt;/p&gt;
 
 &lt;p&gt;The distance (and orthogonality) between two &lt;span style=&quot;color:red&quot;&gt;vectors&lt;/span&gt; at  &lt;span style=&quot;color:red&quot;&gt;point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt;&lt;/span&gt;  is also induced by the FIM since we can define them by the inner product as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -123,7 +123,7 @@ Part IV.&lt;/p&gt;
     &lt;/li&gt;
     &lt;li&gt;
       &lt;p&gt;We also do NOT define how to compute the distance between a vector at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; and another vector at a distinct point
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_1$&lt;/code&gt;, which involves the concept of &lt;a href=&quot;https://en.wikipedia.org/wiki/Parallel_transport&quot;&gt;parallel transport&lt;/a&gt; in a curved space. For simplicity, we aviod defining the transport since it involves partial derivatives of the Fisher-Rao metric (closely related to the &lt;a href=&quot;https://en.wikipedia.org/wiki/Christoffel_symbols#Relationship_to_parallel_transport_and_derivation_of_Christoffel_symbols_in_Riemannian_space&quot;&gt;Christoffel symbols&lt;/a&gt;).&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_1$&lt;/code&gt;, which involves the concept of &lt;a href=&quot;https://en.wikipedia.org/wiki/Parallel_transport&quot;&gt;parallel transport&lt;/a&gt; in a curved space. For simplicity, we avoid defining the transport since it involves partial derivatives of the Fisher-Rao metric (closely related to the &lt;a href=&quot;https://en.wikipedia.org/wiki/Christoffel_symbols#Relationship_to_parallel_transport_and_derivation_of_Christoffel_symbols_in_Riemannian_space&quot;&gt;Christoffel symbols&lt;/a&gt;).&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ul&gt;
 &lt;/div&gt;
@@ -141,7 +141,7 @@ Using this parameterization, consider an optimization problem $\min_{\tau \in \O
 &lt;p&gt;Recall that we allow a &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;small perturbation&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$E$&lt;/code&gt; around &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; contained in  parameter space  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$E \subset \Omega_\tau$&lt;/code&gt;) since  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}$&lt;/code&gt; is an intrinsic parameterization.
 Therefore, when $|t|$ is small enough, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} $&lt;/code&gt; stays in the parameter space and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\mathbf{\tau}_0+t\mathbf{v})$&lt;/code&gt; is well-defined.
 Note that we only require &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} \in \Omega_\tau$&lt;/code&gt; when &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$|t|$&lt;/code&gt; is small enough. This is possible since a line segment &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathbf{\tau}_0+t\mathbf{v} \in E$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$E \subset \Omega_\tau$&lt;/code&gt;.
-Technically, this is because &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set in $\mathcal{R}^K$, where $K$ is the number of entires of parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.&lt;/p&gt;
+Technically, this is because &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set in $\mathcal{R}^K$, where $K$ is the number of entries of parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/img/sphere_simple.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
 
@@ -212,7 +212,7 @@ The main reason is that &lt;code class=&quot;language-plaintext highlighter-roug
 &lt;h1 id=&quot;riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;Recall that we have defined the length of a Riemannian vector and directional derivatives in a manifold.
-Now, we can introduce the Riemannian steepest direction &lt;a class=&quot;citation&quot; href=&quot;#absil2009optimization&quot;&gt;[1]&lt;/a&gt; . We will use this to define/compute natrual-gradients.&lt;/p&gt;
+Now, we can introduce the Riemannian steepest direction &lt;a class=&quot;citation&quot; href=&quot;#absil2009optimization&quot;&gt;[1]&lt;/a&gt; . We will use this to define/compute natural-gradients.&lt;/p&gt;
 
 &lt;p&gt;By choosing an intrinsic parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}$&lt;/code&gt;, a minimization problem over a manifold  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{M}$&lt;/code&gt; can be translated as
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\min_{\tau \in \Omega_\tau } f(\mathbf{\tau})$&lt;/code&gt; over  parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;. Recall that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; has a local vector-space structure.&lt;/p&gt;
@@ -375,7 +375,7 @@ details.)&lt;/p&gt;
 &lt;h1 id=&quot;riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Riemannian gradients as tangent vectors (optional)&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
-Now, we will disucss abstract Riemannian vectors without specifying a parametrization &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[2]&lt;/a&gt;. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in 
+Now, we will discuss abstract Riemannian vectors without specifying a parametrization &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[2]&lt;/a&gt;. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in 
 &lt;!--[Part III]({ post_url 2021-11-02-Geomopt03 }#parameter-transform-and-invariance).--&gt;
 Part III.&lt;/p&gt;
 
@@ -454,11 +454,11 @@ Be aware of the differences shown in the table.&lt;/p&gt;
 
 &lt;p&gt;The tangent vector $\mathbf{v}$ at point $\mathbf{x_0}$  can be viewed as the &lt;strong&gt;tangent direction&lt;/strong&gt; of a (1-dimensional) smooth curve $\gamma(t) \in \mathcal{M}$, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(0)=\mathbf{x_0}$&lt;/code&gt; and   &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d {\gamma}(t) }{d t} \Big|_{t=0}=\mathbf{v}$&lt;/code&gt; and the support of $\gamma(t)$ denoted by $\mathbf{I}$ is an open interval in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^1$&lt;/code&gt; containing 0. 
 Since a curve $\gamma(t)$ is a geometric object,  its tangent direction is also a geometric object.
-Note that an parametrization is just a representation of a geometric object.
-Thus, the tangent direction should be a parameterization-free repesentation of vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt;. 
-For example, in physics, the concept of parameterization-free repesentation means that a law of physics should be independent of any (reference) coordinate system chosen by an observer.&lt;/p&gt;
+Note that a parametrization is just a representation of a geometric object.
+Thus, the tangent direction should be a parameterization-free representation of vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt;. 
+For example, in physics, the concept of parameterization-free representation means that a law of physics should be independent of any (reference) coordinate system chosen by an observer.&lt;/p&gt;
 
-&lt;p&gt;Readers who are not familar with this abstract concept can safely skip this since in practice, we will always choose a
+&lt;p&gt;Readers who are not familiar with this abstract concept can safely skip this since in practice, we will always choose a
 parametrization when it comes to computation.
 A key takeaway is that a geometric property (i.e., length of a vector) should be invariant to the choice of valid parametrizations.&lt;/p&gt;
 
@@ -578,7 +578,7 @@ By exploiting the structures, we can&lt;/p&gt;
 $$&lt;/code&gt;
 where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $&lt;/code&gt; is assumed to be the data-generating distribution. Here, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \mathcal{N} (y | m, v) $&lt;/code&gt; denotes a normal distribution over &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ y $&lt;/code&gt; with mean &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ m $&lt;/code&gt; and variance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ v $&lt;/code&gt;.&lt;/p&gt;
 
-  &lt;p&gt;Well-known algorithms such as  &lt;a href=&quot;https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring&quot;&gt;&lt;strong&gt;Fisher scoring&lt;/strong&gt;&lt;/a&gt;  and &lt;strong&gt;(emprical) natural-gradient descent&lt;/strong&gt; &lt;a class=&quot;citation&quot; href=&quot;#martens2020new&quot;&gt;[4]&lt;/a&gt; are commonly used methods that exploit the geometric structure of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(x,y | \tau)$&lt;/code&gt;. These are examples of algorithms derived from a frequentist perspective, which can also be generalized to neural networks &lt;a class=&quot;citation&quot; href=&quot;#martens2020new&quot;&gt;[4]&lt;/a&gt;.&lt;/p&gt;
+  &lt;p&gt;Well-known algorithms such as  &lt;a href=&quot;https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring&quot;&gt;&lt;strong&gt;Fisher scoring&lt;/strong&gt;&lt;/a&gt;  and &lt;strong&gt;(empirical) natural-gradient descent&lt;/strong&gt; &lt;a class=&quot;citation&quot; href=&quot;#martens2020new&quot;&gt;[4]&lt;/a&gt; are commonly used methods that exploit the geometric structure of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(x,y | \tau)$&lt;/code&gt;. These are examples of algorithms derived from a frequentist perspective, which can also be generalized to neural networks &lt;a class=&quot;citation&quot; href=&quot;#martens2020new&quot;&gt;[4]&lt;/a&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
 
 &lt;blockquote&gt;
@@ -625,7 +625,7 @@ More applications of similar nature are discussed in &lt;a class=&quot;citation&
   &lt;/thead&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;Emprical Risk Minimization&lt;/td&gt;
+      &lt;td style=&quot;text-align: left&quot;&gt;Empirical Risk Minimization&lt;/td&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;observation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(x,y)$&lt;/code&gt;&lt;/td&gt;
       &lt;td style=&quot;text-align: right&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$p(x,y|\tau)$&lt;/code&gt;&lt;/td&gt;
     &lt;/tr&gt;
@@ -678,7 +678,7 @@ for the details.)&lt;/p&gt;
 
 &lt;p&gt;Intrinsic parameterizations&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; are those that satisfy the following two conditions:&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;We require that the parameter space of $\tau$, denoted by $\Omega_\tau$, be an &lt;strong&gt;open&lt;/strong&gt; set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of a parameter array. Intuitively, this ensures a local vector-space structure throughout the parameter space, which then ensure that a small, local perturbation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt; at each point stays within $\Omega_\tau$.&lt;/li&gt;
+  &lt;li&gt;We require that the parameter space of $\tau$, denoted by $\Omega_\tau$, be an &lt;strong&gt;open&lt;/strong&gt; set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K$&lt;/code&gt; is the number of entries of a parameter array. Intuitively, this ensures a local vector-space structure throughout the parameter space, which then ensures that a small, local perturbation &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt; at each point stays within $\Omega_\tau$.&lt;/li&gt;
   &lt;li&gt;We also require that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ E $&lt;/code&gt;  &lt;strong&gt;uniquely&lt;/strong&gt; and &lt;strong&gt;smoothly&lt;/strong&gt; represents  points in a manifold. The condition ensures arbitrary (smooth) parameter transformations should still represent the same sub-set. In other words, we require that
     &lt;ul&gt;
       &lt;li&gt;there exists &lt;strong&gt;bi-jective&lt;/strong&gt; maps among such parameterizations if they represent a common sub-set of points in the manifold.&lt;/li&gt;
@@ -708,7 +708,7 @@ for the details.)&lt;/p&gt;
   &lt;p&gt;&lt;img src=&quot;/img/charts.png&quot; title=&quot;Source:Wikipedia&quot; width=&quot;200&quot; /&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;Now, we discuss invalid cases, where not all conditions are satisified.&lt;/p&gt;
+&lt;p&gt;Now, we discuss invalid cases, where not all conditions are satisfied.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Parameterization 2 (a non-intrinsic parameterization due to non-smoothness):&lt;/p&gt;
@@ -717,7 +717,7 @@ for the details.)&lt;/p&gt;
 
   &lt;p&gt;A (global) parametrization of the circle is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\{ f(\theta) | \theta \in [0,2\pi)  \}$&lt;/code&gt;, where we use one (scalar) parameter.&lt;/p&gt;
 
-  &lt;p&gt;This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$, and its inverse map $f^{-1}$ is &lt;strong&gt;not&lt;/strong&gt; continous at point $(0,1) \in  \mathcal{S}^1$. Therefore, this parametrization is not intrinsic.
+  &lt;p&gt;This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$, and its inverse map $f^{-1}$ is &lt;strong&gt;not&lt;/strong&gt; continunous at point $(0,1) \in  \mathcal{S}^1$. Therefore, this parametrization is not intrinsic.
 In fact, there does not exist a (single) &lt;strong&gt;global&lt;/strong&gt; and intrinsic parametrization to represent the circle.&lt;/p&gt;
 &lt;/blockquote&gt;
 
@@ -757,14 +757,14 @@ Below is the formal condition.&lt;/p&gt;
   &lt;p&gt;For any &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau \in \Omega_\tau$&lt;/code&gt;,  the set of partial derivatives 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \partial_{\tau_i} \log p(w|\tau) \} $&lt;/code&gt; is smooth w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; and is a set of linearly independent functions of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$w$&lt;/code&gt;.&lt;/p&gt;
 
-  &lt;p&gt;In other words, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sum_i c_i [ \partial_{\tau_i} \log p(w|\tau)] = 0 $&lt;/code&gt; holds only when constant &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_i$&lt;/code&gt; is zero and the value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_i$&lt;/code&gt; does not depent on  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$w$&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;In other words, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\sum_i c_i [ \partial_{\tau_i} \log p(w|\tau)] = 0 $&lt;/code&gt; holds only when constant &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_i$&lt;/code&gt; is zero and the value of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$c_i$&lt;/code&gt; does not depend on  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$w$&lt;/code&gt;.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;Note that, due to the definition of the partial derivatives, this regularity condition implicitly assumes that the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is an open set in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where K is the number of entries in parameter array &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;.
 In other words, the openness requirement is not explicit and hidden within the regularity condition.
 We will discuss more about this at &lt;a href=&quot;#caveats-of-the-fisher-matrix-computation&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;The following examples illustrates the regularity condition.&lt;/p&gt;
+&lt;p&gt;The following examples illustrate the regularity condition.&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Example 1 (regularity condition for an intrinsic parameterization):&lt;/p&gt;
@@ -866,7 +866,7 @@ Thus, by Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;
         &lt;p&gt;The key reason is that the parameter space is not open in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^2$&lt;/code&gt; due to the equality constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt;. Thus, Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{4}$&lt;/code&gt; is &lt;strong&gt;incorrect&lt;/strong&gt;.&lt;/p&gt;
 
         &lt;p&gt;By definition, a Bernoulli distribution is valid only when the constraint holds. 
-Thus, the constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt; must be satisifed when we compute the Fisher matrix since the computation involves computing the expectation w.r.t. this distribution.&lt;/p&gt;
+Thus, the constraint &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \pi_0+\pi_1=1 $&lt;/code&gt; must be satisfied when we compute the Fisher matrix since the computation involves computing the expectation w.r.t. this distribution.&lt;/p&gt;
 
         &lt;p&gt;Note that the gradient is defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $&lt;/code&gt;.&lt;/p&gt;
 
@@ -1171,7 +1171,7 @@ $$&lt;/code&gt;&lt;/li&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td&gt;&amp;lt;img src=&quot;/img/icml2021-fig03.png&quot;  width=&quot;500&quot;/&amp;gt;&lt;/td&gt;
-      &lt;td&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; space has a local vector-space structure, &lt;br /&gt; standard NGD in $\tau$ space is a speical case of our NGD,  &lt;br /&gt; where we choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi$&lt;/code&gt; to be the identity map and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; to be a linear map.&lt;/td&gt;
+      &lt;td&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; space has a local vector-space structure, &lt;br /&gt; standard NGD in $\tau$ space is a special case of our NGD,  &lt;br /&gt; where we choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi$&lt;/code&gt; to be the identity map and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; to be a linear map.&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
@@ -1309,7 +1309,7 @@ $$&lt;/code&gt; where $\mathbf{B}$ is a &lt;span style=&quot;color:red&quot;&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h1 id=&quot;structured-gaussian-with-flexiable-precision&quot;&gt;Structured Gaussian with Flexiable Precision&lt;/h1&gt;
+&lt;h1 id=&quot;structured-gaussian-with-flexible-precision&quot;&gt;Structured Gaussian with Flexible Precision&lt;/h1&gt;
 
 &lt;p&gt;Structures in precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}=\mathbf{B}\mathbf{B}^T$&lt;/code&gt; and matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{B}$&lt;/code&gt;
 is a sparse (group) member as below.&lt;/p&gt;
@@ -1447,7 +1447,7 @@ matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Sigm
  \end{aligned}\tag{5}\label{5}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;we formulate a new problem over Gaussian &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(\mathbf{w}|\tau)$&lt;/code&gt; with structured precision, which is a speical case of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma=1$&lt;/code&gt;.
+&lt;p&gt;we formulate a new problem over Gaussian &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(\mathbf{w}|\tau)$&lt;/code&gt; with structured precision, which is a special case of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma=1$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
    \min_{\tau \in \Omega_\tau} E_{q(w|\tau)} \big[ \ell(\mathbf{w}) \big] +  E_{q(w|\tau)} \big[ \log q(\mathbf{w}|\tau)\big],
@@ -1599,7 +1599,7 @@ _1$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&q
 
 &lt;p&gt;Our NGD&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;can use structured Gaussian mixtures as flexiable variational distributions: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(\mathbf{w}|\tau)=\frac{1}{C}\sum_{c=1}^{C}q(\mathbf{w}|\mu_c,\mathbf{S}_c)$&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;can use structured Gaussian mixtures as flexible variational distributions: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$q(\mathbf{w}|\tau)=\frac{1}{C}\sum_{c=1}^{C}q(\mathbf{w}|\mu_c,\mathbf{S}_c)$&lt;/code&gt;&lt;/li&gt;
   &lt;li&gt;gives efficient stochastic natural-gradient variational methods beyond mean-field/diagonal covariance&lt;/li&gt;
 &lt;/ul&gt;
 

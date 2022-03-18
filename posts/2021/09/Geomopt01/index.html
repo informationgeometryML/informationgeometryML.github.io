@@ -248,7 +248,7 @@ By exploiting the structures, we can</p>
 $$</code>
 where <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution. Here, <code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | m, v) $</code> denotes a normal distribution over <code class="language-plaintext highlighter-rouge">$ y $</code> with mean <code class="language-plaintext highlighter-rouge">$ m $</code> and variance <code class="language-plaintext highlighter-rouge">$ v $</code>.</p>
 
-  <p>Well-known algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(emprical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[4]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>. These are examples of algorithms derived from a frequentist perspective, which can also be generalized to neural networks <a class="citation" href="#martens2020new">[4]</a>.</p>
+  <p>Well-known algorithms such as  <a href="https://en.wikipedia.org/wiki/Scoring_algorithm#Fisher_scoring"><strong>Fisher scoring</strong></a>  and <strong>(empirical) natural-gradient descent</strong> <a class="citation" href="#martens2020new">[4]</a> are commonly used methods that exploit the geometric structure of <code class="language-plaintext highlighter-rouge">$p(x,y | \tau)$</code>. These are examples of algorithms derived from a frequentist perspective, which can also be generalized to neural networks <a class="citation" href="#martens2020new">[4]</a>.</p>
 </blockquote>
 
 <blockquote>
@@ -296,7 +296,7 @@ More applications of similar nature are discussed in <a class="citation" href="#
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">Emprical Risk Minimization</td>
+      <td style="text-align: left">Empirical Risk Minimization</td>
       <td style="text-align: center">observation <code class="language-plaintext highlighter-rouge">$(x,y)$</code>
 </td>
       <td style="text-align: right"><code class="language-plaintext highlighter-rouge">$p(x,y|\tau)$</code></td>
@@ -350,7 +350,7 @@ for the details.)</p>
 
 <p>Intrinsic parameterizations<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> are those that satisfy the following two conditions:</p>
 <ul>
-  <li>We require that the parameter space of $\tau$, denoted by $\Omega_\tau$, be an <strong>open</strong> set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array. Intuitively, this ensures a local vector-space structure throughout the parameter space, which then ensure that a small, local perturbation <code class="language-plaintext highlighter-rouge">$ E $</code> at each point stays within $\Omega_\tau$.</li>
+  <li>We require that the parameter space of $\tau$, denoted by $\Omega_\tau$, be an <strong>open</strong> set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array. Intuitively, this ensures a local vector-space structure throughout the parameter space, which then ensures that a small, local perturbation <code class="language-plaintext highlighter-rouge">$ E $</code> at each point stays within $\Omega_\tau$.</li>
   <li>We also require that <code class="language-plaintext highlighter-rouge">$ E $</code>  <strong>uniquely</strong> and <strong>smoothly</strong> represents  points in a manifold. The condition ensures arbitrary (smooth) parameter transformations should still represent the same sub-set. In other words, we require that
     <ul>
       <li>there exists <strong>bi-jective</strong> maps among such parameterizations if they represent a common sub-set of points in the manifold.</li>
@@ -380,7 +380,7 @@ for the details.)</p>
   <p><img src="/img/charts.png" title="Source:Wikipedia" width="200"></p>
 </blockquote>
 
-<p>Now, we discuss invalid cases, where not all conditions are satisified.</p>
+<p>Now, we discuss invalid cases, where not all conditions are satisfied.</p>
 
 <blockquote>
   <p>Parameterization 2 (a non-intrinsic parameterization due to non-smoothness):</p>
@@ -389,7 +389,7 @@ for the details.)</p>
 
   <p>A (global) parametrization of the circle is <code class="language-plaintext highlighter-rouge">$\{ f(\theta) | \theta \in [0,2\pi)  \}$</code>, where we use one (scalar) parameter.</p>
 
-  <p>This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$, and its inverse map $f^{-1}$ is <strong>not</strong> continous at point $(0,1) \in  \mathcal{S}^1$. Therefore, this parametrization is not intrinsic.
+  <p>This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$, and its inverse map $f^{-1}$ is <strong>not</strong> continunous at point $(0,1) \in  \mathcal{S}^1$. Therefore, this parametrization is not intrinsic.
 In fact, there does not exist a (single) <strong>global</strong> and intrinsic parametrization to represent the circle.</p>
 </blockquote>
 
@@ -429,14 +429,14 @@ Below is the formal condition.</p>
   <p>For any <code class="language-plaintext highlighter-rouge">$\tau \in \Omega_\tau$</code>,  the set of partial derivatives 
 <code class="language-plaintext highlighter-rouge">$ \{ \partial_{\tau_i} \log p(w|\tau) \} $</code> is smooth w.r.t. <code class="language-plaintext highlighter-rouge">$\tau$</code> and is a set of linearly independent functions of <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 
-  <p>In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i [ \partial_{\tau_i} \log p(w|\tau)] = 0 $</code> holds only when constant <code class="language-plaintext highlighter-rouge">$c_i$</code> is zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depent on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
+  <p>In other words, <code class="language-plaintext highlighter-rouge">$\sum_i c_i [ \partial_{\tau_i} \log p(w|\tau)] = 0 $</code> holds only when constant <code class="language-plaintext highlighter-rouge">$c_i$</code> is zero and the value of <code class="language-plaintext highlighter-rouge">$c_i$</code> does not depend on  <code class="language-plaintext highlighter-rouge">$w$</code>.</p>
 </div>
 
 <p>Note that, due to the definition of the partial derivatives, this regularity condition implicitly assumes that the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where K is the number of entries in parameter array <code class="language-plaintext highlighter-rouge">$\tau$</code>.
 In other words, the openness requirement is not explicit and hidden within the regularity condition.
 We will discuss more about this at <a href="#caveats-of-the-fisher-matrix-computation">here</a>.</p>
 
-<p>The following examples illustrates the regularity condition.</p>
+<p>The following examples illustrate the regularity condition.</p>
 
 <blockquote>
   <p>Example 1 (regularity condition for an intrinsic parameterization):</p>
@@ -538,7 +538,7 @@ Thus, by Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</cod
         <p>The key reason is that the parameter space is not open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> due to the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> is <strong>incorrect</strong>.</p>
 
         <p>By definition, a Bernoulli distribution is valid only when the constraint holds. 
-Thus, the constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code> must be satisifed when we compute the Fisher matrix since the computation involves computing the expectation w.r.t. this distribution.</p>
+Thus, the constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code> must be satisfied when we compute the Fisher matrix since the computation involves computing the expectation w.r.t. this distribution.</p>
 
         <p>Note that the gradient is defined as <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $</code>.</p>
 
