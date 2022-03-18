@@ -40,7 +40,7 @@ var store = [{
         "url": "/posts/2021/09/Geomopt01/",
         "teaser":null},{
         "title": "Part II: Derivation of Natural-gradients",
-        "excerpt":"Goal This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients: Rimannian steepest direction (i.e., unit natural gradient) The difference between a parameter space and a gradient/vector spaceThe discussion here is informal...","categories": [],
+        "excerpt":"Goal This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients: Rimannian steepest direction (i.e., normalized natural gradient) The difference between a parameter space and a gradient/vector spaceThe discussion here is informal...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/10/Geomopt02/",
         "teaser":null},{
