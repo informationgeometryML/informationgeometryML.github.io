@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-17T23:05:01-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-03-17T23:14:36-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Rimannian steepest direction (i.e., unit natural gradient)&lt;/li&gt;
@@ -375,10 +375,10 @@ details.)&lt;/p&gt;
 &lt;h1 id=&quot;riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Riemannian gradients as tangent vectors (optional)&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
-Now, we will disucss abstract Riemannian vectors without a parametrization &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[2]&lt;/a&gt;. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in 
+Now, we will disucss abstract Riemannian vectors without specifying a parametrization &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[2]&lt;/a&gt;. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in 
 &lt;!--[Part III]({ post_url 2021-11-02-Geomopt03 }#parameter-transform-and-invariance).--&gt;
-Part III.
-In physics, this invariance means that a law of physics should be independent of the choice of (reference) coordinate systems.&lt;/p&gt;
+Part III. 
+In physics, an invariance of parametrization means that a law of physics should be independent of the choice of (reference) coordinate systems.&lt;/p&gt;
 
 &lt;p&gt;A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$ of a smooth curve in the manifold under the parametrization $\tau$. 
 The set of tangent vectors evaluated at $\mathbf{\tau}_0$ is called the tangent space at the corresponding point. 
@@ -454,7 +454,9 @@ Be aware of the differences shown in the table.&lt;/p&gt;
 &lt;h2 id=&quot;parameterization-free-representation-of--vector-mathbfv&quot;&gt;Parameterization-free representation of  vector $\mathbf{v}$&lt;/h2&gt;
 
 &lt;p&gt;The tangent vector $\mathbf{v}$ at point $\mathbf{x_0}$  can be viewed as the &lt;strong&gt;tangent direction&lt;/strong&gt; of a (1-dimensional) smooth curve $\gamma(t) \in \mathcal{M}$, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(0)=\mathbf{x_0}$&lt;/code&gt; and   &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d {\gamma}(t) }{d t} \Big|_{t=0}=\mathbf{v}$&lt;/code&gt; and the support of $\gamma(t)$ denoted by $\mathbf{I}$ is an open interval in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^1$&lt;/code&gt; containing 0. 
-Since a curve $\gamma(t)$ is a geometric object,  its tangent direction is also a geometric object. The tangent direction is a parameterization-free repesentation of vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt;.&lt;/p&gt;
+Since a curve $\gamma(t)$ is a geometric object,  its tangent direction is also a geometric object.
+Note that we use an parametrization to represent a geometric object.
+Thus, the tangent direction should be a parameterization-free repesentation of vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;parameterization-dependent-representation-of-vector-mathbfv&quot;&gt;Parameterization-dependent representation of vector $\mathbf{v}$&lt;/h2&gt;
 
