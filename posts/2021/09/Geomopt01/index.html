@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part I: Smooth Manifolds with the Fisher-Rao Metric - Information Geometry in Machine Learning</title>
-<meta name="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, useful to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
+<meta name="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts  to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
 
 
 
@@ -21,7 +21,7 @@
 <meta property="og:url" content="/posts/2021/09/Geomopt01/">
 
 
-  <meta property="og:description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, useful to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
+  <meta property="og:description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts  to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
 
 
 
@@ -167,7 +167,7 @@
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <meta itemprop="headline" content="Part I: Smooth Manifolds with the Fisher-Rao Metric">
-    <meta itemprop="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, useful to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
+    <meta itemprop="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts  to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
     <meta itemprop="datePublished" content="September 06, 2021">
     
 
@@ -182,7 +182,7 @@
 
 
 
-  18 minute read
+  15 minute read
 </p>
           
         </header>
@@ -191,7 +191,7 @@
       <section class="page__content" itemprop="text">
         
         <h2 id="goal">Goal</h2>
-<p>This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following concepts, useful to ensure non-singular FIMs:</p>
+<p>This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts  to ensure non-singular FIMs:</p>
 <ul>
   <li>Regularity conditions and intrinsic parameterizations of a distribution</li>
   <li>Dimensionality of a smooth manifold</li>
@@ -512,102 +512,6 @@ The regularity condition guarantees that the FIM is non-singular if the matrix e
 <p>In what follows, we will assume the metric to be well-defined, which makes the Fisher-Rao metric a valid Riemannian metric <a class="citation" href="#lee2018introduction">[13]</a> since the corresponding FIM is positive definite everywhere in its intrinsic parameter space.</p>
 
 <h1 id="caveats-of-the-fisher-matrix-computation">Caveats of the Fisher matrix computation</h1>
-<hr>
-<p>There are some caveats when it comes to the Fisher matrix computation. In particular, the regularity condition should be satisfied.
-It is possible to define the FIM under a non-intrinsic parameterization. However, the FIM often is singular or ill-defined under a non-intrinsic  parameterization as shown below.</p>
-
-<blockquote>
-  <p>Example 1 (Ill-defined FIM):</p>
-
-  <p>Consider Bernoulli family  <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$</code> with non-intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>.
-The following computation is not correct. Do you make similar mistakes like this?</p>
-
-  <p>Let <code class="language-plaintext highlighter-rouge">$  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$</code>, where <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. The derivative is
-<code class="language-plaintext highlighter-rouge">$$  \begin{aligned} \nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T  \end{aligned} \tag{4}\label{4}$$</code>
-Thus, by Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, the FIM under this  parameterization is</p>
-
-  <p><code class="language-plaintext highlighter-rouge">$$  \begin{aligned} F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\  \mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;  0 \\ 0 &amp;  \frac{1}{\pi_1} \end{bmatrix} \end{aligned}$$</code></p>
-  <div class="notice--danger">
-    <p>This computation is not correct. Do you know why?</p>
-  </div>
-
-  <div class="notice--info">
-    <details>
-<summary>Reason: (Click to expand)</summary>
-<fieldset class="field-set">
-        <p>The key reason is that the parameter space is not open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> due to the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> is <strong>incorrect</strong>.</p>
-
-        <p>By definition, a Bernoulli distribution is valid only when the constraint holds. 
-Thus, the constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code> must be satisfied when we compute the Fisher matrix since the computation involves computing the expectation w.r.t. this distribution.</p>
-
-        <p>Note that the gradient is defined as <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $</code>.</p>
-
-        <p>Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative <code class="language-plaintext highlighter-rouge">$ \partial_{\pi_0} \log p(w|\tau )$</code>, we fix <code class="language-plaintext highlighter-rouge">$\pi_1$</code> and allow <code class="language-plaintext highlighter-rouge">$\pi_0$</code> to change.
-However, given that <code class="language-plaintext highlighter-rouge">$\pi_1$</code> is fixed and <code class="language-plaintext highlighter-rouge">$ \pi_0 $</code> is fully determined by <code class="language-plaintext highlighter-rouge">$\pi_1$</code> due to the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. 
-Therefore, <code class="language-plaintext highlighter-rouge">$  \partial_{\pi_0} \log p(w|\tau ) $</code> is not well-defined.
-In other words, the above Fisher matrix computation is not correct since <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) $</code> does not exist.</p>
-      </fieldset>
-</details>
-  </div>
-</blockquote>
-
-<blockquote>
-  <p>Example 2  (Singular FIM):</p>
-
-  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with  non-intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1) $</code>.</p>
-
-  <p>Note that a Bernoulli distribution in the family is not uniquely represented by this parametrization. It is obvious to
-see that $\tau_1 = (1,1)$ and $\tau_2=(2,2)$ both represent the same Bernoulli distribution.</p>
-
-  <p>The FIM under this  parameterization is singular as shown below.</p>
-
-  <p>Let <code class="language-plaintext highlighter-rouge">$  p(w|\tau ) =  \mathcal{I}(w=0)  \frac{\pi_0}{\pi_0+\pi_1}+ \mathcal{I}(w=1)  \frac{\pi_1}{\pi_0+\pi_1}$</code>, where <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. The derivative is</p>
-
-  <p><code class="language-plaintext highlighter-rouge">$$ 
-\begin{aligned}
-\nabla_{\tau} \log p(w|\tau ) = \frac{ \mathcal{I}(w=0) - \mathcal{I}(w=1)  }{p(w|\tau )} [\frac{\pi_1}{(\pi_0+\pi_1)^2} , \frac{-\pi_0}{(\pi_0+\pi_1)^2}]^T 
-\end{aligned}
-$$</code></p>
-
-  <p>Thus, the FIM under this  parameterization is
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned} 
-F(\tau) = E_{p(w|\tau) } [ \frac{( \mathcal{I}(w=0) - \mathcal{I}(w=1))^2 }{p^2(w|\tau)} \begin{bmatrix} \frac{\pi_1^2}{(\pi_0+\pi_1)^4}  &amp; \frac{-\pi_0 \pi_1}{(\pi_0+\pi_1)^4} \\ \frac{-\pi_0 \pi_1}{(\pi_0+\pi_1)^4}  &amp;  \frac{\pi_0^2}{(\pi_0+\pi_1)^4} \end{bmatrix} ]   =\frac{1}{(\pi_0+\pi_1)^2} \begin{bmatrix} \frac{\pi_1}{\pi_0} &amp;  -1 \\ -1 &amp;  \frac{\pi_0}{\pi_1} \end{bmatrix}
-\end{aligned}
-$$</code>
-where this FIM is singular since the matrix determinant is zero as shown below. <code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-\mathrm{det}\big( \begin{bmatrix} \frac{\pi_1}{\pi_0} &amp;  -1 \\ -1 &amp;  \frac{\pi_0}{\pi_1} \end{bmatrix}\big) = 0.
-\end{aligned}
-$$</code></p>
-</blockquote>
-
-<p>Now, we give an example to show that the FIM of a Bernoulli family can be non-singular when we use an intrinsic parameterization.</p>
-
-<blockquote>
-  <p>Example 3  (Non-singular FIM):</p>
-
-  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi)  \Big| 0&lt;\pi&lt;1 \}$</code> with  <strong>intrinsic</strong> parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi $</code>.</p>
-
-  <p>The FIM under this parameterization is non-singular as shown below.</p>
-
-  <p>Let <code class="language-plaintext highlighter-rouge">$  p(w|\tau ) =  \mathcal{I}(w=0) \pi+ \mathcal{I}(w=1) (1-\pi)$</code>, where <code class="language-plaintext highlighter-rouge">$\tau = \pi$</code>. The derivative is
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned} \nabla_{\tau} \log p(w|\tau ) = \frac{\mathcal{I}(w=0) - \mathcal{I}(w=1)}{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) }  \end{aligned}
-$$</code></p>
-
-  <p>Thus, the FIM under this  parameterization is
-<code class="language-plaintext highlighter-rouge">$$
-\begin{aligned}
-F(\tau) &amp;= E_{p(w|\tau) } [ \frac{ (\mathcal{I}(w=0) - \mathcal{I}(w=1) )^2 }{ (\mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) )^2 }  ]\\
-&amp; = \pi \frac{1^2}{ \pi^2} + (1-\pi) \frac{(-1)^2}{(1-\pi)^2} \\
-&amp;= \frac{1}{\pi } + \frac{1}{1-\pi} = \frac{1}{\pi(1-\pi)}&gt; 0
-\end{aligned}
-$$</code></p>
-
-</blockquote>
-
-<h1 id="dimensionality-of-a-manifold">Dimensionality of a manifold</h1>
 <hr>
 <p>We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
 Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#tu2011introduction">[12]</a>.
