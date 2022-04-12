@@ -44,6 +44,11 @@ var store = [{
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/10/Geomopt02/",
         "teaser":null},{
+        "title": "Part III: Invariance of Natural-Gradients",
+        "excerpt":"Goal This blog post focuses on the invariance of natural-gradients.We will discuss transformation rules related to natural-gradients and the computation via Automatic Differentiation. the non-invariance of the Euclidean counterpart. The discussion here is informal and focuses more on intuitions, rather than rigor. Click to see how to cite this blog...","categories": [],
+        "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
+        "url": "/posts/2021/11/Geomopt03/",
+        "teaser":null},{
         "title": "Paper Title Number 1",
         "excerpt":"This paper is about the number 1. The number 2 is left for future work. Download paper here Recommended citation: Your Name, You. (2009). “Paper Title Number 1.” Journal 1. 1(1). ","categories": [],
         "tags": [],
