@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-04-12T01:14:07-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part III: Invariance of Natural-Gradients</title><link href="/posts/2021/11/Geomopt03/" rel="alternate" type="text/html" title="Part III: Invariance of Natural-Gradients" /><published>2021-11-02T00:00:00-07:00</published><updated>2021-11-02T00:00:00-07:00</updated><id>/posts/2021/11/Geomopt03</id><content type="html" xml:base="/posts/2021/11/Geomopt03/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-04-12T17:30:58-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part III: Invariance of Natural-Gradients</title><link href="/posts/2021/11/Geomopt03/" rel="alternate" type="text/html" title="Part III: Invariance of Natural-Gradients" /><published>2021-11-02T00:00:00-07:00</published><updated>2021-11-02T00:00:00-07:00</updated><id>/posts/2021/11/Geomopt03</id><content type="html" xml:base="/posts/2021/11/Geomopt03/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the invariance of natural-gradients.
 We will discuss&lt;/p&gt;
 &lt;ul&gt;
@@ -1615,7 +1615,7 @@ $$&lt;/code&gt;&lt;/li&gt;
 &lt;table&gt;
   &lt;tbody&gt;
     &lt;tr&gt;
-      &lt;td&gt;&amp;lt;img src=&quot;/img/icml2021-fig03_new.png&quot;  width=&quot;500&quot;/&amp;gt;&lt;/td&gt;
+      &lt;td&gt;&amp;lt;img src=&quot;/img/icml2021-fig03_new.png&quot;  width=&quot;450&quot;/&amp;gt;&lt;/td&gt;
       &lt;td&gt;When &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; space has a local vector-space structure, &lt;br /&gt; standard NGD in $\tau$ space is a special case of our NGD,  &lt;br /&gt; where we choose &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\psi$&lt;/code&gt; to be the identity map and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\phi_{\lambda_t}$&lt;/code&gt; to be a linear map.&lt;/td&gt;
     &lt;/tr&gt;
   &lt;/tbody&gt;
@@ -1673,7 +1673,7 @@ computation.&lt;/p&gt;
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
         \tau &amp;amp;= \Big\{\mu \in \mathcal{R}^p, \mathbf{S} \in \mathcal{S}_{++}^{p\times p} \Big\},  &amp;amp; \mathbf{S}: \text{positive-definite matrix} \\
-        \lambda &amp;amp; = \Big\{ \mu \in  \mathcal{R}^p , \mathbf{B} \in\mathrm{GL}^{p\times p} \Big\}, &amp;amp;\mathbf{B}: \text{ (closed) matrix Lie group member}\\
+        \lambda &amp;amp; = \Big\{ \mu \in  \mathcal{R}^p , \mathbf{B} \in\mathrm{GL}^{p\times p} \Big\}, &amp;amp;\mathbf{B}: \text{ (closed, connected) matrix Lie group member}\\
         \eta &amp;amp;= \Big\{ \delta\in  \mathcal{R}^p, \mathbf{M} \in\mathcal{S}^{p\times p}  \Big\}, &amp;amp; \mathbf{M}: \text{ member in a sub-space of Lie algebra}
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
