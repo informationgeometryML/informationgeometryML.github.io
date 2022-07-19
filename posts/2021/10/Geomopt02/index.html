@@ -220,9 +220,7 @@
 
 <h1 id="motivation">Motivation</h1>
 <p>In machine learning, a common derivation of natural-gradients is via a Talyor expansion of the Kullback-Leibler divergence as we will
-discuss in
-Part IV. However, the derivation has the following limitations:
-<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#proximal-gradient-descent).    --></p>
+discuss in <a href="/posts/2021/11/Geomopt04/#proximal-gradient-descent">Part IV</a>. However, the derivation has the following limitations:</p>
 <ul>
   <li>It does not clearly illustrate the difference between a parameter space and a (natural) gradient space.</li>
   <li>It implicitly assumes that the Fisher information matrix (FIM) is non-singular and the parameter space is open.</li>
@@ -230,11 +228,9 @@ Part IV. However, the derivation has the following limitations:
 
 <p>These limitations become essential when it comes to constrained parameters (i.e., covariance matrix in a Gaussian family).
 Moreover, a natural gradient (in a gradient space) is invariant (will show in 
-Part III)
-<!--[Part III]({ post_url 2021-11-02-Geomopt03 }#riemannian-steepest-direction-is-invariant) )-->
+<a href="/posts/2021/11/Geomopt03/#riemannian-steepest-direction-is-invariant">Part III</a>)
 while a natural-gradient update (in a parameter space) is only linearly invariant (will discuss in
-Part IV).
-<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#natural-gradient-descent-is-linearly-invariant)--></p>
+<a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-is-linearly-invariant">Part IV</a>).</p>
 
 <p>We will give an alternative <a href="#riemannian-steepest-direction">derivation</a> of natural-gradients to emphasize the subtlety.</p>
 
@@ -272,8 +268,7 @@ $$</code></p>
 
 <p>Now, we  formulate a similar optimization problem like Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>  in order to generalize the steepest direction at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> in a Riemannian manifold.
 To do so, we have to define the length of a vector in manifold cases. In 
-<!--[Part III]({ post_url 2021-11-02-Geomopt03 }#standard-euclidean-gradients-are-not-invariant), -->
-Part III,
+<a href="/posts/2021/11/Geomopt03/#standard-euclidean-gradients-are-not-invariant">Part III</a>, 
 we will show that the (standard) length does not preserve under a parameter transformation while the length induced by the Fisher-Rao metric does.
 Thanks to the Fisher-Rao metric,  we will further show that a natural-gradient is invariant under parameter transformations.</p>
 
@@ -305,8 +300,7 @@ the vector space at <code class="language-plaintext highlighter-rouge">$\tau_0$<
 
 <p>In manifold cases, we have to distinguish the difference between a point (e.g., parameter array $\tau_0$) and a vector (e.g., Riemannian gradient <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> under a parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code>).
 This difference is crucial to (natural) gradient-based methods in 
-<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces).-->
-Part IV.</p>
+<a href="/posts/2021/11/Geomopt04/#two-kinds-of-spaces">Part IV</a>.</p>
 
 <div class="notice--danger">
   <p><strong>Warning</strong>:</p>
@@ -553,14 +547,9 @@ Note that <code class="language-plaintext highlighter-rouge">$\tau$</code> is a 
 Strictly speaking, a natural gradient/vector w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is not well-defined since the FIM is singular.</p>
 
         <p>In the literature, a natural gradient w.r.t. <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code> is  defined as <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code>, where
-<code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is a valid natural gradient w.r.t. intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau=\mathrm{vech}(\mathbf{S})$</code>
-(see<br>
-<!--[Part V]({ post_url 2021-12-14-Geomopt05 }#efficient-ngd-for-multivariate-gaussian)-->
-Part V
-for the
-details.)</p>
-      </blockquote>
+<code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is a valid natural gradient w.r.t. intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau=\mathrm{vech}(\mathbf{S})$</code> (see <a href="/posts/2021/12/Geomopt05/#efficient-ngd-for-multivariate-gaussian">Part V</a> for the details.)</p>
 
+      </blockquote>
     </fieldset>
 </details>
 </div>
@@ -569,8 +558,7 @@ details.)</p>
 <hr>
 <p>In the previous section, we only consider Riemannian vectors/gradients under a parametrization $\tau$.
 Now, we will discuss abstract Riemannian vectors without specifying a parametrization <a class="citation" href="#tu2011introduction">[2]</a>. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in 
-<!--[Part III]({ post_url 2021-11-02-Geomopt03 }#parameter-transform-and-invariance).-->
-Part III.</p>
+<a href="/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance">Part III</a>.</p>
 
 <p>A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$ of a smooth curve in the manifold under the parametrization $\tau$. 
 The set of tangent vectors evaluated at $\mathbf{\tau}_0$ is called the tangent space at the corresponding point. 
@@ -650,7 +638,7 @@ Be aware of the differences shown in the table.</p>
 
 <p>Under <strong>intrinsic</strong> parametrization $\tau$, we have <code class="language-plaintext highlighter-rouge">$\Omega_\tau \subset \mathcal{R}^2$</code>. Thus, we can perform this operation in $\Omega_\tau$ space: <code class="language-plaintext highlighter-rouge">$\tau_0 +t\mathbf{v}(\tau_0) \in \Omega_\tau$</code> when scalar <code class="language-plaintext highlighter-rouge">$|t|$</code> is small enough. Note that we only define the <a href="#weighted-norm-induced-by-the-fisher-rao-metric">distance</a> between two (Riemannian gradient) vectors in the tangent space. The distance between two points in the <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> space is undefined in this post.</p>
 
-<h2 id="parameterization-free-representation-of--vector-mathbfv">Parameterization-free Representation of  Vector $\mathbf{v}$</h2>
+<h2 id="parameterization-free-representation">Parameterization-free Representation</h2>
 
 <p>The tangent vector $\mathbf{v}$ at point $\mathbf{x_0}$  can be viewed as the <strong>tangent direction</strong> of a (1-dimensional) smooth curve $\gamma(t) \in \mathcal{M}$, where <code class="language-plaintext highlighter-rouge">$\gamma(0)=\mathbf{x_0}$</code> and   <code class="language-plaintext highlighter-rouge">$\frac{d {\gamma}(t) }{d t} \Big|_{t=0}=\mathbf{v}$</code> and the support of $\gamma(t)$ denoted by $\mathbf{I}$ is an open interval in  <code class="language-plaintext highlighter-rouge">$\mathcal{R}^1$</code> containing 0. 
 Since a curve $\gamma(t)$ is a geometric object,  its tangent direction is also a geometric object.
@@ -662,7 +650,7 @@ For example, in physics, the concept of parameterization-free representation mea
 parametrization when it comes to computation.
 A key takeaway is that a geometric property (i.e., length of a vector) should be invariant to the choice of valid parametrizations.</p>
 
-<h2 id="parameterization-dependent-representation-of-vector-mathbfv">Parameterization-dependent Representation of Vector $\mathbf{v}$</h2>
+<h2 id="parameterization-dependent-representation">Parameterization-dependent Representation</h2>
 
 <p>Given intrinsic parametrization $\tau$, we can define the parametric representation of the curve denoted by ${\gamma}_\tau(t)$, where the domain is <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau \subset \mathcal{R}^1$</code>.
 The parametric representation of vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> is defined as <code class="language-plaintext highlighter-rouge">$\mathbf{v}(\mathbf{\tau}_0):= \frac{d {\gamma}_{\tau}(t) }{d t} \Big|_{t=0}$</code>, where <code class="language-plaintext highlighter-rouge">${\gamma}_{\tau}(0)=\tau_0$</code>.</p>
@@ -704,8 +692,7 @@ of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> a
 <p>We can similarly define vector additions and real scalar products in a tangent vector space by using the tangent direction of a curve in the manifold with/without a parameterization.</p>
 
 <p>A key takeaway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
-We will discuss more about this difference in Part IV. 
-<!--[Part IV]({ post_url 2021-11-15-Geomopt04 }#two-kinds-of-spaces). --></p>
+We will discuss more about this difference in <a href="/posts/2021/11/Geomopt04/#two-kinds-of-spaces">Part IV</a>.</p>
 
 <hr>
 <h1 id="references">References</h1>
@@ -715,14 +702,13 @@ We will discuss more about this difference in Part IV.
 
 <h2 id="footnotes">Footnotes:</h2>
 
-<!--[Part III]({ post_url 2021-11-02-Geomopt03 }). -->
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wikiCovariant_derivative">covariant derivative</a>, which induces parallel transport. Given a smooth scalar field/function on a manifold, a coordinate representation of the covariant derivative remains the same as the Euclidean case. Note that the standard coordinate derivative  is identical to  the coordinate representation of the covariant derivative when it comes to a scalar field. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p>For simplicity, we avoid defining a (coordinate-free) <a href="https://en.wikipedia.org/wiki/Covariant_derivative">covariant derivative</a>, which induces parallel transport. Given a smooth scalar field/function on a manifold, a coordinate representation of the covariant derivative remains the same as the Euclidean case. Note that the standard coordinate derivative  is identical to  the coordinate representation of the covariant derivative when it comes to a scalar field. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors">covariant vector</a> (A.K.A. a Riemannian covector). We will discuss their transformation rules in  Part III. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p>A Riemannian gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors#Contravariant_transformation">contravariant vector</a> (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a <a href="https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors#Covariant_transformation">covariant vector</a> (A.K.A. a Riemannian covector). We will discuss their transformation rules in <a href="/posts/2021/11/Geomopt03/">Part III</a>. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
@@ -824,6 +810,90 @@ We will discuss more about this difference in Part IV.
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/posts/2021/12/Geomopt06/" rel="permalink">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (Part VI is incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/12/Geomopt05/" rel="permalink">Part V: Efficient Natural-gradient Methods for Exponential Family
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/11/Geomopt04/" rel="permalink">Part IV: Natural and Riemannian  Gradient Descent
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/posts/2021/11/Geomopt03/" rel="permalink">Part III: Invariance of Natural-Gradients
 </a>
       
@@ -834,70 +904,15 @@ We will discuss more about this difference in Part IV.
 
 
 
-  12 minute read
+  13 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Goal
-This blog post focuses on the invariance of natural-gradients.
+This blog post focuses on invariant properties of natural-gradients.
 We will discuss
 
-  transformation rules related to natural-gradients and the computation ...</p>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/posts/2021/09/Geomopt01/" rel="permalink">Part I: Smooth Manifolds with the Fisher-Rao Metric
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  15 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Goal
-This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concept...</p>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/posts/2021/07/ICML/" rel="permalink">Structured Natural Gradient Descent (ICML 2021)
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  12 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">More about this work [1]: (Youtube) talk, extended paper, short paper,
-poster
-
-</p>
+  transformation rules of natural-gradients,
+  the automatic compu...</p>
   </article>
 </div>
         

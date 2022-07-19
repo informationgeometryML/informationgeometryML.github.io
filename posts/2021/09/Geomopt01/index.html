@@ -10,7 +10,7 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Part I: Smooth Manifolds with the Fisher-Rao Metric - Information Geometry in Machine Learning</title>
-<meta name="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts  to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
+<meta name="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following  useful concepts to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
 
 
 
@@ -21,7 +21,7 @@
 <meta property="og:url" content="/posts/2021/09/Geomopt01/">
 
 
-  <meta property="og:description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts  to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
+  <meta property="og:description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following  useful concepts to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
 
 
 
@@ -167,7 +167,7 @@
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
     <meta itemprop="headline" content="Part I: Smooth Manifolds with the Fisher-Rao Metric">
-    <meta itemprop="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts  to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
+    <meta itemprop="description" content="GoalThis blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following  useful concepts to ensure non-singular FIMs:  Regularity conditions and intrinsic parameterizations of a distribution  Dimensionality of a smooth manifold">
     <meta itemprop="datePublished" content="September 06, 2021">
     
 
@@ -182,7 +182,7 @@
 
 
 
-  15 minute read
+  18 minute read
 </p>
           
         </header>
@@ -191,13 +191,14 @@
       <section class="page__content" itemprop="text">
         
         <h2 id="goal">Goal</h2>
-<p>This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts  to ensure non-singular FIMs:</p>
+<p>This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following  useful concepts to ensure non-singular FIMs:</p>
 <ul>
   <li>Regularity conditions and intrinsic parameterizations of a distribution</li>
   <li>Dimensionality of a smooth manifold</li>
 </ul>
 
 <p>The discussion here is informal and focuses on more on intuitions, rather than rigor.</p>
+
 <div class="notice--info">
   <details>
 <summary>Click to see how to cite this blog post</summary>
@@ -319,9 +320,8 @@ More applications of similar nature are discussed in <a class="citation" href="#
   <p>In general, we may have to compute or estimate the inverse of the FIM. However, in many useful machine learning applications, algorithms such as <a class="citation" href="#lin2021tractable">[2]</a>  <a class="citation" href="#martens2020new">[4]</a> <a class="citation" href="#khan2017conjugate">[5]</a> <a class="citation" href="#osawa2019practical">[7]</a>  <a class="citation" href="#wierstra2014natural">[8]</a>  <a class="citation" href="#kakade2001natural">[9]</a>  <a class="citation" href="#le2007topmoumoute">[10]</a> can be efficiently implemented without
 explicitly computing the inverse of the FIM.</p>
 
-  <p>We discuss this in other posts; see<br>
-<!--[Part V]({ post_url 2021-12-14-Geomopt05 }#efficient-ngd-for-multivariate-gaussians)-->
-Part V
+  <p>We discuss this in other posts. See<br>
+<a href="/posts/2021/12/Geomopt05/#efficient-ngd-for-multivariate-gaussians">Part V</a>
 and 
 <a href="/posts/2021/07/ICML/">our ICML work</a>.</p>
 </div>
@@ -342,8 +342,7 @@ We will refer to such flat vector space as a <em>local</em> vector-space structu
   <p>Local <strong>vector-space structure</strong>:</p>
 
   <p>It supports local <strong>vector additions</strong>,  local <strong>real scalar products</strong>, and their algebraic laws (i.e., the distributive law). (see 
-<!--[Part II]({ post_url 2021-10-04-Geomopt02 }#riemannian-gradients-as-tangent-vectors-optional)-->
-Part II
+<a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>
 for the details.)</p>
 </div>
 
@@ -352,8 +351,8 @@ for the details.)</p>
   <li>We require that the parameter space of $\tau$, denoted by $\Omega_\tau$, be an <strong>open</strong> set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array. Intuitively, this ensures a local vector-space structure throughout the parameter space, which then ensures that a small, local perturbation <code class="language-plaintext highlighter-rouge">$ E $</code> at each point stays within $\Omega_\tau$.</li>
   <li>We also require that <code class="language-plaintext highlighter-rouge">$ E $</code>  <strong>uniquely</strong> and <strong>smoothly</strong> represents  points in a manifold. The condition ensures arbitrary (smooth) parameter transformations should still represent the same sub-set. In other words, we require that
     <ul>
-      <li>there exists <strong>bi-jective</strong> maps among such parameterizations if they represent a common sub-set of points in the manifold.</li>
-      <li>the maps and their inverse maps are both <strong>smooth</strong>.</li>
+      <li>there exists a <strong>bi-jective</strong> map among such two parameterizations if these parameterizations represent a common sub-set of points in the manifold.</li>
+      <li>this map and it inverse map are both <strong>smooth</strong>.</li>
     </ul>
 
     <p>In differential geometry, this  requirement is known as a diffeomorphism, which is a formal but more abstract definition of this requirement.</p>
@@ -389,10 +388,11 @@ for the details.)</p>
   <p>A (global) parametrization of the circle is <code class="language-plaintext highlighter-rouge">$\{ f(\theta) | \theta \in [0,2\pi)  \}$</code>, where we use one (scalar) parameter.</p>
 
   <p>This map $f$ is bijective and smooth. However, the parameter space is not open in $\mathcal{R}$, and its inverse map $f^{-1}$ is <strong>not</strong> continunous at point $(0,1) \in  \mathcal{S}^1$. Therefore, this parametrization is not intrinsic.
-In fact, there does not exist a (single) <strong>global</strong> and intrinsic parametrization to represent the circle.</p>
+In fact, there does not exist a (single) <strong>global</strong> and intrinsic parametrization to represent the whole circle.</p>
 </blockquote>
 
-<p>Smoothness of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such case, the Jacobian matrix (to change between the parameterizations) is non-singular everywhere, and we can use the chain rule and inverse function theorem to jump between different intrinsic parameterizations.</p>
+<p>Smoothness of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such case, the Jacobian matrix (to change between the parameterizations) is non-singular everywhere, and we can use the chain rule and inverse function theorem to jump between different intrinsic parameterizations.
+We will discuss this in  <a href="/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance">Part III</a>.</p>
 
 <blockquote>
   <p>Parametrization 3 (a non-intrinsic parameterization due to non-openness):</p>
@@ -512,8 +512,104 @@ The regularity condition guarantees that the FIM is non-singular if the matrix e
 
 <h1 id="caveats-of-the-fisher-matrix-computation">Caveats of the Fisher matrix computation</h1>
 <hr>
+<p>There are some caveats when it comes to the Fisher matrix computation. In particular, the regularity condition should be satisfied.
+It is possible to define the FIM under a non-intrinsic parameterization. However, the FIM often is singular or ill-defined under a non-intrinsic  parameterization as shown below.</p>
+
+<blockquote>
+  <p>Example 1 (Ill-defined FIM):</p>
+
+  <p>Consider Bernoulli family  <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1  \Big| \pi_0&gt;0, \pi_1&gt;0, \pi_0+\pi_1=1  \}$</code> with non-intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>.
+The following computation is not correct. Do you make similar mistakes like this?</p>
+
+  <p>Let <code class="language-plaintext highlighter-rouge">$  p(w|\tau ) =  \mathcal{I}(w=0) \pi_0+ \mathcal{I}(w=1) \pi_1$</code>, where <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. The derivative is
+<code class="language-plaintext highlighter-rouge">$$  \begin{aligned} \nabla_{\tau} \log p(w|\tau ) = \frac{1}{p(w|\tau )} [\mathcal{I}(w=0) ,  \mathcal{I}(w=1)]^T  \end{aligned} \tag{4}\label{4}$$</code>
+Thus, by Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code>, the FIM under this  parameterization is</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$$  \begin{aligned} F(\tau) = E_{p(w|\tau) } [ \frac{1}{p^2(w|\tau)} \begin{bmatrix} \mathcal{I}^2(w=0) &amp;  \mathcal{I}(w=1)  \mathcal{I}(w=0) \\  \mathcal{I}(w=0)  \mathcal{I}(w=1) &amp;  \mathcal{I}^2(w=1) \end{bmatrix} ]   = \begin{bmatrix} \frac{1}{\pi_0} &amp;  0 \\ 0 &amp;  \frac{1}{\pi_1} \end{bmatrix} \end{aligned}$$</code></p>
+  <div class="notice--danger">
+    <p>This computation is not correct. Do you know why?</p>
+  </div>
+
+  <div class="notice--info">
+    <details>
+<summary>Reason: (Click to expand)</summary>
+<fieldset class="field-set">
+        <p>The key reason is that the parameter space is not open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^2$</code> due to the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. Thus, Eq. <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> is <strong>incorrect</strong>.</p>
+
+        <p>By definition, a Bernoulli distribution is valid only when the constraint holds. 
+Thus, the constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code> must be satisfied when we compute the Fisher matrix since the computation involves computing the expectation w.r.t. this distribution.</p>
+
+        <p>Note that the gradient is defined as <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) := [ \partial_{\pi_0} \log p(w|\tau ), \partial_{\pi_1} \log p(w|\tau ) ]^T $</code>.</p>
+
+        <p>Unfortunately, these partial derivatives do not exist. By the definition of  partial derivative <code class="language-plaintext highlighter-rouge">$ \partial_{\pi_0} \log p(w|\tau )$</code>, we fix <code class="language-plaintext highlighter-rouge">$\pi_1$</code> and allow <code class="language-plaintext highlighter-rouge">$\pi_0$</code> to change.
+However, given that <code class="language-plaintext highlighter-rouge">$\pi_1$</code> is fixed and <code class="language-plaintext highlighter-rouge">$ \pi_0 $</code> is fully determined by <code class="language-plaintext highlighter-rouge">$\pi_1$</code> due to the equality constraint <code class="language-plaintext highlighter-rouge">$ \pi_0+\pi_1=1 $</code>. 
+Therefore, <code class="language-plaintext highlighter-rouge">$  \partial_{\pi_0} \log p(w|\tau ) $</code> is not well-defined.
+In other words, the above Fisher matrix computation is not correct since <code class="language-plaintext highlighter-rouge">$ \nabla_{\tau} \log p(w|\tau ) $</code> does not exist.</p>
+      </fieldset>
+</details>
+  </div>
+</blockquote>
+
+<blockquote>
+  <p>Example 2  (Singular FIM):</p>
+
+  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \frac{\pi_0}{\pi_0+\pi_1} + \mathcal{I}(w=1) \frac{\pi_1}{\pi_0+\pi_1} \Big| \pi_0&gt;0, \pi_1&gt;0  \}$</code> with  non-intrinsic parameter <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1) $</code>.</p>
+
+  <p>Note that a Bernoulli distribution in the family is not uniquely represented by this parametrization. It is obvious to
+see that $\tau_1 = (1,1)$ and $\tau_2=(2,2)$ both represent the same Bernoulli distribution.</p>
+
+  <p>The FIM under this  parameterization is singular as shown below.</p>
+
+  <p>Let <code class="language-plaintext highlighter-rouge">$  p(w|\tau ) =  \mathcal{I}(w=0)  \frac{\pi_0}{\pi_0+\pi_1}+ \mathcal{I}(w=1)  \frac{\pi_1}{\pi_0+\pi_1}$</code>, where <code class="language-plaintext highlighter-rouge">$\tau = (\pi_0,\pi_1)$</code>. The derivative is</p>
+
+  <p><code class="language-plaintext highlighter-rouge">$$ 
+\begin{aligned}
+\nabla_{\tau} \log p(w|\tau ) = \frac{ \mathcal{I}(w=0) - \mathcal{I}(w=1)  }{p(w|\tau )} [\frac{\pi_1}{(\pi_0+\pi_1)^2} , \frac{-\pi_0}{(\pi_0+\pi_1)^2}]^T 
+\end{aligned}
+$$</code></p>
+
+  <p>Thus, the FIM under this  parameterization is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned} 
+F(\tau) = E_{p(w|\tau) } [ \frac{( \mathcal{I}(w=0) - \mathcal{I}(w=1))^2 }{p^2(w|\tau)} \begin{bmatrix} \frac{\pi_1^2}{(\pi_0+\pi_1)^4}  &amp; \frac{-\pi_0 \pi_1}{(\pi_0+\pi_1)^4} \\ \frac{-\pi_0 \pi_1}{(\pi_0+\pi_1)^4}  &amp;  \frac{\pi_0^2}{(\pi_0+\pi_1)^4} \end{bmatrix} ]   =\frac{1}{(\pi_0+\pi_1)^2} \begin{bmatrix} \frac{\pi_1}{\pi_0} &amp;  -1 \\ -1 &amp;  \frac{\pi_0}{\pi_1} \end{bmatrix}
+\end{aligned}
+$$</code>
+where this FIM is singular since the matrix determinant is zero as shown below. <code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{det}\big( \begin{bmatrix} \frac{\pi_1}{\pi_0} &amp;  -1 \\ -1 &amp;  \frac{\pi_0}{\pi_1} \end{bmatrix}\big) = 0.
+\end{aligned}
+$$</code></p>
+</blockquote>
+
+<p>Now, we give an example to show that the FIM of a Bernoulli family can be non-singular when we use an intrinsic parameterization.</p>
+
+<blockquote>
+  <p>Example 3  (Non-singular FIM):</p>
+
+  <p>Consider Bernoulli family <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi)  \Big| 0&lt;\pi&lt;1 \}$</code> with  <strong>intrinsic</strong> parameter <code class="language-plaintext highlighter-rouge">$\tau = \pi $</code>.</p>
+
+  <p>The FIM under this parameterization is non-singular as shown below.</p>
+
+  <p>Let <code class="language-plaintext highlighter-rouge">$  p(w|\tau ) =  \mathcal{I}(w=0) \pi+ \mathcal{I}(w=1) (1-\pi)$</code>, where <code class="language-plaintext highlighter-rouge">$\tau = \pi$</code>. The derivative is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned} \nabla_{\tau} \log p(w|\tau ) = \frac{\mathcal{I}(w=0) - \mathcal{I}(w=1)}{ \mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) }  \end{aligned}
+$$</code></p>
+
+  <p>Thus, the FIM under this  parameterization is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+F(\tau) &amp;= E_{p(w|\tau) } [ \frac{ (\mathcal{I}(w=0) - \mathcal{I}(w=1) )^2 }{ (\mathcal{I}(w=0) \pi + \mathcal{I}(w=1) (1-\pi) )^2 }  ]\\
+&amp; = \pi \frac{1^2}{ \pi^2} + (1-\pi) \frac{(-1)^2}{(1-\pi)^2} \\
+&amp;= \frac{1}{\pi } + \frac{1}{1-\pi} = \frac{1}{\pi(1-\pi)}&gt; 0
+\end{aligned}
+$$</code></p>
+
+</blockquote>
+
+<h1 id="dimensionality-of-a-manifold">Dimensionality of a manifold</h1>
+<hr>
 <p>We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
-Mathematically speaking, we can show that any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#tu2011introduction">[12]</a>.
+Due to the theorem of <a href="https://ncatlab.org/nlab/show/topological+invariance+of+dimension">toplological invariance of dimension</a>, any intrinsic parametrization of a manifold has the same degrees of freedom <a class="citation" href="#tu2011introduction">[12]</a>.
 This also gives us a tool to  identify non-manifold cases.
 We now illustrate this by examples.</p>
 
@@ -547,8 +643,7 @@ The  circle and the open unit ball do not have the same dimensionality.</p>
 
 <p>For statistical  manifolds, 
  consider the following examples. We will discuss more about them in 
- <!--[Part II]({ post_url 2021-10-04-Geomopt02 }#riemannian-steepest-direction).-->
- Part II.</p>
+ <a href="/posts/2021/10/Geomopt02/#riemannian-steepest-direction">Part II</a>.</p>
 
 <table>
   <thead>
@@ -735,6 +830,90 @@ $$</code></p>
     
     <h2 class="archive__item-title" itemprop="headline">
       
+        <a href="/posts/2021/12/Geomopt06/" rel="permalink">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (Part VI is incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/12/Geomopt05/" rel="permalink">Part V: Efficient Natural-gradient Methods for Exponential Family
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/11/Geomopt04/" rel="permalink">Part IV: Natural and Riemannian  Gradient Descent
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
         <a href="/posts/2021/11/Geomopt03/" rel="permalink">Part III: Invariance of Natural-Gradients
 </a>
       
@@ -745,70 +924,15 @@ $$</code></p>
 
 
 
-  12 minute read
+  13 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Goal
-This blog post focuses on the invariance of natural-gradients.
+This blog post focuses on invariant properties of natural-gradients.
 We will discuss
 
-  transformation rules related to natural-gradients and the computation ...</p>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/posts/2021/10/Geomopt02/" rel="permalink">Part II: Derivation of Natural-gradients
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  16 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">Goal
-This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the f...</p>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/posts/2021/07/ICML/" rel="permalink">Structured Natural Gradient Descent (ICML 2021)
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
-
-
-
-
-  12 minute read
-</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">More about this work [1]: (Youtube) talk, extended paper, short paper,
-poster
-
-</p>
+  transformation rules of natural-gradients,
+  the automatic compu...</p>
   </article>
 </div>
         

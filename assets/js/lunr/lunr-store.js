@@ -45,9 +45,24 @@ var store = [{
         "url": "/posts/2021/10/Geomopt02/",
         "teaser":null},{
         "title": "Part III: Invariance of Natural-Gradients",
-        "excerpt":"Goal This blog post focuses on the invariance of natural-gradients.We will discuss transformation rules related to natural-gradients and the computation via Automatic Differentiation. the non-invariance of the Euclidean counterpart. The discussion here is informal and focuses more on intuitions, rather than rigor. Click to see how to cite this blog...","categories": [],
+        "excerpt":"Goal This blog post focuses on invariant properties of natural-gradients.We will discuss transformation rules of natural-gradients, the automatic computation of re-parametrized natural-gradients via the transformation rules, non-invariance of the Euclidean counterpart.The discussion here is informal and focuses more on intuitions, rather than rigor. Click to see how to cite this...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/11/Geomopt03/",
+        "teaser":null},{
+        "title": "Part IV: Natural and Riemannian  Gradient Descent",
+        "excerpt":"Warning: working in Progress (incomplete) Goal This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.We also discuss some invariance property of natural-gradient descent, Riemannian gradient descent, and Newton’s method. We will give an informal introduction with a focus on high level of ideas. Click to...","categories": [],
+        "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
+        "url": "/posts/2021/11/Geomopt04/",
+        "teaser":null},{
+        "title": "Part V: Efficient Natural-gradient Methods for Exponential Family",
+        "excerpt":"Warning: working in Progress (incomplete) Goal This blog post should show that we can efficiently implement natural-gradient methods in many cases. We will give an informal introduction with a focus on high level of ideas. Click to see how to cite this blog post @misc{lin2021NGDblog05, title = {Introduction to Natural-gradient...","categories": [],
+        "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold","Exponential Family"],
+        "url": "/posts/2021/12/Geomopt05/",
+        "teaser":null},{
+        "title": "Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods",
+        "excerpt":"Warning: working in Progress (Part VI is incomplete) Goal In this blog post, we discuss about how to handle parameter constraints of exponential family. Click to see how to cite this blog post @misc{lin2021NGDblog06, title = {Introduction to Natural-gradient Descent: Part VI}, author = {Lin, Wu and Nielsen, Frank and...","categories": [],
+        "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold","Exponential Family"],
+        "url": "/posts/2021/12/Geomopt06/",
         "teaser":null},{
         "title": "Paper Title Number 1",
         "excerpt":"This paper is about the number 1. The number 2 is left for future work. Download paper here Recommended citation: Your Name, You. (2009). “Paper Title Number 1.” Journal 1. 1(1). ","categories": [],

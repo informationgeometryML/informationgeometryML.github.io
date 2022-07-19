@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.12.0 by Michael Rose
+  Copyright 2013-2018 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE.txt
+--><html lang="en" class="no-js">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods - Information Geometry in Machine Learning</title>
+<meta name="description" content="Warning: working in Progress (Part VI is incomplete)">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Information Geometry in Machine Learning">
+<meta property="og:title" content="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods">
+<meta property="og:url" content="/posts/2021/12/Geomopt06/">
+
+
+  <meta property="og:description" content="Warning: working in Progress (Part VI is incomplete)">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-12-22T00:00:00-08:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="/posts/2021/12/Geomopt06/">
+
+
+
+
+
+
+
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "Person",
+      "name": "Information Geometry in ML",
+      "url": "https://github.com/pages/informationgeometryML/informationgeometryML.github.io",
+      "sameAs": null
+    }
+  </script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Information Geometry in Machine Learning Feed">
+
+<!-- http://t.co/dKP3o1e -->
+<meta name="HandheldFriendly" content="True">
+<meta name="MobileOptimized" content="320">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if lte IE 9]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
+
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single mywide">
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    <div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        <a class="site-title" href="/">Information Geometry in Machine Learning</a>
+        <ul class="visible-links">
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/news/">News</a>
+            </li>
+          
+            
+            <li class="masthead__menu-item">
+              <a href="/year-archive/">Blog Posts</a>
+            </li>
+          
+        </ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+
+  <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods">
+    <meta itemprop="description" content="Warning: working in Progress (Part VI is incomplete)">
+    <meta itemprop="datePublished" content="December 22, 2021">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods
+</h1>
+          
+            <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  5 minute read
+</p>
+          
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Warning: working in Progress (Part VI is incomplete)</p>
+
+<h2 id="goal">Goal</h2>
+<p>In this blog post, we discuss about how to handle parameter constraints of exponential family.</p>
+
+<div class="notice--info">
+  <details>
+<summary>Click to see how to cite this blog post</summary>
+<fieldset class="field-set">
+
+      <div class="language-latex highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>@misc<span class="p">{</span>lin2021NGDblog06,
+  title = <span class="p">{</span>Introduction to Natural-gradient Descent: Part VI<span class="p">}</span>,
+  author = <span class="p">{</span>Lin, Wu and Nielsen, Frank and Khan, Mohammad Emtiyaz and Schmidt, Mark<span class="p">}</span>,
+  url = <span class="p">{</span>https://informationgeometryml.github.io/year-archive/<span class="p">}</span>, 
+  howpublished = <span class="p">{</span><span class="k">\url</span><span class="p">{</span>https://informationgeometryml.github.io/posts/2021/12/Geomopt06/<span class="p">}}</span>,
+  year = <span class="p">{</span>2021<span class="p">}</span>,
+  note = <span class="p">{</span>Accessed: 2021-12-22<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>      </div>
+    </fieldset>
+</details>
+</div>
+
+<h1 id="handling-parameter-constraints">Handling Parameter Constraints</h1>
+<hr>
+
+<p>Recall that  in Part IV, we discuss 
+<a href="/posts/2021/11/Geomopt04/#many-faces-of-natural-gradient-descent">the many faces of NGD</a> in unconstrained cases.  These methods could also be exteneded in constrained cases to handle the parameter constraint.</p>
+
+<p>Given a natural parameterization <code class="language-plaintext highlighter-rouge">$\eta$</code> with parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, consider the following problem
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{\eta \in \Omega_\eta} \ell_\eta(\mathbf{\eta}) = E_{p(w|\eta)} [h(w) + \log p(w|\eta)]
+\end{aligned}
+$$</code></p>
+
+<p>We could also consider the reparameterized problem by using the expectation parameter <code class="language-plaintext highlighter-rouge">$\mathbf{m}$</code>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\min_{m \in \Omega_m} \ell_m(\mathbf{m}) = E_{p(w| \eta(m) )} [h(w) + \log p(w|\eta(\mathbf{m}))] = \ell_\eta(\eta(\mathbf{m}))
+\end{aligned}
+$$</code></p>
+
+<div class="notice--success">
+  <p><strong>Note</strong>:</p>
+
+  <ul>
+    <li>
+      <p>Recall that updates in <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> and <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code> are
+equivalent in exponential family cases even when <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> is constrained as long as <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is unconstrained.</p>
+    </li>
+    <li>
+      <p>When <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is constrained, updates in  <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>, <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>, and <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> are <strong>distinct</strong> methods.</p>
+    </li>
+    <li>
+      <p>Since both <code class="language-plaintext highlighter-rouge">$\Omega_m$</code> and <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>  can be arbitrary open subsets in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code> in general,  <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code>, <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code>, <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>, and <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> can be difficult to solve.</p>
+    </li>
+  </ul>
+</div>
+
+<h2 id="unconstrained-reparametrization">Unconstrained Reparametrization</h2>
+<p>A straightforward approach to handle a constraint is via an unconstrained reparametrization, where we use the
+transformation rule for natural-gradients as discussed in 
+ <a href="/posts/2021/11/Geomopt03/">Part III</a>.</p>
+
+<p>However, we have to compute the Jacobian matrix used the transformation rule.
+It could be possible to use Auto-Diff to compute (implicit) natural-gradients as suggested by
+ <a class="citation" href="#salimbeni2018natural">[1]</a>.
+ However, an unconstrained reparametrization can easily destroy structures in a parameter space due to the
+(Jacobian) matrix product.
+ Moreover, it is often difficult for Auto-Diff to exploit sparsity such as automatically using a sparse linear solver. Please see Appendix G.1 of <a class="citation" href="#lin2021tractable">[2]</a> for detailed discussion about this issue.</p>
+
+<h2 id="projected-natural-gradient-descent">Projected Natural Gradient Descent</h2>
+<p>Another straightforward approach from natural-gradient descent is the projected natural-gradient descent, where we  use 
+the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta_k)$</code> evaluted at <code class="language-plaintext highlighter-rouge">$\eta_k$</code> as a projection metric and use the <a href="/posts/2021/10/Geomopt02/%0A#distance-induced-by-the-fisher-rao-metric">weighted inner product</a> to measure the distance for the projection.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+&amp; \eta_{k+1}  \leftarrow  \arg\min_{ \color{red} {y} \in \Omega_\eta} \| \color{red} {\mathbf{y}} - \eta_k + \alpha
+\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k) \|^2_{ \color{green}{ \mathbf{F}_\eta(\eta_k)} }\\
+=&amp; \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
+\big]^T \mathbf{F}_{\eta}(\eta_k) \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
+\big]\\
+=&amp; \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta \ell_\eta(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T \ell_\eta(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta \ell_\eta(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
+=&amp; \arg\min_{\color{red}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{red}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
+\end{aligned}\tag{1}\label{1}
+$$</code></p>
+
+<p>This approach is closely related to proximial-gradient descent.
+Recall that in
+<a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-unconstrained-proximal-gradient-descent">Part IV</a>,
+we show that natural-gradient descent can be viewed as an  proximal-gradient method, where we use the
+second-order Taylor  approximation of any f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)$</code> at <code class="language-plaintext highlighter-rouge">$y=\eta_k$</code>:</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{D}_f(\mathbf{y},\eta_k) \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
+\end{aligned}
+$$</code></p>
+
+<h2 id="proximal-gradient-descent">Proximal Gradient Descent</h2>
+
+<p>We could also obtain proximal gradient descent by using a f-divergence <code class="language-plaintext highlighter-rouge">$\mathrm{D}_f(\mathbf{y},\eta_k)$</code> without the Taylor approximation.</p>
+
+<p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\eta_{k+1} \leftarrow \arg\min_{\color{red}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{red}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \mathrm{D}_f(\color{red}{ \mathbf{y}},\eta_k)  \} 
+\end{aligned}\tag{2}\label{2}
+$$</code></p>
+
+<p>We have the following additional results, when the f-divergence is chosen to be a KL divergence.</p>
+
+<ul>
+  <li>
+    <p>The KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})]=\mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k)=\mathrm{B}_{A_\eta}(\eta_k,\color{red}{\mathbf{y}})$</code> is a f-divergence and a Bregman divergence. The
+second-order Taylor approximation   at 
+ <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> is
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
+\end{aligned}
+$$</code></p>
+  </li>
+  <li>
+    <p>The second-order Taylor approximation  of the <strong>reverse</strong> KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\color{red} {\mathbf{y}} ) || p(\mathbf{w}|\eta_k)]$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> gives the same approximation:
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{KL} [p(\mathbf{w}|\color{red}{\mathbf{y}}) || p(\mathbf{w}|\eta_k)] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
+\end{aligned}
+$$</code></p>
+  </li>
+</ul>
+
+<div class="notice--success">
+  <p><strong>Note</strong>:</p>
+
+  <p>The KL divergence is the only divergence <a class="citation" href="#amari2016information">[3]</a> that is both a  f-divergence and a Bregman divergence.</p>
+
+  <p>We have the following identity for the KL divergence.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})] = 
+\mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k) = \mathrm{B}_{A_\eta}(\eta_k,\color{red}{\mathbf{y}}) =  \mathrm{B}_{A^*_\eta}(\color{red}{\mathbf{x}},\mathbf{m}_k)
+= \mathrm{KL} [p(\mathbf{w}|\mathbf{m}_k) || p(\mathbf{w}|\color{red}{\mathbf{x}})] 
+\end{aligned}
+$$</code>  where <code class="language-plaintext highlighter-rouge">$\mathbf{y}$</code> is a natural parameter and <code class="language-plaintext highlighter-rouge">$\mathbf{x}$</code> is the corresponding expectation parameter.</p>
+</div>
+
+<h2 id="mirror-descent">Mirror Descent</h2>
+<p>Mirror descent in the expectation space remains the same as in <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-mirror-descent">Part V</a>.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{red} {x} \in \Omega_m}\{ \langle \nabla_m \ell_m(\mathbf{m}_k), \color{red}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{red}{\mathbf{x}},\mathbf{m}_k) \}
+\end{aligned}\tag{3}\label{3}
+$$</code>
+where 
+<code class="language-plaintext highlighter-rouge">$\nabla_m \ell_m(\mathbf{m}_k) = \nabla_m \ell_\eta( \underbrace{ \eta(\mathbf{m}_k)}_{=\eta_k} )=  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)$</code>.</p>
+
+<p>We could also perform  mirror descent in the natural parameter space as
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{red}{y} \in \Omega_\eta}\{ \langle \nabla_\eta \ell_\eta(\mathbf{\eta}_k), \color{red}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{red}{\mathbf{y}},\mathbf{\eta}_k) \}
+\end{aligned}\tag{4}\label{4}
+$$</code></p>
+
+<div class="notice--success">
+  <p><strong>Note</strong>:</p>
+
+  <p>Without the Taylor approximation,  <code class="language-plaintext highlighter-rouge">$\eqref{2}$</code> and  <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> are distinct updates since the KL divergence is not symmetric.</p>
+</div>
+
+<h2 id="adaptive-step-size-selection">Adaptive Step-size Selection</h2>
+<p>Since <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code> is an open set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, the standard natural-gradient descent is still valid when a step-size is small enough.</p>
+
+<p>One idea is to use an adaptive step-size for natural-gradient descent without a projection.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\eta_{k+1} \leftarrow \eta_k - \alpha_k \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
+\end{aligned}\tag{5}\label{5}
+$$</code> where  the step-size <code class="language-plaintext highlighter-rouge">$\alpha_k$</code> is selected  so that
+<code class="language-plaintext highlighter-rouge">$\eta_{k+1} \in \Omega_\eta$</code>.</p>
+
+<p>However, for a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, this approach could result in a slow progression of the method.
+The step-size selection precedure has to  check the constraint at each iteration and could select an extremely small step-size
+<code class="language-plaintext highlighter-rouge">$\alpha_k$</code>.</p>
+
+<h2 id="riemannian-gradient-descent">Riemannian Gradient Descent</h2>
+
+<p>An alternative approach is to use Riemannian gradient descent as we discussed in 
+<a href="/posts/2021/11/Geomopt04/#riemannian-gradient-descent-and-its-non-linear-invariance">Part IV</a>, which is a generalization of natural-gradient descent. 
+Note that this approach is completely different from mirror descent.</p>
+
+<p>To avoid solving the geodeisc ODE, we could use an approximation of the geodesic, which
+induces a retraction map.
+<code class="language-plaintext highlighter-rouge">$$
+\begin{aligned}
+\eta_{k+1} \leftarrow \mathrm{Ret}_{\eta_k} (- \alpha  \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k) )  
+\end{aligned}\tag{6}\label{6}
+$$</code></p>
+
+<p>As mentioned in 
+<a href="/posts/2021/11/Geomopt04/#natural-gradient-descent-as-inexact-riemannian-gradient-descent">Part IV</a>,
+we have to carefully select a retraction map to handle the parameter constraint.
+Given 
+a general parameter constraint <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, it can be difficult to come out an efficient retraction map to satisfy
+the constraint.</p>
+
+<p>For positive-definite constraints in <code class="language-plaintext highlighter-rouge">$\Omega_\eta$</code>, please see <a class="citation" href="#lin2020handling">[4]</a> as an example to derive efficient Riemannian gradient updates.</p>
+
+<hr>
+<h1 id="references">References</h1>
+<p class="bibliography"></p>
+<p><span id="salimbeni2018natural">[1] H. Salimbeni, S. Eleftheriadis, &amp; J. Hensman, "Natural gradients in practice: Non-conjugate variational inference in Gaussian process models," <i>International Conference on Artificial Intelligence and Statistics</i> (PMLR, 2018), pp. 689–697.</span></p>
+<p><span id="lin2021tractable">[2] W. Lin, F. Nielsen, M. E. Khan, &amp; M. Schmidt, "Tractable structured natural gradient descent using local parameterizations," <i>International Conference on Machine Learning (ICML)</i> (2021).</span></p>
+<p><span id="amari2016information">[3] S.-ichi Amari, <i>Information geometry and its applications</i> (Springer, 2016).</span></p>
+<p><span id="lin2020handling">[4] W. Lin, M. Schmidt, &amp; M. E. Khan, "Handling the positive-definite constraint in the bayesian learning rule," <i>International Conference on Machine Learning</i> (PMLR, 2020), pp. 6116–6126.</span></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#exponential-family" class="page__taxonomy-item" rel="tag">Exponential Family</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#information-geometry" class="page__taxonomy-item" rel="tag">Information Geometry</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#natural-gradient-descent" class="page__taxonomy-item" rel="tag">Natural Gradient Descent</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#riemannian-manifold" class="page__taxonomy-item" rel="tag">Riemannian Manifold</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-12-22T00:00:00-08:00">December 22, 2021</time></p>
+        
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title" data-translate="share_on_label">Share on</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Part+VI%3A+Handling+Parameter+Constraints+of+Exponential+Family+In+Natural-gradient+Methods%20informationgeometryML.github.io%2Fposts%2F2021%2F12%2FGeomopt06%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=informationgeometryML.github.io%2Fposts%2F2021%2F12%2FGeomopt06%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=informationgeometryML.github.io%2Fposts%2F2021%2F12%2FGeomopt06%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+
+
+
+     
+
+  <script src="https://utteranc.es/client.js" repo="informationgeometryML/informationgeometryML.github.io" issue-term="url" label="blog-comments" theme="github-light" crossorigin="anonymous" async>
+  </script>
+
+
+
+
+
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/posts/2021/12/Geomopt05/" class="pagination--pager" title="Part V: Efficient Natural-gradient Methods for Exponential Family
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You may also enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/12/Geomopt05/" rel="permalink">Part V: Efficient Natural-gradient Methods for Exponential Family
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  18 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/11/Geomopt04/" rel="permalink">Part IV: Natural and Riemannian  Gradient Descent
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  19 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Warning: working in Progress (incomplete)
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/11/Geomopt03/" rel="permalink">Part III: Invariance of Natural-Gradients
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  12 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post focuses on invariant properties of natural-gradients.
+We will discuss
+
+  transformation rules of natural-gradients,
+  the automatic compu...</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="http://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/posts/2021/10/Geomopt02/" rel="permalink">Part II: Derivation of Natural-gradients
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  15 minute read
+</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the f...</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+
+    <div class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>Follow</strong></li>
+    
+    
+    
+    
+      <li><a href="https://github.com/informationgeometryML"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+    
+    
+    
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">© 2022 Information Geometry in ML. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    <script src="/assets/js/custom.js"></script>
+  
+    <script src="/assets/js/translations.js"></script>
+  
+    <script src="/assets/js/math-code.js"></script>
+  
+
+
+
+  </body>
+</html>
