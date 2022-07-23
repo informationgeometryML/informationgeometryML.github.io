@@ -143,7 +143,6 @@ author:
 
 after_footer_scripts:
   - /assets/js/custom.js
-  - /assets/js/translations.js
   - /assets/js/math-code.js
 
 # Reading Files
