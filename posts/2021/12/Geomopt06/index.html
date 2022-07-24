@@ -280,13 +280,13 @@ the FIM <code class="language-plaintext highlighter-rouge">$\mathbf{F}_\eta(\eta
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-&amp; \eta_{k+1}  \leftarrow  \arg\min_{ \color{red} {y} \in \Omega_\eta} \| \color{red} {\mathbf{y}} - \eta_k + \alpha
+&amp; \eta_{k+1}  \leftarrow  \arg\min_{ {\color{red} y} \in \Omega_\eta} \| {\color{red} \mathbf{y}} - \eta_k + \alpha
 \mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k) \|^2_{ \color{green}{ \mathbf{F}_\eta(\eta_k)} }\\
 =&amp; \arg\min_{ y \in \Omega_\eta} \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
 \big]^T \mathbf{F}_{\eta}(\eta_k) \big[ (\mathbf{y}-\eta_k) + \alpha\mathbf{F}_\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)
 \big]\\
 =&amp; \arg\min_{ y \in \Omega_\eta} 2\alpha \big[ \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) + (\mathbf{y}-\eta_k)^T  \nabla_\eta \ell_\eta(\eta_k) + \underbrace{ \frac{\alpha}{2} \nabla_\eta^T \ell_\eta(\eta_k) \mathbf{F}^{-1}_\eta(\eta_k) \nabla_\eta \ell_\eta(\eta_k)}_{\text{constant w.r.t. } y} \big] \\
-=&amp; \arg\min_{\color{red}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{red}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
+=&amp; \arg\min_{ {\color{red}y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),{\color{red}\mathbf{y}}-\eta_k \rangle   + \frac{1}{2\alpha} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k) \} 
 \end{aligned}\tag{1}\label{1}
 $$</code></p>
 
@@ -308,7 +308,7 @@ $$</code></p>
 
 <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\eta_{k+1} \leftarrow \arg\min_{\color{red}{y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),\color{red}{\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \mathrm{D}_f(\color{red}{ \mathbf{y}},\eta_k)  \} 
+\eta_{k+1} \leftarrow \arg\min_{ {\color{red}y} \in  \Omega_\eta  } \{ \langle \nabla_\eta \ell_\eta(\eta_k),{\color{red}\mathbf{y}}-\eta_k \rangle   + \frac{1}{\alpha} \mathrm{D}_f( {\color{red} \mathbf{y}},\eta_k)  \} 
 \end{aligned}\tag{2}\label{2}
 $$</code></p>
 
@@ -316,20 +316,20 @@ $$</code></p>
 
 <ul>
   <li>
-    <p>The KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})]=\mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k)=\mathrm{B}_{A_\eta}(\eta_k,\color{red}{\mathbf{y}})$</code> is a f-divergence and a Bregman divergence. The
+    <p>The KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|{\color{red}\mathbf{y}})]=\mathrm{D}_f({\color{red}\mathbf{y}},\eta_k)=\mathrm{B}_{A_\eta}(\eta_k,{\color{red}\mathbf{y}})$</code> is a f-divergence and a Bregman divergence. The
 second-order Taylor approximation   at 
  <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> is
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
+\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|{\color{red}\mathbf{y}})] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
 \end{aligned}
 $$</code></p>
   </li>
   <li>
-    <p>The second-order Taylor approximation  of the <strong>reverse</strong> KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|\color{red} {\mathbf{y}} ) || p(\mathbf{w}|\eta_k)]$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> gives the same approximation:
+    <p>The second-order Taylor approximation  of the <strong>reverse</strong> KL divergence <code class="language-plaintext highlighter-rouge">$\mathrm{KL} [p(\mathbf{w}|{ \color{red} \mathbf{y}} ) || p(\mathbf{w}|\eta_k)]$</code> at <code class="language-plaintext highlighter-rouge">$\mathbf{y}=\eta_k$</code> gives the same approximation:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathrm{KL} [p(\mathbf{w}|\color{red}{\mathbf{y}}) || p(\mathbf{w}|\eta_k)] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
+\mathrm{KL} [p(\mathbf{w}|{\color{red}\mathbf{y}}) || p(\mathbf{w}|\eta_k)] \approx \frac{1}{2} (\mathbf{y}-\eta_k)^T \mathbf{F}_{\eta}(\eta_k) (\mathbf{y}-\eta_k)
 \end{aligned}
 $$</code></p>
   </li>
@@ -343,9 +343,9 @@ $$</code></p>
   <p>We have the following identity for the KL divergence.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|\color{red}{\mathbf{y}})] = 
-\mathrm{D}_f(\color{red}{\mathbf{y}},\eta_k) = \mathrm{B}_{A_\eta}(\eta_k,\color{red}{\mathbf{y}}) =  \mathrm{B}_{A^*_\eta}(\color{red}{\mathbf{x}},\mathbf{m}_k)
-= \mathrm{KL} [p(\mathbf{w}|\mathbf{m}_k) || p(\mathbf{w}|\color{red}{\mathbf{x}})] 
+\mathrm{KL} [p(\mathbf{w}|\eta_k) || p(\mathbf{w}|{\color{red}\mathbf{y}})] = 
+\mathrm{D}_f({\color{red}\mathbf{y}},\eta_k) = \mathrm{B}_{A_\eta}(\eta_k,{\color{red}\mathbf{y}}) =  \mathrm{B}_{A^*_\eta}({\color{red}\mathbf{x}},\mathbf{m}_k)
+= \mathrm{KL} [p(\mathbf{w}|\mathbf{m}_k) || p(\mathbf{w}|{\color{red}\mathbf{x}})] 
 \end{aligned}
 $$</code>  where <code class="language-plaintext highlighter-rouge">$\mathbf{y}$</code> is a natural parameter and <code class="language-plaintext highlighter-rouge">$\mathbf{x}$</code> is the corresponding expectation parameter.</p>
 </div>
@@ -354,7 +354,7 @@ $$</code>  where <code class="language-plaintext highlighter-rouge">$\mathbf{y}$
 <p>Mirror descent in the expectation space remains the same as in <a href="/posts/2021/12/Geomopt05/#natural-gradient-descent-as-mirror-descent">Part V</a>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{m}_{k+1} \leftarrow \arg \min_{ \color{red} {x} \in \Omega_m}\{ \langle \nabla_m \ell_m(\mathbf{m}_k), \color{red}{\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}(\color{red}{\mathbf{x}},\mathbf{m}_k) \}
+\mathbf{m}_{k+1} \leftarrow \arg \min_{ {\color{red} x} \in \Omega_m}\{ \langle \nabla_m \ell_m(\mathbf{m}_k), {\color{red}\mathbf{x}}-\mathbf{m}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A^*_\eta}({\color{red}\mathbf{x}},\mathbf{m}_k) \}
 \end{aligned}\tag{3}\label{3}
 $$</code>
 where 
@@ -363,7 +363,7 @@ where
 <p>We could also perform  mirror descent in the natural parameter space as
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathbf{\eta}_{k+1} \leftarrow \arg \min_{\color{red}{y} \in \Omega_\eta}\{ \langle \nabla_\eta \ell_\eta(\mathbf{\eta}_k), \color{red}{\mathbf{y}}-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}(\color{red}{\mathbf{y}},\mathbf{\eta}_k) \}
+\mathbf{\eta}_{k+1} \leftarrow \arg \min_{  {\color{red}y} \in \Omega_\eta}\{ \langle \nabla_\eta \ell_\eta(\mathbf{\eta}_k), { \color{red}\mathbf{y} }-\mathbf{\eta}_k  \rangle + \frac{1}{\alpha}  \mathrm{B}_{A_\eta}( { \color{red}\mathbf{y} },\mathbf{\eta}_k) \}
 \end{aligned}\tag{4}\label{4}
 $$</code></p>
 
