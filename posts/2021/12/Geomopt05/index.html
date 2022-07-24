@@ -473,7 +473,7 @@ We define a new map <code class="language-plaintext highlighter-rouge">$\mathrm{
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 p({w}|\mathbf{\eta})
-&amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2} \color{red}{\mathrm{vech}}( \Sigma^{-1} ) \\ \Sigma^{-1}\mu  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix}  \color{red}{\mathrm{vec2h}}( \mathrm{w}\mathbf{w}^T )   ) \\ \mathbf{w}  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ d\log ( 2\pi ) + \log \mathrm{det} (\Sigma) + \mu^T \Sigma^{-1} \mu ]     )   \\
+&amp;= \underbrace{ \exp(0) }_{  h_\eta({w}) }  \exp( \langle \underbrace{\begin{bmatrix} -\frac{1}{2} {\color{red}\mathrm{vech}}( \Sigma^{-1} ) \\ \Sigma^{-1}\mu  \end{bmatrix}}_{\mathbf{\eta} }  ,  \underbrace{\begin{bmatrix}  {\color{red}\mathrm{vec2h} }( \mathrm{w}\mathbf{w}^T )   ) \\ \mathbf{w}  \end{bmatrix}}_{ \mathbf{T}_\eta ({w}) } \rangle  -   \frac{1}{2} [ d\log ( 2\pi ) + \log \mathrm{det} (\Sigma) + \mu^T \Sigma^{-1} \mu ]     )   \\
 \end{aligned}
 $$</code> where  <code class="language-plaintext highlighter-rouge">$\eta$</code> is a $(d+\frac{d(d+1)}{2})$-dim array.
 It can be shown that $\Omega_\eta$ is open in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K=d+\frac{d(d+1)}{2}$</code>.</p>
@@ -686,12 +686,12 @@ $$</code></p>
 <p>In particular, the Kullback–Leibler (KL) divergence is a Bregman divergence under natural parametrization <code class="language-plaintext highlighter-rouge">$\eta$</code>:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\, &amp; \,\mathrm{KL} [p(\mathbf{w}| \eta_1 ) || p(\mathbf{w}|\color{red}{\eta_2})]\\
+\, &amp; \,\mathrm{KL} [p(\mathbf{w}| \eta_1 ) || p(\mathbf{w}|{\color{red}\eta_2})]\\
 =&amp; \,E_{p(w|\eta_1)} [ \log \frac{p(\mathbf{w}|\eta_1)} {p(\mathbf{w}|\eta_2)} ] \\
 =&amp; \,E_{p(w|\eta_1)} [  \langle \eta_1-\eta_2 , \mathbf{T}_\eta (\mathbf{w}) \rangle - A_\eta(\eta_1) + A_\eta(\eta_2) ] &amp; ( p(\mathbf{w}|\eta) \text{ is an exponential family}) \\
 =&amp; \,A_\eta(\eta_2) - A_\eta(\eta_1) - E_{p(w|\eta_1)} [  \langle \eta_2-\eta_1,  \mathbf{T}_\eta (\mathbf{w}) \rangle ] \\
 =&amp; \,A_\eta(\eta_2) - A_\eta(\eta_1) - \langle \eta_2-\eta_1, \underbrace{ E_{p(w|\eta_1)} [ \mathbf{T}_\eta (\mathbf{w}) ] }_{ \nabla_\eta A_\eta(\eta_1) }  \rangle    \\
-=&amp; \, \mathrm{B}_{A_\eta}(\color{red} {\mathbf{\eta}_2},  \mathbf{\eta}_1 ) &amp; ( A_\eta(\eta) \text{ is strictly convex})
+=&amp; \, \mathrm{B}_{A_\eta}( {\color{red} \mathbf{\eta}_2},  \mathbf{\eta}_1 ) &amp; ( A_\eta(\eta) \text{ is strictly convex})
 \end{aligned}
 $$</code></p>
 
@@ -759,14 +759,14 @@ the FIM under expectation parameter <code class="language-plaintext highlighter-
 <p>Moreover, we have the following identity since by <code class="language-plaintext highlighter-rouge">$\eqref{5}$</code>, <code class="language-plaintext highlighter-rouge">$A_\eta(\eta)=\langle \mathbf{\eta},\mathbf{m} \rangle- A^*_\eta( \mathbf{m}) $</code>.
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\mathrm{B}_{A_\eta}(\mathbf{\eta}_2, \color{red}{\mathbf{\eta}_1 })
+\mathrm{B}_{A_\eta}(\mathbf{\eta}_2, {\color{red}\mathbf{\eta}_1 })
 &amp;= A_\eta(\eta_2) - A_\eta(\eta_1) - \langle \eta_2-\eta_1, \overbrace{ \nabla_\eta A_\eta(\eta_1) }^{= \mathbf{m}_1} \rangle    \\
 &amp;= [  \langle \mathbf{\eta}_2,\mathbf{m}_2 \rangle- A^*_\eta( \mathbf{m}_2) ]   
 -[  \langle \mathbf{\eta}_1,\mathbf{m}_1 \rangle- A^*_\eta( \mathbf{m}_1) ]
 -\langle \eta_2-\eta_1, \mathbf{m}_1 \rangle \\
 &amp;=  A^*_\eta( \mathbf{m}_1) - A^*_\eta( \mathbf{m}_2) -    
 \langle \mathbf{m}_1-\mathbf{m}_2, \underbrace{ \eta_2}_{ = \nabla_{\mathbf{m}} A^*_\eta( \mathbf{m}_2)} \rangle\\
-&amp;= \mathrm{B}_{A^*_\eta}( \color{red}{ \mathbf{m}_1 },\mathbf{m}_2) &amp; (\text{the order is changed})
+&amp;= \mathrm{B}_{A^*_\eta}( {\color{red} \mathbf{m}_1 },\mathbf{m}_2) &amp; (\text{the order is changed})
 \end{aligned}
 $$</code></p>
 

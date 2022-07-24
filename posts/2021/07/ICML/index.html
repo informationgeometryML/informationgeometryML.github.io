@@ -351,7 +351,7 @@ $$</code></p>
  the natural-gradient <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\eta_0}^{(t)}$</code> at <code class="language-plaintext highlighter-rouge">$\eta_0$</code> tied to <code class="language-plaintext highlighter-rouge">$\lambda_t$</code>, which is computed by the chain rule,
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned} 
-        \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;=  \color{green}{\mathbf{F}_{\eta}(\eta_0)^{-1} } 
+        \hat{\mathbf{g}}_{\eta_0}^{(t)} &amp;=  {\color{green}\mathbf{F}_{\eta}(\eta_0)^{-1} } 
          \,\, \big[ \nabla_{\eta_0} \big[ \psi \circ \phi_{\lambda_t} (\eta) \big]
         \nabla_{\tau_t}\mathcal{L}(\tau) \big]  
 \end{aligned} 
@@ -424,7 +424,7 @@ where <span style="color:red"><strong>tractable</strong></span> natural-gradient
 \begin{aligned}
     \hat{\mathbf{g}}_{\eta_0}^{(t)} =
  \Big(  \begin{array}{c} \hat{\mathbf{g}}_{\delta_0}^{(t)}\\ \mathrm{vec}(  \hat{\mathbf{g}}_{M_0}^{(t)})\end{array}   \Big)
-= \underbrace{  \color{green}{\Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of the exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] \,\,\,\,&amp; (\text{tractable: easy to inverse FIM at  } \eta_0)
+= \underbrace{  {\color{green} \Big(\begin{array}{cc} \mathbf{I}_p &amp; 0 \\ 0 &amp; 2 \mathbf{I}_{p^2} \end{array} \Big)^{-1}}  }_{ \text{inverse of the exact FIM } } \Big[\begin{array}{c}  \mathbf{B}_t^{-1} \mathbf{g}_{\mu_t} \\ \mathrm{vec}( -2\mathbf{B}_t^{-1} \mathbf{g}_{\Sigma_t} \mathbf{B}_t^{-T}) \end{array} \Big] \,\,\,\,&amp; (\text{tractable: easy to inverse FIM at  } \eta_0)
 \end{aligned}
 $$</code></p>
 
@@ -441,7 +441,7 @@ $$</code></p>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
 &amp; \mu_{t+1}   = \mu_t - \beta \mathbf{S}_{t}^{-1} E_{q(\text{w}|\tau_t)}{ \big[ \nabla_w \ell( \mathbf{w} ) \big] } \\
-&amp;\mathbf{S}_{t+1} =   \underbrace{ \overbrace{(1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) \big] }}^{\text{standard NGD on $\mathbf{S}$ }} + \color{red}{ \frac{\beta^2}{2} \mathbf{G}_t \mathbf{S}_t^{-1}\mathbf{G}_t}
+&amp;\mathbf{S}_{t+1} =   \underbrace{ \overbrace{(1-\beta \gamma)\mathbf{S}_t + \beta  E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) \big] }}^{\text{standard NGD on $\mathbf{S}$ }} + { \color{red} \frac{\beta^2}{2} \mathbf{G}_t \mathbf{S}_t^{-1}\mathbf{G}_t}
 }_{\color{red}{\text{ RGD with retraction}}}+ O(\beta^3)
  \end{aligned}
 $$</code> where $\mathbf{B}$ is a <span style="color:red"><strong>dense</strong></span> matrix in matrix group <code class="language-plaintext highlighter-rouge">$\mathrm{GL}^{p\times p}$</code> and <code class="language-plaintext highlighter-rouge">$\mathbf{G}_t := E_{q(w|\tau_t)}{ \big[ \nabla_w^2 \ell(\mathbf{w}) ] } -\gamma \mathbf{S}_t$</code>.</p>
@@ -630,7 +630,7 @@ $$</code>
 \begin{aligned}
  \mu_{t+1} &amp;  \leftarrow  \mu_t - \beta \mathbf{S}_{t}^{-1} \nabla_{\mu_t} \ell( \mu), \\ 
 \mathbf{B}_{t+1} &amp; \leftarrow 
-   \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot \color{red}{\kappa_{\text{up}}\big(  \mathbf{B}_t^{-1} \nabla_{\mu_t}^2 \ell( \mu)  \mathbf{B}_t^{-T} - \mathbf{I} \big)} \Big)
+   \mathbf{B}_t \mathbf{h} \Big( \beta \mathbf{C}_{\text{up}} \odot { \color{red}\kappa_{\text{up}}\big(  \mathbf{B}_t^{-1} \nabla_{\mu_t}^2 \ell( \mu)  \mathbf{B}_t^{-T} - \mathbf{I} \big)} \Big)
  \end{aligned}\tag{7}\label{7}
 $$</code> by using <code class="language-plaintext highlighter-rouge">$\eqref{4}$</code> evaluated at the mean <code class="language-plaintext highlighter-rouge">$\mu_t$</code>
 <code class="language-plaintext highlighter-rouge">$$

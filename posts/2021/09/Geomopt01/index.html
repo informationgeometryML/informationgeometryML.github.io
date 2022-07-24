@@ -254,7 +254,7 @@ By exploiting the structures, we can</p>
 \begin{aligned}
 \min_{\tau}  \frac{1}{2n} \sum_{i=1}^{n}   (y_i-x_i^T\tau)^2 
  &amp;= - \frac{1}{n}  \sum_{i=1}^{n}  \log \mathcal{N}(y_i | x_i^T\tau,1) + \text{constant}\\
-&amp; \approx  E_{ \color{red}  { p(x,y | \tau) } } [ - \log  p(x,y | \tau) ]
+&amp; \approx  E_{ {\color{red}   p(x,y | \tau) } } [ - \log  p(x,y | \tau) ]
 \end{aligned} \tag{1}\label{1}
 $$</code>
 where <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \mathcal{N}(y | x^T\tau,1) p(x) $</code> is assumed to be the data-generating distribution. Here, <code class="language-plaintext highlighter-rouge">$ \mathcal{N} (y | m, v) $</code> denotes a normal distribution over <code class="language-plaintext highlighter-rouge">$ y $</code> with mean <code class="language-plaintext highlighter-rouge">$ m $</code> and variance <code class="language-plaintext highlighter-rouge">$ v $</code>.</p>
@@ -268,7 +268,7 @@ where <code class="language-plaintext highlighter-rouge">$ p(x,y | \tau) = \math
   <p>Given a prior <code class="language-plaintext highlighter-rouge">$ p(z) $</code> and a likelihood <code class="language-plaintext highlighter-rouge">$ p(\mathcal{D} | z ) $</code> over a latent vector <code class="language-plaintext highlighter-rouge">$z$</code> and known data <code class="language-plaintext highlighter-rouge">$ \mathcal{D} $</code>, we can approximate the exact posterior <code class="language-plaintext highlighter-rouge">$ p( z | \mathcal{D} ) =\frac{p(z,\mathcal{D})}{p(\mathcal{D})} $</code> by optimizing a variational objective with respect to  an approximated distribution <code class="language-plaintext highlighter-rouge">$ q(z | \tau) $</code>:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\min_{\tau} \mathrm{KL} [ { q(z | \tau) || p( z | \mathcal{D} ) }   ] = E_{ \color{red}  {q(z | \tau)} } [ \log q(z | \tau) - \log p( z , \mathcal{D} )    ]  + \text{constant} 
+\min_{\tau} \mathrm{KL} [ { q(z | \tau) || p( z | \mathcal{D} ) }   ] = E_{ {\color{red}  q(z | \tau)} } [ \log q(z | \tau) - \log p( z , \mathcal{D} )    ]  + \text{constant} 
 \end{aligned} \tag{2}\label{2}
 $$</code>
 where <code class="language-plaintext highlighter-rouge">$ \mathrm{KL} [ q(z) ||  p(z) ] :=  E_{ {q(z)} } [ \log \big(\frac{q(z)}{p(z)}\big) ]$</code> is the Kullback–Leibler divergence.</p>
@@ -283,7 +283,7 @@ This approach is derived from a Bayesian  perspective, and can also be generaliz
   <p>Global optimization methods often use a search distribution, denoted by <code class="language-plaintext highlighter-rouge">$ \pi(a | \tau ) $</code>, to find the global maximum of an objective <code class="language-plaintext highlighter-rouge">$h(a)$</code> by solving a problem of the following form:
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\min_{\tau}  E_{ \color{red}  {\pi(a | \tau)} } [ h(a)  ]
+\min_{\tau}  E_{ {\color{red}  \pi(a | \tau)} } [ h(a)  ]
 \end{aligned} \tag{3}\label{3}
 $$</code>
 Samples from the search distribution are evaluated through a “fitness” function <code class="language-plaintext highlighter-rouge">$ h(a) $</code>, and guide the optimization towards better optima.</p>
@@ -359,7 +359,7 @@ for the details.)</p>
 
 <p>Intrinsic parameterizations<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> are those that satisfy the following two conditions:</p>
 <ul>
-  <li>We require that the parameter space of $\tau$, denoted by $\Omega_\tau$, be an <strong>open</strong> set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array. Intuitively, this ensures a local vector-space structure throughout the parameter space, which then ensures that a small, local perturbation <code class="language-plaintext highlighter-rouge">$ E $</code> at each point stays within $\Omega_\tau$.</li>
+  <li>We require that the parameter space of $\tau$, denoted by $\Omega_\tau$, be an <strong>open</strong> set in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where <code class="language-plaintext highlighter-rouge">$K$</code> is the number of entries of a parameter array. Intuitively, this ensures a local vector-space structure throughout the parameter space, which then ensures that a small, local perturbation <code class="language-plaintext highlighter-rouge">$ E $</code> at each point stays within <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.</li>
   <li>We also require that <code class="language-plaintext highlighter-rouge">$ E $</code>  <strong>uniquely</strong> and <strong>smoothly</strong> represents  points in a manifold. The condition ensures arbitrary (smooth) parameter transformations should still represent the same sub-set. In other words, we require that
     <ul>
       <li>there exists a <strong>bi-jective</strong> map among such two parameterizations if these parameterizations represent a common sub-set of points in the manifold.</li>
