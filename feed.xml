@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-08-02T20:28:09-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (Part VI is incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-10-22T12:48:38-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (Part VI is incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -72,7 +72,7 @@ It could be possible to use Auto-Diff to compute (implicit) natural-gradients as
 
 &lt;h2 id=&quot;projected-natural-gradient-descent&quot;&gt;Projected Natural Gradient Descent&lt;/h2&gt;
 &lt;p&gt;Another straightforward approach from natural-gradient descent is the projected natural-gradient descent, where we  use 
-the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\eta(\eta_k)$&lt;/code&gt; evaluted at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_k$&lt;/code&gt; as a projection metric and use the &lt;a href=&quot;/posts/2021/10/Geomopt02/
+the FIM &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}_\eta(\eta_k)$&lt;/code&gt; evaluted at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta_k$&lt;/code&gt; as a projection metric and use the &lt;a href=&quot;/Geomopt02/
 #distance-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; to measure the distance for the projection.&lt;/p&gt;
 
 &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -489,7 +489,7 @@ p({w}|\mathbf{\eta})
 $$&lt;/code&gt; where  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is a $(d+\frac{d(d+1)}{2})$-dim array.
 It can be shown that $\Omega_\eta$ is open in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$K=d+\frac{d(d+1)}{2}$&lt;/code&gt;.&lt;/p&gt;
 
-        &lt;p&gt;As we discussed in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\Sigma^{-1})$&lt;/code&gt; is an intrinsic parameterization while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vec}(\Sigma^{-1})$&lt;/code&gt; is not.&lt;/p&gt;
+        &lt;p&gt;As we discussed in &lt;a href=&quot;/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;,  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\Sigma^{-1})$&lt;/code&gt; is an intrinsic parameterization while &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vec}(\Sigma^{-1})$&lt;/code&gt; is not.&lt;/p&gt;
       &lt;/blockquote&gt;
     &lt;/fieldset&gt;
 &lt;/details&gt;
@@ -581,7 +581,7 @@ the expectation parameter space &lt;code class=&quot;language-plaintext highligh
 $$&lt;/code&gt; which means this FIM is a Jacobian matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}=\nabla_\eta \mathbf{m}(\eta)$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;As we discussed in
-&lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;,
+&lt;a href=&quot;/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;,
 a natural-gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$f(\eta)$&lt;/code&gt; can be computed as below, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\eta=\nabla_\eta f(\eta)$&lt;/code&gt; is a Euclidean gradient w.r.t.  natural parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt;.
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
@@ -935,7 +935,7 @@ _\eta^{-1} (\eta_k) \nabla_\eta \ell_\eta(\eta_k)$&lt;/code&gt;.&lt;/p&gt;
       &lt;p&gt;When the natural parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is minimal, this Legendre transformation is diffeomorphic since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla_\eta^2 A_\eta(\eta)$&lt;/code&gt; is positive-definite in its domain. In other words, the expectation parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{m}$&lt;/code&gt; is also intrinsic when the natural parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eta$&lt;/code&gt; is minimal. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural and Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural and Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
+&lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><category term="Exponential Family" /><summary type="html">Warning: working in Progress (incomplete)</summary></entry><entry><title type="html">Part IV: Natural Gradient Descent and its Extension—Riemannian Gradient Descent</title><link href="/posts/2021/11/Geomopt04/" rel="alternate" type="text/html" title="Part IV: Natural Gradient Descent and its Extension—Riemannian Gradient Descent" /><published>2021-11-15T00:00:00-08:00</published><updated>2021-11-15T00:00:00-08:00</updated><id>/posts/2021/11/Geomopt04</id><content type="html" xml:base="/posts/2021/11/Geomopt04/">&lt;p&gt;Warning: working in Progress (incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.
@@ -965,7 +965,7 @@ We also discuss some invariance property of natural-gradient descent, Riemannian
 &lt;hr /&gt;
 &lt;p&gt;We will discuss (Riemannian) gradient spaces and parameter spaces for gradient-based updates.&lt;/p&gt;
 
-&lt;p&gt;As we disucssed in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, the parameter space $\Omega_\tau$ and the tangent space denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T_{\tau_0}\mathcal{M}$&lt;/code&gt; at point $\tau_0$ are two distinct spaces. 
+&lt;p&gt;As we disucssed in &lt;a href=&quot;/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, the parameter space $\Omega_\tau$ and the tangent space denoted by &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T_{\tau_0}\mathcal{M}$&lt;/code&gt; at point $\tau_0$ are two distinct spaces. 
 Given  &lt;a href=&quot;/posts/2021/09/Geomopt01/#intrinsic-parameterizations&quot;&gt;intrinsic parametrization&lt;/a&gt;  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt;,  the tangent space is a (complete) vector space and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T_{\tau_0}\mathcal{M}=\mathcal{R}^K$&lt;/code&gt; while the parameter space $\Omega_\tau$ is like a local vector space in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;, where $K$ is the dimension of the manifold. In other words, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is often an open (proper) subset of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathcal{R}^K$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;p&gt;In manifold cases, we have to explicitly distinguish the difference between the representation of a point (parameter) and a vector (Riemannian gradient).  These two spaces are different in many aspects such as
@@ -1091,7 +1091,7 @@ Therefore, it will be ideal if  a
 gradient-based method does not dependent on the choice of intrinsic parametrizations.&lt;/p&gt;
 
 &lt;p&gt;We will first introduce the concept of a (one-dimensional) geodesic $\gamma(t)$, which is the “shortest curve” on a manifold with a Riemannian metric (i.e., the Fisher-Rao metric).
-Recall that in  &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold. 
+Recall that in  &lt;a href=&quot;/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold. 
 In statistics, the distance induced by a geodesic with the Fisher-Rao metric is known as the Rao distance &lt;a class=&quot;citation&quot; href=&quot;#atkinson1981rao&quot;&gt;[2]&lt;/a&gt;. This is
 known as the boundary value problem (BVP) of a geodesic. The boundary conditions are  specified by  a starting point and an end
 point in the manifold. To solve this problem, we often solve an easier problem, which is known as the initial value
@@ -1126,7 +1126,8 @@ $$&lt;/code&gt;  where &lt;code class=&quot;language-plaintext highlighter-rouge
 &lt;div class=&quot;notice--danger&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:&lt;/p&gt;
 
-  &lt;p&gt;We use 
+  &lt;p&gt;The exponential map is a geometric object.
+We use 
 a parametric representation of a geodesic curve to define the exponential map.
 Thus, the form/expression of the map does depend on the choice of parametrizations.&lt;/p&gt;
 &lt;/div&gt;
@@ -1525,8 +1526,7 @@ Euclidean gradients follow the
 \begin{aligned}
 \mathbf{H}_{\tau} (\tau_k) &amp;amp;= \nabla_\tau ( \mathbf{g}_{\tau_k} ) \\
 &amp;amp;=\nabla_\tau ( \mathbf{J}^T \mathbf{g}_{\lambda_k} ) \\
-&amp;amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) + \underbrace{[\nabla_\tau \mathbf{J}^T ]}_{=0} \mathbf{g}_{\lambda_k}  \,\,\,\,\text{(In linear cases, } \mathbf{J} = \mathbf{U} \text{ is a
-constant)}   \\
+&amp;amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) + \underbrace{[\nabla_\tau \mathbf{J}^T ]}_{=0} \mathbf{g}_{\lambda_k}  \,\,\,\,\text{(In linear cases, } \mathbf{J} = \mathbf{U}\text{ is a constant)}   \\
 &amp;amp;=\mathbf{J}^T [ \nabla_\lambda (  \mathbf{g}_{\lambda_k} ) ] \mathbf{J} \\ 
 &amp;amp;=\mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} 
 \end{aligned}\tag{7}\label{7}
@@ -1653,7 +1653,7 @@ We will discuss&lt;/p&gt;
 &lt;hr /&gt;
 &lt;p&gt;Recall that a Riemannian gradient is also known as a &lt;strong&gt;natural gradient&lt;/strong&gt; since we use the Fisher-Rao metric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{F}$&lt;/code&gt; as the Riemannian metric.&lt;/p&gt;
 
-&lt;p&gt;In &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, we have shown that a Riemannian gradient is a parametric representation of the tangent direction of a curve in a  manifold.
+&lt;p&gt;In &lt;a href=&quot;/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, we have shown that a Riemannian gradient is a parametric representation of the tangent direction of a curve in a  manifold.
 Since a curve and its tangent direction are geometric obejects, they should be invariant to the choice of parametrization.
 In other words, geometric properties should be persevered in any valid coordinate system. This is a coordinate-free argument.&lt;/p&gt;
 
@@ -1827,9 +1827,9 @@ $$&lt;/code&gt;&lt;/p&gt;
   &lt;/ol&gt;
 &lt;/div&gt;
 
-&lt;p&gt;Thanks to these properties, we will show that the optimal solution of the &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/a&gt; considered in Part II is invariant under an intrinsic parameter transformation. This is in contrast with the Euclidean steepest direction which is not invaraint under an intrinsic parameter transformation.&lt;/p&gt;
+&lt;p&gt;Thanks to these properties, we will show that the optimal solution of the &lt;a href=&quot;/Geomopt02/#riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/a&gt; considered in Part II is invariant under an intrinsic parameter transformation. This is in contrast with the Euclidean steepest direction which is not invaraint under an intrinsic parameter transformation.&lt;/p&gt;
 
-&lt;p&gt;In &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, we consider a point $\mathbf{x}_0$ in a manifold $\mathcal{M}$, a (1-dimensional) curve $\gamma(t)$, and a smooth scalar function $h: \mathcal{M} \to \mathcal{R}$.
+&lt;p&gt;In &lt;a href=&quot;/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;, we consider a point $\mathbf{x}_0$ in a manifold $\mathcal{M}$, a (1-dimensional) curve $\gamma(t)$, and a smooth scalar function $h: \mathcal{M} \to \mathcal{R}$.
 Given an intrinsic parametrization $\tau$ containing the point, we consider the following parametric representations.&lt;/p&gt;
 
 &lt;table&gt;
@@ -1876,7 +1876,7 @@ In other words, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&
 \end{aligned}\tag{1}\label{1}
 $$&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;In &lt;a href=&quot;/posts/2021/10/Geomopt02/#parameterization-dependent-representation&quot;&gt;Part II&lt;/a&gt;, we have shown that 
+&lt;p&gt;In &lt;a href=&quot;/Geomopt02/#parameterization-dependent-representation&quot;&gt;Part II&lt;/a&gt;, we have shown that 
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
  \frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0} &amp;amp;=  [\nabla h_\tau(\mathbf{\tau}_0)  ]^T  \frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}   \\ 
@@ -1884,7 +1884,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 \end{aligned}
 $$&lt;/code&gt; where $\nabla$ is the standard (coordinate) derivative.&lt;/p&gt;
 
-&lt;p&gt;Recall that in &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;,  we have shown that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt; is a  parametric representation of a tangent vector, which is a Riemannian gradient.
+&lt;p&gt;Recall that in &lt;a href=&quot;/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;,  we have shown that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d {\gamma}_\tau(t) }{d t} \Big|_{t=0}$&lt;/code&gt; is a  parametric representation of a tangent vector, which is a Riemannian gradient.
 Notice that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\nabla h_\lambda(\mathbf{\lambda}_0)$&lt;/code&gt; is a Euclidean gradient&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
 
 &lt;p&gt;We will use the following notations to simplify expressions.&lt;/p&gt;
@@ -1988,7 +1988,8 @@ $$&lt;/code&gt;&lt;/p&gt;
 $$&lt;/code&gt;&lt;/p&gt;
 
   &lt;p&gt;Note:
-&lt;span style=&quot;color:blue&quot;&gt;&lt;strong&gt;column&lt;/strong&gt;&lt;/span&gt; vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\tau$&lt;/code&gt; can be computed via a Jacobian-vector product used in forward-mode differentiation  &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[1]&lt;/a&gt; &lt;a class=&quot;citation&quot; href=&quot;#salimbeni2018natural&quot;&gt;[2]&lt;/a&gt; given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\lambda$&lt;/code&gt; is pre-computed.&lt;/p&gt;
+&lt;span style=&quot;color:blue&quot;&gt;&lt;strong&gt;column&lt;/strong&gt;&lt;/span&gt; vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\tau$&lt;/code&gt; can be computed via a (inverse) Jacobian-vector product used in forward-mode differentiation &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[1]&lt;/a&gt; &lt;a class=&quot;citation&quot; href=&quot;#salimbeni2018natural&quot;&gt;[2]&lt;/a&gt; given that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_\lambda$&lt;/code&gt; is pre-computed and we can explicitly express &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; in terms of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda$&lt;/code&gt;. As shown in &lt;a class=&quot;citation&quot; href=&quot;#salimbeni2018natural&quot;&gt;[2]&lt;/a&gt;, this Jacobian-vector product can be computed by using two 
+ vector-Jacobian products in any standard Auto-Diff toolbox.&lt;/p&gt;
 &lt;/div&gt;
 
 &lt;p&gt;The elementwise expression of the transformation rule for Riemannian gradients is
@@ -2069,7 +2070,7 @@ $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;riemannian-steepest-direction-is-invariant&quot;&gt;Riemannian Steepest Direction is Invariant&lt;/h1&gt;
 &lt;hr /&gt;
-&lt;p&gt;Now, we can show that the optimal solution of &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/a&gt; considered in Part II  under parametrization $\tau$ and $\lambda$ are equivalent since both the length and the directional derivative remain the same.&lt;/p&gt;
+&lt;p&gt;Now, we can show that the optimal solution of &lt;a href=&quot;/Geomopt02/#riemannian-steepest-direction&quot;&gt;Riemannian steepest direction&lt;/a&gt; considered in Part II  under parametrization $\tau$ and $\lambda$ are equivalent since both the length and the directional derivative remain the same.&lt;/p&gt;
 
 &lt;p&gt;Denote Euclidean gradients as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\lambda:= \nabla  f_\lambda(\mathbf{\lambda}_0) $&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau:= \nabla  f_\tau(\mathbf{\tau}_0)  = \nabla  f_\lambda(\mathbf{\lambda}(\tau_0)) $&lt;/code&gt;, which follows the parameter transformation rule in  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{6}$&lt;/code&gt;.&lt;/p&gt;
 
@@ -2109,13 +2110,13 @@ In other words, the Riemannian steepest direction (which is indeed  a normalized
 
 &lt;h1 id=&quot;euclidean-steepest-direction-is-not-invariant&quot;&gt;Euclidean Steepest Direction is NOT Invariant&lt;/h1&gt;
 &lt;hr /&gt;
-&lt;p&gt;Recall that we have shown that a unit Euclidean gradient is the optimal solution of  &lt;a href=&quot;/posts/2021/10/Geomopt02/#euclidean-steepest-direction&quot;&gt;Euclidean steepest direction&lt;/a&gt; in Part II.&lt;/p&gt;
+&lt;p&gt;Recall that we have shown that a unit Euclidean gradient is the optimal solution of  &lt;a href=&quot;/Geomopt02/#euclidean-steepest-direction&quot;&gt;Euclidean steepest direction&lt;/a&gt; in Part II.&lt;/p&gt;
 
-&lt;p&gt;We can show that the (standard) length of a Euclidean gradient is NOT invariant under a parameter transformation due to the Jacobian matrix (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\| \mathbf{g}_\tau \| \neq \| \mathbf{g}_\lambda \|$&lt;/code&gt;). This is a reason why we use the &lt;a href=&quot;/posts/2021/10/Geomopt02/#weighted-norm-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; to define the length of a gradient vector.&lt;/p&gt;
+&lt;p&gt;We can show that the (standard) length of a Euclidean gradient is NOT invariant under a parameter transformation due to the Jacobian matrix (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\| \mathbf{g}_\tau \| \neq \| \mathbf{g}_\lambda \|$&lt;/code&gt;). This is a reason why we use the &lt;a href=&quot;/Geomopt02/#weighted-norm-induced-by-the-fisher-rao-metric&quot;&gt;weighted inner product&lt;/a&gt; to define the length of a gradient vector.&lt;/p&gt;
 
 &lt;p&gt;Note that we denote the Euclidean gradients as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\lambda:= \nabla  f_\lambda(\mathbf{\lambda}_0) $&lt;/code&gt; and  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{g}_\tau:= \nabla  f_\tau(\mathbf{\tau}_0)  = \nabla  f_\lambda(\mathbf{\lambda}(\tau_0)) $&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Recall that the optimal solution of the &lt;a href=&quot;/posts/2021/10/Geomopt02/#euclidean-steepest-direction&quot;&gt;Euclidean steepest direction&lt;/a&gt; is
+&lt;p&gt;Recall that the optimal solution of the &lt;a href=&quot;/Geomopt02/#euclidean-steepest-direction&quot;&gt;Euclidean steepest direction&lt;/a&gt; is
 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
 \begin{aligned}
 \mathbf{u}_{\lambda}^{(opt)}= -\frac{\nabla_\lambda f_\lambda(\mathbf{\lambda}_0) }{\|\nabla_\lambda f_\lambda(\mathbf{\lambda}_0)  \|} = -\frac{\mathbf{g}_\lambda}{\|\mathbf{g}_\lambda\|} \\
@@ -2156,7 +2157,20 @@ Moreover, Euclidean gradient descent is not invariant under a parameter transfor
       &lt;p&gt;We assume readers are familar with the transformation rule for Euclidean gradients.  Let  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau(t)=\gamma_\tau(t)$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\lambda(t)=\gamma_\lambda(t)$&lt;/code&gt;.  In differential geometry, this transformation rule can also be shown by using the following identity: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{J}(\tau)= \frac{ \partial [\Psi_\lambda \circ \Psi_\tau^{-1}](\tau) }{\partial \tau } =  \frac{ \partial  \lambda  }{\partial \tau } $&lt;/code&gt;, where we drop the index $t$ and recall that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma_\tau(t)=\Psi_\tau \circ \gamma(t)$&lt;/code&gt; &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on invariant properties of natural-gradients. We will discuss transformation rules of natural-gradients, the automatic computation of re-parametrized natural-gradients via the transformation rules, non-invariance of the Euclidean counterpart.</summary></entry><entry><title type="html">Part II: Derivation of Natural-gradients</title><link href="/posts/2021/10/Geomopt02/" rel="alternate" type="text/html" title="Part II: Derivation of Natural-gradients" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/posts/2021/10/Geomopt02</id><content type="html" xml:base="/posts/2021/10/Geomopt02/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+&lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on invariant properties of natural-gradients. We will discuss transformation rules of natural-gradients, the automatic computation of re-parametrized natural-gradients via the transformation rules, non-invariance of the Euclidean counterpart.</summary></entry><entry><title type="html">Geomopt02</title><link href="/Geomopt02/" rel="alternate" type="text/html" title="Geomopt02" /><published>2021-10-04T00:00:00-07:00</published><updated>2021-10-04T00:00:00-07:00</updated><id>/Geomopt02</id><content type="html" xml:base="/Geomopt02/">&lt;p&gt;–
+title: ‘Part II: Derivation of Natural-gradients’
+date: 2021-10-04
+permalink: /posts/2021/10/Geomopt02/
+tags:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Natural Gradient Descent&lt;/li&gt;
+  &lt;li&gt;Information Geometry&lt;/li&gt;
+  &lt;li&gt;
+    &lt;h2 id=&quot;riemannian-manifold&quot;&gt;Riemannian Manifold&lt;/h2&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Rimannian steepest direction (i.e.,  normalized natural gradient)&lt;/li&gt;
@@ -2513,7 +2527,7 @@ Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\t
 Strictly speaking, a natural gradient/vector w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is not well-defined since the FIM is singular.&lt;/p&gt;
 
         &lt;p&gt;In the literature, a natural gradient w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt; is  defined as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}(\mathbf{v})$&lt;/code&gt;, where
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is a valid natural gradient w.r.t. intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau=\mathrm{vech}(\mathbf{S})$&lt;/code&gt; (see &lt;a href=&quot;/posts/2021/12/Geomopt05/#efficient-ngd-for-multivariate-gaussian&quot;&gt;Part V&lt;/a&gt; for the details.)&lt;/p&gt;
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; is a valid natural gradient w.r.t. intrinsic parameter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau=\mathrm{vech}(\mathbf{S})$&lt;/code&gt; (see &lt;a href=&quot;/posts/2021/12/Geomopt05/#efficient-ngd-for-multivariate-gaussians&quot;&gt;Part V&lt;/a&gt; for the details.)&lt;/p&gt;
 
       &lt;/blockquote&gt;
     &lt;/fieldset&gt;
@@ -2669,7 +2683,7 @@ We will discuss more about this difference in &lt;a href=&quot;/posts/2021/11/Ge
       &lt;p&gt;A Riemannian gradient is a coordinate representation of a &lt;a href=&quot;https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors#Contravariant_transformation&quot;&gt;contravariant vector&lt;/a&gt; (A.K.A. a Riemannian vector) while a Euclidean gradient is a coordinate representation of a &lt;a href=&quot;https://en.wikipedia.org/wiki/Covariance_and_contravariance_of_vectors#Covariant_transformation&quot;&gt;covariant vector&lt;/a&gt; (A.K.A. a Riemannian covector). We will discuss their transformation rules in &lt;a href=&quot;/posts/2021/11/Geomopt03/&quot;&gt;Part III&lt;/a&gt;. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients: Rimannian steepest direction (i.e., normalized natural gradient) The difference between a parameter space and a gradient/vector space</summary></entry><entry><title type="html">Part I: Smooth Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Smooth Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
+&lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><summary type="html">– title: ‘Part II: Derivation of Natural-gradients’ date: 2021-10-04 permalink: /posts/2021/10/Geomopt02/ tags: Natural Gradient Descent Information Geometry Riemannian Manifold</summary></entry><entry><title type="html">Part I: Smooth Manifolds with the Fisher-Rao Metric</title><link href="/posts/2021/09/Geomopt01/" rel="alternate" type="text/html" title="Part I: Smooth Manifolds with the Fisher-Rao Metric" /><published>2021-09-06T00:00:00-07:00</published><updated>2021-09-06T00:00:00-07:00</updated><id>/posts/2021/09/Geomopt01</id><content type="html" xml:base="/posts/2021/09/Geomopt01/">&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following  useful concepts to ensure non-singular FIMs:&lt;/p&gt;
 &lt;ul&gt;
   &lt;li&gt;Regularity conditions and intrinsic parameterizations of a distribution&lt;/li&gt;
@@ -2815,7 +2829,7 @@ We will refer to such flat vector space as a &lt;em&gt;local&lt;/em&gt; vector-s
   &lt;p&gt;Local &lt;strong&gt;vector-space structure&lt;/strong&gt;:&lt;/p&gt;
 
   &lt;p&gt;It supports local &lt;strong&gt;vector additions&lt;/strong&gt;,  local &lt;strong&gt;real scalar products&lt;/strong&gt;, and their algebraic laws (i.e., the distributive law). (see 
-&lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;
+&lt;a href=&quot;/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt;
 for the details.)&lt;/p&gt;
 &lt;/div&gt;
 
@@ -3116,7 +3130,7 @@ The  circle and the open unit ball do not have the same dimensionality.&lt;/p&gt
 
 &lt;p&gt;For statistical  manifolds, 
  consider the following examples. We will discuss more about them in 
- &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;.&lt;/p&gt;
+ &lt;a href=&quot;/Geomopt02/#riemannian-steepest-direction&quot;&gt;Part II&lt;/a&gt;.&lt;/p&gt;
 
 &lt;table&gt;
   &lt;thead&gt;

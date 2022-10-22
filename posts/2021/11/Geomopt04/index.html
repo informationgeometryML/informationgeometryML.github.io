@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Part IV: Natural and Riemannian  Gradient Descent - Information Geometry in Machine Learning</title>
+<!-- begin _includes/seo.html --><title>Part IV: Natural Gradient Descent and its Extension—Riemannian Gradient Descent - Information Geometry in Machine Learning</title>
 <meta name="description" content="Warning: working in Progress (incomplete)">
 
 
@@ -17,7 +17,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Information Geometry in Machine Learning">
-<meta property="og:title" content="Part IV: Natural and Riemannian  Gradient Descent">
+<meta property="og:title" content="Part IV: Natural Gradient Descent and its Extension—Riemannian Gradient Descent">
 <meta property="og:url" content="/posts/2021/11/Geomopt04/">
 
 
@@ -177,7 +177,7 @@ MathJax = {
   
 
   <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Part IV: Natural and Riemannian  Gradient Descent">
+    <meta itemprop="headline" content="Part IV: Natural Gradient Descent and its Extension—Riemannian Gradient Descent">
     <meta itemprop="description" content="Warning: working in Progress (incomplete)">
     <meta itemprop="datePublished" content="November 15, 2021">
     
@@ -185,7 +185,7 @@ MathJax = {
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Part IV: Natural and Riemannian  Gradient Descent
+          <h1 id="page-title" class="page__title" itemprop="headline">Part IV: Natural Gradient Descent and its Extension—Riemannian Gradient Descent
 </h1>
           
             <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
@@ -232,7 +232,7 @@ We also discuss some invariance property of natural-gradient descent, Riemannian
 <hr>
 <p>We will discuss (Riemannian) gradient spaces and parameter spaces for gradient-based updates.</p>
 
-<p>As we disucssed in <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, the parameter space $\Omega_\tau$ and the tangent space denoted by <code class="language-plaintext highlighter-rouge">$T_{\tau_0}\mathcal{M}$</code> at point $\tau_0$ are two distinct spaces. 
+<p>As we disucssed in <a href="/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, the parameter space $\Omega_\tau$ and the tangent space denoted by <code class="language-plaintext highlighter-rouge">$T_{\tau_0}\mathcal{M}$</code> at point $\tau_0$ are two distinct spaces. 
 Given  <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">intrinsic parametrization</a>  <code class="language-plaintext highlighter-rouge">$\tau$</code>,  the tangent space is a (complete) vector space and <code class="language-plaintext highlighter-rouge">$T_{\tau_0}\mathcal{M}=\mathcal{R}^K$</code> while the parameter space $\Omega_\tau$ is like a local vector space in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where $K$ is the dimension of the manifold. In other words, <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is often an open (proper) subset of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.</p>
 
 <p>In manifold cases, we have to explicitly distinguish the difference between the representation of a point (parameter) and a vector (Riemannian gradient).  These two spaces are different in many aspects such as
@@ -358,7 +358,7 @@ Therefore, it will be ideal if  a
 gradient-based method does not dependent on the choice of intrinsic parametrizations.</p>
 
 <p>We will first introduce the concept of a (one-dimensional) geodesic $\gamma(t)$, which is the “shortest curve” on a manifold with a Riemannian metric (i.e., the Fisher-Rao metric).
-Recall that in  <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a> we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold. 
+Recall that in  <a href="/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a> we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold. 
 In statistics, the distance induced by a geodesic with the Fisher-Rao metric is known as the Rao distance <a class="citation" href="#atkinson1981rao">[2]</a>. This is
 known as the boundary value problem (BVP) of a geodesic. The boundary conditions are  specified by  a starting point and an end
 point in the manifold. To solve this problem, we often solve an easier problem, which is known as the initial value
@@ -393,7 +393,8 @@ $$</code>  where <code class="language-plaintext highlighter-rouge">$t$</code> i
 <div class="notice--danger">
   <p><strong>Warning</strong>:</p>
 
-  <p>We use 
+  <p>The exponential map is a geometric object.
+We use 
 a parametric representation of a geodesic curve to define the exponential map.
 Thus, the form/expression of the map does depend on the choice of parametrizations.</p>
 </div>
@@ -792,8 +793,7 @@ Euclidean gradients follow the
 \begin{aligned}
 \mathbf{H}_{\tau} (\tau_k) &amp;= \nabla_\tau ( \mathbf{g}_{\tau_k} ) \\
 &amp;=\nabla_\tau ( \mathbf{J}^T \mathbf{g}_{\lambda_k} ) \\
-&amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) + \underbrace{[\nabla_\tau \mathbf{J}^T ]}_{=0} \mathbf{g}_{\lambda_k}  \,\,\,\,\text{(In linear cases, } \mathbf{J} = \mathbf{U} \text{ is a
-constant)}   \\
+&amp;=\mathbf{J}^T\nabla_\tau (  \mathbf{g}_{\lambda_k} ) + \underbrace{[\nabla_\tau \mathbf{J}^T ]}_{=0} \mathbf{g}_{\lambda_k}  \,\,\,\,\text{(In linear cases, } \mathbf{J} = \mathbf{U}\text{ is a constant)}   \\
 &amp;=\mathbf{J}^T [ \nabla_\lambda (  \mathbf{g}_{\lambda_k} ) ] \mathbf{J} \\ 
 &amp;=\mathbf{J}^T \mathbf{H}_{\lambda} (\lambda_k)\mathbf{J} 
 \end{aligned}\tag{7}\label{7}
@@ -935,7 +935,7 @@ However, a non-linear reparametrization will lead to a non-natural parametrizati
     <h4 class="page__share-title" data-translate="share_on_label">Share on</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=Part+IV%3A+Natural+and+Riemannian++Gradient+Descent%20informationgeometryML.github.io%2Fposts%2F2021%2F11%2FGeomopt04%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Part+IV%3A+Natural+Gradient+Descent+and+its+Extension---Riemannian+Gradient+Descent%20informationgeometryML.github.io%2Fposts%2F2021%2F11%2FGeomopt04%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=informationgeometryML.github.io%2Fposts%2F2021%2F11%2FGeomopt04%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
@@ -1074,7 +1074,7 @@ We will discuss
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/posts/2021/10/Geomopt02/" rel="permalink">Part II: Derivation of Natural-gradients
+        <a href="/Geomopt02/" rel="permalink">Geomopt02
 </a>
       
     </h2>
@@ -1084,11 +1084,17 @@ We will discuss
 
 
 
-  15 minute read
+  16 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">Goal
-This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the f...</p>
+    <p class="archive__item-excerpt" itemprop="description">–
+title: ‘Part II: Derivation of Natural-gradients’
+date: 2021-10-04
+permalink: /posts/2021/10/Geomopt02/
+tags:
+
+  Natural Gradient Descent
+  Information Geo...</p>
   </article>
 </div>
         
