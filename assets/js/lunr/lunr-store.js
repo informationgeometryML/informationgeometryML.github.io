@@ -39,10 +39,10 @@ var store = [{
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/09/Geomopt01/",
         "teaser":null},{
-        "title": "Geomopt02",
-        "excerpt":"–title: ‘Part II: Derivation of Natural-gradients’date: 2021-10-04permalink: /posts/2021/10/Geomopt02/tags: Natural Gradient Descent Information Geometry Riemannian Manifold Goal This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients: Rimannian steepest direction (i.e., normalized natural...","categories": [],
-        "tags": [],
-        "url": "/Geomopt02/",
+        "title": "Part II: Derivation of Natural-gradients",
+        "excerpt":"Goal This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients: Rimannian steepest direction (i.e., normalized natural gradient) The difference between a parameter space and a gradient/vector spaceThe discussion here is informal...","categories": [],
+        "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
+        "url": "/posts/2021/10/Geomopt02/",
         "teaser":null},{
         "title": "Part III: Invariance of Natural-Gradients",
         "excerpt":"Goal This blog post focuses on invariant properties of natural-gradients.We will discuss transformation rules of natural-gradients, the automatic computation of re-parametrized natural-gradients via the transformation rules, non-invariance of the Euclidean counterpart.The discussion here is informal and focuses more on intuitions, rather than rigor. Click to see how to cite this...","categories": [],

@@ -232,7 +232,7 @@ We also discuss some invariance property of natural-gradient descent, Riemannian
 <hr>
 <p>We will discuss (Riemannian) gradient spaces and parameter spaces for gradient-based updates.</p>
 
-<p>As we disucssed in <a href="/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, the parameter space $\Omega_\tau$ and the tangent space denoted by <code class="language-plaintext highlighter-rouge">$T_{\tau_0}\mathcal{M}$</code> at point $\tau_0$ are two distinct spaces. 
+<p>As we disucssed in <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a>, the parameter space $\Omega_\tau$ and the tangent space denoted by <code class="language-plaintext highlighter-rouge">$T_{\tau_0}\mathcal{M}$</code> at point $\tau_0$ are two distinct spaces. 
 Given  <a href="/posts/2021/09/Geomopt01/#intrinsic-parameterizations">intrinsic parametrization</a>  <code class="language-plaintext highlighter-rouge">$\tau$</code>,  the tangent space is a (complete) vector space and <code class="language-plaintext highlighter-rouge">$T_{\tau_0}\mathcal{M}=\mathcal{R}^K$</code> while the parameter space $\Omega_\tau$ is like a local vector space in <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>, where $K$ is the dimension of the manifold. In other words, <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> is often an open (proper) subset of <code class="language-plaintext highlighter-rouge">$\mathcal{R}^K$</code>.</p>
 
 <p>In manifold cases, we have to explicitly distinguish the difference between the representation of a point (parameter) and a vector (Riemannian gradient).  These two spaces are different in many aspects such as
@@ -358,7 +358,7 @@ Therefore, it will be ideal if  a
 gradient-based method does not dependent on the choice of intrinsic parametrizations.</p>
 
 <p>We will first introduce the concept of a (one-dimensional) geodesic $\gamma(t)$, which is the “shortest curve” on a manifold with a Riemannian metric (i.e., the Fisher-Rao metric).
-Recall that in  <a href="/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a> we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold. 
+Recall that in  <a href="/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional">Part II</a> we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of a geodesic to define the distance between two points on the manifold. 
 In statistics, the distance induced by a geodesic with the Fisher-Rao metric is known as the Rao distance <a class="citation" href="#atkinson1981rao">[2]</a>. This is
 known as the boundary value problem (BVP) of a geodesic. The boundary conditions are  specified by  a starting point and an end
 point in the manifold. To solve this problem, we often solve an easier problem, which is known as the initial value
@@ -1074,7 +1074,7 @@ We will discuss
     
     <h2 class="archive__item-title" itemprop="headline">
       
-        <a href="/Geomopt02/" rel="permalink">Geomopt02
+        <a href="/posts/2021/10/Geomopt02/" rel="permalink">Part II: Derivation of Natural-gradients
 </a>
       
     </h2>
@@ -1084,17 +1084,11 @@ We will discuss
 
 
 
-  16 minute read
+  15 minute read
 </p>
     
-    <p class="archive__item-excerpt" itemprop="description">–
-title: ‘Part II: Derivation of Natural-gradients’
-date: 2021-10-04
-permalink: /posts/2021/10/Geomopt02/
-tags:
-
-  Natural Gradient Descent
-  Information Geo...</p>
+    <p class="archive__item-excerpt" itemprop="description">Goal
+This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the f...</p>
   </article>
 </div>
         
