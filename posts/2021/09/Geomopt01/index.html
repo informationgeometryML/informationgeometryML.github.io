@@ -679,7 +679,7 @@ The  circle and the open unit ball do not have the same dimensionality.</p>
   </tbody>
 </table>
 
-<p>Note that <code class="language-plaintext highlighter-rouge">$\log \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) := -\frac{1}{2} (d \log (2\pi) - \log \mathrm{det}(  \mathbf{S} ) +\frac{1}{2} \mathbf{w}^T (\mathbf{S} + \mathbf{S}^T ) \mathbf{w} ) $</code>, where we explicitly enforce the symmetric constraint.
+<p>Note that <code class="language-plaintext highlighter-rouge">$\log \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) := -\frac{1}{2} (d \log (2\pi) - \log \mathrm{det}( \frac{ \mathbf{S} + \mathbf{S}^T }{2} ) +\frac{1}{2} \mathbf{w}^T (\mathbf{S} + \mathbf{S}^T ) \mathbf{w} ) $</code>, where we have to explicitly enforce the symmetric constraint during the Fisher matrix computation.
 We  can use 
 the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization map</a> <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code> to enforce the symmetric constraint instead.
 The map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>  returns  a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array obtained by vectorizing only the lower triangular part of a (symmetric) <code class="language-plaintext highlighter-rouge">$d$</code>-by-<code class="language-plaintext highlighter-rouge">$d$</code> matrix <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.
