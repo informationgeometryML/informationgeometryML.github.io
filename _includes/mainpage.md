@@ -4,7 +4,7 @@ Blog posts on computational aspects of differential, geometric, and algebraic st
 
 
 For generalized natural-gradient methods, please see 
-* Structured natural gradient descent: [talk](https://www.youtube.com/watch?v=vEY1ZxDJX8o&t=11s), [paper](https://arxiv.org/abs/2102.07405), [blog]({{ site.baseurl }}{% post_url 2021-07-05-GeomProj01 %})
+* Structured natural gradient descent: [long talk]( https://download.dsf.tuhh.de/ig4ds22/videos/IG4DS-WuLin.mp4), [short talk](https://www.youtube.com/watch?v=vEY1ZxDJX8o&t=11s), [paper](https://arxiv.org/abs/2102.07405), [blog]({{ site.baseurl }}{% post_url 2021-07-05-GeomProj01 %})
 * Riemannian gradient descent: [talk](https://www.youtube.com/watch?v=nu1hT-LExFg), [paper](https://arxiv.org/abs/2002.10060)
 
 
