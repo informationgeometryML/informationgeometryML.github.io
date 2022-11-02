@@ -193,7 +193,7 @@ MathJax = {
 
 
 
-  18 minute read
+  19 minute read
 </p>
           
         </header>
@@ -617,6 +617,69 @@ $$</code></p>
 
 </blockquote>
 
+<blockquote>
+  <p>More Example   (Ill-defined FIM and Singular FIM):</p>
+
+  <p>Consider a bivariate  Gaussian family with zero mean. There are many parametrizations.</p>
+
+  <ol>
+    <li>
+      <p>ill-defined paramtrization: <code class="language-plaintext highlighter-rouge">$ \Big\{ \exp\Big( -\frac{1}{2}\Big[  w^T \Sigma^{-1} w + \log \mathrm{det}(\Sigma) + 2 \log (2\pi)  \Big] \Big)  | \Sigma \in \mathcal{R}^{2 \times 2}   \Big\}$</code> since 
+<code class="language-plaintext highlighter-rouge">$\log \mathrm{det}(\Sigma)$</code> must be well-defined. This parametrization leads to an ill-defined FIM.</p>
+    </li>
+    <li>
+      <p>ill-defined paramtrization: <code class="language-plaintext highlighter-rouge">$ \Big\{ \exp\Big( -\frac{1}{2}\Big[  w^T \Sigma^{-1} w + \log \mathrm{det}(\Sigma) + 2 \log (2\pi)  \Big] \Big)  | \mathrm{det}(\Sigma)&gt;0, \Sigma \in \mathcal{R}^{2 \times 2}  \Big\}$</code> since <code class="language-plaintext highlighter-rouge">$ w^T \Sigma^{-1} w $</code> can be as negative as possible as $w \to \infty$ if $\Sigma^{-1}$ is not symmetric positive-definite.
+This parametrization leads to an ill-defined FIM.</p>
+    </li>
+    <li>
+      <p>well-defined paramtrization with non-intrinsic  $2$-by-$2$ (asymmetric) parameter matrix <code class="language-plaintext highlighter-rouge">$\Sigma$</code>: <code class="language-plaintext highlighter-rouge">$\Big \{ \exp\Big( -\frac{1}{2}\Big[  w^T \big(\frac{ \Sigma^{-1} + \Sigma^{-T} }{2}\big) w + \log \mathrm{det}(\Sigma) + 2 \log (2\pi)  \Big] \Big)  |  \frac{ \Sigma^{-1} + \Sigma^{-T} }{2} \succ \mathbf{0},  \mathrm{det}(\Sigma)&gt;0, \Sigma \in \mathcal{R}^{2 \times 2} \Big\}$</code>, where we have to explicitly enforce the symmetric constraint such as $w^T \big(\frac{ \Sigma^{-1} + \Sigma^{-T} }{2}\big) w $.
+This parametrization leads to a singular FIM.</p>
+    </li>
+    <li>
+      <p>well-defined paramtrization with intrinsic $3$-by-$1$  parameter vector <code class="language-plaintext highlighter-rouge">v</code>: <code class="language-plaintext highlighter-rouge">$\Big\{ \exp\Big( -\frac{1}{2}\Big[  w^T  ( \mathrm{vech}^{-1}(v))^{-1} w + \log \mathrm{det}( \mathrm{vech}^{-1}(v)) + 2 \log (2\pi)  \Big] \Big)  |   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$</code>.  Equivalentlly, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$ is a symmetric parameter matrix.
+This parametrization leads to a non-singular FIM.</p>
+    </li>
+  </ol>
+
+  <p>The map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}^{-1}()$</code> is the inverse map of  <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code>.
+We  can use 
+the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization map</a> <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code> to enforce the symmetric constraint instead.
+The map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>  returns  a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array obtained by vectorizing only the lower triangular part of a (symmetric) <code class="language-plaintext highlighter-rouge">$d$</code>-by-<code class="language-plaintext highlighter-rouge">$d$</code> matrix <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.</p>
+
+</blockquote>
+<div class="notice--info">
+  <details>
+<summary>Illustration of map $\mathrm{vech}()$ and $\mathrm{vech}^{-1}()$ (click to expand)</summary>
+<fieldset class="field-set">
+      <blockquote>
+        <p>Consider the following symmetric 2-by-2 matrix</p>
+
+        <p><code class="language-plaintext highlighter-rouge">$$
+\mathbf{S} = 
+\begin{aligned}
+\begin{bmatrix} 2 &amp;  -1 \\  -1  &amp; 3  \end{bmatrix}
+\end{aligned}
+$$</code>
+The output of map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code> is
+<code class="language-plaintext highlighter-rouge">$$
+\mathbf{v}:=\mathrm{vech}(\mathbf{S}) = 
+\begin{aligned}
+\begin{bmatrix} 2  \\  -1  \\ 3  \end{bmatrix}
+\end{aligned}
+$$</code></p>
+
+        <p>The output of  map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}^{-1}(\mathbf{v})$</code> is
+<code class="language-plaintext highlighter-rouge">$$
+\mathrm{vech}^{-1}(\mathbf{v}) = 
+\begin{aligned}
+\begin{bmatrix} 2 &amp;  -1 \\  -1  &amp; 3  \end{bmatrix}
+\end{aligned}
+$$</code></p>
+      </blockquote>
+    </fieldset>
+</details>
+</div>
+
 <h1 id="dimensionality-of-a-manifold">Dimensionality of a manifold</h1>
 <hr>
 <p>We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
@@ -669,7 +732,7 @@ The  circle and the open unit ball do not have the same dimensionality.</p>
 <code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |0,s^{-1}) \Big|  s&gt;0 \}$</code> with precision <code class="language-plaintext highlighter-rouge">$s$</code> <br> under intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau = s $</code>
 </td>
       <td style="text-align: center">
-<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathrm{MatH}(\tau) = \mathbf{S}   \succ \mathbf{0} \}$</code> with precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>  <br> under intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{S})$</code>.</td>
+<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathrm{vech}^{-1}(\tau) = \mathbf{S}   \succ \mathbf{0} \}$</code> with precision <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>  <br> under intrinsic parameterization <code class="language-plaintext highlighter-rouge">$\tau = \mathrm{vech}(\mathbf{S})$</code>.</td>
     </tr>
     <tr>
       <td style="text-align: center">1-dim statistical manifold</td>
@@ -678,45 +741,6 @@ The  circle and the open unit ball do not have the same dimensionality.</p>
     </tr>
   </tbody>
 </table>
-
-<p>Note that <code class="language-plaintext highlighter-rouge">$\log \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) := -\frac{1}{2} (d \log (2\pi) - \log \mathrm{det}( \frac{ \mathbf{S} + \mathbf{S}^T }{2} ) +\frac{1}{2} \mathbf{w}^T (\mathbf{S} + \mathbf{S}^T ) \mathbf{w} ) $</code>, where we have to explicitly enforce the symmetric constraint during the Fisher matrix computation.
-We  can use 
-the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization map</a> <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code> to enforce the symmetric constraint instead.
-The map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>  returns  a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array obtained by vectorizing only the lower triangular part of a (symmetric) <code class="language-plaintext highlighter-rouge">$d$</code>-by-<code class="language-plaintext highlighter-rouge">$d$</code> matrix <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.
-The map <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}()$</code> is the inverse map of  <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code>.</p>
-
-<div class="notice--info">
-  <details>
-<summary>Illustration of these two maps (click to expand)</summary>
-<fieldset class="field-set">
-      <blockquote>
-        <p>Consider the following symmetric 2-by-2 matrix</p>
-
-        <p><code class="language-plaintext highlighter-rouge">$$
-\mathbf{S} = 
-\begin{aligned}
-\begin{bmatrix} 2 &amp;  -1 \\  -1  &amp; 3  \end{bmatrix}
-\end{aligned}
-$$</code>
-The output of map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code> is
-<code class="language-plaintext highlighter-rouge">$$
-\mathbf{v}:=\mathrm{vech}(\mathbf{S}) = 
-\begin{aligned}
-\begin{bmatrix} 2  \\  -1  \\ 3  \end{bmatrix}
-\end{aligned}
-$$</code></p>
-
-        <p>The output of  map <code class="language-plaintext highlighter-rouge">$\mathrm{MatH}(\mathbf{v})$</code> is
-<code class="language-plaintext highlighter-rouge">$$
-\mathrm{MatH}(\mathbf{v}) = 
-\begin{aligned}
-\begin{bmatrix} 2 &amp;  -1 \\  -1  &amp; 3  \end{bmatrix}
-\end{aligned}
-$$</code></p>
-      </blockquote>
-    </fieldset>
-</details>
-</div>
 
 <hr>
 <h1 id="references">References</h1>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-10-26T19:54:09-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (Part VI is incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-11-02T11:22:42-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (Part VI is incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -3080,6 +3080,69 @@ $$&lt;/code&gt;&lt;/p&gt;
 
 &lt;/blockquote&gt;
 
+&lt;blockquote&gt;
+  &lt;p&gt;More Example   (Ill-defined FIM and Singular FIM):&lt;/p&gt;
+
+  &lt;p&gt;Consider a bivariate  Gaussian family with zero mean. There are many parametrizations.&lt;/p&gt;
+
+  &lt;ol&gt;
+    &lt;li&gt;
+      &lt;p&gt;ill-defined paramtrization: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \Big\{ \exp\Big( -\frac{1}{2}\Big[  w^T \Sigma^{-1} w + \log \mathrm{det}(\Sigma) + 2 \log (2\pi)  \Big] \Big)  | \Sigma \in \mathcal{R}^{2 \times 2}   \Big\}$&lt;/code&gt; since 
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\log \mathrm{det}(\Sigma)$&lt;/code&gt; must be well-defined. This parametrization leads to an ill-defined FIM.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;ill-defined paramtrization: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \Big\{ \exp\Big( -\frac{1}{2}\Big[  w^T \Sigma^{-1} w + \log \mathrm{det}(\Sigma) + 2 \log (2\pi)  \Big] \Big)  | \mathrm{det}(\Sigma)&amp;gt;0, \Sigma \in \mathcal{R}^{2 \times 2}  \Big\}$&lt;/code&gt; since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ w^T \Sigma^{-1} w $&lt;/code&gt; can be as negative as possible as $w \to \infty$ if $\Sigma^{-1}$ is not symmetric positive-definite.
+This parametrization leads to an ill-defined FIM.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;well-defined paramtrization with non-intrinsic  $2$-by-$2$ (asymmetric) parameter matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Sigma$&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Big \{ \exp\Big( -\frac{1}{2}\Big[  w^T \big(\frac{ \Sigma^{-1} + \Sigma^{-T} }{2}\big) w + \log \mathrm{det}(\Sigma) + 2 \log (2\pi)  \Big] \Big)  |  \frac{ \Sigma^{-1} + \Sigma^{-T} }{2} \succ \mathbf{0},  \mathrm{det}(\Sigma)&amp;gt;0, \Sigma \in \mathcal{R}^{2 \times 2} \Big\}$&lt;/code&gt;, where we have to explicitly enforce the symmetric constraint such as $w^T \big(\frac{ \Sigma^{-1} + \Sigma^{-T} }{2}\big) w $.
+This parametrization leads to a singular FIM.&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;p&gt;well-defined paramtrization with intrinsic $3$-by-$1$  parameter vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;v&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Big\{ \exp\Big( -\frac{1}{2}\Big[  w^T  ( \mathrm{vech}^{-1}(v))^{-1} w + \log \mathrm{det}( \mathrm{vech}^{-1}(v)) + 2 \log (2\pi)  \Big] \Big)  |   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$&lt;/code&gt;.  Equivalentlly, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$ is a symmetric parameter matrix.
+This parametrization leads to a non-singular FIM.&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+
+  &lt;p&gt;The map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}^{-1}()$&lt;/code&gt; is the inverse map of  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt;.
+We  can use 
+the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization map&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt; to enforce the symmetric constraint instead.
+The map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;  returns  a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d + 1)}{2}$&lt;/code&gt;-dim array obtained by vectorizing only the lower triangular part of a (symmetric) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d$&lt;/code&gt;-by-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d$&lt;/code&gt; matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;.&lt;/p&gt;
+
+&lt;/blockquote&gt;
+&lt;div class=&quot;notice--info&quot;&gt;
+  &lt;details&gt;
+&lt;summary&gt;Illustration of map $\mathrm{vech}()$ and $\mathrm{vech}^{-1}()$ (click to expand)&lt;/summary&gt;
+&lt;fieldset class=&quot;field-set&quot;&gt;
+      &lt;blockquote&gt;
+        &lt;p&gt;Consider the following symmetric 2-by-2 matrix&lt;/p&gt;
+
+        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\mathbf{S} = 
+\begin{aligned}
+\begin{bmatrix} 2 &amp;amp;  -1 \\  -1  &amp;amp; 3  \end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;
+The output of map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\mathbf{v}:=\mathrm{vech}(\mathbf{S}) = 
+\begin{aligned}
+\begin{bmatrix} 2  \\  -1  \\ 3  \end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+
+        &lt;p&gt;The output of  map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}^{-1}(\mathbf{v})$&lt;/code&gt; is
+&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
+\mathrm{vech}^{-1}(\mathbf{v}) = 
+\begin{aligned}
+\begin{bmatrix} 2 &amp;amp;  -1 \\  -1  &amp;amp; 3  \end{bmatrix}
+\end{aligned}
+$$&lt;/code&gt;&lt;/p&gt;
+      &lt;/blockquote&gt;
+    &lt;/fieldset&gt;
+&lt;/details&gt;
+&lt;/div&gt;
+
 &lt;h1 id=&quot;dimensionality-of-a-manifold&quot;&gt;Dimensionality of a manifold&lt;/h1&gt;
 &lt;hr /&gt;
 &lt;p&gt;We can define the dimension of a manifold by using the  degrees of freedom of an intrinsic parametrization.
@@ -3129,7 +3192,7 @@ The  circle and the open unit ball do not have the same dimensionality.&lt;/p&gt
   &lt;tbody&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(w |0,s^{-1}) \Big|  s&amp;gt;0 \}$&lt;/code&gt; with precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$s$&lt;/code&gt; &lt;br /&gt; under intrinsic parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = s $&lt;/code&gt;&lt;/td&gt;
-      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathrm{MatH}(\tau) = \mathbf{S}   \succ \mathbf{0} \}$&lt;/code&gt; with precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;  &lt;br /&gt; under intrinsic parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \mathrm{vech}(\mathbf{S})$&lt;/code&gt;.&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ \{ \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) \Big| \mathrm{vech}^{-1}(\tau) = \mathbf{S}   \succ \mathbf{0} \}$&lt;/code&gt; with precision &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;  &lt;br /&gt; under intrinsic parameterization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau = \mathrm{vech}(\mathbf{S})$&lt;/code&gt;.&lt;/td&gt;
     &lt;/tr&gt;
     &lt;tr&gt;
       &lt;td style=&quot;text-align: center&quot;&gt;1-dim statistical manifold&lt;/td&gt;
@@ -3137,45 +3200,6 @@ The  circle and the open unit ball do not have the same dimensionality.&lt;/p&gt
     &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-
-&lt;p&gt;Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\log \mathcal{N}(\mathbf{w} |\mathbf{0},\mathbf{S}^{-1}) := -\frac{1}{2} (d \log (2\pi) - \log \mathrm{det}( \frac{ \mathbf{S} + \mathbf{S}^T }{2} ) +\frac{1}{2} \mathbf{w}^T (\mathbf{S} + \mathbf{S}^T ) \mathbf{w} ) $&lt;/code&gt;, where we have to explicitly enforce the symmetric constraint during the Fisher matrix computation.
-We  can use 
-the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization map&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt; to enforce the symmetric constraint instead.
-The map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;  returns  a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d + 1)}{2}$&lt;/code&gt;-dim array obtained by vectorizing only the lower triangular part of a (symmetric) &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d$&lt;/code&gt;-by-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d$&lt;/code&gt; matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;.
-The map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}()$&lt;/code&gt; is the inverse map of  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;notice--info&quot;&gt;
-  &lt;details&gt;
-&lt;summary&gt;Illustration of these two maps (click to expand)&lt;/summary&gt;
-&lt;fieldset class=&quot;field-set&quot;&gt;
-      &lt;blockquote&gt;
-        &lt;p&gt;Consider the following symmetric 2-by-2 matrix&lt;/p&gt;
-
-        &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\mathbf{S} = 
-\begin{aligned}
-\begin{bmatrix} 2 &amp;amp;  -1 \\  -1  &amp;amp; 3  \end{bmatrix}
-\end{aligned}
-$$&lt;/code&gt;
-The output of map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt; is
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\mathbf{v}:=\mathrm{vech}(\mathbf{S}) = 
-\begin{aligned}
-\begin{bmatrix} 2  \\  -1  \\ 3  \end{bmatrix}
-\end{aligned}
-$$&lt;/code&gt;&lt;/p&gt;
-
-        &lt;p&gt;The output of  map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{MatH}(\mathbf{v})$&lt;/code&gt; is
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
-\mathrm{MatH}(\mathbf{v}) = 
-\begin{aligned}
-\begin{bmatrix} 2 &amp;amp;  -1 \\  -1  &amp;amp; 3  \end{bmatrix}
-\end{aligned}
-$$&lt;/code&gt;&lt;/p&gt;
-      &lt;/blockquote&gt;
-    &lt;/fieldset&gt;
-&lt;/details&gt;
-&lt;/div&gt;
 
 &lt;hr /&gt;
 &lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
