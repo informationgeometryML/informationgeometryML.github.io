@@ -637,7 +637,11 @@ This parametrization leads to an ill-defined/incorrect FIM.</p>
 This parametrization leads to a singular FIM.</p>
     </li>
     <li>
-      <p>Well-defined parametrization with <strong>intrinsic</strong> $3$-by-$1$  parameter vector <code class="language-plaintext highlighter-rouge">$v$</code>: <code class="language-plaintext highlighter-rouge">$\Big\{ \exp\Big( -\frac{1}{2}\Big[  w^T  ( \mathrm{vech}^{-1}(v))^{-1} w + \log \mathrm{det}( \mathrm{vech}^{-1}(v)) + 2 \log (2\pi)  \Big] \Big)  \Big|   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$</code>.  Equivalentlly, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$ is a symmetric parameter matrix.
+      <p>Well-defined parametrization with <strong>intrinsic</strong> $3$-by-$1$  parameter vector <code class="language-plaintext highlighter-rouge">$v$</code>: <code class="language-plaintext highlighter-rouge">$\Big\{ \exp\Big( -\frac{1}{2}
+  \Big[  w^T  ( \mathrm{vech}^{-1}(v))^{-1} w + \log \mathrm{det}( \mathrm{vech}^{-1}(v)) + 2 \log (2\pi)  \Big] \Big)
+  \Big|   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$</code>.  Equivalentlly, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$
+  is a symmetric parameter matrix. Note that we should compute derivatives w.r.t. <code class="language-plaintext highlighter-rouge">$v$</code> instead of <code class="language-plaintext highlighter-rouge">$\Sigma$</code> under
+  this parametrization due to the symmetric constraint. 
 This parametrization leads to a non-singular FIM.</p>
     </li>
   </ol>
