@@ -193,7 +193,7 @@ MathJax = {
 
 
 
-  19 minute read
+  20 minute read
 </p>
           
         </header>
@@ -618,7 +618,7 @@ $$</code></p>
 </blockquote>
 
 <blockquote>
-  <p>More Example   (Ill-defined FIM and Singular FIM):</p>
+  <p>More Examples  (Ill-defined FIM and Singular FIM):</p>
 
   <p>Consider a bivariate  Gaussian family with zero mean. There are many parametrizations.</p>
 
@@ -634,6 +634,10 @@ This parametrization leads to an ill-defined/incorrect FIM.</p>
     <li>
       <p>Well-defined paramtrization with <strong>non-intrinsic</strong>  $2$-by-$2$ (potentially asymmetric) parameter matrix <code class="language-plaintext highlighter-rouge">$\Sigma$</code>: <code class="language-plaintext highlighter-rouge">$\Big \{ \exp\Big( -\frac{1}{2}\Big[  w^T \big(\frac{ \Sigma^{-1} + \Sigma^{-T} }{2}\big) w + \log \mathrm{det}(\Sigma) + 2 \log (2\pi)  \Big] \Big)  |  \frac{ \Sigma^{-1} + \Sigma^{-T} }{2} \succ \mathbf{0},  \mathrm{det}(\Sigma)&gt;0, \Sigma \in \mathcal{R}^{2 \times 2} \Big\}$</code>, where we have to explicitly enforce the symmetric constraint such as $w^T \big(\frac{ \Sigma^{-1} + \Sigma^{-T} }{2}\big) w $.
 This parametrization leads to a singular FIM.</p>
+    </li>
+    <li>
+      <p>Well-defined paramtrization with <strong>non-intrinsic</strong>  $2$-by-$2$ (potentially asymmetric) parameter matrix <code class="language-plaintext highlighter-rouge">$\Sigma$</code>: <code class="language-plaintext highlighter-rouge">$\Big \{ \exp\Big( -\frac{1}{2}\Big[  w^T \big(\frac{ \Sigma^{-1} + \Sigma^{-T} }{2}\big) w + \log \mathrm{det}\big(\frac{ \Sigma^{-1} + \Sigma^{-T} }{2}\big) + 2 \log (2\pi)  \Big] \Big)  |  \frac{ \Sigma^{-1} + \Sigma^{-T} }{2} \succ \mathbf{0},  \Sigma \in \mathcal{R}^{2 \times 2} \Big\}$</code>, where we have to explicitly enforce the symmetric constraint.
+This parametrization also leads to a singular FIM.</p>
     </li>
     <li>
       <p>Well-defined paramtrization with <strong>intrinsic</strong> $3$-by-$1$  parameter vector <code class="language-plaintext highlighter-rouge">v</code>: <code class="language-plaintext highlighter-rouge">$\Big\{ \exp\Big( -\frac{1}{2}\Big[  w^T  ( \mathrm{vech}^{-1}(v))^{-1} w + \log \mathrm{det}( \mathrm{vech}^{-1}(v)) + 2 \log (2\pi)  \Big] \Big)  |   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$</code>.  Equivalentlly, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$ is a symmetric parameter matrix.
