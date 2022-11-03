@@ -193,7 +193,7 @@ MathJax = {
 
 
 
-  19 minute read
+  21 minute read
 </p>
           
         </header>
@@ -680,6 +680,34 @@ $$</code></p>
       </fieldset>
 </details>
   </div>
+
+  <div class="notice--danger">
+    <p>The symmetric constraint is essential when it comes to the FIM computation.</p>
+
+    <p>For simplicity, consider <code class="language-plaintext highlighter-rouge">$\Sigma_0= \mathbf{I}$</code>, where $\mathrm{vec}(\Sigma_0)=(1,0,0,1)$ and $\mathrm{vech}(\Sigma_0)=(1,0,1)$.</p>
+
+    <p>Case 1 (without the symmetric constraint) <code class="language-plaintext highlighter-rouge">$-\log p_1(w|\Sigma)= \frac{1}{2}\Big[  w^T  \Sigma^{-1} w + \log \mathrm{det}\big(\Sigma \big) + 2 \log (2\pi) \Big] $</code>.</p>
+
+    <p>Note that the bivariate Gaussian distribution <code class="language-plaintext highlighter-rouge">$p_1(w|\Sigma)$</code> is not well-defined since $\Sigma$ is in general not symmetric.</p>
+
+    <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned} 
+F(\mathrm{vec}(\Sigma_0)) &amp; = E_{p_1(w|\Sigma) } [  - \nabla_{\mathrm{vec}(\Sigma) }^2 \log p_1(w|\Sigma) ] \Big|_{\Sigma=\Sigma_0} = \begin{bmatrix} 0.5 &amp;  0 &amp; 0 &amp; 0 \\ 0 &amp;  -0.25 &amp; 0.75 &amp; 0 \\ 0 &amp;  0.75 &amp; -0.25 &amp; 0\\ 0 &amp;  0 &amp; 0 &amp; 0.5\end{bmatrix}
+\end{aligned}  \,\,\,\,\, \text{(incorrect FIM)}
+$$</code></p>
+
+    <p>Case 2 (with the symmetric constraint) <code class="language-plaintext highlighter-rouge">$-\log p_2(w|\Sigma)= \frac{1}{2}\Big[  w^T \big(\frac{ \Sigma + \Sigma^{T} }{2}\big)^{-1} w + \log \mathrm{det}\big(\frac{ \Sigma + \Sigma^{T} }{2}\big) + 2 \log (2\pi) \Big] $</code>.</p>
+
+    <p>Note that the bivariate Gaussian distribution <code class="language-plaintext highlighter-rouge">$p_2(w|\Sigma)$</code> is well-defined since the symmetric constraint is enforced.</p>
+
+    <p><code class="language-plaintext highlighter-rouge">$$
+\begin{aligned} 
+F(\mathrm{vec}(\Sigma_0)) &amp; = E_{p_2(w|\Sigma) } [  - \nabla_{\mathrm{vec}(\Sigma) }^2 \log p_2(w|\Sigma) ]  = \begin{bmatrix} 0.5 &amp;  0 &amp; 0 &amp; 0 \\ 0 &amp;  0.25 &amp; 0.25 &amp; 0 \\ 0 &amp;  0.25 &amp; 0.25 &amp; 0\\ 0 &amp;  0 &amp; 0 &amp; 0.5\end{bmatrix}
+\end{aligned} \,\,\,\,\, \text{(correct FIM)}
+$$</code></p>
+
+  </div>
+
 </blockquote>
 
 <h1 id="dimensionality-of-a-manifold">Dimensionality of a manifold</h1>
