@@ -644,7 +644,7 @@ vectorization map.</p>
 is a symmetric parameter matrix. Note that we should compute derivatives w.r.t. <code class="language-plaintext highlighter-rouge">$v$</code> instead of <code class="language-plaintext highlighter-rouge">$\Sigma$</code> under
 this parametrization due to the symmetric constraint. 
 This parametrization leads to a <strong>non-singular</strong> FIM w.r.t. <code class="language-plaintext highlighter-rouge">$v=\mathrm{vech}(\Sigma)$</code>, where <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code> is
-the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization map</a>. It implicitly enforces the symmetric constraint.</p>
+the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization map</a>. Note that <code class="language-plaintext highlighter-rouge">$\mathrm{vech}^{-1}(v)$</code> implicitly enforces the symmetric constraint.</p>
     </li>
   </ol>
 
