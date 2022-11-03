@@ -687,6 +687,39 @@ $$</code></p>
     <p>For simplicity, consider <code class="language-plaintext highlighter-rouge">$\Sigma_0= \mathbf{I}$</code>, where $\mathrm{vec}(\Sigma_0)=(1,0,0,1)$ and $\mathrm{vech}(\Sigma_0)=(1,0,1)$.</p>
 
     <p>Please see the following Python (JAX) code to obtain the numerical results.</p>
+    <div class="notice--info">
+      <details>
+<summary>Python (JAX) code of the Gaussian example: (Click to expand)</summary>
+<fieldset class="field-set">
+          <div class="language-python highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">jax</span>
+<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">jax.config</span> <span class="kn">import</span> <span class="n">config</span><span class="p">;</span> <span class="n">config</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="s">"jax_enable_x64"</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">neg_log_p</span><span class="p">(</span><span class="n">param</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">is_sym</span><span class="p">):</span>
+    <span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">param</span><span class="p">,(</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">))</span> <span class="c1"># co-variance # (Sigma = vec^{-1}(param))
+</span>    <span class="k">if</span> <span class="n">is_sym</span><span class="p">:</span>
+        <span class="n">Sigma</span> <span class="o">=</span> <span class="p">(</span><span class="n">Sigma</span><span class="o">+</span><span class="n">Sigma</span><span class="p">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+    <span class="n">Sigma0</span> <span class="o">=</span> <span class="n">jax</span><span class="p">.</span><span class="n">lax</span><span class="p">.</span><span class="n">stop_gradient</span><span class="p">(</span> <span class="p">(</span><span class="n">Sigma</span><span class="o">+</span><span class="n">Sigma</span><span class="p">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span> <span class="p">)</span>
+    <span class="n">trace</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">solve</span><span class="p">(</span><span class="n">Sigma</span><span class="p">,</span><span class="n">Sigma0</span><span class="p">)</span> <span class="p">)</span> <span class="c1"># Tr(Sigma^{-1} Sigma_0)
+</span>    <span class="n">_</span><span class="p">,</span> <span class="n">logdet</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">slogdet</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)</span> <span class="c1"># log det(Sigma)
+</span>    <span class="k">return</span> <span class="p">(</span> <span class="n">trace</span> <span class="o">+</span> <span class="n">logdet</span> <span class="o">+</span> <span class="n">d</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">)</span> <span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
+<span class="n">is_sym</span> <span class="o">=</span> <span class="bp">False</span> <span class="c1"># case 1 if is_sym==False; case 2 if is_sym==True
+</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span>
+<span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">param</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Sigma</span><span class="p">,(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span> <span class="c1">#vec(Sigma)
+</span><span class="k">print</span><span class="p">(</span> <span class="s">'vec(Sigma):'</span><span class="p">,</span> <span class="n">param</span> <span class="p">)</span>
+<span class="k">print</span><span class="p">(</span> <span class="s">'Sigma:</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">param</span><span class="p">,(</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">))</span> <span class="p">)</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">param</span><span class="p">:</span><span class="n">neg_log_p</span><span class="p">(</span><span class="n">param</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">is_sym</span><span class="p">)</span>
+<span class="n">hess_f</span> <span class="o">=</span> <span class="n">jax</span><span class="p">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="n">jacrev</span><span class="p">(</span><span class="n">nlp</span><span class="p">))</span>
+<span class="n">hess</span> <span class="o">=</span> <span class="n">hess_f</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'FIM:</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span> <span class="n">hess</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span> <span class="s">'det(FIM):%f'</span><span class="o">%</span><span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">det</span><span class="p">(</span><span class="n">hess</span><span class="p">)</span> <span class="p">)</span>
+<span class="n">w</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">hess</span><span class="p">)</span><span class="c1">#eigen values
+</span><span class="k">print</span><span class="p">(</span><span class="s">'eigen values of the FIM:'</span><span class="p">,</span><span class="n">w</span><span class="p">)</span>
+</code></pre></div>          </div>
+        </fieldset>
+</details>
+    </div>
 
     <p><strong>Case 1 (without the symmetry constraint)</strong>: <code class="language-plaintext highlighter-rouge">$-\log p_1(w|\Sigma)= \frac{1}{2}\Big[  w^T  \Sigma^{-1} w + \log \mathrm{det}\big(\Sigma \big) + 2 \log (2\pi) \Big] $</code>.</p>
 
@@ -717,42 +750,6 @@ $$</code> where  <code class="language-plaintext highlighter-rouge">$ F_2(\mathr
 
   </div>
 </blockquote>
-
-<div class="notice--info">
-  <details>
-<summary>Python (JAX) code of the Gaussian example: (Click to expand)</summary>
-<fieldset class="field-set">
-
-      <figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">jax</span>
-<span class="kn">import</span> <span class="nn">jax.numpy</span> <span class="k">as</span> <span class="n">np</span>
-<span class="kn">from</span> <span class="nn">jax.config</span> <span class="kn">import</span> <span class="n">config</span><span class="p">;</span> <span class="n">config</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="s">"jax_enable_x64"</span><span class="p">,</span> <span class="bp">True</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">neg_log_p</span><span class="p">(</span><span class="n">param</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">is_sym</span><span class="p">):</span>
-    <span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">param</span><span class="p">,(</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">))</span> <span class="c1"># co-variance # (Sigma = vec^{-1}(param))
-</span>    <span class="k">if</span> <span class="n">is_sym</span><span class="p">:</span>
-        <span class="n">Sigma</span> <span class="o">=</span> <span class="p">(</span><span class="n">Sigma</span><span class="o">+</span><span class="n">Sigma</span><span class="p">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
-    <span class="n">Sigma0</span> <span class="o">=</span> <span class="n">jax</span><span class="p">.</span><span class="n">lax</span><span class="p">.</span><span class="n">stop_gradient</span><span class="p">(</span> <span class="p">(</span><span class="n">Sigma</span><span class="o">+</span><span class="n">Sigma</span><span class="p">.</span><span class="n">T</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span> <span class="p">)</span>
-    <span class="n">trace</span> <span class="o">=</span>  <span class="n">np</span><span class="p">.</span><span class="n">trace</span><span class="p">(</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">solve</span><span class="p">(</span><span class="n">Sigma</span><span class="p">,</span><span class="n">Sigma0</span><span class="p">)</span> <span class="p">)</span> <span class="c1"># Tr(Sigma^{-1} Sigma_0)
-</span>    <span class="n">_</span><span class="p">,</span> <span class="n">logdet</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">slogdet</span><span class="p">(</span><span class="n">Sigma</span><span class="p">)</span> <span class="c1"># log det(Sigma)
-</span>    <span class="k">return</span> <span class="p">(</span> <span class="n">trace</span> <span class="o">+</span> <span class="n">logdet</span> <span class="o">+</span> <span class="n">d</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="o">*</span><span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">)</span> <span class="p">)</span><span class="o">/</span><span class="mf">2.0</span>
-
-<span class="n">is_sym</span> <span class="o">=</span> <span class="bp">False</span> <span class="c1"># case 1 if is_sym==False; case 2 if is_sym==True
-</span><span class="n">d</span><span class="o">=</span><span class="mi">2</span>
-<span class="n">Sigma</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
-<span class="n">param</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">Sigma</span><span class="p">,(</span><span class="o">-</span><span class="mi">1</span><span class="p">,))</span> <span class="c1">#vec(Sigma)
-</span><span class="k">print</span><span class="p">(</span> <span class="s">'vec(Sigma):'</span><span class="p">,</span> <span class="n">param</span> <span class="p">)</span>
-<span class="k">print</span><span class="p">(</span> <span class="s">'Sigma:</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">param</span><span class="p">,(</span><span class="n">d</span><span class="p">,</span><span class="n">d</span><span class="p">))</span> <span class="p">)</span>
-<span class="n">nlp</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">param</span><span class="p">:</span><span class="n">neg_log_p</span><span class="p">(</span><span class="n">param</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">is_sym</span><span class="p">)</span>
-<span class="n">hess_f</span> <span class="o">=</span> <span class="n">jax</span><span class="p">.</span><span class="n">jacfwd</span><span class="p">(</span><span class="n">jax</span><span class="p">.</span><span class="n">jacrev</span><span class="p">(</span><span class="n">nlp</span><span class="p">))</span>
-<span class="n">hess</span> <span class="o">=</span> <span class="n">hess_f</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span><span class="s">'FIM:</span><span class="se">\n</span><span class="s">'</span><span class="p">,</span> <span class="n">hess</span><span class="p">)</span>
-<span class="k">print</span><span class="p">(</span> <span class="s">'det(FIM):%f'</span><span class="o">%</span><span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">det</span><span class="p">(</span><span class="n">hess</span><span class="p">)</span> <span class="p">)</span>
-<span class="n">w</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">eigh</span><span class="p">(</span><span class="n">hess</span><span class="p">)</span><span class="c1">#eigen values
-</span><span class="k">print</span><span class="p">(</span><span class="s">'eigen values of the FIM:'</span><span class="p">,</span><span class="n">w</span><span class="p">)</span></code></pre></figure>
-
-    </fieldset>
-</details>
-</div>
 
 <h1 id="dimensionality-of-a-manifold">Dimensionality of a manifold</h1>
 <hr>
