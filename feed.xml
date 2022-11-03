@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-11-02T21:45:47-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (Part VI is incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-11-02T21:50:40-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (Part VI is incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -3145,7 +3145,8 @@ $$&lt;/code&gt;&lt;/p&gt;
   &lt;/div&gt;
 
   &lt;div class=&quot;notice--danger&quot;&gt;
-    &lt;p&gt;The symmetric constraint in the Gaussian family is essential when it comes to the FIM computation.&lt;/p&gt;
+    &lt;p&gt;The symmetric constraint in the Gaussian family is essential when it comes to the FIM computation.
+Recall that a FIM is positive semi-definite by definition.&lt;/p&gt;
 
     &lt;p&gt;For simplicity, consider &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Sigma_0= \mathbf{I}$&lt;/code&gt;, where $\mathrm{vec}(\Sigma_0)=(1,0,0,1)$ and $\mathrm{vech}(\Sigma_0)=(1,0,1)$.&lt;/p&gt;
 
@@ -3167,7 +3168,7 @@ $$&lt;/code&gt; where $\mathrm{det}( F_1(\mathrm{vec}(\Sigma_0)) )&amp;lt;0$  is
 \begin{aligned} 
 F_2(\mathrm{vec}(\Sigma_0)) &amp;amp; = E_{p_2(w|\Sigma) } [  - \nabla_{\mathrm{vec}(\Sigma) }^2 \log p_2(w|\Sigma) ] \Big|_{\Sigma=\Sigma_0} = \begin{bmatrix} 0.5 &amp;amp;  0 &amp;amp; 0 &amp;amp; 0 \\ 0 &amp;amp;  0.25 &amp;amp; 0.25 &amp;amp; 0 \\ 0 &amp;amp;  0.25 &amp;amp; 0.25 &amp;amp; 0\\ 0 &amp;amp;  0 &amp;amp; 0 &amp;amp; 0.5\end{bmatrix}
 \end{aligned} \,\,\,\,\, \text{(correct (singular) FIM)},
-$$&lt;/code&gt; where $ F_2(\mathrm{vec}(\Sigma_0)) $  is semi-positive definite.&lt;/p&gt;
+$$&lt;/code&gt; where $ F_2(\mathrm{vec}(\Sigma_0)) $  is positive semi-definite.&lt;/p&gt;
 
   &lt;/div&gt;
 

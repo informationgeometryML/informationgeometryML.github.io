@@ -682,7 +682,8 @@ $$</code></p>
   </div>
 
   <div class="notice--danger">
-    <p>The symmetric constraint in the Gaussian family is essential when it comes to the FIM computation.</p>
+    <p>The symmetric constraint in the Gaussian family is essential when it comes to the FIM computation.
+Recall that a FIM is positive semi-definite by definition.</p>
 
     <p>For simplicity, consider <code class="language-plaintext highlighter-rouge">$\Sigma_0= \mathbf{I}$</code>, where $\mathrm{vec}(\Sigma_0)=(1,0,0,1)$ and $\mathrm{vech}(\Sigma_0)=(1,0,1)$.</p>
 
@@ -704,7 +705,7 @@ $$</code> where $\mathrm{det}( F_1(\mathrm{vec}(\Sigma_0)) )&lt;0$  is even <str
 \begin{aligned} 
 F_2(\mathrm{vec}(\Sigma_0)) &amp; = E_{p_2(w|\Sigma) } [  - \nabla_{\mathrm{vec}(\Sigma) }^2 \log p_2(w|\Sigma) ] \Big|_{\Sigma=\Sigma_0} = \begin{bmatrix} 0.5 &amp;  0 &amp; 0 &amp; 0 \\ 0 &amp;  0.25 &amp; 0.25 &amp; 0 \\ 0 &amp;  0.25 &amp; 0.25 &amp; 0\\ 0 &amp;  0 &amp; 0 &amp; 0.5\end{bmatrix}
 \end{aligned} \,\,\,\,\, \text{(correct (singular) FIM)},
-$$</code> where $ F_2(\mathrm{vec}(\Sigma_0)) $  is semi-positive definite.</p>
+$$</code> where $ F_2(\mathrm{vec}(\Sigma_0)) $  is positive semi-definite.</p>
 
   </div>
 
