@@ -696,7 +696,8 @@ $$</code></p>
 \begin{aligned} 
 F_1(\mathrm{vec}(\Sigma_0)) &amp; = E_{p_1(w|\Sigma) } \Big[  - \nabla_{\mathrm{vec}(\Sigma) }^2 \log p_1(w|\Sigma) \Big] \Big|_{\Sigma=\Sigma_0} \\
 &amp; = \frac{1}{2}  E_{p_1(w|\Sigma) } \Big[   \nabla_{\mathrm{vec}(\Sigma) }^2 \Big( \mathrm{Tr}\big(\Sigma^{-1} w w^T\big) + \log \mathrm{det}(\Sigma) \Big) \Big] \Big|_{\Sigma=\Sigma_0} \\
-&amp; =  \frac{1}{2} \nabla_{\mathrm{vec}(\Sigma) }^2 \Big( \mathrm{Tr}\big(\Sigma^{-1} E_{p_1(w|\Sigma) }\big[w w^T\big] \big) + \log \mathrm{det}(\Sigma) \Big)  \Big|_{\Sigma=\Sigma_0} \\
+&amp; = \frac{1}{2} \nabla_{\mathrm{vec}(\Sigma) }^2 E_{p_1(w|\Sigma_0) } \Big[    \Big( \mathrm{Tr}\big(\Sigma^{-1} w w^T\big) + \log \mathrm{det}(\Sigma) \Big) \Big] \Big|_{\Sigma=\Sigma_0} \\
+&amp; =  \frac{1}{2} \nabla_{\mathrm{vec}(\Sigma) }^2 \Big( \mathrm{Tr}\big(\Sigma^{-1} E_{p_1(w|\Sigma_0) }\big[w w^T\big] \big) + \log \mathrm{det}(\Sigma) \Big)  \Big|_{\Sigma=\Sigma_0} \\
 &amp; =  \frac{1}{2} \nabla_{\mathrm{vec}(\Sigma) }^2 \Big( \mathrm{Tr}\big(\Sigma^{-1} \Sigma_0\big) + \log \mathrm{det}(\Sigma) \Big)  \Big|_{\Sigma=\Sigma_0} \\
 &amp; = \begin{bmatrix} 0.5 &amp;  0 &amp; 0 &amp; 0 \\ 0 &amp;  0 &amp; 0.5 &amp; 0 \\ 0 &amp;  0.5 &amp; 0 &amp; 0\\ 0 &amp;  0 &amp; 0 &amp; 0.5\end{bmatrix} \,\,\,\,\, \text{(incorrect (non-singular) FIM)},
 \end{aligned} 
