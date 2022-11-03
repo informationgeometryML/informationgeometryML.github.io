@@ -634,29 +634,26 @@ This parametrization leads to an ill-defined/incorrect FIM.</p>
     </li>
     <li>
       <p>Well-defined parametrization with <strong>non-intrinsic</strong>  $2$-by-$2$ (potentially asymmetric) parameter matrix <code class="language-plaintext highlighter-rouge">$\Sigma$</code>: <code class="language-plaintext highlighter-rouge">$\Big \{ \exp\Big( -\frac{1}{2}\Big[  w^T \big(\frac{ \Sigma + \Sigma^{T} }{2}\big)^{-1} w + \log \mathrm{det}\big(\frac{ \Sigma + \Sigma^{T} }{2}\big) + 2 \log (2\pi)  \Big] \Big)  \Big|  \frac{ \Sigma + \Sigma^{T} }{2} \succ \mathbf{0},  \Sigma \in \mathcal{R}^{2 \times 2} \Big\}$</code>, where we have to explicitly enforce the symmetric constraint.
-This parametrization leads to a singular FIM.</p>
+This parametrization leads to a <strong>singular</strong> FIM w.r.t. <code class="language-plaintext highlighter-rouge">$\mathrm{vec}(\Sigma)$</code>, where <code class="language-plaintext highlighter-rouge">$\mathrm{vec}()$</code> is the standard
+vectorization map.</p>
     </li>
     <li>
       <p>Well-defined parametrization with <strong>intrinsic</strong> $3$-by-$1$  parameter vector <code class="language-plaintext highlighter-rouge">$v$</code>: <code class="language-plaintext highlighter-rouge">$\Big\{ \exp\Big( -\frac{1}{2}
-  \Big[  w^T  ( \mathrm{vech}^{-1}(v))^{-1} w + \log \mathrm{det}( \mathrm{vech}^{-1}(v)) + 2 \log (2\pi)  \Big] \Big)
-  \Big|   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$</code>.  Equivalently, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$
-  is a symmetric parameter matrix. Note that we should compute derivatives w.r.t. <code class="language-plaintext highlighter-rouge">$v$</code> instead of <code class="language-plaintext highlighter-rouge">$\Sigma$</code> under
-  this parametrization due to the symmetric constraint. 
-This parametrization leads to a non-singular FIM.</p>
+\Big[  w^T  ( \mathrm{vech}^{-1}(v))^{-1} w + \log \mathrm{det}( \mathrm{vech}^{-1}(v)) + 2 \log (2\pi)  \Big] \Big)
+\Big|   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$</code>.  Equivalently, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$
+is a symmetric parameter matrix. Note that we should compute derivatives w.r.t. <code class="language-plaintext highlighter-rouge">$v$</code> instead of <code class="language-plaintext highlighter-rouge">$\Sigma$</code> under
+this parametrization due to the symmetric constraint. 
+This parametrization leads to a <strong>non-singular</strong> FIM w.r.t. <code class="language-plaintext highlighter-rouge">$v=\mathrm{vech}(\Sigma)$</code>, where <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code> is
+the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization map</a>. It implicitly enforces the symmetric constraint.</p>
     </li>
   </ol>
 
-  <p>The map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}^{-1}()$</code> is the inverse map of  <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code>.
-We  can use 
-the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization map</a> <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code> to enforce the symmetric constraint instead.
-The map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>  returns  a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array obtained by vectorizing only the lower triangular part of a symmetric <code class="language-plaintext highlighter-rouge">$d$</code>-by-<code class="language-plaintext highlighter-rouge">$d$</code> matrix <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.</p>
+  <p>The map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>  returns  a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array obtained by vectorizing only the lower triangular part of a symmetric <code class="language-plaintext highlighter-rouge">$d$</code>-by-<code class="language-plaintext highlighter-rouge">$d$</code> matrix <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.</p>
 
-</blockquote>
-<div class="notice--info">
-  <details>
+  <div class="notice--info">
+    <details>
 <summary>Illustration of map $\mathrm{vech}()$ and $\mathrm{vech}^{-1}()$ (click to expand)</summary>
 <fieldset class="field-set">
-      <blockquote>
         <p>Consider the following symmetric 2-by-2 matrix</p>
 
         <p><code class="language-plaintext highlighter-rouge">$$
@@ -680,10 +677,10 @@ $$</code></p>
 \begin{bmatrix} 2 &amp;  -1 \\  -1  &amp; 3  \end{bmatrix}
 \end{aligned}
 $$</code></p>
-      </blockquote>
-    </fieldset>
+      </fieldset>
 </details>
-</div>
+  </div>
+</blockquote>
 
 <h1 id="dimensionality-of-a-manifold">Dimensionality of a manifold</h1>
 <hr>

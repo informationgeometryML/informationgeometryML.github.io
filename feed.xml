@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-11-02T13:26:17-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (Part VI is incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-11-02T18:30:21-07:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (Part VI is incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -3097,29 +3097,26 @@ This parametrization leads to an ill-defined/incorrect FIM.&lt;/p&gt;
     &lt;/li&gt;
     &lt;li&gt;
       &lt;p&gt;Well-defined parametrization with &lt;strong&gt;non-intrinsic&lt;/strong&gt;  $2$-by-$2$ (potentially asymmetric) parameter matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Sigma$&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Big \{ \exp\Big( -\frac{1}{2}\Big[  w^T \big(\frac{ \Sigma + \Sigma^{T} }{2}\big)^{-1} w + \log \mathrm{det}\big(\frac{ \Sigma + \Sigma^{T} }{2}\big) + 2 \log (2\pi)  \Big] \Big)  \Big|  \frac{ \Sigma + \Sigma^{T} }{2} \succ \mathbf{0},  \Sigma \in \mathcal{R}^{2 \times 2} \Big\}$&lt;/code&gt;, where we have to explicitly enforce the symmetric constraint.
-This parametrization leads to a singular FIM.&lt;/p&gt;
+This parametrization leads to a &lt;strong&gt;singular&lt;/strong&gt; FIM w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vec}(\Sigma)$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vec}()$&lt;/code&gt; is the standard
+vectorization map.&lt;/p&gt;
     &lt;/li&gt;
     &lt;li&gt;
       &lt;p&gt;Well-defined parametrization with &lt;strong&gt;intrinsic&lt;/strong&gt; $3$-by-$1$  parameter vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$v$&lt;/code&gt;: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Big\{ \exp\Big( -\frac{1}{2}
-  \Big[  w^T  ( \mathrm{vech}^{-1}(v))^{-1} w + \log \mathrm{det}( \mathrm{vech}^{-1}(v)) + 2 \log (2\pi)  \Big] \Big)
-  \Big|   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$&lt;/code&gt;.  Equivalently, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$
-  is a symmetric parameter matrix. Note that we should compute derivatives w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$v$&lt;/code&gt; instead of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Sigma$&lt;/code&gt; under
-  this parametrization due to the symmetric constraint. 
-This parametrization leads to a non-singular FIM.&lt;/p&gt;
+\Big[  w^T  ( \mathrm{vech}^{-1}(v))^{-1} w + \log \mathrm{det}( \mathrm{vech}^{-1}(v)) + 2 \log (2\pi)  \Big] \Big)
+\Big|   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$&lt;/code&gt;.  Equivalently, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$
+is a symmetric parameter matrix. Note that we should compute derivatives w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$v$&lt;/code&gt; instead of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Sigma$&lt;/code&gt; under
+this parametrization due to the symmetric constraint. 
+This parametrization leads to a &lt;strong&gt;non-singular&lt;/strong&gt; FIM w.r.t. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$v=\mathrm{vech}(\Sigma)$&lt;/code&gt;, where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt; is
+the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization map&lt;/a&gt;. It implicitly enforces the symmetric constraint.&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
 
-  &lt;p&gt;The map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}^{-1}()$&lt;/code&gt; is the inverse map of  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt;.
-We  can use 
-the &lt;a href=&quot;https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization&quot;&gt;half-vectorization map&lt;/a&gt; &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}()$&lt;/code&gt; to enforce the symmetric constraint instead.
-The map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;  returns  a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d + 1)}{2}$&lt;/code&gt;-dim array obtained by vectorizing only the lower triangular part of a symmetric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d$&lt;/code&gt;-by-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d$&lt;/code&gt; matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;.&lt;/p&gt;
+  &lt;p&gt;The map &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathrm{vech}(\mathbf{S})$&lt;/code&gt;  returns  a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\frac{d(d + 1)}{2}$&lt;/code&gt;-dim array obtained by vectorizing only the lower triangular part of a symmetric &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d$&lt;/code&gt;-by-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$d$&lt;/code&gt; matrix &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{S}$&lt;/code&gt;.&lt;/p&gt;
 
-&lt;/blockquote&gt;
-&lt;div class=&quot;notice--info&quot;&gt;
-  &lt;details&gt;
+  &lt;div class=&quot;notice--info&quot;&gt;
+    &lt;details&gt;
 &lt;summary&gt;Illustration of map $\mathrm{vech}()$ and $\mathrm{vech}^{-1}()$ (click to expand)&lt;/summary&gt;
 &lt;fieldset class=&quot;field-set&quot;&gt;
-      &lt;blockquote&gt;
         &lt;p&gt;Consider the following symmetric 2-by-2 matrix&lt;/p&gt;
 
         &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$
@@ -3143,10 +3140,10 @@ $$&lt;/code&gt;&lt;/p&gt;
 \begin{bmatrix} 2 &amp;amp;  -1 \\  -1  &amp;amp; 3  \end{bmatrix}
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
-      &lt;/blockquote&gt;
-    &lt;/fieldset&gt;
+      &lt;/fieldset&gt;
 &lt;/details&gt;
-&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/blockquote&gt;
 
 &lt;h1 id=&quot;dimensionality-of-a-manifold&quot;&gt;Dimensionality of a manifold&lt;/h1&gt;
 &lt;hr /&gt;
