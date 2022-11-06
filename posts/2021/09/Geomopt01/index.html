@@ -689,7 +689,7 @@ $$</code></p>
     <p>Please see this Python (JAX) code to compute FIMs in the following examples.</p>
     <div class="notice--info">
       <details>
-<summary>Python (JAX) code of the Gaussian example: (Click to expand)</summary>
+<summary>Python (JAX) code of the Gaussian examples: (Click to expand)</summary>
 <fieldset class="field-set">
           <div class="language-python highlighter-rouge">
 <div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">jax</span>
@@ -734,7 +734,7 @@ F_1(\mathrm{vec}(\Sigma_0)) &amp; = E_{p_1(w|\Sigma) } \Big[  - \nabla_{\mathrm{
 &amp; =  \frac{1}{2} \nabla_{\mathrm{vec}(\Sigma) }^2 \Big( \mathrm{Tr}\big(\Sigma^{-1} \Sigma_0\big) + \log \mathrm{det}(\Sigma) \Big)  \Big|_{\Sigma=\Sigma_0} \\
 &amp; = \begin{bmatrix} 0.5 &amp;  0 &amp; 0 &amp; 0 \\ 0 &amp;  0 &amp; 0.5 &amp; 0 \\ 0 &amp;  0.5 &amp; 0 &amp; 0\\ 0 &amp;  0 &amp; 0 &amp; 0.5\end{bmatrix} \,\,\,\,\, \text{(incorrect (non-singular) FIM)},
 \end{aligned} 
-$$</code> where <code class="language-plaintext highlighter-rouge">$F_1(\mathrm{vec}(\Sigma_0))$</code> is even <strong>not</strong> positive semi-definite since <code class="language-plaintext highlighter-rouge">$\mathrm{det}( F_1(\mathrm{vec}(\Sigma_0)) )&lt;0$</code>.</p>
+$$</code> where <code class="language-plaintext highlighter-rouge">$F_1(\mathrm{vec}(\Sigma_0))$</code> is even <span style="color:red"><strong>not</strong></span> positive semi-definite since <code class="language-plaintext highlighter-rouge">$\mathrm{det}( F_1(\mathrm{vec}(\Sigma_0)) )&lt;0$</code>.</p>
 
     <p><strong>Gaussian Example 2 (with the symmetry constraint)</strong>: <code class="language-plaintext highlighter-rouge">$-\log p_2(w|\Sigma)= \frac{1}{2}\Big[  w^T \big(\frac{ \Sigma + \Sigma^{T} }{2}\big)^{-1} w + \log \mathrm{det}\big(\frac{ \Sigma + \Sigma^{T} }{2}\big) + 2 \log (2\pi) \Big] $</code>.</p>
 
