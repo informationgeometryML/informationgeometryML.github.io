@@ -318,7 +318,7 @@ This difference is crucial to (natural) gradient-based methods in
   <p><strong>Warning</strong>:</p>
   <ul>
     <li>
-      <p>We do NOT define how to compute the distance between two points in the manifold, which will be discussed <a href="#riemannian-gradients-as-tangent-vectors-optional">here</a>.</p>
+      <p>We do NOT define how to compute the distance between two points on the manifold, which will be discussed <a href="#riemannian-gradients-as-tangent-vectors-optional">here</a>.</p>
     </li>
     <li>
       <p>We also do NOT define how to compute the distance between a vector at point <code class="language-plaintext highlighter-rouge">$\tau_0$</code> and another vector at a distinct point
@@ -375,14 +375,14 @@ This is the <strong>key difference</strong> between intrinsic parameter space <c
 
         <p><code class="language-plaintext highlighter-rouge">$\tau$</code> is a <strong>local intrinsic</strong> parameterization for the unit sphere.</p>
 
-        <p>The line segment from <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> to <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} $</code>  is shown in blue, which is the parameter representation of the yellow curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> in the manifold.
+        <p>The line segment from <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> to <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0+t\mathbf{v} $</code>  is shown in blue, which is the parameter representation of the yellow curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> on the manifold.
 We will show later that Riemannian gradient vector <code class="language-plaintext highlighter-rouge">$\mathbf{v}$</code> under this parametrization at point <code class="language-plaintext highlighter-rouge">$\mathbf{\tau}_0$</code> is the <strong>parameter representation</strong> of the tangent vector of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> at point <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code>.</p>
 
         <p><img src="/img/sphere_simple.png" width="500"></p>
 
         <div class="notice--danger">
           <p><strong>Warning</strong>:
-Curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> often is NOT the shortest curve in the manifold from <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code> to  <code class="language-plaintext highlighter-rouge">$\mathbf{x}_1$</code>.</p>
+Curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> often is NOT the shortest curve on the manifold from <code class="language-plaintext highlighter-rouge">$\mathbf{x}_0$</code> to  <code class="language-plaintext highlighter-rouge">$\mathbf{x}_1$</code>.</p>
         </div>
       </blockquote>
     </fieldset>
@@ -572,7 +572,7 @@ Strictly speaking, a natural gradient/vector w.r.t. <code class="language-plaint
 Now, we will discuss abstract Riemannian vectors without specifying a parametrization <a class="citation" href="#tu2011introduction">[2]</a>. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in 
 <a href="/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance">Part III</a>.</p>
 
-<p>A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$ of a smooth curve in the manifold under the parametrization $\tau$. 
+<p>A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$ of a smooth curve on the manifold under the parametrization $\tau$. 
 The set of tangent vectors evaluated at $\mathbf{\tau}_0$ is called the tangent space at the corresponding point. 
 We will illustrate this by an example.</p>
 
@@ -682,7 +682,7 @@ and the blue line segment <code class="language-plaintext highlighter-rouge">${\
 
 <blockquote>
 
-  <p>Consider a smooth scalar function defined in the manifold $h: \mathcal{M} \to \mathcal{R}$. In the unit sphere case, consider <code class="language-plaintext highlighter-rouge">$h(\mathbf{z})$</code> subject to <code class="language-plaintext highlighter-rouge">$\mathbf{z}^T \mathbf{z}=1$</code>.
+  <p>Consider a smooth scalar function defined on the manifold $h: \mathcal{M} \to \mathcal{R}$. In the unit sphere case, consider <code class="language-plaintext highlighter-rouge">$h(\mathbf{z})$</code> subject to <code class="language-plaintext highlighter-rouge">$\mathbf{z}^T \mathbf{z}=1$</code>.
 Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function as <code class="language-plaintext highlighter-rouge">$h_\tau(\mathbf{\tau}):=h( (\tau_x,\tau_y,\sqrt{1-\tau_x^2-\tau_y^2}) )$</code> where <code class="language-plaintext highlighter-rouge">$\tau \in \Omega_\tau$</code>.</p>
 
   <p>By the definition of a <a href="#directional-derivatives-in-a-manifold">directional derivative</a>, the following identity holds for any smooth scalar function $h$: <code class="language-plaintext highlighter-rouge">$[\nabla h_\tau(\mathbf{\tau}_0)]^T \mathbf{v}(\mathbf{\tau}_0) =\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}$</code>, where $h_\tau$ is the parametric representation of  $h$ . Note that <code class="language-plaintext highlighter-rouge">$(h_\tau \circ {\gamma}_\tau) (t)$</code> is a function defined from <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau $</code> to $\mathcal{R}^1$, where domain <code class="language-plaintext highlighter-rouge">$\mathbf{I}_\tau \subset \mathcal{R}^1$</code>.</p>
@@ -701,7 +701,7 @@ of curve <code class="language-plaintext highlighter-rouge">$\gamma(t)$</code> a
 </blockquote>
 
 <h2 id="riemannian-gradient-space-has-a-vector-space-structure">(Riemannian) Gradient Space has a Vector-space Structure</h2>
-<p>We can similarly define vector additions and real scalar products in a tangent vector space by using the tangent direction of a curve in the manifold with/without a parameterization.</p>
+<p>We can similarly define vector additions and real scalar products in a tangent vector space by using the tangent direction of a curve on the manifold with/without a parameterization.</p>
 
 <p>A key takeaway is that a vector space structure is an integral part of a tangent <strong>vector</strong> space. On the other hand, we have to use an intrinsic parametrization <code class="language-plaintext highlighter-rouge">$\tau$</code> to artificially create a local vector space structure in parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code>.
 We will discuss more about this difference in <a href="/posts/2021/11/Geomopt04/#two-kinds-of-spaces">Part IV</a>.</p>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-11-07T08:35:50-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (Part VI is incomplete)&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-11-08T10:46:45-08:00</updated><id>/feed.xml</id><title type="html">Information Geometry in Machine Learning</title><subtitle>Blog website for Information Geometry in ML.</subtitle><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><entry><title type="html">Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods</title><link href="/posts/2021/12/Geomopt06/" rel="alternate" type="text/html" title="Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods" /><published>2021-12-22T00:00:00-08:00</published><updated>2021-12-22T00:00:00-08:00</updated><id>/posts/2021/12/Geomopt06</id><content type="html" xml:base="/posts/2021/12/Geomopt06/">&lt;p&gt;Warning: working in Progress (Part VI is incomplete)&lt;/p&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;p&gt;In this blog post, we discuss about how to handle parameter constraints of exponential family.&lt;/p&gt;
@@ -988,14 +988,14 @@ speaking,  a (Riemannian) gradient space is much simpler and nicer than a  param
 \end{aligned}\tag{1}\label{1}
 $$&lt;/code&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\tau_k}$&lt;/code&gt; is a natural gradient evaluated at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k}$&lt;/code&gt; and $\alpha&amp;gt;0$ is a step-size.&lt;/p&gt;
+&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\tau_k}:=-\mathbf{v}(\tau_k) $&lt;/code&gt; is a natural gradient evaluated at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k}$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha:=t&amp;gt;0$&lt;/code&gt; is a step-size.&lt;/p&gt;
 
-&lt;p&gt;This update in Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is inspired by the standard vector update in the &lt;strong&gt;gradient space&lt;/strong&gt;.
-By choosing an intrinsic parametrization, this update is also valid in the &lt;strong&gt;parameter space&lt;/strong&gt; as long as the step-size is small
+&lt;p&gt;This update in Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is inspired by the standard linear update in the &lt;strong&gt;tangent vector space&lt;/strong&gt; (see the green space in the above figure).
+By choosing an intrinsic parametrization, this update is also valid in the &lt;strong&gt;parameter space&lt;/strong&gt;  (see the red space in the above figure) as long as the step-size is small
 enough.&lt;/p&gt;
 
-&lt;p&gt;The update in the parameter space is valid since the parameter space $\Omega_\tau$ has a local vector-space structure thanks to the use of an intrinsic parametrization.
-However, when $\Omega_\tau$ is a proper subset of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T_{\tau_k}\mathcal{M}$&lt;/code&gt; (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau \neq T_{\tau_k}\mathcal{M} $&lt;/code&gt;), the update in Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is valid only when the step-size $\alpha$ is small enough so that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k+1} \in \Omega_\tau$&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;The update in the parameter space is valid since the parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; has a local vector-space structure thanks to the use of an intrinsic parametrization.
+However, when   &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt; is a proper &lt;strong&gt;subset&lt;/strong&gt; of &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$T_{\tau_k}\mathcal{M}$&lt;/code&gt; (i.e., &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau \neq T_{\tau_k}\mathcal{M} $&lt;/code&gt;), the update in Eq. &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\eqref{1}$&lt;/code&gt; is valid only when the step-size &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\alpha$&lt;/code&gt; is small enough so that  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k+1} \in \Omega_\tau$&lt;/code&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;notice--danger&quot;&gt;
   &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:&lt;/p&gt;
@@ -1094,7 +1094,7 @@ gradient-based method does not dependent on the choice of intrinsic parametrizat
 Recall that in  &lt;a href=&quot;/posts/2021/10/Geomopt02/#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;Part II&lt;/a&gt; we only define a distance between two Riemannian gradients evaluated at the same point. We can use the length of the shortest geodesic to define the distance between two points on the manifold. 
 In statistics, the distance induced by a geodesic with the Fisher-Rao metric is known as the Rao distance &lt;a class=&quot;citation&quot; href=&quot;#atkinson1981rao&quot;&gt;[2]&lt;/a&gt;. This is
 known as the boundary value problem (BVP) of a geodesic. The boundary conditions are  specified by  a starting point and an end
-point in the manifold. To solve this problem, we often solve an easier problem, which is known as the initial value
+point on the manifold. To solve this problem, we often solve an easier problem, which is known as the initial value
 problem (IVP) of a geodesic. The initial conditions are  specified by a starting point and an initial Riemannian gradient/velocity.&lt;/p&gt;
 
 &lt;p&gt;We will only consider the IVP of a geodesic for simplicity. 
@@ -1127,8 +1127,7 @@ $$&lt;/code&gt;  where &lt;code class=&quot;language-plaintext highlighter-rouge
   &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:&lt;/p&gt;
 
   &lt;p&gt;The exponential map is a geometric object.
-We use 
-a parametric representation of a geodesic curve to define the exponential map.
+We use a parametric representation of a geodesic curve to define the exponential map.
 Thus, the form/expression of the map does depend on the choice of parametrizations.&lt;/p&gt;
 &lt;/div&gt;
 
@@ -1142,7 +1141,7 @@ Under intrinsic parametrization &lt;code class=&quot;language-plaintext highligh
 \end{aligned}
 $$&lt;/code&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k+1}$&lt;/code&gt; always stays in the manifold thanks to the exponential map since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\tau_k}$&lt;/code&gt; is in the domain of the exponential map.&lt;/p&gt;
+&lt;p&gt;where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_{k+1}$&lt;/code&gt; always stays on the manifold thanks to the exponential map since &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\hat{\mathbf{g}}_{\tau_k}$&lt;/code&gt; is in the domain of the exponential map.&lt;/p&gt;
 
 &lt;p&gt;The invariance of this update is due to the uniqueness of the geodesic and the invariance of &lt;a href=&quot;https://en.wikipedia.org/wiki/Solving_the_geodesic_equations&quot;&gt;the Euler-Lagrange equation&lt;/a&gt;. We will not discuss this further in this post to avoid complicated derivations. We will cover this in future posts about calculus of variations.&lt;/p&gt;
 
@@ -2273,7 +2272,7 @@ This difference is crucial to (natural) gradient-based methods in
   &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:&lt;/p&gt;
   &lt;ul&gt;
     &lt;li&gt;
-      &lt;p&gt;We do NOT define how to compute the distance between two points in the manifold, which will be discussed &lt;a href=&quot;#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+      &lt;p&gt;We do NOT define how to compute the distance between two points on the manifold, which will be discussed &lt;a href=&quot;#riemannian-gradients-as-tangent-vectors-optional&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
     &lt;/li&gt;
     &lt;li&gt;
       &lt;p&gt;We also do NOT define how to compute the distance between a vector at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau_0$&lt;/code&gt; and another vector at a distinct point
@@ -2330,14 +2329,14 @@ This is the &lt;strong&gt;key difference&lt;/strong&gt; between intrinsic parame
 
         &lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; is a &lt;strong&gt;local intrinsic&lt;/strong&gt; parameterization for the unit sphere.&lt;/p&gt;
 
-        &lt;p&gt;The line segment from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} $&lt;/code&gt;  is shown in blue, which is the parameter representation of the yellow curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; in the manifold.
+        &lt;p&gt;The line segment from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0+t\mathbf{v} $&lt;/code&gt;  is shown in blue, which is the parameter representation of the yellow curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; on the manifold.
 We will show later that Riemannian gradient vector &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{v}$&lt;/code&gt; under this parametrization at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{\tau}_0$&lt;/code&gt; is the &lt;strong&gt;parameter representation&lt;/strong&gt; of the tangent vector of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; at point &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt;.&lt;/p&gt;
 
         &lt;p&gt;&lt;img src=&quot;/img/sphere_simple.png&quot; width=&quot;500&quot; /&gt;&lt;/p&gt;
 
         &lt;div class=&quot;notice--danger&quot;&gt;
           &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;:
-Curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; often is NOT the shortest curve in the manifold from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt; to  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_1$&lt;/code&gt;.&lt;/p&gt;
+Curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\gamma(t)$&lt;/code&gt; often is NOT the shortest curve on the manifold from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_0$&lt;/code&gt; to  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{x}_1$&lt;/code&gt;.&lt;/p&gt;
         &lt;/div&gt;
       &lt;/blockquote&gt;
     &lt;/fieldset&gt;
@@ -2527,7 +2526,7 @@ Strictly speaking, a natural gradient/vector w.r.t. &lt;code class=&quot;languag
 Now, we will discuss abstract Riemannian vectors without specifying a parametrization &lt;a class=&quot;citation&quot; href=&quot;#tu2011introduction&quot;&gt;[2]&lt;/a&gt;. This concept is often used to show the invariance of Riemannian gradients, which will be discussed in 
 &lt;a href=&quot;/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance&quot;&gt;Part III&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$ of a smooth curve in the manifold under the parametrization $\tau$. 
+&lt;p&gt;A Riemannian gradient denoted by $\mathbf{v}(\tau)$ is indeed a tangent vector $\mathbf{v}$ of a smooth curve on the manifold under the parametrization $\tau$. 
 The set of tangent vectors evaluated at $\mathbf{\tau}_0$ is called the tangent space at the corresponding point. 
 We will illustrate this by an example.&lt;/p&gt;
 
@@ -2630,7 +2629,7 @@ and the blue line segment &lt;code class=&quot;language-plaintext highlighter-ro
 
 &lt;blockquote&gt;
 
-  &lt;p&gt;Consider a smooth scalar function defined in the manifold $h: \mathcal{M} \to \mathcal{R}$. In the unit sphere case, consider &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h(\mathbf{z})$&lt;/code&gt; subject to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{z}^T \mathbf{z}=1$&lt;/code&gt;.
+  &lt;p&gt;Consider a smooth scalar function defined on the manifold $h: \mathcal{M} \to \mathcal{R}$. In the unit sphere case, consider &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h(\mathbf{z})$&lt;/code&gt; subject to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{z}^T \mathbf{z}=1$&lt;/code&gt;.
 Under parameterization $\mathbf{\tau}$, we can locally re-expressed the function as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$h_\tau(\mathbf{\tau}):=h( (\tau_x,\tau_y,\sqrt{1-\tau_x^2-\tau_y^2}) )$&lt;/code&gt; where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau \in \Omega_\tau$&lt;/code&gt;.&lt;/p&gt;
 
   &lt;p&gt;By the definition of a &lt;a href=&quot;#directional-derivatives-in-a-manifold&quot;&gt;directional derivative&lt;/a&gt;, the following identity holds for any smooth scalar function $h$: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$[\nabla h_\tau(\mathbf{\tau}_0)]^T \mathbf{v}(\mathbf{\tau}_0) =\frac{d h_\tau({\gamma}_\tau(t)) }{d t} \Big|_{t=0}$&lt;/code&gt;, where $h_\tau$ is the parametric representation of  $h$ . Note that &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$(h_\tau \circ {\gamma}_\tau) (t)$&lt;/code&gt; is a function defined from &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau $&lt;/code&gt; to $\mathcal{R}^1$, where domain &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\mathbf{I}_\tau \subset \mathcal{R}^1$&lt;/code&gt;.&lt;/p&gt;
@@ -2649,7 +2648,7 @@ of curve &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\ga
 &lt;/blockquote&gt;
 
 &lt;h2 id=&quot;riemannian-gradient-space-has-a-vector-space-structure&quot;&gt;(Riemannian) Gradient Space has a Vector-space Structure&lt;/h2&gt;
-&lt;p&gt;We can similarly define vector additions and real scalar products in a tangent vector space by using the tangent direction of a curve in the manifold with/without a parameterization.&lt;/p&gt;
+&lt;p&gt;We can similarly define vector additions and real scalar products in a tangent vector space by using the tangent direction of a curve on the manifold with/without a parameterization.&lt;/p&gt;
 
 &lt;p&gt;A key takeaway is that a vector space structure is an integral part of a tangent &lt;strong&gt;vector&lt;/strong&gt; space. On the other hand, we have to use an intrinsic parametrization &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\tau$&lt;/code&gt; to artificially create a local vector space structure in parameter space &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$\Omega_\tau$&lt;/code&gt;.
 We will discuss more about this difference in &lt;a href=&quot;/posts/2021/11/Geomopt04/#two-kinds-of-spaces&quot;&gt;Part IV&lt;/a&gt;.&lt;/p&gt;
@@ -3296,7 +3295,7 @@ The  circle and the open unit ball do not have the same dimensionality.&lt;/p&gt
       &lt;p&gt;In differential geometry, an intrinsic parametrization is known as a coordinate chart. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
     &lt;/li&gt;
   &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts to ensure non-singular FIMs: Regularity conditions and intrinsic parameterizations of a distribution Dimensionality of a smooth manifold</summary></entry><entry><title type="html">Structured Natural Gradient Descent (ICML 2021)</title><link href="/posts/2021/07/ICML/" rel="alternate" type="text/html" title="Structured Natural Gradient Descent (ICML 2021)" /><published>2021-07-05T00:00:00-07:00</published><updated>2021-07-05T00:00:00-07:00</updated><id>/posts/2021/07/GeomProj01</id><content type="html" xml:base="/posts/2021/07/ICML/">&lt;p&gt;More about this work &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[1]&lt;/a&gt;: &lt;a href=&quot;https://download.dsf.tuhh.de/ig4ds22/videos/IG4DS-WuLin.mp4&quot;&gt;Long talk&lt;/a&gt;,  &lt;a href=&quot;https://www.youtube.com/watch?v=vEY1ZxDJX8o&amp;amp;t=11s&quot;&gt;(Youtube) talk&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2102.07405&quot;&gt;extended paper&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2107.10884&quot;&gt;short paper&lt;/a&gt;,
+&lt;/div&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Riemannian Manifold" /><summary type="html">Goal This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts to ensure non-singular FIMs: Regularity conditions and intrinsic parameterizations of a distribution Dimensionality of a smooth manifold</summary></entry><entry><title type="html">Structured Natural Gradient Descent (ICML 2021)</title><link href="/posts/2021/07/ICML/" rel="alternate" type="text/html" title="Structured Natural Gradient Descent (ICML 2021)" /><published>2021-07-05T00:00:00-07:00</published><updated>2021-07-05T00:00:00-07:00</updated><id>/posts/2021/07/GeomProj01</id><content type="html" xml:base="/posts/2021/07/ICML/">&lt;p&gt;More about this work &lt;a class=&quot;citation&quot; href=&quot;#lin2021tractable&quot;&gt;[1]&lt;/a&gt;: &lt;a href=&quot;https://download.dsf.tuhh.de/ig4ds22/videos/IG4DS-WuLin.mp4&quot;&gt;Long talk&lt;/a&gt;,  &lt;a href=&quot;https://www.youtube.com/watch?v=vEY1ZxDJX8o&amp;amp;t=11s&quot;&gt;(Youtube) short talk&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2102.07405&quot;&gt;extended paper&lt;/a&gt;, &lt;a href=&quot;https://arxiv.org/abs/2107.10884&quot;&gt;short paper&lt;/a&gt;,
 &lt;a href=&quot;/img/poster.pdf&quot;&gt;poster&lt;/a&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;introduction&quot;&gt;Introduction&lt;/h1&gt;
@@ -3878,4 +3877,4 @@ _1$&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&q
 &lt;p&gt;&lt;span id=&quot;glasmachers2010exponential&quot;&gt;[3] T. Glasmachers, T. Schaul, S. Yi, D. Wierstra, &amp;amp; J. Schmidhuber, &quot;Exponential natural evolution strategies,&quot; &lt;i&gt;Proceedings of the 12th annual conference on Genetic and evolutionary computation&lt;/i&gt; (2010), pp. 393–400.&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;lin2021structured&quot;&gt;[4] W. Lin, F. Nielsen, M. E. Khan, &amp;amp; M. Schmidt, &quot;Structured second-order methods via natural gradient descent,&quot; &lt;i&gt;arXiv preprint arXiv:2107.10884&lt;/i&gt; (2021).&lt;/span&gt;&lt;/p&gt;
 &lt;p&gt;&lt;span id=&quot;lin2019stein&quot;&gt;[5] W. Lin, M. E. Khan, &amp;amp; M. Schmidt, &quot;Stein’s Lemma for the Reparameterization Trick with Exponential Family Mixtures,&quot; &lt;i&gt;arXiv preprint arXiv:1910.13398&lt;/i&gt; (2019).&lt;/span&gt;&lt;/p&gt;
-&lt;p&gt;&lt;span id=&quot;lin2020handling&quot;&gt;[6] W. Lin, M. Schmidt, &amp;amp; M. E. Khan, &quot;Handling the positive-definite constraint in the bayesian learning rule,&quot; &lt;i&gt;International Conference on Machine Learning&lt;/i&gt; (PMLR, 2020), pp. 6116–6126.&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Matrix Lie Groups" /><category term="Exponential Family" /><summary type="html">More about this work [1]: Long talk, (Youtube) talk, extended paper, short paper, poster</summary></entry></feed>
+&lt;p&gt;&lt;span id=&quot;lin2020handling&quot;&gt;[6] W. Lin, M. Schmidt, &amp;amp; M. E. Khan, &quot;Handling the positive-definite constraint in the bayesian learning rule,&quot; &lt;i&gt;International Conference on Machine Learning&lt;/i&gt; (PMLR, 2020), pp. 6116–6126.&lt;/span&gt;&lt;/p&gt;&lt;/p&gt;</content><author><name>Wu Lin,&lt;br&gt;Frank Nielsen,&lt;br&gt;Emtiyaz Khan,&lt;br&gt;Mark Schmidt</name><email>informationgeometryML@gmail.com</email></author><category term="Natural Gradient Descent" /><category term="Information Geometry" /><category term="Matrix Lie Groups" /><category term="Exponential Family" /><summary type="html">More about this work [1]: Long talk, (Youtube) short talk, extended paper, short paper, poster</summary></entry></feed>
