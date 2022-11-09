@@ -622,7 +622,7 @@ $$</code></p>
 <blockquote>
   <p>Consider a bivariate Gaussian family with zero mean over random variable $w \in \mathcal{R}^2$. There are many parametrizations.</p>
 
-  <ol>
+  <ul>
     <li>
       <p>Ill-defined parametrization: <code class="language-plaintext highlighter-rouge">$ \Big\{ \exp\Big( -\frac{1}{2}\Big[  w^T \Sigma^{-1} w + \log \mathrm{det}(\Sigma) + 2 \log (2\pi)  \Big] \Big)  \Big| \Sigma \in \mathcal{R}^{2 \times 2}   \Big\}$</code> since <code class="language-plaintext highlighter-rouge">$\log \mathrm{det}(\Sigma)$</code> must be well-defined. This parametrization leads to an ill-defined/incorrect FIM.</p>
     </li>
@@ -638,51 +638,50 @@ This parametrization leads to a <strong>singular</strong> FIM w.r.t. <code class
     <li>
       <p>Well-defined parametrization with <strong>intrinsic</strong> $3$-by-$1$  parameter vector <code class="language-plaintext highlighter-rouge">$v$</code>: <code class="language-plaintext highlighter-rouge">$\Big\{ \exp\Big( -\frac{1}{2}
 \Big[  w^T  ( \mathrm{vech}^{-1}(v))^{-1} w + \log \mathrm{det}( \mathrm{vech}^{-1}(v)) + 2 \log (2\pi)  \Big] \Big)
-\Big|   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$</code>.  Equivalently, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$
+\Big|   \mathrm{vech}^{-1}(v) \succ \mathbf{0} \Big\}$</code>.
+<br>  Given a symmetric matrix $\Sigma$, we define another vectorization map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\Sigma)$</code>, which returns a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array obtained by vectorizing only the lower triangular part of a symmetric <code class="language-plaintext highlighter-rouge">$d$</code>-by-<code class="language-plaintext highlighter-rouge">$d$</code> matrix <code class="language-plaintext highlighter-rouge">$\Sigma$</code>.
+<code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code> is known as the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization map</a>. 
+<br>   Equivalently, parameter $\Sigma:=\mathrm{vech}^{-1}(v)$
 is a symmetric parameter matrix. Note that <code class="language-plaintext highlighter-rouge">$\mathrm{vech}^{-1}(v)$</code> implicitly enforces the symmetry constraint and we should compute derivatives w.r.t. <code class="language-plaintext highlighter-rouge">$v$</code> instead of <code class="language-plaintext highlighter-rouge">$\Sigma$</code> under
 this parametrization.
-This parametrization leads to a <strong>non-singular</strong> FIM w.r.t. <code class="language-plaintext highlighter-rouge">$v=\mathrm{vech}(\Sigma)$</code>, where <code class="language-plaintext highlighter-rouge">$\mathrm{vech}()$</code> is
-the <a href="https://en.wikipedia.org/wiki/Vectorization_(mathematics)#Half-vectorization">half-vectorization map</a>.</p>
-    </li>
-  </ol>
+This parametrization leads to a <strong>non-singular</strong> FIM w.r.t. <code class="language-plaintext highlighter-rouge">$v=\mathrm{vech}(\Sigma)$</code>.</p>
 
-  <p>The map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code>  returns  a <code class="language-plaintext highlighter-rouge">$\frac{d(d + 1)}{2}$</code>-dim array obtained by vectorizing only the lower triangular part of a symmetric <code class="language-plaintext highlighter-rouge">$d$</code>-by-<code class="language-plaintext highlighter-rouge">$d$</code> matrix <code class="language-plaintext highlighter-rouge">$\mathbf{S}$</code>.</p>
-
-  <div class="notice--info">
-    <details>
+      <div class="notice--info">
+        <details>
 <summary>Illustration of map $\mathrm{vech}()$ and $\mathrm{vech}^{-1}()$ (click to expand)</summary>
 <fieldset class="field-set">
-        <p>Consider the following symmetric 2-by-2 matrix</p>
-
-        <p><code class="language-plaintext highlighter-rouge">$$
-\mathbf{S} = 
+            <p>Consider the following symmetric 2-by-2 matrix
+<code class="language-plaintext highlighter-rouge">$$
+\Sigma = 
 \begin{aligned}
 \begin{bmatrix} 2 &amp;  -1 \\  -1  &amp; 3  \end{bmatrix}
 \end{aligned}
-$$</code>
-The output of map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\mathbf{S})$</code> is
-<code class="language-plaintext highlighter-rouge">$$
-\mathbf{v}:=\mathrm{vech}(\mathbf{S}) = 
+ $$</code>
+ The output of map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}(\Sigma)$</code> is
+ <code class="language-plaintext highlighter-rouge">$$
+ \mathbf{v}:=\mathrm{vech}(\Sigma) = 
 \begin{aligned}
-\begin{bmatrix} 2  \\  -1  \\ 3  \end{bmatrix}
+ \begin{bmatrix} 2  \\  -1  \\ 3  \end{bmatrix}
 \end{aligned}
-$$</code></p>
+ $$</code></p>
 
-        <p>The output of  map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}^{-1}(\mathbf{v})$</code> is
-<code class="language-plaintext highlighter-rouge">$$
-\mathrm{vech}^{-1}(\mathbf{v}) = 
+            <p>The output of  map <code class="language-plaintext highlighter-rouge">$\mathrm{vech}^{-1}(\mathbf{v})$</code> is
+ <code class="language-plaintext highlighter-rouge">$$
+ \mathrm{vech}^{-1}(\mathbf{v}) = 
 \begin{aligned}
-\begin{bmatrix} 2 &amp;  -1 \\  -1  &amp; 3  \end{bmatrix}
+ \begin{bmatrix} 2 &amp;  -1 \\  -1  &amp; 3  \end{bmatrix}
 \end{aligned}
-$$</code></p>
-      </fieldset>
+ $$</code></p>
+          </fieldset>
 </details>
-  </div>
+      </div>
+    </li>
+  </ul>
+
+  <p>The following examples show that the symmetry constraint should be respected.</p>
 
   <div class="notice--danger">
     <p>The symmetry constraint in the Gaussian family is essential when it comes to the FIM computation.</p>
-
-    <p>The following examples show that the symmetry constraint should be respected.</p>
 
     <p>Please see this Python (JAX) code to compute FIMs in the following examples.</p>
     <div class="notice--info">
