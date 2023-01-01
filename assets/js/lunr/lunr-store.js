@@ -35,32 +35,32 @@ var store = [{
         "url": "/posts/2021/07/ICML/",
         "teaser":null},{
         "title": "Part I: Smooth Manifolds with the Fisher-Rao Metric",
-        "excerpt":"Goal This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts to ensure non-singular FIMs: Regularity conditions and intrinsic parameterizations of a distribution Dimensionality of a smooth manifoldThe discussion here is informal and focuses on more...","categories": [],
+        "excerpt":"Goal (edited: 01-Jan-23) This blog post focuses on the Fisher-Rao metric, which gives rise to the Fisher information matrix (FIM). We will introduce the following useful concepts to ensure non-singular FIMs: Regularity conditions and intrinsic parameterizations of a distribution Dimensionality of a smooth manifoldThe discussion here is informal and focuses...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/09/Geomopt01/",
         "teaser":null},{
         "title": "Part II: Derivation of Natural-gradients",
-        "excerpt":"Goal This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients: Rimannian steepest direction (i.e., normalized natural gradient) The difference between a parameter space and a gradient/vector spaceThe discussion here is informal...","categories": [],
+        "excerpt":"Goal (edited: 01-Jan-23) This blog post focuses on the derivation of natural-gradients, which are known as Riemannian gradients with the Fisher-Rao metric. We will discuss the following concepts to derive natural-gradients: Rimannian steepest direction (i.e., normalized natural gradient) The difference between a parameter space and a gradient/vector spaceThe discussion here...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/10/Geomopt02/",
         "teaser":null},{
         "title": "Part III: Invariance of Natural-Gradients",
-        "excerpt":"Goal This blog post focuses on invariant properties of natural-gradients.We will discuss transformation rules of natural-gradients, the automatic computation of re-parametrized natural-gradients via the transformation rules, non-invariance of the Euclidean counterpart.The discussion here is informal and focuses more on intuitions, rather than rigor. Click to see how to cite this...","categories": [],
+        "excerpt":"Goal (edited: 01-Jan-23) This blog post focuses on invariant properties of natural-gradients.We will discuss transformation rules of natural-gradients, the automatic computation of re-parametrized natural-gradients via the transformation rules, non-invariance of the Euclidean counterpart.The discussion here is informal and focuses more on intuitions, rather than rigor. Click to see how to...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/11/Geomopt03/",
         "teaser":null},{
         "title": "Part IV: Natural Gradient Descent and its Extension---Riemannian Gradient Descent",
-        "excerpt":"Warning: working in Progress (incomplete) Goal This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.We also discuss some invariance property of natural-gradient descent, Riemannian gradient descent, and Newton’s method. We will give an informal introduction with a focus on high level of ideas. Click to...","categories": [],
+        "excerpt":"Warning: working in Progress (incomplete) Goal (edited: 01-Jan-23) This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.We also discuss some invariance property of natural-gradient descent, Riemannian gradient descent, and Newton’s method. We will give an informal introduction with a focus on high level of ideas....","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/11/Geomopt04/",
         "teaser":null},{
         "title": "Part V: Efficient Natural-gradient Methods for Exponential Family",
-        "excerpt":"Warning: working in Progress (incomplete) Goal This blog post should show that we can efficiently implement natural-gradient methods in many cases. We will give an informal introduction with a focus on high level of ideas. Click to see how to cite this blog post @misc{lin2021NGDblog05, title = {Introduction to Natural-gradient...","categories": [],
+        "excerpt":"Warning: working in Progress (incomplete) Goal (edited: 01-Jan-23) This blog post should show that we can efficiently implement natural-gradient methods in many cases. We will give an informal introduction with a focus on high level of ideas. Click to see how to cite this blog post @misc{lin2021NGDblog05, title = {Introduction...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold","Exponential Family"],
         "url": "/posts/2021/12/Geomopt05/",
         "teaser":null},{
         "title": "Part VI: Handling Parameter Constraints of Exponential Family In Natural-gradient Methods",
-        "excerpt":"Warning: working in Progress (Part VI is incomplete) Goal In this blog post, we discuss about how to handle parameter constraints of exponential family. Click to see how to cite this blog post @misc{lin2021NGDblog06, title = {Introduction to Natural-gradient Descent: Part VI}, author = {Lin, Wu and Nielsen, Frank and...","categories": [],
+        "excerpt":"Warning: working in Progress (Part VI is incomplete) Goal (edited: 01-Jan-23) In this blog post, we discuss about how to handle parameter constraints of exponential family. Click to see how to cite this blog post @misc{lin2021NGDblog06, title = {Introduction to Natural-gradient Descent: Part VI}, author = {Lin, Wu and Nielsen,...","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold","Exponential Family"],
         "url": "/posts/2021/12/Geomopt06/",
         "teaser":null},{
