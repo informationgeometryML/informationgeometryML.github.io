@@ -225,6 +225,7 @@ plugins:
   - jemoji
   - jekyll-scholar
   - jekyll-spaceship
+  - jekyll-last-modified-at
 
 scholar:
   style: custom
@@ -233,6 +234,9 @@ scholar:
   bibliography_item_tag: p
   bibtex_filters:
     - latex
+
+last-modified-at:
+  date-format: '%d-%b-%y'
 
 
 jekyll-spaceship:
