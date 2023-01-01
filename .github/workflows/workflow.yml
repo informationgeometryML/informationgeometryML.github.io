@@ -26,7 +26,6 @@ jobs:
       run: pip install jekyllnb
     - name: Convert embedded notebooks
       run: |
-        jupyter jekyllnb --site-dir ./ --page-dir _posts --image-dir img notebooks/20*.ipynb
         jupyter jekyllnb --site-dir ./ --page-dir _includes --image-dir img embedded/nb_*.ipynb
         sed -i '1,5d' _includes/nb_*.md
     - name: Build Jekyll site
@@ -43,9 +42,8 @@ jobs:
         set -xo pipefail
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
-        rm -rf _site/img/nb_* _site/img/20*
+        rm -rf _site/img/nb_* 
         mv img/nb_* _site/img/
-        mv img/20* _site/img/
         git checkout master
         ls -Q | grep -v _site | xargs rm -rf
         mv _site/* .
