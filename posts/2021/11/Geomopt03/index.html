@@ -193,7 +193,7 @@ MathJax = {
 
 
 
-  12 minute read
+  13 minute read
 </p>
           
         </header>
@@ -563,7 +563,8 @@ $$</code></p>
 $$</code></p>
 
   <p>Note:
-<span style="color:blue"><strong>row</strong></span> vector <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_\tau^T$</code> can be computed via a vector-Jacobian product in any standard Auto-Diff toolbox given that <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_\lambda$</code> is pre-computed.</p>
+<span style="color:blue"><strong>row</strong></span> vector <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_\tau^T$</code> can be computed via a vector-Jacobian product<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> in any standard Auto-Diff toolbox given that <code class="language-plaintext highlighter-rouge">${\mathbf{g}}_\lambda$</code> is pre-computed.</p>
+
 </div>
 
 <p>By Eq <code class="language-plaintext highlighter-rouge">$\eqref{3}$</code>, we obtain the transformation rule for Riemannian gradients  (denoted by a column vector) as below,  where <code class="language-plaintext highlighter-rouge">$\mathbf{Q}:=\mathbf{J}^{-1}$</code> is also a Jacobian matrix and <code class="language-plaintext highlighter-rouge">$Q_{ki}=\frac{\partial \tau^k(\lambda)}{\partial \lambda^i}$</code> is the <code class="language-plaintext highlighter-rouge">$(k,i)$</code> entry of matrix <code class="language-plaintext highlighter-rouge">$\mathbf{Q}$</code>.</p>
@@ -571,13 +572,14 @@ $$</code></p>
 <div class="notice--success">
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\hat{\mathbf{g}}_\tau= \mathbf{J}^{-1}  \hat{\mathbf{g}}_\lambda 
+\hat{\mathbf{g}}_\tau= \mathbf{Q} \hat{\mathbf{g}}_\lambda 
 \end{aligned}\tag{7}\label{7}
 $$</code></p>
 
   <p>Note:
-<span style="color:blue"><strong>column</strong></span> vector <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code> can be computed via a (inverse) Jacobian-vector product used in forward-mode differentiation <a class="citation" href="#lin2021tractable">[1]</a> <a class="citation" href="#salimbeni2018natural">[2]</a> given that <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> is pre-computed and we can explicitly express <code class="language-plaintext highlighter-rouge">$\tau$</code> in terms of <code class="language-plaintext highlighter-rouge">$\lambda$</code>. As shown in <a class="citation" href="#salimbeni2018natural">[2]</a>, this Jacobian-vector product can be computed by using two 
+<span style="color:blue"><strong>column</strong></span> vector <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\tau$</code> can be computed via a (inverse) Jacobian-vector product<sup id="fnref:4" role="doc-noteref"><a href="#fn:4" class="footnote" rel="footnote">4</a></sup> used in forward-mode differentiation <a class="citation" href="#lin2021tractable">[1]</a> <a class="citation" href="#salimbeni2018natural">[2]</a> given that <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_\lambda$</code> is pre-computed and we can explicitly express <code class="language-plaintext highlighter-rouge">$\tau$</code> in terms of <code class="language-plaintext highlighter-rouge">$\lambda$</code>. As shown in <a class="citation" href="#salimbeni2018natural">[2]</a>, this Jacobian-vector product can be computed by using two 
  vector-Jacobian products in any standard Auto-Diff toolbox.</p>
+
 </div>
 
 <p>The elementwise expression of the transformation rule for Riemannian gradients is
@@ -744,6 +746,12 @@ Moreover, Euclidean gradient descent is not invariant under a parameter transfor
     </li>
     <li id="fn:2" role="doc-endnote">
       <p>We assume readers are familar with the transformation rule for Euclidean gradients.  Let  <code class="language-plaintext highlighter-rouge">$\tau(t)=\gamma_\tau(t)$</code> and <code class="language-plaintext highlighter-rouge">$\lambda(t)=\gamma_\lambda(t)$</code>.  In differential geometry, this transformation rule can also be shown by using the following identity: <code class="language-plaintext highlighter-rouge">$\mathbf{J}(\tau)= \frac{ \partial [\Psi_\lambda \circ \Psi_\tau^{-1}](\tau) }{\partial \tau } =  \frac{ \partial  \lambda  }{\partial \tau } $</code>, where we drop the index $t$ and recall that <code class="language-plaintext highlighter-rouge">$\gamma_\tau(t)=\Psi_\tau \circ \gamma(t)$</code> <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>Consider vector function <code class="language-plaintext highlighter-rouge">$\lambda(\tau)$</code> from input space <code class="language-plaintext highlighter-rouge">$\tau$</code> to output space <code class="language-plaintext highlighter-rouge">$\lambda$</code>. The linearization of function <code class="language-plaintext highlighter-rouge">$\lambda(\tau)$</code> is a linear map defined by Jacobian matrix <code class="language-plaintext highlighter-rouge">$J$</code>. This linear map is known as the pullback map of <code class="language-plaintext highlighter-rouge">$\lambda(\tau)$</code>   in differential geometry. Given (Euclidean) vector <code class="language-plaintext highlighter-rouge">$g_\lambda$</code> in the output space, the Euclidean transformation rule (the standard chain rule) returns (Euclidean) vector <code class="language-plaintext highlighter-rouge">$g_\tau$</code> in the input space by the linearization. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:4" role="doc-endnote">
+      <p>Recall that function  <code class="language-plaintext highlighter-rouge">$\tau(\lambda)$</code> is the inverse map of function <code class="language-plaintext highlighter-rouge">$\lambda(\tau)$</code>. Consider vector function  <code class="language-plaintext highlighter-rouge">$\tau(\lambda)$</code> from input space <code class="language-plaintext highlighter-rouge">$\lambda$</code> to output space <code class="language-plaintext highlighter-rouge">$\tau$</code>.  The linearization of  function  <code class="language-plaintext highlighter-rouge">$\tau(\lambda)$</code> is a linear map defined by Jacobian matrix <code class="language-plaintext highlighter-rouge">$Q=J^{-1}$</code>. This linear map is known as the pushforward map of <code class="language-plaintext highlighter-rouge">$\tau(\lambda)$</code>  in differential geometry. Given (Riemannian) vector <code class="language-plaintext highlighter-rouge">$\hat{g}_\lambda$</code> in the input space, the Riemannian transformation rule returns (Riemannian) vector <code class="language-plaintext highlighter-rouge">$\hat{g}_\tau$</code> in the output space by the linearization. <a href="#fnref:4" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>

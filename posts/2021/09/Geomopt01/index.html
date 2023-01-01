@@ -339,7 +339,7 @@ and
 
 <p>In the rest of the post, we will mainly focus on the geometric structure of (finite-dimensional) parametric families, for example, a univariate Gaussian family.
 The following figure illustrates four distributions in the Gaussian family denoted by
-<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code>, where <code class="language-plaintext highlighter-rouge">$ p(w | \tau ): = \mathcal{N}(w |\mu,\sigma) = \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>  and <code class="language-plaintext highlighter-rouge">$\tau :=(\mu,\sigma) $</code>. We will later see that this family is a 2-dimensional manifold in the parameter space.</p>
+<code class="language-plaintext highlighter-rouge">$ \{ \mathcal{N}(w |\mu,\sigma) \Big| \mu \in \mathcal{R}, \sigma&gt;0 \}$</code>, where <code class="language-plaintext highlighter-rouge">$ \mathcal{N}(w |\mu,\sigma) := \frac{1}{\sqrt{2\pi \sigma} } \exp [- \frac{(w-\mu)^2}{2\sigma} ] $</code>  and parameter <code class="language-plaintext highlighter-rouge">$\tau :=(\mu,\sigma) $</code>. We will later see that this family is a 2-dimensional manifold in the parameter space.</p>
 
 <p><img src="/img/gauss1d.png" alt="Figure 2" title="Source:Wikipedia"></p>
 
@@ -363,7 +363,7 @@ for the details.)</p>
   <li>We also require that <code class="language-plaintext highlighter-rouge">$ E $</code>  <strong>uniquely</strong> and <strong>smoothly</strong> represents  points in a manifold. The condition ensures arbitrary (smooth) parameter transformations should still represent the same sub-set. In other words, we require that
     <ul>
       <li>there exists a <strong>bi-jective</strong> map among such two parameterizations if these parameterizations represent a common sub-set of points in the manifold.</li>
-      <li>this map and it inverse map are both <strong>smooth</strong>.</li>
+      <li>this map and its inverse map are both <strong>smooth</strong>.</li>
     </ul>
 
     <p>In differential geometry, this  requirement is known as a diffeomorphism, which is a formal but more abstract definition of this requirement.</p>
@@ -402,7 +402,7 @@ for the details.)</p>
 In fact, there does not exist a (single) <strong>global</strong> and intrinsic parametrization to represent the whole circle.</p>
 </blockquote>
 
-<p>Smoothness of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such case, the Jacobian matrix (to change between the parameterizations) is non-singular everywhere, and we can use the chain rule and inverse function theorem to jump between different intrinsic parameterizations.
+<p>Smoothness of the inverse map is essential when it comes to reparametrization (A.K.A. parameter transformation). The smoothness, along with the inverse map, gives us a way to generate new intrinsic parameterizations. Essentially, in such a case, the Jacobian matrix (to change between the parameterizations) is non-singular everywhere, and we can use the chain rule and inverse function theorem to jump between different intrinsic parameterizations.
 We will discuss this in  <a href="/posts/2021/11/Geomopt03/#parameter-transformation-and-invariance">Part III</a>.</p>
 
 <blockquote>
@@ -468,7 +468,7 @@ It is easy to see that these partial derivatives are smooth w.r.t. $\tau=(\mu,v)
 \end{aligned}
 $$</code>
 For this point, the regularity condition will be <code class="language-plaintext highlighter-rouge">$ c_1 w + c_2  (\frac{ w^2 -1 }{2}) = 0$</code>.
-For this to hold for all $w$, it is necessarily that <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies linear independence.</p>
+For this to hold for all $w$, it is necessary that <code class="language-plaintext highlighter-rouge">$c_1=c_2=0$</code>, which implies linear independence.</p>
 
   <p>A formal proof can be built to show that this holds for any <code class="language-plaintext highlighter-rouge">$\mu \in \mathcal{R}$</code> and <code class="language-plaintext highlighter-rouge">$v &gt;0$</code>.</p>
 </blockquote>
@@ -481,12 +481,12 @@ The partial derivatives are</p>
 
   <p><code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\partial_{\pi_0} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{\pi_1}{(\pi_0+\pi_1)^2}   
+\partial_{\pi_0} \log \mathcal{B}(w |\pi_0, \pi_1) = \frac{(\mathcal{I}(w=0)-\mathcal{I}(w=1))}{\mathcal{B}(w |\pi_0, \pi_1)}   \frac{\pi_1}{(\pi_0+\pi_1)^2}   
 \end{aligned}
 $$</code>
 <code class="language-plaintext highlighter-rouge">$$
 \begin{aligned}
-\partial_{\pi_1} \log \mathcal{B}(w |\pi_0, \pi_1) = \mathcal{B}(w |\pi_0, \pi_1)  (\mathcal{I}(w=0)-\mathcal{I}(w=1)) \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} 
+\partial_{\pi_1} \log \mathcal{B}(w |\pi_0, \pi_1) = \frac{(\mathcal{I}(w=0)-\mathcal{I}(w=1))}{\mathcal{B}(w |\pi_0, \pi_1)}  \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} 
 \end{aligned}
 $$</code>
 Note that when <code class="language-plaintext highlighter-rouge">$c_0 = \pi_0 \neq 0 $</code> and <code class="language-plaintext highlighter-rouge">$c_1= \pi_1 \neq 0$</code>, we have <code class="language-plaintext highlighter-rouge">$c_0 \frac{\pi_1}{(\pi_0+\pi_1)^2}  + c_1 \frac{-\pi_0}{ (\pi_0+\pi_1 )^2} = 0$</code>. 
@@ -1031,7 +1031,7 @@ The  circle and the open unit ball do not have the same dimensionality.</p>
 
 
 
-  13 minute read
+  14 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Goal

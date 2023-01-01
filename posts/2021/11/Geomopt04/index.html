@@ -258,7 +258,7 @@ $$</code></p>
 <p>where <code class="language-plaintext highlighter-rouge">$\hat{\mathbf{g}}_{\tau_k}:=-\mathbf{v}(\tau_k) $</code> is a natural gradient evaluated at point <code class="language-plaintext highlighter-rouge">$\tau_{k}$</code> and <code class="language-plaintext highlighter-rouge">$\alpha:=t&gt;0$</code> is a step-size.</p>
 
 <p>This update in Eq. <code class="language-plaintext highlighter-rouge">$\eqref{1}$</code> is inspired by the standard linear update in the <strong>tangent vector space</strong> (see the green space in the above figure).
-By choosing an intrinsic parametrization, this update is also valid in the <strong>parameter space</strong>  (see the red space in the above figure) as long as the step-size is small
+By choosing an intrinsic parametrization, this update is also valid in the <strong>parameter space</strong><sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>  (see the red space in the above figure) as long as the step-size is small
 enough.</p>
 
 <p>The update in the parameter space is valid since the parameter space <code class="language-plaintext highlighter-rouge">$\Omega_\tau$</code> has a local vector-space structure thanks to the use of an intrinsic parametrization.
@@ -378,7 +378,7 @@ $$</code> where the geodesic is uniquely determined by the initial conditions an
 <p>For a <a href="https://en.wikipedia.org/wiki/Geodesic_manifold">geodesically complete</a> manifold, the domain of the geodesic is the whole space  <code class="language-plaintext highlighter-rouge">$\mathbf{I}_{\tau}
 =\mathcal{R}$</code>. We will only consider this case in this post.</p>
 
-<p>To avoid explicitly writing down the differential equations of a geodesic<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup> (i.e., <a href="https://en.wikipedia.org/wiki/Levi-Civita_connection#Christoffel_symbols">Christoffel symbols</a> or <a href="https://en.wikipedia.org/wiki/Connection_form#Example:_the_Levi-Civita_connection">connection 1-form in a section</a>), 
+<p>To avoid explicitly writing down the differential equations of a geodesic<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">2</a></sup> (i.e., <a href="https://en.wikipedia.org/wiki/Levi-Civita_connection#Christoffel_symbols">Christoffel symbols</a> or <a href="https://en.wikipedia.org/wiki/Connection_form#Example:_the_Levi-Civita_connection">connection 1-form in a section</a>), 
 researchers refer to it as the manifold exponential map.
 Given an intrinsic parametrization $\tau$,
 the  map at point $\tau_0$  is defined as
@@ -816,7 +816,7 @@ $$</code> where by the definition we have <code class="language-plaintext highli
 <h2 id="the-hessian-is-not-a-valid-manifold-metric">The Hessian is not a valid manifold metric</h2>
 
 <p>The Hessian <code class="language-plaintext highlighter-rouge">$\mathbf{H}_\tau(\tau_k)=\nabla_\tau^2 h_\tau(\tau_k)$</code>  in general is not a valid manifold metric since it does not follow the transformation
-rule of a metric in non-linear cases<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>.</p>
+rule of a metric in non-linear cases<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">3</a></sup>.</p>
 
 <p>Contrastingly, the FIM is a valid manifold metric. Recall that the FIM can also be computed
 as
@@ -881,10 +881,13 @@ However, a non-linear reparametrization will lead to a non-natural parametrizati
 <div class="footnotes" role="doc-endnotes">
   <ol>
     <li id="fn:1" role="doc-endnote">
-      <p>In Riemannian geometry, a geodesic is induced by the Levi-Civita connection. This connection is known as the metric compatiable parallel transport. Christoffel symbols are used to represent the connection in a coordinate/parametrization system. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p>Informally, we locally identify the parameter space with the tanget vector space. However, not all properties are the same in these two spaces. For example, the weighted inner product induced by the Riemannian metric is only defined in the vector space. We often do not use the same weighted inner product in the parameter space. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">↩</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>This is due to the non-zero partial derivatives of the Jacobian matrix (Eq. \eqref{7}) when it comes to non-linear parameter transformations. These partial derivatives are also related to  Christoffel symbols or Levi-Civita connection coefficients. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
     <li id="fn:2" role="doc-endnote">
-      <p>This is due to the non-zero partial derivatives of the Jacobian matrix (Eq. \eqref{7}) when it comes to non-linear parameter transformations. These partial derivatives are also related to  Christoffel symbols or Levi-Civita connection coefficients. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
+      <p>In Riemannian geometry, a geodesic is induced by the Levi-Civita connection. This connection is known as the metric compatiable parallel transport. Christoffel symbols are used to represent the connection in a coordinate/parametrization system. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">↩</a></p>
     </li>
   </ol>
 </div>
@@ -1052,7 +1055,7 @@ However, a non-linear reparametrization will lead to a non-natural parametrizati
 
 
 
-  12 minute read
+  13 minute read
 </p>
     
     <p class="archive__item-excerpt" itemprop="description">Goal
