@@ -50,7 +50,7 @@ var store = [{
         "url": "/posts/2021/11/Geomopt03/",
         "teaser":null},{
         "title": "Part IV: Natural Gradient Descent and its Extension---Riemannian Gradient Descent",
-        "excerpt":"Warning: working in Progress (incomplete) Goal (edited: 01-Jan-23) This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.We also discuss some invariance property of natural-gradient descent, Riemannian gradient descent, and Newton’s method. We will give an informal introduction with a focus on high level of ideas....","categories": [],
+        "excerpt":"Warning: working in Progress (incomplete) Goal (edited: 07-Jan-23) This blog post should help readers to understand natural-gradient descent and Riemannian gradient descent.We also discuss some invariance property of natural-gradient descent, Riemannian gradient descent, and Newton’s method. We will give an informal introduction with a focus on high level of ideas....","categories": [],
         "tags": ["Natural Gradient Descent","Information Geometry","Riemannian Manifold"],
         "url": "/posts/2021/11/Geomopt04/",
         "teaser":null},{
